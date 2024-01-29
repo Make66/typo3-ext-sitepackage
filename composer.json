@@ -1,0 +1,36 @@
+{
+    "name": "taketool/sitepackage",
+    "type": "typo3-cms-extension",
+    "license": "GPL-2.0-or-later",
+    "description": "Container elements and other stuff",
+    "authors": [
+        {
+            "name": "Martin Keller",
+            "role": "Developer"
+        }
+    ],
+    "version": "2.0.0",
+    "require": {
+        "typo3/cms-core": "^10.4 || ^11.5",
+        "b13/container": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Taketool\\Sitepackage\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Taketool\\Sitepackage\\Tests\\": "Tests"
+        }
+    },
+    "replace": {
+        "typo3-ter/sitepackage": "self.version"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "sitepackage"
+        }
+    }
+}
+

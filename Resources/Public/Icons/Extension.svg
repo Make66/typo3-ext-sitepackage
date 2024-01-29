@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Ebene_1" x="0px" y="0px" width="600px" height="600px" viewBox="0 0 600 600" style="enable-background:new 0 0 600 600;" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="100.483" height="100.508"/>
+  </defs>
+  <rect width="600" height="600" style="stroke: rgb(0, 0, 0); fill: rgb(181, 37, 43);"/>
+  <g>
+    <polygon style="fill: rgb(255, 255, 255);" points="569.433,213.182 479.354,213.182 425.858,445.382 351.233,445.382 404.659,213.182 &#10;&#9;315.174,213.182 327.922,157.309 582.245,157.309 569.433,213.182 "/>
+    <polygon style="fill: rgb(255, 255, 255);" points="288.29,213.642 198.21,213.642 144.718,445.842 70.09,445.842 123.518,213.642 &#10;&#9;34.033,213.642 46.778,157.771 301.104,157.771 288.29,213.642 "/>
+  </g>
+</svg>

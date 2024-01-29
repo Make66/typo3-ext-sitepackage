@@ -1,0 +1,9 @@
+mod.web_layout {
+    tt_content {
+        preview {
+            container_2_columns = EXT:sitepackage/Resources/Private/Templates/Preview/3_columns.html
+            container_3_columns = EXT:sitepackage/Resources/Private/Templates/Preview/3_columns.html
+            container_4_columns = EXT:sitepackage/Resources/Private/Templates/Preview/3_columns.html
+        }
+    }
+}
