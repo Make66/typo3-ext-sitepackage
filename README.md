@@ -4,4 +4,6 @@ A developing site package starting with replacement for gridelements by containe
 - adds page.tsconfig for slightly improved backend preview
 - use container columns setup for bootstrap_package and default icons
 
-Quickstart: Add extension and TypoScript template to base templates (last)
+Quickstart: 
+- clone repository to dev/extensions and rename to "sitepackage"
+- add TypoScript template to base templates (last)

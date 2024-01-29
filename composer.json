@@ -12,7 +12,12 @@
     "version": "2.0.0",
     "require": {
         "typo3/cms-core": "^10.4 || ^11.5",
-        "b13/container": "^2.2"
+        "b13/container": "^2.2",
+        "bk2k/bootstrap-package": "^12.0"
+    },
+    "replace": {
+        "gridelementsteam/gridelements":"*",
+        "laxap//bootstrap_grids":"*"
     },
     "autoload": {
         "psr-4": {
