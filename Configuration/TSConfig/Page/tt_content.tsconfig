@@ -1,0 +1,47 @@
+## Eigene Rahmen fuer Content Elemente
+## PageTSconfig
+TCEFORM.tt_content.frame_class.addItems {
+    sliderstartseite = Slider (Höhe 80%)
+    zielgruppenstart = Zielgruppen Startseite
+    zielgruppenstart_box = Zielgruppen Startseite (6Spalten)
+    sliderkasten = Slider Kasten
+    slidertextlinks = Slider-Text (linksbündig)
+    zielseitensection = Zielseiten Menü
+    zielseitensection_button = Zielseiten Menü Button
+    kalenderkasten1 = Kalender Kasten 1
+    kalenderkasten2 = Kalender Kasten 2
+    newslayout1 = News Layout 1 (Button)
+    newslayout2 = News Layout 2 (Pfeil)
+    infokastenstart  = Infokasten
+    rahmen100 = Rahmen 100%
+    rahmen_ohne_abstand = Rahmen ohne Abstand
+    ampel = Ampel
+    rahmen_ueberlappen = Überlappen
+    rahmen_streifen  = Streifen
+    unterseiten_menu = Unterseitenmenü
+}
+
+## Eigene Class fuer Content Elemente
+TCEFORM {
+    tt_content {
+        frame_layout {
+            addItems {
+                galerie = Galerie
+                rollover_image = Bild mit Hover-Effekt
+            }
+        }
+    }
+}
+
+
+## Eigene Hintergrundfarbe fuer Content Elemente
+TCEFORM {
+    tt_content {
+        background_color_class {
+            addItems {
+                schmuckfarbe = Schmuckfarbe
+                verlauf = Farbverlauf
+            }
+        }
+    }
+}

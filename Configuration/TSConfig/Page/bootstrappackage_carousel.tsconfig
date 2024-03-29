@@ -1,0 +1,21 @@
+## Eigene Zusatzklassen im Carousel-Slider
+TCEFORM.tx_bootstrappackage_carousel_item.header_class.addItems{
+    fadeIn = Textanimation einblenden
+    fadeInDown = Textanimation von oben nach unten
+    fadeInLeft = Textanimation von links nach rechts
+    fadeInRight = Textanimation von rechts nach links
+    fadeInUp =  Textanimation  von unten nach oben
+    bounceIn = Textanimation hüpfen
+    button = Button
+}
+
+
+TCEFORM.tx_bootstrappackage_carousel_item.subheader_class.addItems {
+    fadeIn = Textanimation einblenden
+    fadeInDown = Textanimation von oben nach unten
+    fadeInLeft = Textanimation von links nach rechts
+    fadeInRight = Textanimation von rechts nach links
+    fadeInUp =  Textanimation  von unten nach oben
+    bounceIn = Textanimation hüpfen
+    button = Button
+}
