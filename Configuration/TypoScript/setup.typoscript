@@ -1,1 +1,1 @@
-@import 'EXT:sitepackage/Configuration/TypoScript/setup/'
+@import 'EXT:sitepackage/Configuration/TypoScript/setup/*'
