@@ -1,0 +1,6 @@
+#Zeichenanzahl
+plugin.tx_news.settings.cropMaxCharacters = 70
+#Bildgröße
+plugin.tx_news.settings.list.media.image.width = 450
+#Einträge pro Seite
+plugin.tx_news.settings.list.paginate.itemsPerPage = 12

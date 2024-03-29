@@ -1,0 +1,26 @@
+page.theme.cookieconsent.enable = 0
+plugin.tx_cookieconsent.settings {
+    url = 0
+    type = opt-in
+    dismissOnScroll = 0
+    layout = dpextend
+    marketing = 0
+    statistics = 0
+    position = bottom-left
+    overlay.box {
+        background = #009e42
+        text = #FFFFFF
+    }
+    overlay.button {
+        background = #009e42
+        text = #FFFFFF
+    }
+    palette.popup {
+        background = #009e42
+        text = #FFFFFF
+    }
+    palette.button {
+        background = #304A97
+        text = #FFFFFF
+    }
+}

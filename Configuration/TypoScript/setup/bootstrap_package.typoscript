@@ -1,0 +1,6 @@
+#Bildgrößen
+lib.contentElement.settings.responsiveimages.variants.default.width = 1900
+lib.contentElement.settings.responsiveimages.variants.large.width = 1700
+lib.contentElement.settings.responsiveimages.variants.medium.width = 1520
+lib.contentElement.settings.responsiveimages.variants.small.width = 1350
+lib.contentElement.settings.responsiveimages.variants.extrasmall.width = 1200

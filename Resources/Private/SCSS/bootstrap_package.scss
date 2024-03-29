@@ -1,105 +1,105 @@
-@import url('../../../../fileadmin/templates/ext/fonts/font-awesome/css/font-awesome.min.css');
+@import url('../../Public/Fonts/fontawesome/css/fontawesome.min.css');
 
 @font-face {
   font-family: 'Abel';
-  src: url('../../../../fileadmin/templates/ext/fonts/Abel-Regular.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/Abel-Regular.woff') format('woff');
+  src: url('../../Public/Fonts/Abel-Regular.woff2') format('woff2'),
+  url('../../Public/Fonts/Abel-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Allison';
-  src: url('../../../../fileadmin/templates/ext/fonts/allison-v7-latin-regular.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/allison-v7-latin-regular.woff') format('woff');
+  src: url('../../Public/Fonts/allison-v7-latin-regular.woff2') format('woff2'),
+  url('../../Public/Fonts/allison-v7-latin-regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family:'AvantGarde Bk BT';
-  src: url('../../../../fileadmin/templates/ext/fonts/Avgardn.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/Avgardn.woff') format('woff');
+  src: url('../../Public/Fonts/Avgardn.woff2') format('woff2'),
+  url('../../Public/Fonts/Avgardn.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'AvantGarde Md BT';
-  src: url('../../../../fileadmin/templates/ext/fonts/Avgardm.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/Avgardm.woff') format('woff');
+  src: url('../../Public/Fonts/Avgardm.woff2') format('woff2'),
+  url('../../Public/Fonts/Avgardm.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Edu';
-  src: url('../../../../fileadmin/templates/ext/fonts/EduVICWANT.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/EduVICWANT.woff') format('woff');
+  src: url('../../Public/Fonts/EduVICWANT.woff2') format('woff2'),
+  url('../../Public/Fonts/EduVICWANT.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Lora italic';
-  src: url('../../../../fileadmin/templates/ext/fonts/Lora-Italic.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/Lora-Italic.woff') format('woff');
+  src: url('../../Public/Fonts/Lora-Italic.woff2') format('woff2'),
+  url('../../Public/Fonts/Lora-Italic.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Lobster';
-  src: url('../../../../fileadmin/templates/ext/fonts/lobster-regular.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/lobster-regular.woff') format('woff');
+  src: url('../../Public/Fonts/lobster-regular.woff2') format('woff2'),
+  url('../../Public/Fonts/lobster-regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('../../../../fileadmin/templates/ext/fonts/Montserrat-Regular.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/Montserrat-Regular.woff') format('woff');
+  src: url('../../Public/Fonts/Montserrat-Regular.woff2') format('woff2'),
+  url('../../Public/Fonts/Montserrat-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Open Sans';
-  src: url('../../../../fileadmin/templates/ext/fonts/OpenSans-Regular.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/OpenSans-Regular.woff') format('woff');
+  src: url('../../Public/Fonts/OpenSans-Regular.woff2') format('woff2'),
+  url('../../Public/Fonts/OpenSans-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Poppins-Medium';
-  src: url('../../../../fileadmin/templates/ext/fonts/Poppins-Medium.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/Poppins-Medium.woff') format('woff');
+  src: url('../../Public/Fonts/Poppins-Medium.woff2') format('woff2'),
+  url('../../Public/Fonts/Poppins-Medium.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Permanent Marker';
-  src: url('../../../../fileadmin/templates/ext/fonts/PermanentMarker-Regular.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/PermanentMarker-Regular.woff') format('woff');
+  src: url('../../Public/Fonts/PermanentMarker-Regular.woff2') format('woff2'),
+  url('../../Public/Fonts/PermanentMarker-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'PT Sans';
-  src: url('../../../../fileadmin/templates/ext/fonts/PTSans-Regular.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/PTSans-Regular.woff') format('woff');
+  src: url('../../Public/Fonts/PTSans-Regular.woff2') format('woff2'),
+  url('../../Public/Fonts/PTSans-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Source Sans Pro';
-  src: url('../../../../fileadmin/templates/ext/fonts/SourceSansPro-Regular.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/SourceSansPro-Regular.woff') format('woff');
+  src: url('../../Public/Fonts/SourceSansPro-Regular.woff2') format('woff2'),
+  url('../../Public/Fonts/SourceSansPro-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -114,16 +114,16 @@
 
 @font-face {
   font-family: 'Roboto Condensed';
-  src: url('../../../../fileadmin/templates/ext/fonts/RobotoCondensed-Regular.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/RobotoCondensed-Regular.woff') format('woff');
+  src: url('../../Public/Fonts/RobotoCondensed-Regular.woff2') format('woff2'),
+  url('../../Public/Fonts/RobotoCondensed-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Roboto Regular';
-  src: url('../../../../fileadmin/templates/ext/fonts/Roboto-Regular.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/Roboto-Regular.woff') format('woff');
+  src: url('../../Public/Fonts/Roboto-Regular.woff2') format('woff2'),
+  url('../../Public/Fonts/Roboto-Regular.woff') format('woff');
   font-weight: 500;
   font-style: normal;
 }
@@ -131,16 +131,16 @@
 
 @font-face {
   font-family: 'Roboto Medium';
-  src: url('../../../../fileadmin/templates/ext/fonts/Roboto-Medium.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/Roboto-Medium.woff') format('woff');
+  src: url('../../Public/Fonts/Roboto-Medium.woff2') format('woff2'),
+  url('../../Public/Fonts/Roboto-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Raleway';
-  src: url('../../../../fileadmin/templates/ext/fonts/Raleway-Regular.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/ext/fonts/Raleway-Regular.woff') format('woff');
+  src: url('../../Public/Fonts/Raleway-Regular.woff2') format('woff2'),
+  url('../../Public/Fonts/Raleway-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }

@@ -1,0 +1,5 @@
+plugin.tx_dp_cookieconsent._LOCAL_LANG.de {
+    message = Wir verwenden technisch notwendige Cookies, die für die Funktion der Webseite unerlässlich sind. Andere Tracker werden nicht eingesetzt.
+    allowall = Alle akzeptieren.
+    dismiss = Auswahl zulassen.
+}
