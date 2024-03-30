@@ -1,4 +1,10 @@
-#Bildgrößen
+# Bootstrap theme configuration; choose bootstrap version in custom theme.scss
+page.includeCSS {
+    theme >
+    theme = fileadmin/templates/{$mandant}/theme.scss
+}
+
+# Bildgrößen
 lib.contentElement.settings.responsiveimages.variants.default.width = 1900
 lib.contentElement.settings.responsiveimages.variants.large.width = 1700
 lib.contentElement.settings.responsiveimages.variants.medium.width = 1520

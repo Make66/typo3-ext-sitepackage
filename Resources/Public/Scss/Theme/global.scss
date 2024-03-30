@@ -1,81 +1,81 @@
-@import url('../../Public/Fonts/fontawesome/css/fontawesome.min.css');
+@import url('../../Fonts/fontawesome/css/fontawesome.min.css');
 
 @font-face {
   font-family: 'Abel';
-  src: url('../../Public/Fonts/Abel-Regular.woff2') format('woff2'),
-  url('../../Public/Fonts/Abel-Regular.woff') format('woff');
+  src: url('../../Fonts/Abel-Regular.woff2') format('woff2'),
+  url('../../Fonts/Abel-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Allison';
-  src: url('../../Public/Fonts/allison-v7-latin-regular.woff2') format('woff2'),
-  url('../../Public/Fonts/allison-v7-latin-regular.woff') format('woff');
+  src: url('../../Fonts/allison-v7-latin-regular.woff2') format('woff2'),
+  url('../../Fonts/allison-v7-latin-regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family:'AvantGarde Bk BT';
-  src: url('../../Public/Fonts/Avgardn.woff2') format('woff2'),
-  url('../../Public/Fonts/Avgardn.woff') format('woff');
+  src: url('../../Fonts/Avgardn.woff2') format('woff2'),
+  url('../../Fonts/Avgardn.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'AvantGarde Md BT';
-  src: url('../../Public/Fonts/Avgardm.woff2') format('woff2'),
-  url('../../Public/Fonts/Avgardm.woff') format('woff');
+  src: url('../../Fonts/Avgardm.woff2') format('woff2'),
+  url('../../Fonts/Avgardm.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Edu';
-  src: url('../../Public/Fonts/EduVICWANT.woff2') format('woff2'),
-  url('../../Public/Fonts/EduVICWANT.woff') format('woff');
+  src: url('../../Fonts/EduVICWANT.woff2') format('woff2'),
+  url('../../Fonts/EduVICWANT.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Lora italic';
-  src: url('../../Public/Fonts/Lora-Italic.woff2') format('woff2'),
-  url('../../Public/Fonts/Lora-Italic.woff') format('woff');
+  src: url('../../Fonts/Lora-Italic.woff2') format('woff2'),
+  url('../../Fonts/Lora-Italic.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Lobster';
-  src: url('../../Public/Fonts/lobster-regular.woff2') format('woff2'),
-  url('../../Public/Fonts/lobster-regular.woff') format('woff');
+  src: url('../../Fonts/lobster-regular.woff2') format('woff2'),
+  url('../../Fonts/lobster-regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('../../Public/Fonts/Montserrat-Regular.woff2') format('woff2'),
-  url('../../Public/Fonts/Montserrat-Regular.woff') format('woff');
+  src: url('../../Fonts/Montserrat-Regular.woff2') format('woff2'),
+  url('../../Fonts/Montserrat-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Open Sans';
-  src: url('../../Public/Fonts/OpenSans-Regular.woff2') format('woff2'),
-  url('../../Public/Fonts/OpenSans-Regular.woff') format('woff');
+  src: url('../../Fonts/OpenSans-Regular.woff2') format('woff2'),
+  url('../../Fonts/OpenSans-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Poppins-Medium';
-  src: url('../../Public/Fonts/Poppins-Medium.woff2') format('woff2'),
-  url('../../Public/Fonts/Poppins-Medium.woff') format('woff');
+  src: url('../../Fonts/Poppins-Medium.woff2') format('woff2'),
+  url('../../Fonts/Poppins-Medium.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -90,40 +90,40 @@
 
 @font-face {
   font-family: 'PT Sans';
-  src: url('../../Public/Fonts/PTSans-Regular.woff2') format('woff2'),
-  url('../../Public/Fonts/PTSans-Regular.woff') format('woff');
+  src: url('../../Fonts/PTSans-Regular.woff2') format('woff2'),
+  url('../../Fonts/PTSans-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Source Sans Pro';
-  src: url('../../Public/Fonts/SourceSansPro-Regular.woff2') format('woff2'),
-  url('../../Public/Fonts/SourceSansPro-Regular.woff') format('woff');
+  src: url('../../Fonts/SourceSansPro-Regular.woff2') format('woff2'),
+  url('../../Fonts/SourceSansPro-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Source Sans Pro Light';
-  src: url('../../../../fileadmin/templates/tx_fonts/SourceSansPro-Light.woff2') format('woff2'),
-  url('../../../../fileadmin/templates/tx_fonts/SourceSansPro-Light.woff') format('woff');
+  src: url('../../Fonts/SourceSansPro-Light.woff2') format('woff2'),
+  url('../../Fonts/SourceSansPro-Light.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Roboto Condensed';
-  src: url('../../Public/Fonts/RobotoCondensed-Regular.woff2') format('woff2'),
-  url('../../Public/Fonts/RobotoCondensed-Regular.woff') format('woff');
+  src: url('../../Fonts/RobotoCondensed-Regular.woff2') format('woff2'),
+  url('../../Fonts/RobotoCondensed-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Roboto Regular';
-  src: url('../../Public/Fonts/Roboto-Regular.woff2') format('woff2'),
-  url('../../Public/Fonts/Roboto-Regular.woff') format('woff');
+  src: url('../../Fonts/Roboto-Regular.woff2') format('woff2'),
+  url('../../Fonts/Roboto-Regular.woff') format('woff');
   font-weight: 500;
   font-style: normal;
 }
@@ -139,8 +139,8 @@
 
 @font-face {
   font-family: 'Raleway';
-  src: url('../../Public/Fonts/Raleway-Regular.woff2') format('woff2'),
-  url('../../Public/Fonts/Raleway-Regular.woff') format('woff');
+  src: url('../../Fonts/Raleway-Regular.woff2') format('woff2'),
+  url('../../Fonts/Raleway-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -863,7 +863,7 @@ h3.carousel-item-header,
 
 .glyphicon-calendar::before {
   background-repeat: no-repeat;
-  background-image: url("../ext/bootstrap_package/img/cal_date.svg");
+  background-image: url("../../Icons/cal_date.svg");
   display: inline-block;
   background-size: cover;
   width: 20px;
@@ -874,7 +874,7 @@ h3.carousel-item-header,
 
 .glyphicon-time::before {
   background-repeat: no-repeat;
-  background-image: url("../ext/bootstrap_package/img/cal_time.svg");
+  background-image: url("../../Icons/cal_time.svg");
   display: inline-block;
   background-size: cover;
   width: 20px;
@@ -883,8 +883,12 @@ h3.carousel-item-header,
   background-position: 0px 0px;
 }
 
-.calendarize_single .glyphicon-calendar::before {background-image: url("../ext/bootstrap_package/img/cal_date_white.svg");}
-.calendarize_single .glyphicon-time::before {background-image: url("../ext/bootstrap_package/img/cal_time_white.svg");}
+.calendarize_single .glyphicon-calendar::before {
+  background-image: url("../../Icons/cal_date_white.svg");
+}
+.calendarize_single .glyphicon-time::before {
+  background-image: url("../../Icons/cal_time_white.svg");
+}
 
 /* Kalender Liste*/
 .calendarize .panel-body {
@@ -1802,17 +1806,17 @@ h3.carousel-item-header,
 
 .frame-adventskalender_menu li:nth-of-type(2) a {transform: rotate(-3deg);}
 .frame-adventskalender_menu li:nth-of-type(3) a {transform: rotate(5deg);}
-.frame-adventskalender_menu li:nth-of-type(4) a {transform: rotate1(2deg);}
+.frame-adventskalender_menu li:nth-of-type(4) a {transform: rotate(2deg);}
 .frame-adventskalender_menu li:nth-of-type(5) a {transform: rotate(-4deg);}
 .frame-adventskalender_menu li:nth-of-type(6) a {transform: rotate(-3deg);}
-.frame-adventskalender_menu li:nth-of-type(7) a {transform: rotate1(6deg);}
+.frame-adventskalender_menu li:nth-of-type(7) a {transform: rotate(6deg);}
 .frame-adventskalender_menu li:nth-of-type(8) a {transform: rotate(-6deg);}
 .frame-adventskalender_menu li:nth-of-type(9) a {transform: rotate(-2.5deg);}
 .frame-adventskalender_menu li:nth-of-type(10) a {transform: rotate(-6deg);}
-.frame-adventskalender_menu li:nth-of-type(11) a {transform: rotate1(6deg);}
+.frame-adventskalender_menu li:nth-of-type(11) a {transform: rotate(6deg);}
 .frame-adventskalender_menu li:nth-of-type(12) a {transform: rotate(6deg);}
 .frame-adventskalender_menu li:nth-of-type(13) a {transform: rotate(-4.5deg);}
-.frame-adventskalender_menu li:nth-of-type(15) a {transform: rotate1(-6deg);}
+.frame-adventskalender_menu li:nth-of-type(15) a {transform: rotate(-6deg);}
 .frame-adventskalender_menu li:nth-of-type(18) a {transform: rotate(3deg);}
 .frame-adventskalender_menu li:nth-of-type(22) a {transform: rotate(-4.5deg);}
 
@@ -2578,7 +2582,7 @@ textarea {
 
 /* Anmeldung */
 .tx-tool-pi2 h2.clickme::after {
-  content: url("../ext/bootstrap_package/img/pfeil_unten.svg")!important;
+  content: url("../../Icons/pfeil_unten.svg")!important;
   float: right;
 }
 

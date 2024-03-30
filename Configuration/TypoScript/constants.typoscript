@@ -1,1 +1,7 @@
-@import 'EXT:sitepackage/Configuration/TypoScript/constants/*'
+@import 'EXT:sitepackage/Configuration/TypoScript/constants/bootstrap_package.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/constants/page.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/constants/seo.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/constants/calendarize.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/constants/news.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/constants/dp_cookieconsent.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/constants/powermail.typoscript'

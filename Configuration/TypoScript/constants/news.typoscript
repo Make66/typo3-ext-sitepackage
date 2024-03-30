@@ -1,0 +1,2 @@
+#News (Twitter Bootstrap)
+plugin.tx_news.view.twb.partialRootPath = fileadmin/templates/ext/news/Resources/Private/Partials/

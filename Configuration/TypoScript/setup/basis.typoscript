@@ -1,0 +1,69 @@
+@import 'EXT:seo/Configuration/TypoScript/XmlSitemap/setup.typoscript'
+
+config.additionalHeaders.90.header = t3versions: hide-major
+
+page.meta.keywords.field = keywords
+
+#Angepasste ContentElemente (Bildueberschrift verlinkt für Rollover Effekt)
+lib.contentElement {
+    partialRootPaths.30 = EXT:sitemap/Resources/Private/Partials/BootstrapPackage/ContentElements/
+}
+
+plugin.tx_powermail.settings.setup {
+    sender.overwrite.senderName.value = {$powermailFromName}
+    sender.overwrite.senderEmail.value = kundenserver13-1@taketool.de
+    receiver.overwrite.senderName.value = {$powermailFromName}
+    receiver.overwrite.senderEmail.value = kundenserver13-1@taketool.de
+}
+
+#E-Mail Adressen verschlüsselt ausgeben
+config.spamProtectEmailAddresses = 1
+config.spamProtectEmailAddresses_atSubst = (at)
+
+# Powermail FROM Feld voreinstellen
+plugin.tx_powermail.settings.setup {
+    sender.overwrite.senderName.value = {$powermailFromName}
+    sender.overwrite.senderEmail.value =  {$powermailFromEmail}
+    receiver.overwrite.senderName.value = {$powermailFromName}
+    receiver.overwrite.senderEmail.value =  {$powermailFromEmail}
+}
+
+#Hintergrundbilder ausgeben
+temp.bild = IMG_RESOURCE
+temp.bild {
+    file {
+        import =  uploads/media/
+        import.data = levelmedia:-1, slide
+        treatIdAsReference = 1
+        import.listNum = 0
+    }
+}
+
+page.headerData.13 < temp.bild
+page.headerData.13.stdWrap.wrap = <style type="text/css">#page-content {background-image: url(|);}</style>
+
+temp.bild = IMG_RESOURCE
+temp.bild {
+    file {
+        import =  uploads/media/
+        import.data = levelmedia:2, slide
+        treatIdAsReference = 1
+        import.listNum = 0
+    }
+}
+
+page.headerData.13 < temp.bild
+page.headerData.13.stdWrap.wrap = <style type="text/css">#page-content { background-image: url(../|);}</style>
+
+temp.bild = IMG_RESOURCE
+temp.bild {
+    file {
+        import =  uploads/media/
+        import.data = levelmedia:3, slide
+        treatIdAsReference = 1
+        import.listNum = 0
+    }
+}
+
+page.headerData.13 < temp.bild
+page.headerData.13.stdWrap.wrap = <style type="text/css">#page-content { background-image: url(../../../|);}</style>

@@ -1,0 +1,8 @@
+page.preloader {
+    backgroundColor = #DDDBDB
+    logo.file = EXT:sitepackage/Resources/Public/Icons/preloader.svg
+    logo.width = 280
+    logo.height = 130
+    fadeDuration = 0.2
+    enable = 0
+}
