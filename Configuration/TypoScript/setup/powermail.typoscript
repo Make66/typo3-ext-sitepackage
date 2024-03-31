@@ -1,0 +1,6 @@
+plugin.tx_powermail.settings.setup {
+    sender.overwrite.senderName.value = {$powermailFromName}
+    sender.overwrite.senderEmail.value = kundenserver13-1@taketool.de
+    receiver.overwrite.senderName.value = {$powermailFromName}
+    receiver.overwrite.senderEmail.value = kundenserver13-1@taketool.de
+}

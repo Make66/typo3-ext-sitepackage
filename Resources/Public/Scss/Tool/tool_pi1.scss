@@ -1,0 +1,375 @@
+
+ul.typo3-messages {
+  padding-left: 0;
+}
+
+ul.typo3-messages li {
+  list-style: none;
+}
+
+h4.alert-title {
+  font-family: unset;
+  font-size: large;
+}
+
+img.fa-info-circle {
+  width: 1em;
+  height: 1em;
+}
+
+.tx-tool-pi1 div.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.tx-tool-pi1 div.even {
+  background-color: #EEEEEE;
+}
+
+.tx-tool-pi1 div.odd {
+  background-color: #FFFFFF;
+}
+
+.tx-tool-pi1 hr.clear {
+  display: block;
+  clear: both;
+  border: 0;
+  margin: 0;
+}
+
+.tx-tool-pi1 div.kursid {
+  display: none;
+}
+
+.tx-tool-pi1 .disabled {
+  pointer-events: none;
+  color: #999999;
+}
+
+.tx-tool-pi1 div.col {
+  width: 25px;
+  height: auto;
+  min-height: 18px;
+  padding: 4px;
+  flex: auto;
+  @include media-breakpoint-up(lg) {
+    display: flex;
+    flex: 1 0 0%;
+  }
+}
+
+.tx-tool-pi1 div.head {
+  display: none;
+
+  @include media-breakpoint-up(lg) {
+    font-weight: bold;
+    background: none !important;
+    color: $primary !important;
+    border-bottom: 1px solid $primary;
+    display: block;
+    font-size: 90%;
+    font-weight: normal;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.tx-tool-pi1 div.head div.col:last-of-type {
+  width: 100%;
+  @include media-breakpoint-up(lg) {
+    width: auto;
+    flex-grow: calc(2 + 3);
+  }
+}
+
+.tx-tool-pi1 div.ampel {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline;
+}
+
+.tx-tool-pi1 span.ampel {
+  width: 0.75em;
+  height: 0.75em;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.tx-tool-pi1 span.ampel-green {
+  background-color: #00ff00;
+}
+
+.tx-tool-pi1 span.ampel-yellow {
+  background-color: #ffff00;
+}
+
+.tx-tool-pi1 span.ampel-red {
+  background-color: #ff0000;
+}
+
+.tx-tool-pi1 div.ampel {
+  width: 6%;
+  @include media-breakpoint-up(lg) {
+    width: auto;
+    flex-grow: 0.3;
+  }
+}
+
+.tx-tool-pi1 div.bezeichnung {
+  width: 94%;
+  @include media-breakpoint-up(lg) {
+    width: auto;
+    flex-grow: 9;
+  }
+}
+
+.tx-tool-pi1 div.wochentag {
+  width: 100%;
+  @include media-breakpoint-up(lg) {
+    width: auto;
+    flex-grow: 2.5;
+  }
+}
+
+.tx-tool-pi1 .col.beginndatum {
+  width: 100%;
+  @include media-breakpoint-up(lg) {
+    width: auto;
+    flex-grow: 2.5;
+  }
+}
+
+.tx-tool-pi1 div.vonzeit,
+.tx-tool-pi1 div.biszeit {
+  width: 100%;
+  @include media-breakpoint-up(lg) {
+    width: auto;
+    flex-grow: 1.5;
+  }
+}
+
+.tx-tool-pi1 div.anzahleinheiten {
+  width: 100%;
+  @include media-breakpoint-up(lg) {
+    width: auto;
+    flex-grow: 2;
+  }
+}
+
+.tx-tool-pi1 div.zahlbetrag {
+  width: 100%;
+  @include media-breakpoint-up(lg) {
+    width: auto;
+    flex-grow: 2;
+  }
+}
+
+.tx-tool-pi1 div.anmeldung {
+  width: 100%;
+  @include media-breakpoint-up(lg) {
+    width: auto;
+    flex-grow: 3;
+  }
+}
+
+/* Spaltentitel Mobilansicht */
+
+.tx-tool-pi1 div.standort::before {
+  content: "Standort: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.bezeichnung::before {
+  content: "Bezeichnung: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.raum::before {
+  content: "Raum: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.beginndatum::before {
+  content: "Datum: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.wochentag::before {
+  content: "Wochentag: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.vonzeit::before {
+  content: "Uhrzeit: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.biszeit::before {
+  content: "bis: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.anzahleinheiten::before {
+  content: "Wie oft: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.zahlbetrag::before {
+  content: "Honorar: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.saison::before {
+  content: "Saison: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.kursnummer::before {
+  content: "Kurs Nr.: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.honorar::before {
+  content: "Honorar: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.tanzlehrer::before {
+  content: "Tanzlehrer: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.no_content {
+  width: 100%;
+  clear: both;
+}
+
+.tx-tool-pi1 span.anmTxt,
+.tx-tool-pi1 span.noanmeldung {
+  font-size: 80%;
+  line-height: 100%;
+}
+
+.tx-tool-pi1 span.noanmeldung {
+  margin: 4px 0 2px 2px;
+}
+
+.tx-tool-pi1 div.zsText {
+  margin: 1em 0;
+}
+
+.tx-tool-pi1 .more {
+  cursor: pointer;
+}
+
+.tx-tool-pi1 th.col-ampel {
+  color: transparent;
+}
+
+.tx-tool-pi1 .tanzlehrerPopUp, .tx-tool-pi1 .kursTerminBox {
+  position: absolute;
+  padding: 20px;
+  border: 1px solid grey;
+  margin: auto;
+  background-color: white;
+  z-index: 9;
+}
+
+.section.section-default:last-child div.frame:last-child div.tx-tool-pi1 div.kursTerminBox {
+  position: static;
+}
+
+.tx-tool-pi1 .tanzlehrerClose, .tx-tool-pi1 .kursTerminClose {
+  float: right;
+  margin-left: 1em;
+  margin-right: -15px;
+  margin-top: -15px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  padding: -20px;
+  z-index: 2;
+  background-image: url(../../Icons/Tool/close.png);
+  background-repeat: no-repeat;
+}
+
+.tx-tool-pi1 .text-muted {
+  color: #999;
+}
+
+.tx-tool-pi1 div.modal-header {
+  background-color: lightgray;
+}
+
+.tx-tool-pi1 div.anmeldung a {
+  width: 300px;
+  display: block;
+  color: #fff;
+  background: $primary;
+  text-align: center;
+  border-radius: 5px;
+  padding: 0 6px;
+  @include media-breakpoint-up(lg) {
+    width: 95%;
+  }
+}
+
+.tx-tool-pi1 div.anmeldung a:hover {
+  background-color: #5f5f5f;
+  text-decoration: none;
+}

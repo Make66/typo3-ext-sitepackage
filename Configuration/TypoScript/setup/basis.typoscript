@@ -1,60 +1,31 @@
 @import 'EXT:seo/Configuration/TypoScript/XmlSitemap/setup.typoscript'
 
+config.spamProtectEmailAddresses = 1
+config.spamProtectEmailAddresses_atSubst = (at)
 config.additionalHeaders.90.header = t3versions: hide-major
 
 page.meta.keywords.field = keywords
 
-#Angepasste ContentElemente (Bildueberschrift verlinkt für Rollover Effekt)
+# Bootstrap theme configuration; choose bootstrap version in custom theme.scss
+page.includeCSS {
+    theme >
+    theme = fileadmin/templates/{$mandant}/theme.scss
+}
+
+# Angepasste ContentElemente (Bildueberschrift verlinkt für Rollover Effekt)
 lib.contentElement {
     partialRootPaths.30 = EXT:sitemap/Resources/Private/Partials/BootstrapPackage/ContentElements/
-}
-
-plugin.tx_powermail.settings.setup {
-    sender.overwrite.senderName.value = {$powermailFromName}
-    sender.overwrite.senderEmail.value = kundenserver13-1@taketool.de
-    receiver.overwrite.senderName.value = {$powermailFromName}
-    receiver.overwrite.senderEmail.value = kundenserver13-1@taketool.de
-}
-
-#E-Mail Adressen verschlüsselt ausgeben
-config.spamProtectEmailAddresses = 1
-config.spamProtectEmailAddresses_atSubst = (at)
-
-# Powermail FROM Feld voreinstellen
-plugin.tx_powermail.settings.setup {
-    sender.overwrite.senderName.value = {$powermailFromName}
-    sender.overwrite.senderEmail.value =  {$powermailFromEmail}
-    receiver.overwrite.senderName.value = {$powermailFromName}
-    receiver.overwrite.senderEmail.value =  {$powermailFromEmail}
-}
-
-#Hintergrundbilder ausgeben
-temp.bild = IMG_RESOURCE
-temp.bild {
-    file {
-        import =  uploads/media/
-        import.data = levelmedia:-1, slide
-        treatIdAsReference = 1
-        import.listNum = 0
+    # Bildgrößen
+    settings.responsiveimages.variants {
+        default.width = 1900
+        large.width = 1700
+        medium.width = 1520
+        small.width = 1350
+        extrasmall.width = 1200
     }
 }
 
-page.headerData.13 < temp.bild
-page.headerData.13.stdWrap.wrap = <style type="text/css">#page-content {background-image: url(|);}</style>
-
-temp.bild = IMG_RESOURCE
-temp.bild {
-    file {
-        import =  uploads/media/
-        import.data = levelmedia:2, slide
-        treatIdAsReference = 1
-        import.listNum = 0
-    }
-}
-
-page.headerData.13 < temp.bild
-page.headerData.13.stdWrap.wrap = <style type="text/css">#page-content { background-image: url(../|);}</style>
-
+# Hintergrundbilder ausgeben
 temp.bild = IMG_RESOURCE
 temp.bild {
     file {
@@ -64,6 +35,5 @@ temp.bild {
         import.listNum = 0
     }
 }
-
 page.headerData.13 < temp.bild
 page.headerData.13.stdWrap.wrap = <style type="text/css">#page-content { background-image: url(../../../|);}</style>

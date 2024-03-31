@@ -1,0 +1,94 @@
+{namespace c=HDNET\Calendarize\ViewHelpers}
+
+<f:alias map="{event: index.originalObject}">
+  <div class="calendarize_single">
+	<h1>
+		<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}"/>
+		<c:titleTag><f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}"/></c:titleTag>
+	</h1>
+	<h3 class="state-{index.state}"><span class="glyphicon glyphicon-calendar"></span>
+    	<f:if condition="{index.state}=='canceled'">
+			<f:then>
+				<f:translate key="canceled" />
+			</f:then>
+			<f:else>
+				<f:render partial="DateInformation" arguments="{index: index}"/>
+			</f:else>
+		</f:if>
+    </h3>
+	<div class="text">
+		<f:format.html>{event.description}</f:format.html>
+	</div>
+    <f:if condition="{event.location}">
+			<dl class="dl-horizontal meta">
+			<dt><f:translate key="tx_calendarize_domain_model_event.location" />:</dt>
+			<dd>
+				<f:if condition="{event.locationLink}">
+					<f:then>
+						<f:link.typolink parameter="{event.locationLink}">{event.location}</f:link.typolink>
+					</f:then>
+					<f:else>
+						{event.location}
+					</f:else>
+				</f:if>
+			</dd>
+          </dl>
+	</f:if>
+</div>
+	<f:if condition="{event.images}">
+		<div class="single-images">
+			<f:for each="{event.images}" as="image" iteration="i">
+				<f:if condition="{image.originalResource.type}==4">
+                    <f:then>
+                        <f:media file="{image}" />
+                    </f:then>
+                    <f:else>
+                        <f:image image="{image}" alt="" maxWidth="300" class="img-rounded"/>
+                    </f:else>
+                </f:if>
+			</f:for>
+		</div>
+	</f:if>
+	<f:comment>
+		Category example (also possible in list view):
+		<div class="categories">
+			<f:for each="{event.categories}" as="category" iteration="itemIteration">
+				<span class="category c{category.uid}"><i class="fa fa-tags"></i>&nbsp;{category.title}</span>
+			</f:for>
+		</div>
+	</f:comment>
+		<f:if condition="{event.organizer}">
+			<dt><f:translate key="tx_calendarize_domain_model_event.organizer" />:</dt>
+			<dd>
+				<f:if condition="{event.organizerLink}">
+					<f:then>
+						<f:link.typolink parameter="{event.organizerLink}">{event.organizer}</f:link.typolink>
+					</f:then>
+					<f:else>
+						{event.organizer}
+					</f:else>
+				</f:if>
+			</dd>
+				</dl>
+		</f:if>
+	<f:if condition="{event.downloads}">
+		<div class="downloads">
+			<f:for each="{event.downloads}" as="download" iteration="i">
+				<a href="{download.originalResource.publicUrl}">{download.originalResource.publicUrl}</a>
+			</f:for>
+		</div>
+	</f:if>
+
+	<!--<f:if condition="{settings.bookingPid}">
+		<f:if condition="{event.bookable}">
+			<c:link.booking index="{index}" class="btn btn-default btn-primary">
+				<f:translate key="booking"/>
+				<span class="glyphicon glyphicon-arrow-right"></span>
+			</c:link.booking>
+		</f:if>
+	</f:if>-->
+</f:alias>
+
+<c:ifExtensionLoaded extensionKey="schema">
+	<f:render partial="{index.configuration.partialIdentifier}/StructuredData/Detail" arguments="{index: index}"/>
+</c:ifExtensionLoaded>

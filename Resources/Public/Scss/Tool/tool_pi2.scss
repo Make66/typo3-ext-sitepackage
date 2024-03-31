@@ -1,0 +1,27 @@
+/* Anmeldung */
+
+.tx-tool-pi2 legend {
+  color: $primary;
+  float: unset;
+}
+
+.tx-tool-pi2 h2:hover {
+  background: $primary;
+}
+
+.tx-tool-pi2 h2.clickme::after {
+  content: url("../../Icons/pfeil_unten.svg") !important;
+  float: right;
+}
+
+/* Copy-Button */
+.tx-tool-pi2 .copyButton {
+  border-color: #c2c0be;
+  color: #c02727;
+  width: 100%;
+  @include media-breakpoint-up(lg) {
+    position: absolute;
+    left: 650px;
+    width: auto !important;
+  }
+}
