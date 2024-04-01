@@ -1,0 +1,12 @@
+# @todo This needs to be solved more elegantly mke 2024-04-01
+page.headerData.15 = TEXT
+page.headerData.15.value (
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script data-ignore="1" data-cookieconsent="statistics" type="text/plain" async src="https://www.googletagmanager.com/gtag/js?id=G-H3TKSV574G"></script>
+<script data-ignore="1" data-cookieconsent="statistics" type="text/plain">
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-H3TKSV574G', { 'anonymize_ip': true });
+</script>
+)

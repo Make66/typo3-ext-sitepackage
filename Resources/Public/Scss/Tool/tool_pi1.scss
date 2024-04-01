@@ -1,3 +1,7 @@
+/*
+ @import "../../../../../../public/typo3conf/ext/bootstrap_package/Resources/Public/Scss/bootstrap5/variables";
+ @import "../../../../../../public/typo3conf/ext/bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/bootstrap";
+*/
 
 ul.typo3-messages {
   padding-left: 0;
@@ -348,13 +352,9 @@ img.fa-info-circle {
   background-repeat: no-repeat;
 }
 
-span.pi1-icon-info {
-  width: 1rem;
-  height: 1rem;
-  cursor: pointer;
-  display: block;
-  background-image: url(../../Icons/Tool/close.png);
-  background-repeat: no-repeat;
+img.pi1-icon-info {
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .tx-tool-pi1 .text-muted {
