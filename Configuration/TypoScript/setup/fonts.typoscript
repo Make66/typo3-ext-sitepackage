@@ -1,0 +1,2 @@
+page.includeCSS.fonts = 'EXT:sitepackage/Resources/Public/Css/fonts.css'
+page.includeCSS.fontawesome = 'EXT:sitepackage/Resources/Public/Fonts/fontawesome/css/fontawesome.min.css'
