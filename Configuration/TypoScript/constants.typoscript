@@ -4,3 +4,4 @@
 @import 'EXT:sitepackage/Configuration/TypoScript/constants/news.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/constants/cookieconsent.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/constants/powermail.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/constants/sourceopt.typoscript'

@@ -348,6 +348,15 @@ img.fa-info-circle {
   background-repeat: no-repeat;
 }
 
+span.pi1-icon-info {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  display: block;
+  background-image: url(../../Icons/Tool/close.png);
+  background-repeat: no-repeat;
+}
+
 .tx-tool-pi1 .text-muted {
   color: #999;
 }

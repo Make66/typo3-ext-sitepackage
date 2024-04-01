@@ -3,3 +3,4 @@
 @import 'EXT:sitepackage/Configuration/TypoScript/setup/dp_cookieconsent.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/setup/news.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/setup/powermail.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/setup/sourceopt.typoscript'
