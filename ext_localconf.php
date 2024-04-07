@@ -20,6 +20,6 @@ if ($versionInformation->getMajorVersion() < 12) {
       @import "EXT:sitepackage/Configuration/TypoScript/setup.typoscript"
    ');
     ExtensionManagementUtility::addPageTSConfig('
-      @import "EXT:sitepackage/Configuration/TSConfig/page.tsconfig"
+      @import "EXT:sitepackage/Configuration/page.tsconfig"
    ');
 }
