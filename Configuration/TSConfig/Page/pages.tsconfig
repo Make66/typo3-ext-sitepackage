@@ -1,7 +1,0 @@
-TCEFORM.pages.layout {
-    addItems {
-        4 = Hintergrundbild
-        5 = Hintergrundbild (transparent)
-        6 = Eventseite
-    }
-}
