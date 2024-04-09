@@ -1,6 +1,5 @@
 @import "fonts";
 
-
 @font-face {
   font-family: 'Abel';
   src: url('../../Fonts/Abel-Regular.woff2') format('woff2'),
@@ -83,8 +82,8 @@
 
 @font-face {
   font-family: 'Permanent Marker';
-  src: url('../../Public/Fonts/PermanentMarker-Regular.woff2') format('woff2'),
-  url('../../Public/Fonts/PermanentMarker-Regular.woff') format('woff');
+  src: url('../../Fonts/PermanentMarker-Regular.woff2') format('woff2'),
+  url('../../Fonts/PermanentMarker-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -132,8 +131,8 @@
 
 @font-face {
   font-family: 'Roboto Medium';
-  src: url('../../Public/Fonts/Roboto-Medium.woff2') format('woff2'),
-  url('../../Public/Fonts/Roboto-Medium.woff') format('woff');
+  src: url('../../Fonts/Roboto-Medium.woff2') format('woff2'),
+  url('../../Fonts/Roboto-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
 }
@@ -1150,7 +1149,7 @@ h3.carousel-item-header,
   font-size:1.4em;
   margin-bottom:8px;
   padding: 3px;
-  text-transform:normal;
+  text-transform:none;
   @include media-breakpoint-up(lg) {
     font-size:1.8em;
   }
@@ -1383,7 +1382,7 @@ h3.carousel-item-header,
   word-wrap: break-word;
   background-color:#f7f7f7;
   background-clip: border-box;
-  border: 1px solidrgba(0, 0, 0, 0.125);
+  border: 1px solid rgba(0, 0, 0, 0.125);
   border-color: rgba(0, 0, 0, 0.125);
   border-style: solid;
   border-width: 1px;
