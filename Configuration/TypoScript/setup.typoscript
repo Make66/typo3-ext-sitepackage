@@ -1,4 +1,5 @@
 @import 'EXT:sitepackage/Configuration/TypoScript/setup/basis.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/setup/fonts.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/setup/dp_cookieconsent.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/setup/news.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/setup/powermail.typoscript'
