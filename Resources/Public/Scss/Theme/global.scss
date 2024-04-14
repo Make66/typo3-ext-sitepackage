@@ -1,150 +1,5 @@
 @import "fonts";
 
-@font-face {
-  font-family: 'Abel';
-  src: url('../../Fonts/Abel-Regular.woff2') format('woff2'),
-  url('../../Fonts/Abel-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Allison';
-  src: url('../../Fonts/allison-v7-latin-regular.woff2') format('woff2'),
-  url('../../Fonts/allison-v7-latin-regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family:'AvantGarde Bk BT';
-  src: url('../../Fonts/Avgardn.woff2') format('woff2'),
-  url('../../Fonts/Avgardn.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'AvantGarde Md BT';
-  src: url('../../Fonts/Avgardm.woff2') format('woff2'),
-  url('../../Fonts/Avgardm.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Edu';
-  src: url('../../Fonts/EduVICWANT.woff2') format('woff2'),
-  url('../../Fonts/EduVICWANT.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Lora italic';
-  src: url('../../Fonts/Lora-Italic.woff2') format('woff2'),
-  url('../../Fonts/Lora-Italic.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Lobster';
-  src: url('../../Fonts/lobster-regular.woff2') format('woff2'),
-  url('../../Fonts/lobster-regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: url('../../Fonts/Montserrat-Regular.woff2') format('woff2'),
-  url('../../Fonts/Montserrat-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Open Sans';
-  src: url('../../Fonts/OpenSans-Regular.woff2') format('woff2'),
-  url('../../Fonts/OpenSans-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Poppins-Medium';
-  src: url('../../Fonts/Poppins-Medium.woff2') format('woff2'),
-  url('../../Fonts/Poppins-Medium.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Permanent Marker';
-  src: url('../../Fonts/PermanentMarker-Regular.woff2') format('woff2'),
-  url('../../Fonts/PermanentMarker-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PT Sans';
-  src: url('../../Fonts/PTSans-Regular.woff2') format('woff2'),
-  url('../../Fonts/PTSans-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Source Sans Pro';
-  src: url('../../Fonts/SourceSansPro-Regular.woff2') format('woff2'),
-  url('../../Fonts/SourceSansPro-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Source Sans Pro Light';
-  src: url('../../Fonts/SourceSansPro-Light.woff2') format('woff2'),
-  url('../../Fonts/SourceSansPro-Light.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Roboto Condensed';
-  src: url('../../Fonts/RobotoCondensed-Regular.woff2') format('woff2'),
-  url('../../Fonts/RobotoCondensed-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Roboto Regular';
-  src: url('../../Fonts/Roboto-Regular.woff2') format('woff2'),
-  url('../../Fonts/Roboto-Regular.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-}
-
-
-@font-face {
-  font-family: 'Roboto Medium';
-  src: url('../../Fonts/Roboto-Medium.woff2') format('woff2'),
-  url('../../Fonts/Roboto-Medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src: url('../../Fonts/Raleway-Regular.woff2') format('woff2'),
-  url('../../Fonts/Raleway-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
 :root {
   --gallery-gap: 0rem;
 }
@@ -824,70 +679,37 @@ h3.carousel-item-header,
   }
 }
 
-/* Pagination*/
-.pagination, .page-navigation {
-  display: inline-block;
-  width: 100%;
-  padding-left: 0px;
-  padding-top:20px;
-}
-
-.page-navigation p {display:none;}
-
-.pagination a {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  transition: background-color .3s;
-}
-
-.pagination .active a {
-  background-color: $primary;
-  color: white;
-}
-
-.pagination .current span {
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  background-color: $primary;
-  color: white;
-  transition: background-color .3s;
-}
-
-.pagination a:hover {background-color: #ddd;}
-
 /* Kalender*/
 .calendarize .glyphicon {display: inline-block; width:25px;}
 
 .glyphicon-calendar::before {
   background-repeat: no-repeat;
-  background-image: url("../../Icons/cal_date.svg");
+  background-image: url("../../../typo3conf/ext/sitepackage/Resources/Public/Icons/cal_date.svg");
   display: inline-block;
   background-size: cover;
   width: 20px;
   height: 20px;
   content: " ";
-  background-position: 0px 0px;
+  background-position: 0 0;
 }
 
 .glyphicon-time::before {
   background-repeat: no-repeat;
-  background-image: url("../../Icons/cal_time.svg");
+  background-image: url("../../../typo3conf/ext/sitepackage/Resources/Public/Icons/cal_time.svg");
   display: inline-block;
   background-size: cover;
   width: 20px;
   height: 20px;
   content: " ";
-  background-position: 0px 0px;
+  background-position: 0 0;
 }
 
 .calendarize_single .glyphicon-calendar::before {
-  background-image: url("../../Icons/cal_date_white.svg");
+  background-image: url("../../../typo3conf/ext/sitepackage/Resources/Public/Icons/cal_date_white.svg");
 }
+
 .calendarize_single .glyphicon-time::before {
-  background-image: url("../../Icons/cal_time_white.svg");
+  background-image: url("../../../typo3conf/ext/sitepackage/Resources/Public/Icons/cal_time_white.svg");
 }
 
 /* Kalender Liste*/
@@ -1149,7 +971,7 @@ h3.carousel-item-header,
   font-size:1.4em;
   margin-bottom:8px;
   padding: 3px;
-  text-transform:none;
+  text-transform:normal;
   @include media-breakpoint-up(lg) {
     font-size:1.8em;
   }
@@ -1179,11 +1001,15 @@ h3.carousel-item-header,
 .f3-widget-paginator {
   display: inline-block;
   width: 100%;
-  padding-left: 0px;
-  padding-top:20px;
+  padding-left: 0;
+  padding-top: 20px;
 }
 
-.f3-widget-paginator p {display:none;}
+.f3-widget-paginator li {display: inline;}
+
+.f3-widget-paginator p {
+  display: none;
+}
 
 .f3-widget-paginator a {
   color: black;
@@ -1193,14 +1019,16 @@ h3.carousel-item-header,
   transition: background-color .3s;
 }
 
-.f3-widget-paginator a:hover {background-color: #ddd;}
+.f3-widget-paginator a:hover {
+  background-color: #ddd;
+}
 
 .f3-widget-paginatorn .active a {
   background-color: $primary;
   color: white;
 }
 
-.f3-widget-paginator .current  {
+.f3-widget-paginator .current {
   float: left;
   padding: 8px 16px;
   text-decoration: none;
@@ -1382,7 +1210,7 @@ h3.carousel-item-header,
   word-wrap: break-word;
   background-color:#f7f7f7;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  border: 1px solidrgba(0, 0, 0, 0.125);
   border-color: rgba(0, 0, 0, 0.125);
   border-style: solid;
   border-width: 1px;
@@ -2561,3 +2389,4 @@ textarea {
 //
 @import "../Tool/tool_pi1";
 @import "../Tool/tool_pi2";
+
