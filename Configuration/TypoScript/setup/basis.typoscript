@@ -1,14 +1,5 @@
 @import 'EXT:seo/Configuration/TypoScript/XmlSitemap/setup.typoscript'
 
-# Use 1 for the default exception handler (enabled by default in production context)
-#config.contentObjectExceptionHandler = 1
-# Use a class name for individual exception handlers
-#config.contentObjectExceptionHandler = TYPO3\CMS\Frontend\ContentObject\Exception\ProductionExceptionHandler
-# Customize the error message.
-config.contentObjectExceptionHandler.errorMessage = Huch - es ist ein Fehler aufgetreten (%s)
-#  TYPO3\CMS\Extbase\Property\Exception\TargetNotFoundException; Object of type xy with identity "961" not found.
-#config.contentObjectExceptionHandler.ignoreCodes.10 = 1297933823
-
 config.spamProtectEmailAddresses = 1
 config.spamProtectEmailAddresses_atSubst = (at)
 config.additionalHeaders.90.header = t3versions: hide-major
@@ -21,15 +12,16 @@ page.includeCSS {
     theme = fileadmin/templates/{$mandant}/theme.scss
 }
 
+# Angepasste ContentElemente (Bildueberschrift verlinkt für Rollover Effekt)
+lib.contentElement {
+    partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
+}
+
 #Update Template 4Cols (Bug: individual classes)
 tt_content.gridelements_pi1.templateRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapGrids/Resources/Private/Templates/
 # gridelements eats flexform settings when plugin in column
 tt_content.gridelements_pi1.dataProcessing.10.default.options.resolveChildFlexFormData = 0
 
-# Angepasste ContentElemente (Bildueberschrift verlinkt für Rollover Effekt)
-lib.contentElement {
-    partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
-}
     # Bildgrößen
     settings.responsiveimages.variants {
         default.width = 1900

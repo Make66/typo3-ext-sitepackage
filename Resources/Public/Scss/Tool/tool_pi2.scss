@@ -10,7 +10,11 @@
 }
 
 .tx-tool-pi2 h2.clickme::after {
-  content: url("../../Icons/pfeil_unten.svg") !important;
+  content: "" !important;
+  background:url("../../../typo3conf/ext/sitepackage/Resources/Public/Icons/tool_pfeil_unten.svg") !important;
+  background-size: cover !important;
+  width: 25px;
+  height: 25px;
   float: right;
 }
 

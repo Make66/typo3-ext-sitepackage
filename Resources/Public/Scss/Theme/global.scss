@@ -1526,6 +1526,7 @@ h3.carousel-item-header,
 }
 
 /* Cookieconsent */
+.cc-window {background-color:var(--dp-cookie-palette-popup-background)}
 .cc-btn {border-radius: 0; box-shadow: none; margin:0;}
 .cc-btn.cc-allow-all {background-color:var(--dp-cookie-palette-button-background)!important;color:var(--dp-cookie-palette-button-text);}
 .cc-btn {background:$primary!important;}
@@ -2389,4 +2390,5 @@ textarea {
 //
 @import "../Tool/tool_pi1";
 @import "../Tool/tool_pi2";
+@import "../Tool/tool_pi4";
 

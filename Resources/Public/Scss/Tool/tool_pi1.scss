@@ -13,19 +13,19 @@ img.fa-info-circle { width: 1em; height: 1em; }
 .tx-tool-pi1 hr.clear   { display: block; clear: both; border: 0; margin: 0; }
 .tx-tool-pi1 div.kursid { display: none; }
 .tx-tool-pi1 .disabled  { pointer-events: none; color: #999999; }
+.tx-tool-pi2 h2 {border: 0;}
 
 .tx-tool-pi1 div {width:100%;}
 
 .tx-tool-pi1 div.col    {
-  width: 25px;
+  width: 80px;
   height: auto;
   min-height: 18px;
   padding: 4px;
-  flex:auto;
+  flex: unset;
   @include media-breakpoint-up(lg) {
     display: flex;
     flex-wrap: wrap;
-    flex: unset;
   }
 }
 
@@ -57,17 +57,24 @@ img.fa-info-circle { width: 1em; height: 1em; }
 .tx-tool-pi1 span.ampel-yellow {background-color: #ffff00;}
 .tx-tool-pi1 span.ampel-red    {background-color: #ff0000;}
 
-.tx-tool-pi1 div.kursnummer	{
-  width:100%;
+.tx-tool-pi1 div.ampel	{
+  width:5%;
   @include media-breakpoint-up(lg) {
-    width:40px;
+    width:25px;
   }
 }
 
-.tx-tool-pi1 div.ampel	{
-  width:6%;
+.tx-tool-pi1 div.kursnummer	{
+  width:100%;
   @include media-breakpoint-up(lg) {
-    width:25px;
+    width:45px;
+  }
+}
+
+.tx-tool-pi1 div.standort	{
+  width:100%;
+  @include media-breakpoint-up(lg) {
+    width:100px;
   }
 }
 
@@ -86,10 +93,17 @@ img.fa-info-circle { width: 1em; height: 1em; }
   }
 }
 
-.tx-tool-pi1 .col.beginndatum {
+.tx-tool-pi1 div.beginndatum {
   width:100%;
   @include media-breakpoint-up(lg) {
     width:120px;
+  }
+}
+
+.tx-tool-pi1 .div.termine {
+  width:100%;
+  @include media-breakpoint-up(lg) {
+    width:65px;
   }
 }
 
@@ -104,14 +118,15 @@ img.fa-info-circle { width: 1em; height: 1em; }
 .tx-tool-pi1 div.anzahleinheiten {
   width:100%;
   @include media-breakpoint-up(lg) {
-    width:150px;
+    width:140px;
   }
 }
 
-.tx-tool-pi1 div.raeumlichkeit {
+.tx-tool-pi1 div.raeumlichkeit,
+.tx-tool-pi1 div.raum {
   width:100%;
   @include media-breakpoint-up(lg) {
-    width:150px;
+    width:160px;
   }
 }
 
@@ -125,7 +140,7 @@ img.fa-info-circle { width: 1em; height: 1em; }
 .tx-tool-pi1 div.zahlbetrag  {
   width:100%;
   @include media-breakpoint-up(lg) {
-    width:80px;
+    width:85px;
   }
 }
 
@@ -177,6 +192,15 @@ img.fa-info-circle { width: 1em; height: 1em; }
 
 .tx-tool-pi1 div.raum::before {
   content: "Raum: ";
+  font-weight: bold;
+  margin-right: 5px;
+  @include media-breakpoint-up(lg) {
+    content: none;
+  }
+}
+
+.tx-tool-pi1 div.termine::before {
+  content: "Termine: ";
   font-weight: bold;
   margin-right: 5px;
   @include media-breakpoint-up(lg) {
@@ -286,7 +310,7 @@ img.fa-info-circle { width: 1em; height: 1em; }
 .tx-tool-pi1 div.anmeldung a  { display: block; }
 .tx-tool-pi1 div.anmeldung a:hover { background-color: #DDDDDD; }
 .tx-tool-pi1 span.anmTxt,
-.tx-tool-pi1 span.noanmeldung { font-size: 75%; line-height: 110%; padding-top: 2px; }
+.tx-tool-pi1 span.noanmeldung { font-size: 75%; padding-top: 2px; width: 100%;}
 .tx-tool-pi1 span.noanmeldung { margin: 4px 0 2px 2px; }
 .tx-tool-pi1 div.zsText       { margin: 1em 0; }
 .tx-tool-pi1 .more            { cursor: pointer; }
@@ -302,19 +326,6 @@ img.fa-info-circle { width: 1em; height: 1em; }
 .section.section-default:last-child div.frame:last-child div.tx-tool-pi1 div.kursTerminBox {
   position: static;
 }
-.tx-tool-pi1 .tanzlehrerClose, .tx-tool-pi1 .kursTerminClose {
-  float: right;
-  margin-left: 1em;
-  margin-right: -15px;
-  margin-top: -15px;
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  padding: -20px;
-  z-index: 2;
-  background-image: url(../Icons/icon_tx_tool_pi1_close.png);
-  background-repeat: no-repeat;
-}
 .tx-tool-pi1 .text-muted { color: #999; }
 .tx-tool-pi1 div.modal-header { background-color: lightgray; }
 
@@ -328,6 +339,8 @@ img.fa-info-circle { width: 1em; height: 1em; }
   border-radius: 4px;
   text-align: center;
 }
+
+.tx-tool-pi1 div.anmeldung .noanmeldung a {padding:5px;}
 
 .tx-tool-pi1 div.anmeldung a:hover {text-decoration:none;}
 
@@ -350,4 +363,15 @@ img.fa-info-circle { width: 1em; height: 1em; }
 .tx-tool-pi2 legend {
   float: unset;
 }
+
+.leader-note:before {
+  content: "" !important;
+  background: url(../../../typo3conf/ext/sitepackage/Resources/Public/Icons/hinweis.svg);
+  background-size:cover;
+  margin:0 5px 0 20px;
+  width: 17px;
+  height: 17px;
+  display: inline-block;
+}
+
 
