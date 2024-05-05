@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="50px" height="49px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 32.71 32.24"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:#5B5B5B}
+    .fil1 {fill:#FEFEFE;fill-rule:nonzero}
+   ]]>
+  </style>
+ </defs>
+ <g id="Ebene_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <ellipse class="fil0" cx="16.36" cy="16.12" rx="16.36" ry="16.12"/>
+  <path class="fil1" d="M11.79 8.98c-0.45,-0.18 -0.84,-0.43 -1.07,-0.79 -0.37,-0.57 -0.14,-0.88 -0.07,-0.99 0.22,-0.3 0.69,-0.55 1.32,-0.55 0.21,0 0.44,0.03 0.69,0.1 0.33,0.09 0.62,0.3 0.87,0.58 -0.12,0.02 -0.24,0.04 -0.36,0.07 -0.62,0.16 -0.89,0.95 -0.57,1.58l7.51 0c0.31,-0.63 0.05,-1.42 -0.57,-1.58 -0.13,-0.03 -0.25,-0.06 -0.36,-0.07 0.24,-0.28 0.53,-0.49 0.87,-0.58 0.95,-0.27 1.71,0.05 2,0.45 0.08,0.11 0.31,0.42 -0.06,0.99 -0.24,0.36 -0.63,0.61 -1.09,0.79l3.32 0c0.5,-1.07 0.41,-2.22 -0.27,-3.16 -0.94,-1.29 -2.76,-1.82 -4.53,-1.33 -1.55,0.43 -2.5,1.7 -3.07,2.99 -0.57,-1.29 -1.51,-2.56 -3.06,-2.99 -1.77,-0.49 -3.59,0.04 -4.53,1.33 -0.69,0.94 -0.78,2.09 -0.28,3.16l3.31 0z"/>
+  <path class="fil1" d="M7.28 10.65c-0.61,0 -1.11,0.5 -1.11,1.11l0 3.96c0,0.46 0.28,0.85 0.67,1.02l8.34 0 0 -6.09 -7.2 0 -0.7 0z"/>
+  <path class="fil1" d="M6.87 25.17c0,0.61 0.5,1.1 1.11,1.1l7.2 0 0 -7.19 -8.31 0 0 6.09z"/>
+  <path class="fil1" d="M17.53 26.27l7.2 0c0.61,0 1.11,-0.49 1.11,-1.1l0 -6.09 -8.31 0 0 7.19z"/>
+  <path class="fil1" d="M25.43 10.65l-7.9 0 0 6.09 8.33 0c0.4,-0.17 0.68,-0.56 0.68,-1.02l0 -3.96c0,-0.61 -0.5,-1.11 -1.11,-1.11z"/>
+ </g>
+</svg>

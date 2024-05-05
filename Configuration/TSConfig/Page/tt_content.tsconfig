@@ -1,0 +1,72 @@
+## Eigene Rahmen fuer Content Elemente
+## PageTSconfig
+TCEFORM.tt_content.frame_class.addItems {
+    sliderstartseite = Slider (Höhe 80%)
+    zielgruppenstart = Zielgruppen Startseite
+    zielgruppenstart_box = Zielgruppen Startseite (6Spalten)
+    sliderkasten = Slider Kasten
+    slidertextlinks = Slider-Text (linksbündig)
+    zielseitensection = Zielseiten Menü
+    zielseitensection_button = Zielseiten Menü Button
+    kalenderkasten1 = Kalender Kasten 1
+    kalenderkasten2 = Kalender Kasten 2
+    newslayout1 = News Layout 1 (Button)
+    newslayout2 = News Layout 2 (Pfeil)
+    infokastenstart  = Infokasten
+    rahmen100 = Rahmen 100%
+    rahmen_ohne_abstand = Rahmen ohne Abstand
+    ampel = Ampel
+    rahmen_ueberlappen = Überlappen
+    rahmen_streifen  = Streifen
+    unterseiten_menu = Unterseitenmenü
+    pfeil = Pfeil
+    adventskalender_menu = Adventskalender Menü
+    adventskalender_text = Adventskalender Text
+    box_herz = box Herz
+    slider_klein = Slider klein
+    text_video = Text Video
+    info_kreis = Info Kreis
+    info_kreis_bild = Info Kreis Bild
+    welle_oben = Welle oben
+    welle_unten = Welle unten
+    infokasten_tuerkis  = Infokasten Türkis
+    infokasten_grau  = Infokasten Grau
+    zielseitenbilder = Zielseitenbilder
+    zielgruppenstart = Video Startseite
+    accordionstart = Accordion Startseite
+    accordioninfo = Accordion Infobutton
+    accordionkalender = Accordion Kalender
+    bilder_grau = Bilder Grau
+}
+
+## Eigene Class fuer Content Elemente
+TCEFORM {
+    tt_content {
+        frame_layout {
+            addItems {
+                galerie = Galerie
+                rollover_image = Bild mit Hover-Effekt
+                #Stuewe Lippstadt
+                image_hover = Hover Effekt
+                galerie_main = Galerie Hauptseite
+                #Monika Bauer
+                team = Team
+            }
+        }
+    }
+}
+
+## Eigene Hintergrundfarbe fuer Content Elemente
+TCEFORM {
+    tt_content {
+        background_color_class {
+            addItems {
+                schmuckfarbe = Schmuckfarbe
+                verlauf = Farbverlauf
+                ohnebanner = ohne Banner
+                #Timo Müller
+                gelb = gelb
+            }
+        }
+    }
+}

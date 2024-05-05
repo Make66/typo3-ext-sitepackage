@@ -1,0 +1,15 @@
+@import 'EXT:sitepackage/Configuration/TsConfig/Page/pages.tsconfig'
+@import 'EXT:sitepackage/Configuration/TsConfig/Page/tt_content.tsconfig'
+@import 'EXT:sitepackage/Configuration/TsConfig/Page/bootstrappackage_carousel.tsconfig'
+
+/*
+mod.web_layout {
+tt_content {
+preview {
+container_2_columns = EXT:sitepackage/Resources/Private/Templates/Preview/2_columns.html
+container_3_columns = EXT:sitepackage/Resources/Private/Templates/Preview/3_columns.html
+container_4_columns = EXT:sitepackage/Resources/Private/Templates/Preview/3_columns.html
+     }
+  }
+}
+*/

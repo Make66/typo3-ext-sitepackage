@@ -1,0 +1,136 @@
+.tx-tool-pi4 {
+  width: 600px;
+}
+
+.tx-tool-pi4 h2 {
+  border-radius: 0.25em;
+  color: #fff;
+  background: $primary;
+  padding: 0 10px;
+  border: 0;
+  font-weight: 500;
+}
+
+.tx-tool-pi4 h2:hover {
+  background: $primary;
+}
+
+.tx-tool-pi4 legend {
+  padding: 0 0 20px 0;
+  color: $primary;
+}
+
+.motif span:nth-of-type(1),
+.motif span:nth-of-type(5) {
+  margin-left: 0;
+}
+
+.motif span:nth-of-type(4) {
+  margin-right: 1em;
+}
+
+.tx-tool-pi4 hr {
+  margin: 10px 0;
+}
+
+.button.forward,
+.button.submit,
+.button.back {
+  align-items: center;
+  background-clip: padding-box;
+  background-color: $primary;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 600;
+  justify-content: center;
+  margin: 0;
+  padding: 5px 20px;
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.button.forward:hover,
+.button.forward:focus,
+.button.submit :hover,
+.button.submit :focus {
+  background-color: $primary;
+  opacity: 0.9;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.button.forward:hover,
+.button.submit:hover {
+  transform: translateY(-3px);
+}
+
+.button.forward:active,
+.button.submit:active {
+  background-color: $primary;
+  opacity: 0.85;
+  box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+  transform: translateY(0);
+}
+
+.button.submit:disabled,
+.button.submit[disabled],
+.button.back {
+  color: #A9A5A6;
+  border: 2px solid #A9A5A6;
+  background: #f5f5f5;
+}
+
+.button.submit:disabled:hover,
+.button.submit[disabled]:hover,
+.button.back:hover {
+  transform: translateY(0px);
+}
+
+.tx-tool-pi4 h2:first-child {
+  background-color: $primary;
+}
+
+.tx-tool-pi4 a {
+  padding-left: 10px;
+}
+
+.tx-tool-pi4 a:before {
+  background-repeat: no-repeat;
+  background-image: url("../../../typo3conf/ext/sitepackage/Resources/Public/Icons/gutschein_pfeil.svg");
+  display: inline-block;
+  background-size: cover;
+  width: 18px;
+  height: 18px;
+  content: " ";
+  background-position: 0 0;
+  margin-right: 5px;
+}
+
+.tx-tool-pi4 p:nth-of-type(3) {
+  border: 5px solid;
+  border-image: linear-gradient(45deg, gold, deeppink) 1;
+  clip-path: inset(0px round 10px);
+  animation: huerotate 6s infinite linear;
+  filter: hue-rotate(360deg);
+  border-radius: 0.25em;
+  padding: 20px;
+}
+
+@keyframes huerotate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rorate(360deg);
+  }
+}
