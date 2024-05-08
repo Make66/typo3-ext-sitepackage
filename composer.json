@@ -27,7 +27,7 @@
     },
     "replace": {
         "gridelementsteam/gridelements":"*",
-        "laxap//bootstrap_grids":"*"
+        "laxap/bootstrap_grids":"*"
     },
     "autoload": {
         "psr-4": {

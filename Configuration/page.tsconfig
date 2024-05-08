@@ -23,6 +23,13 @@ TCEFORM.tt_content.frame_class {
         adventskalender_text = Adventskalender Text
         text_bild_box1 = Text/Bild Box 1
         text_bild_box2 = Text/Bild Box 2
+        #Monika
+        accordionstart = Accordion Startseite
+        accordioninfo = Accordion Infobutton
+        accordionkalender = Accordion Kalender
+        bilder_grau = Bilder Grau
+        infokasten_tuerkis  = Infokasten Türkis
+        infokasten_grau  = Infokasten Grau
     }
 }
 
