@@ -37,6 +37,8 @@ TCEFORM.tt_content.frame_class.addItems {
     accordioninfo = Accordion Infobutton
     accordionkalender = Accordion Kalender
     bilder_grau = Bilder Grau
+    text_bild_box1 = Text/Bild Box 1
+    text_bild_box2 = Text/Bild Box 2
 }
 
 ## Eigene Class fuer Content Elemente

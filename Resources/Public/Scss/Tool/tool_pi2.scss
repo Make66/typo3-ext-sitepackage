@@ -1,5 +1,4 @@
 /* Anmeldung */
-
 .tx-tool-pi2 legend {
   color: $primary;
   float: unset;
@@ -11,12 +10,19 @@
 
 .tx-tool-pi2 h2.clickme::after {
   content: "" !important;
-  background:url("../../../typo3conf/ext/sitepackage/Resources/Public/Icons/tool_pfeil_unten.svg") !important;
-  background-size: cover !important;
-  width: 25px;
+  background-image:url("../../../typo3conf/ext/sitepackage/Resources/Public/Icons/tool_pfeil_unten.svg") !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 0 8px;
+  width: 20px;
   height: 25px;
   float: right;
+  -moz-animation: bounce 3s infinite!important;
+  -webkit-animation: bounce 3s infinite!important;
+  animation: bounce 3s infinite!important;
 }
+
+.tx-tool-pi2 h2.clickme:hover {background:$primary;}
 
 /* Copy-Button */
 .tx-tool-pi2 .copyButton {
@@ -27,5 +33,84 @@
     position: absolute;
     left: 650px;
     width: auto !important;
+  }
+}
+
+.tx-tool-pi2 div.backButtons {
+  padding-bottom: 50px;
+  clear: both;
+}
+
+.tx-tool-pi2 hr {
+  height: 0;
+}
+
+.tx-tool-pi2 input {transition: 0.5s;}
+
+.tx-tool-pi2 input:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 14px;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.tx-tool-pi2 input:hover{
+  padding-right: 24px;
+  padding-left:8px;
+}
+
+.tx-tool-pi2 input:hover:after {
+  opacity: 1;
+  right: 10px;
+}
+
+@-moz-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-8px);
+    transform: translateY(-8px);
+  }
+  60% {
+    -moz-transform: translateY(-4px);
+    transform: translateY(-4px);
+  }
+}
+@-webkit-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-8x);
+    transform: translateY(-8px);
+  }
+  60% {
+    -webkit-transform: translateY(-4px);
+    transform: translateY(-4px);
+  }
+}
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-8px);
+    -ms-transform: translateY(-8px);
+    -webkit-transform: translateY(-8px);
+    transform: translateY(-8px);
+  }
+  60% {
+    -moz-transform: translateY(-4px);
+    -ms-transform: translateY(-4px);
+    -webkit-transform: translateY(-4px);
+    transform: translateY(-4px);
   }
 }

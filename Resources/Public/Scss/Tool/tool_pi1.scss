@@ -67,7 +67,7 @@ img.fa-info-circle { width: 1em; height: 1em; }
 .tx-tool-pi1 div.kursnummer	{
   width:100%;
   @include media-breakpoint-up(lg) {
-    width:45px;
+    width:55px;
   }
 }
 
@@ -95,6 +95,7 @@ img.fa-info-circle { width: 1em; height: 1em; }
 
 .tx-tool-pi1 div.beginndatum {
   width:100%;
+  display: inline-block;
   @include media-breakpoint-up(lg) {
     width:120px;
   }
@@ -146,6 +147,7 @@ img.fa-info-circle { width: 1em; height: 1em; }
 
 .tx-tool-pi1 div.anmeldung   {
   width:100%;
+  display: inline-block;
   @include media-breakpoint-up(lg) {
     width:180px;
   }
@@ -156,10 +158,18 @@ img.fa-info-circle { width: 1em; height: 1em; }
   background:$primary;
   color:#fff;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 4px;
+  display: inline-block!important;
+  padding: 0 6px;
   @include media-breakpoint-up(lg) {
     width: 95%;
   }
+}
+
+.tx-tool-pi1 div.anmeldung a:hover {
+  text-decoration:none;
+  background: #5f5f5f!important;
+  color:#fff;
 }
 
 /* Spaltentitel Mobilansicht */
@@ -307,11 +317,8 @@ img.fa-info-circle { width: 1em; height: 1em; }
 }
 
 .tx-tool-pi1 div.no_content   { width: 100%; clear:both; }
-.tx-tool-pi1 div.anmeldung a  { display: block; }
-.tx-tool-pi1 div.anmeldung a:hover { background-color: #DDDDDD; }
 .tx-tool-pi1 span.anmTxt,
-.tx-tool-pi1 span.noanmeldung { font-size: 75%; padding-top: 2px; width: 100%;}
-.tx-tool-pi1 span.noanmeldung { margin: 4px 0 2px 2px; }
+.tx-tool-pi1 span.noanmeldung { font-size: 75%; padding-top: 2px; width: 100%; margin: 4px 0 2px 2px;}
 .tx-tool-pi1 div.zsText       { margin: 1em 0; }
 .tx-tool-pi1 .more            { cursor: pointer; }
 .tx-tool-pi1 th.col-ampel     { color: transparent; }
@@ -328,21 +335,7 @@ img.fa-info-circle { width: 1em; height: 1em; }
 }
 .tx-tool-pi1 .text-muted { color: #999; }
 .tx-tool-pi1 div.modal-header { background-color: lightgray; }
-
-.tx-tool-pi1 div.anmeldung a {
-  padding: 0 6px;
-}
-
-.tx-tool-pi1 div.anmeldung a {
-  background:$primary;
-  color: #fff;
-  border-radius: 4px;
-  text-align: center;
-}
-
 .tx-tool-pi1 div.anmeldung .noanmeldung a {padding:5px;}
-
-.tx-tool-pi1 div.anmeldung a:hover {text-decoration:none;}
 
 /* Anmeldung */
 .tx-tool-pi2 legend {color:$primary;}
