@@ -6,3 +6,5 @@ page.preloader {
     fadeDuration = 0.2
     enable = 0
 }
+
+plugin.bootstrap_package.settings.scss.h5-font-size = $font-size-base * 1.3

@@ -23,7 +23,7 @@ tt_content.gridelements_pi1.templateRootPaths.30 = EXT:sitepackage/Resources/Pri
 tt_content.gridelements_pi1.dataProcessing.10.default.options.resolveChildFlexFormData = 0
 
     # Bildgrößen
-    settings.responsiveimages.variants {
+lib.contentElement.settings.responsiveimages.variants {
         default.width = 1900
         large.width = 1700
         medium.width = 1520

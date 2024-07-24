@@ -1,5 +1,9 @@
 @import "fonts";
 
+body {
+  font-family: "Source Sans Pro",sans-serif;
+}
+
 :root {
   --gallery-gap: 0rem;
 }
@@ -240,7 +244,7 @@ h3.carousel-item-header,
   color: $pink;
 }
 .footer-section-content a:not(.btn):hover {
-  color: $gray-300;
+  color: $indigo;
 }
 .footer-section-content-column ul { list-style: square;}
 
@@ -251,6 +255,7 @@ h3.carousel-item-header,
 .footer-section .texticon-content p {
   font-size: 1.1rem;
 }
+#page-footer .frame {background:transparent;}
 
 .footer-section-meta {display:none;}
 
@@ -853,7 +858,7 @@ h3.carousel-item-header,
   background: #fff;
   width:100%;
   margin-bottom: 30px;
-  @include media-breakpoint-up(xs) {
+  @include media-breakpoint-up(md) {
     height: 590px;
     width: 48%;
     margin: 1%;
@@ -1299,6 +1304,9 @@ h3.carousel-item-header,
     max-width: 960px;
   }
   @include media-breakpoint-up(xl) {
+    max-width: 1140px;
+  }
+  @include media-breakpoint-up(xxl) {
     max-width: 1320px;
   }
 }
@@ -1760,6 +1768,10 @@ h3.carousel-item-header,
   padding:0 0 0 10px!important;
 }
 
+.box .gallery-item figure {
+  height:100%;
+}
+
 .box .frame-container .frame-inner p,
 .box p,
 .box h1,
@@ -1828,6 +1840,7 @@ h3.carousel-item-header,
 .frame-zielgruppenstart_box .row {
   margin-right: 0;
   margin-left: 0;
+  --bs-gutter-x: 0;
 }
 
 .frame-zielgruppenstart_box .col-md-6 {
@@ -1881,6 +1894,11 @@ h3.carousel-item-header,
 .box.start .textpic.textpic-above {
   margin:0;
   border-radius: 0;
+  height:100%;
+}
+
+.box.start .gallery-row {
+  height:100%;
 }
 
 .box.start .frame-container, .box.start .textpic-text {
@@ -1924,6 +1942,7 @@ h3.carousel-item-header,
 
 .box.start .gallery-item img, .box.start .gallery-item picture {
   width: 130%;
+  height:100%;
   @include media-breakpoint-up(md) {
     width: 100%;
   }
@@ -1970,6 +1989,10 @@ h3.carousel-item-header,
 .tx-powermail .col-md-6 {
   flex: 0 0 100%;
   max-width: 100%;
+}
+
+textarea {
+  width: 100%;
 }
 
 fieldset  {
@@ -2039,6 +2062,7 @@ fieldset  {
 
 /* Medis2Click */
 .media2click-placeholder {
+  position: relative!important;
   font-size:0.95em;
   padding:0;
 }
@@ -2050,14 +2074,6 @@ fieldset  {
 .media2click-controls .media2click-button {
   background-color: #626161;
 }
-
-.media2click-placeholder {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
 
 /* ANIMATION */
 /* FadeInLeft */

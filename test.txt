@@ -1,0 +1,1 @@
+sudo apt install php8.3 php8.3-cli php8.3-{bcmath,bz2,cli,common,curl,gd,gmp,igbinary,imagick,intl,mbstring,mysql,opcache,phpdbg,readline,redis,xml,zip}

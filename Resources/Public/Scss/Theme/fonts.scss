@@ -7,6 +7,14 @@
 }
 
 @font-face {
+    font-family: 'Alef';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Alef-Regular.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Alef-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Allison';
     src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/allison-v7-latin-regular.woff2') format('woff2'),
     url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/allison-v7-latin-regular.woff') format('woff');
@@ -31,9 +39,49 @@
 }
 
 @font-face {
+    font-family: 'duepuntozero_regular';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/duepuntozero_regular.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/duepuntozero_regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Edu';
     src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/EduVICWANT.woff2') format('woff2'),
     url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/EduVICWANT.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FreestyleScript';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/FreestyleScriptStd.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/FreestyleScriptStd.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fontin Sans Regular';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Fontin_Sans_R.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Fontin_Sans_R.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fontin Sans SmallCaps';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Fontin_Sans_SC.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Fontin_Sans_SC.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hector';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Hector.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Hector.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -58,6 +106,22 @@
     font-family: 'Montserrat';
     src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Montserrat-Regular.woff2') format('woff2'),
     url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Montserrat-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MyriadPro-Regular';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/MyriadPro-Regular.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/MyriadPro-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MyriadPro-Bold';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/MyriadPro-Bold.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/MyriadPro-Bold.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -95,6 +159,14 @@
 }
 
 @font-face {
+    font-family: 'Roboto Condensed';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/RobotoCondensed-Regular.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/RobotoCondensed-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Source Sans Pro';
     src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/SourceSansPro-Regular.woff2') format('woff2'),
     url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/SourceSansPro-Regular.woff') format('woff');
@@ -111,33 +183,10 @@
 }
 
 @font-face {
-    font-family: 'Roboto Condensed';
-    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/RobotoCondensed-Regular.woff2') format('woff2'),
-    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/RobotoCondensed-Regular.woff') format('woff');
+    font-family: 'Train One';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/train-one-regular.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/train-one-regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'Roboto Regular';
-    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Roboto-Regular.woff2') format('woff2'),
-    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Roboto-Regular.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Roboto Medium';
-    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Roboto-Medium.woff2') format('woff2'),
-    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Roboto-Medium.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Raleway';
-    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Raleway-Regular.woff2') format('woff2'),
-    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Raleway-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
