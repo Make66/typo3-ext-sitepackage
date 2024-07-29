@@ -23,3 +23,42 @@ page.bodyTagCObject.stdWrap.append.value (
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 )
+
+#News Plugin
+#Zeichenanzahl
+plugin.tx_news.settings.cropMaxCharacters = 90
+#Bildgröße
+plugin.tx_news.settings.list.media.image.width = 750
+#Einträge pro Seite
+plugin.tx_news.settings.list.paginate.itemsPerPage = 12
+
+#Bildgrößen
+lib.contentElement.settings.responsiveimages.variants.default.width = 2000
+lib.contentElement.settings.responsiveimages.variants.large.width = 1800
+lib.contentElement.settings.responsiveimages.variants.medium.width = 1620
+lib.contentElement.settings.responsiveimages.variants.small.width = 1050
+lib.contentElement.settings.responsiveimages.variants.extrasmall.width = 980
+
+#ab hier dp_cookieconsent-settings
+plugin.tx_dp_cookieconsent._LOCAL_LANG.de {
+    message = Wir verwenden technisch notwendige Cookies, die für die Funktion der Webseite unerlässlich sind. Andere Tracker werden nicht eingesetzt.
+    allowall = Alle akzeptieren.
+    dismiss = Auswahl zulassen.
+}
+
+plugin.tx_news.settings.detail.media.image.maxWidth = 600
+page.meta.google-site-verification=brmnAIsYD94cWPgH-tcTO1O_Atygww9diWaK9Zgfjzs
+
+
+#Hintergrundbilder ausgeben
+temp.bild = IMG_RESOURCE
+temp.bild {
+    file {
+        import =  uploads/media/
+        treatIdAsReference = 1
+        import.listNum = 0
+    }
+}
+
+page.headerData.13 < temp.bild
+page.headerData.13.stdWrap.wrap = <style type='text/css'>.layout-5 .body-bg-top {background-image: url(|);}</style>

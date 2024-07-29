@@ -22,7 +22,7 @@ tt_content.gridelements_pi1.templateRootPaths.30 = EXT:sitepackage/Resources/Pri
 # gridelements eats flexform settings when plugin in column
 tt_content.gridelements_pi1.dataProcessing.10.default.options.resolveChildFlexFormData = 0
 
-    # Bildgrößen
+# Bildgrößen
 lib.contentElement.settings.responsiveimages.variants {
         default.width = 1900
         large.width = 1700
