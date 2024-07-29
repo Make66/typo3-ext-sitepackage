@@ -1,0 +1,25 @@
+page.includeCSSLibs.googlewebfont >
+
+page.headerData.5 = TEXT
+page.headerData.5.value (
+<link rel="stylesheet" href="https://use.typekit.net/rak7bcg.css">
+)
+
+page.headerData.16 = TEXT
+page.headerData.16.value (
+<!-- Google Tag Manager -->
+<script data-ignore="1" data-cookieconsent="statistics" type="text/plain">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WKP954B');</script>
+<!-- End Google Tag Manager -->
+)
+
+page.bodyTagCObject.stdWrap.append = TEXT
+page.bodyTagCObject.stdWrap.append.value (
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WKP954B"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+)

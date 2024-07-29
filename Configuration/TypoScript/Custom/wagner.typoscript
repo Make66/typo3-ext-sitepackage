@@ -1,0 +1,17 @@
+page.includeCSSLibs.googlewebfont >
+
+page.headerData.5 = TEXT
+page.headerData.5.value (
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script data-ignore="1" data-cookieconsent="statistics" type="text/plain" async="" data-src="https://www.googletagmanager.com/gtag/js?id=G-6SG3W3P0V9"></script>
+<script data-ignore="1" data-cookieconsent="statistics" type="text/plain">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6SG3W3P0V9');
+</script>
+)
+
+#5 Navigationsebenen anzeigen
+page.10.dataProcessing.10.levels=3

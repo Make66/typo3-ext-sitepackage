@@ -1,0 +1,38 @@
+
+page.includeCSSLibs.googlewebfont >
+
+#Bildgrößen
+lib.contentElement.settings.responsiveimages.variants.default.width = 1700
+lib.contentElement.settings.responsiveimages.variants.large.width = 1100
+lib.contentElement.settings.responsiveimages.variants.medium.width = 920
+lib.contentElement.settings.responsiveimages.variants.small.width = 850
+lib.contentElement.settings.responsiveimages.variants.extrasmall.width = 680
+
+page.headerData.16 = TEXT
+page.headerData.16.value (
+<!-- Google tag (gtag.js) -->
+<script data-ignore="1" data-cookieconsent="statistics" async src="https://www.googletagmanager.com/gtag/js?id=G-858QZN8FMC"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-858QZN8FMC'); </script>
+
+<script data-ignore="1" data-cookieconsent="statistics" type="text/plain">
+ /* Google Analytics Optout */
+ var gaProperty = '{$googleAnalytics}';
+ var disableStr = 'ga-disable-' + gaProperty;
+ if (document.cookie.indexOf(disableStr + '=true') > -1) {
+ window[disableStr] = true;
+ }
+  /* Google Analytics */
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', gaProperty, { 'anonymize_ip': true });
+  /* End Google Analytics */
+</script>
+<script type="text/javascript">
+  /* Google Analytics Optout */
+  var gaProperty = '{$googleAnalytics}';
+  function gaOptout() {
+    document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+    window[disableStr] = true;
+  }
+</script>
+)

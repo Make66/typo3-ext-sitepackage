@@ -1,0 +1,32 @@
+#5 Navigationsebenen anzeigen
+page.10.dataProcessing.10.levels=5
+
+page.includeCSSLibs.googlewebfont >
+
+#Google Analytics
+page.headerData.16 = TEXT
+page.headerData.16.value (
+<!-- Google tag (gtag.js) -->
+<script data-ignore="1" data-cookieconsent="statistics" async src="https://www.googletagmanager.com/gtag/js?id=G-4NJ0871C3P"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-4NJ0871C3P'); </script>
+
+<script data-ignore="1" data-cookieconsent="statistics" type="text/plain">
+ /* Google Analytics Optout */
+ var gaProperty = 'UA-134042563-1';
+ var disableStr = 'ga-disable-' + gaProperty;
+ if (document.cookie.indexOf(disableStr + '=true') > -1) {window[disableStr] = true;
+ }
+  /* Google Analytics */
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', gaProperty, { 'anonymize_ip': true });
+  /* End Google Analytics */
+</script>
+<script type="text/javascript">
+  /* Google Analytics Optout */
+  var gaProperty = 'UA-134042563-1';
+  function gaOptout() {
+    document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';window[disableStr] = true;
+  }
+</script>
+)
