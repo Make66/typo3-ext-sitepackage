@@ -11,19 +11,9 @@
     ],
     "version": "1.0.0",
     "require": {
-        "typo3/cms-core": "^11.5",
-        "typo3/cms-seo": "^11.5",
-        "baschte/content-animations": "^2.4.2",
-        "dms/microtango": "@dev",
-        "georgringer/news": "^9.4.0",
-        "georgringer/numbered-pagination": "^2.0",
-        "gridelementsteam/gridelements": "^11.1.0",
-        "in2code/powermail": "^10.7.3",
-        "jonathanheilmann/jh_mail_configurator": "@dev",
-        "laxap/bootstrap-grids": "^3.0.0",
-        "lochmueller/autoloader": "^7.4.4",
-        "lochmueller/calendarize": "^12.4.4",
-        "taketool/powermailextender": "2.0.0"
+        "typo3/cms-core": "^10.4 || ^11.5",
+        "typo3/cms-seo": "^10.4 || ^11.5",
+
     },
     "replace": {
         "gridelementsteam/gridelements":"*",
