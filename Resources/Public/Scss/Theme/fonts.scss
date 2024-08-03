@@ -39,6 +39,38 @@
 }
 
 @font-face {
+    font-family: 'Baby Brooklynn Regular';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Babybrooklyn-Medium.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Babybrooklyn-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cairo';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Cairo-Regular.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Cairo-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Charm';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Charm-Regular.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Charm-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Dancing Script';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Dancing-Regular.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Dancing-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Duepuntozero_regular';
     src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Duepuntozero_regular.woff2') format('woff2'),
     url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Duepuntozero_regular.woff') format('woff');
@@ -82,6 +114,22 @@
     font-family: 'Hector';
     src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Hector.woff2') format('woff2'),
     url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Hector.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inconsolata';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Inconsolata-Regular.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Inconsolata-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Lato-Regular.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Lato-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -190,3 +238,10 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Ubuntu-Regular.woff2') format('woff2'),
+    url('../../../typo3conf/ext/sitepackage/Resources/Public/Fonts/Ubuntu-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
