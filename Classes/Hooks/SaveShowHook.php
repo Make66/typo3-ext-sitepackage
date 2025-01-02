@@ -25,22 +25,26 @@ Class SaveShowHook
      */
     public function addSaveShowButton($params, &$buttonBar)
     {
+        //\nn\t3::debug($params);
         $buttons = $params['buttons'];
-        $saveButton = $buttons[ButtonBar::BUTTON_POSITION_LEFT][2][0];
-        if ($saveButton instanceof InputButton) {
-            /** @var IconFactory $iconFactory */
-            $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
+        if (!empty($buttons[ButtonBar::BUTTON_POSITION_LEFT]) && !empty($buttons[ButtonBar::BUTTON_POSITION_LEFT][2])) {
+            $saveButton = $buttons[ButtonBar::BUTTON_POSITION_LEFT][2][0];
+            if ($saveButton instanceof InputButton) {
+                /** @var IconFactory $iconFactory */
+                $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
 
-            $saveShowButton = $buttonBar->makeInputButton()
-                ->setName('save-view')
-                ->setValue('1')
-                ->setForm($saveButton->getForm())
-                ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:rm.saveDocShow'))
-                ->setIcon($iconFactory->getIcon('actions-document-save-view', Icon::SIZE_SMALL))
-                ->setShowLabelText(true);
+                $saveShowButton = $buttonBar->makeInputButton()
+                    ->setName('save-view')
+                    ->setValue('1')
+                    ->setForm($saveButton->getForm())
+                    ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:rm.saveDocShow'))
+                    ->setIcon($iconFactory->getIcon('actions-document-save-view', Icon::SIZE_SMALL))
+                    ->setShowLabelText(true);
 
-            $buttons[ButtonBar::BUTTON_POSITION_LEFT][2][] = $saveShowButton;
+                $buttons[ButtonBar::BUTTON_POSITION_LEFT][2][] = $saveShowButton;
+            }
         }
+
         return $buttons;
     }
 
