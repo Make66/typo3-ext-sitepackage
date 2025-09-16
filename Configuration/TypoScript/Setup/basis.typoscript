@@ -33,7 +33,7 @@ lib.contentElement.settings.responsiveimages.variants {
 }
 
 lib.accessibilityMenu = TEXT
-[{$tx_sitepackage.settings.accessibility.enabled} == 1]
+[{$plugin.sitepackage.accessibility.enable} == 1]
 # AccessibilityMenu Definition
 lib.accessibilityMenu = HMENU
 lib.accessibilityMenu {
