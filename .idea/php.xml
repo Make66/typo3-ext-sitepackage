@@ -10,8 +10,93 @@
     <option name="highlightLevel" value="WARNING" />
     <option name="transferred" value="true" />
   </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/nikic/php-parser" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/enshrined/svg-sanitize" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/lolli42/finediff" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/typo3/symfony-psr-event-dispatcher-adapter" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/bacon/bacon-qr-code" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/typo3/phar-stream-wrapper" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/typo3/cms-composer-installers" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/typo3/cms-cli" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/dasprid/enum" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/typo3/html-sanitizer" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/typo3/class-alias-loader" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/ralouphie/getallheaders" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/typo3fluid/fluid" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/webmozart/assert" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/egulias/email-validator" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/doctrine/lexer" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/doctrine/deprecations" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/doctrine/event-manager" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/guzzlehttp/promises" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/doctrine/annotations" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/guzzlehttp/psr7" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/expression-language" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/doctrine/instantiator" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/guzzlehttp/guzzle" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/deprecation-contracts" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/doctrine/dbal" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/finder" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/doctrine/cache" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/routing" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/cache" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/var-exporter" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/dependency-injection" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/psr/http-server-handler" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/polyfill-php80" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/psr/http-factory" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/psr/container" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/config" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/psr/http-client" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/property-access" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/psr/http-message" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/mailer" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/psr/event-dispatcher" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/mime" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/psr/http-server-middleware" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/polyfill-ctype" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/masterminds/html5" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/psr/cache" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/property-info" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/psr/log" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/polyfill-php72" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/filesystem" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/polyfill-php73" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/polyfill-intl-idn" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/console" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/options-resolver" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/event-dispatcher" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/var-dumper" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/http-foundation" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/polyfill-php81" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/lock" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/rate-limiter" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/polyfill-intl-icu" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/service-contracts" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/string" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/yaml" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/cache-contracts" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/polyfill-mbstring" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/christian-riesen/base32" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/phpdocumentor/type-resolver" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/phpdocumentor/reflection-common" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/composer" />
+      <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/polyfill-php83" />
+    </include_path>
+  </component>
   <component name="PhpStanOptionsConfiguration">
     <option name="transferred" value="true" />
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings custom_loader_path="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/autoload.php" />
+    </phpunit_settings>
   </component>
   <component name="PsalmOptionsConfiguration">
     <option name="transferred" value="true" />

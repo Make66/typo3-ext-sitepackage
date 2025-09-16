@@ -1,0 +1,118 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:bk2k="http://typo3.org/ns/BK2K/BootstrapPackage/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:asset.script identifier="sitepackageAssetPath" priority="true">
+  const sitepackage_assetPath = "{f:uri.resource(path:'EXT:sitepackage/Resources/Public/', extensionName: 'sitepackage')}"
+</f:asset.script>
+<f:variable name="headerClass">bp-page-header navbar navbar-mainnavigation navbar-{theme.navigation.style}</f:variable>
+<f:variable name="headerClass">{headerClass}{f:if(condition: logo.normal, then:' navbar-has-image')}</f:variable>
+<f:variable name="headerClass">{headerClass}{f:if(condition: theme.navigation.type, else:' navbar-top', then:' navbar-{theme.navigation.type} navbar-fixed-{theme.navigation.type}')}</f:variable>
+<header id="page-header" class="{headerClass}">
+  <div class="container">
+    <f:link.page pageUid="{rootPage}" class="navbar-brand navbar-brand-{f:if(condition: logo.normal, then: 'image', else: 'text')}" title="{settings.logo.linktitle}">
+      <f:if condition="{logo.normal}">
+        <f:then>
+          <img class="navbar-brand-logo-normal" src="{f:uri.image(image: logo.normal)}" alt="{logoAlt}" height="{settings.logo.height}" width="{settings.logo.width}">
+          <f:if condition="{logo.inverted}">
+            <img class="navbar-brand-logo-inverted" src="{f:uri.image(image: logo.inverted)}" alt="{logoAlt}" height="{settings.logo.height}" width="{settings.logo.width}">
+          </f:if>
+        </f:then>
+        <f:else>
+          <span>{siteTitle}</span>
+        </f:else>
+      </f:if>
+    </f:link.page>
+    <f:if condition="{mainnavigation}">
+      <!-- Service Button Accessibility Mobil-->
+      <div class="servicebutton mobil" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false">
+        <label for="menu-toggle-mobil" class="menu-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 1135 1135" fill="none" stroke="none" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd">
+            <circle class="stroke-black" cx="567.5" cy="567.5" r="522" fill="#FFFFFF" stroke="#000000" stroke-width="90.93" stroke-miterlimit="22.93"/>
+            <path class="fill-accessibility" fill="#000000" d="M278 338c-26 6-45 46-29 72 13 21 45 30 73 39 15 4 114 35 127 40 16 7 20 16 21 35 0 18-2 32-5 50-2 17-4 34-6 50-4 32-11 63-16 95-11 63-22 125-34 189-3 17-6 32 4 46 7 11 19 18 35 20 38 5 54-20 60-50 15-73 28-156 52-227 4-13 12-36 23-15 12 23 19 58 27 85 7 27 24 106 30 137 5 28 10 62 42 69 16 4 35-1 46-8 28-20 16-52 10-85-12-62-22-126-35-188-6-29-19-111-21-145-5-55 10-48 89-76 27-10 55-20 83-29 26-9 57-23 55-57-1-16-9-30-17-38-13-12-25-11-42-6-59 16-119 31-182 41-106 16-194 1-295-23-14-4-30-7-45-11-12-4-33-12-45-9z"/>
+            <path class="fill-accessibility" fill="#000000" d="M563 160c-46 8-83 46-77 100 5 44 49 84 100 76 45-7 83-47 76-100-6-43-48-85-100-76z"/>
+          </svg><span class="sr-only">Menü öffnen</span></label>
+        <input type="checkbox" id="menu-toggle-mobil" class="menu-checkbox-mobil" hidden>
+        <f:cObject typoscriptObjectPath="lib.accessibilityMenu" />
+      </div>
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#mainnavigation" data-bs-target="#mainnavigation" aria-controls="mainnavigation" aria-expanded="false" aria-label="{f:translate(key: 'togglenavigation', extensionName: 'bootstrap_package')}">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <nav id="mainnavigation" class="collapse navbar-collapse">
+        <f:render partial="DropIn/Navigation/MainBefore" arguments="{_all}" />
+        <f:render section="MainNavigation" arguments="{menu: mainnavigation, theme: theme}" />
+        <f:render partial="DropIn/Navigation/MainAfter" arguments="{_all}" />
+      </nav>
+    </f:if>
+  </div>
+</header>
+
+<f:section name="MainNavigation">
+  <f:if condition="{menu}">
+    <ul class="navbar-nav">
+      <f:for as="item" each="{menu}">
+        <f:if condition="{item.spacer}">
+          <f:then>
+    </ul>
+    <ul class="navbar-nav">
+      </f:then>
+      <f:else>
+        <li class="nav-item{f:if(condition: item.active, then:' active')}{f:if(condition: item.children, then:' dropdown dropdown-hover')}">
+          <a class="nav-link{f:if(condition: item.children, then:' dropdown-toggle')}" href="{item.link}" id="nav-item-{item.data.uid}" {f:if(condition: '{item.target}', then: '
+          target="{item.target}"')}{f:if(condition: '{item.target} == "_blank"', then: ' rel="noopener noreferrer"')} title="{item.title}"{f:if(condition: item.children, then:'
+          aria-haspopup="true" aria-expanded="false"')}>
+          <f:if condition="{theme.navigation.icon.enable} && {item.icon}">
+            <span class="nav-link-icon">
+                <bk2k:icon height="{theme.navigation.icon.height}" icon="{item.icon}" width="{theme.navigation.icon.width}"/>
+            </span>
+          </f:if>
+          <span class="nav-link-text">{item.title}<f:if condition="{item.current}"> <span class="visually-hidden">(current)</span></f:if></span>
+          </a>
+          <f:if condition="{item.children}">
+            <ul aria-labelledby="nav-item-{item.data.uid}" class="dropdown-menu">
+              <f:for as="child" each="{item.children}">
+                <f:if condition="{child.spacer}">
+                  <f:then>
+                    <li class="dropdown-divider"></li>
+                  </f:then>
+                  <f:else>
+                    <li>
+                      <a class="dropdown-item{f:if(condition: child.active, then:' active')}" href="{child.link}" {f:if(condition: '{child.target}', then: '
+                      target="{child.target}"')}{f:if(condition: '{child.target} == "_blank"', then: ' rel="noopener noreferrer"')} title="{child.title}">
+                      <f:if condition="{theme.navigation.dropdown.icon.enable} && {child.icon}">
+                        <span class="dropdown-icon">
+                            <bk2k:icon height="{theme.navigation.dropdown.icon.height}" icon="{child.icon}" width="{theme.navigation.dropdown.icon.width}"/>
+                        </span>
+                      </f:if>
+                      <span class="dropdown-text">{child.title}<f:if condition="{child.current}"> <span class="visually-hidden">(current)</span></f:if></span>
+                      </a>
+                    </li>
+                  </f:else>
+                </f:if>
+              </f:for>
+            </ul>
+          </f:if>
+        </li>
+      </f:else>
+  </f:if>
+  </f:for>
+  </ul>
+  <!-- Service Button Accessibility Desktop-->
+  <f:asset.script identifier="accessibilityScript" src="EXT:sitepackage/Resources/Public/JavaScript/accessibility.js"/>
+  <div aria-expanded="false" aria-haspopup="true" class="servicebutton desktop" role="button" tabindex="0">
+    <label class="menu-icon" for="menu-toggle-desktop">
+      <svg fill="none" height="30" stroke="none"
+           style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+           viewBox="0 0 1135 1135" width="30"
+           xmlns="http://www.w3.org/2000/svg">
+        <circle class="stroke-black" cx="567.5" cy="567.5" fill="#FFFFFF" r="522" stroke="#000000" stroke-miterlimit="22.93" stroke-width="90.93"/>
+        <path class="fill-accessibility"
+              d="M278 338c-26 6-45 46-29 72 13 21 45 30 73 39 15 4 114 35 127 40 16 7 20 16 21 35 0 18-2 32-5 50-2 17-4 34-6 50-4 32-11 63-16 95-11 63-22 125-34 189-3 17-6 32 4 46 7 11 19 18 35 20 38 5 54-20 60-50 15-73 28-156 52-227 4-13 12-36 23-15 12 23 19 58 27 85 7 27 24 106 30 137 5 28 10 62 42 69 16 4 35-1 46-8 28-20 16-52 10-85-12-62-22-126-35-188-6-29-19-111-21-145-5-55 10-48 89-76 27-10 55-20 83-29 26-9 57-23 55-57-1-16-9-30-17-38-13-12-25-11-42-6-59 16-119 31-182 41-106 16-194 1-295-23-14-4-30-7-45-11-12-4-33-12-45-9z"
+              fill="#000000"/>
+        <path class="fill-accessibility" d="M563 160c-46 8-83 46-77 100 5 44 49 84 100 76 45-7 83-47 76-100-6-43-48-85-100-76z" fill="#000000"/>
+      </svg>
+      <span class="sr-only">Menü öffnen</span>
+    </label>
+    <input class="menu-checkbox-desktop" id="menu-toggle-desktop" type="checkbox" hidden>
+    <f:cObject typoscriptObjectPath="lib.accessibilityMenu"/>
+  </div>
+  </f:if>
+</f:section>
+</html>

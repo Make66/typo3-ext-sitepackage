@@ -1,0 +1,36 @@
+h2, h3, h4, h5, .accordion-button, .timeline-item-header-headline { background:none;}
+h1 span, .h1 span {border-bottom: 2px solid #000;}
+
+h2, .carousel-item-type-text_and_image h2  {color:#014E7E!important;}
+
+a {color:#005980;}
+a:hover {color:#000;}
+
+#page-header {border-image: linear-gradient(90deg,#0f6a91 0%,#0f6990 25%,#074762 25%,#074762 50%,#6a7029 50%,#6a7029 75%,#032438 75%) 1;}
+
+#page-content a.btn {border:0;}
+.nav-link-text {font-weight: bold;}
+.navbar-mainnavigation .navbar-nav > li > .nav-link::before {background-color: #005D85;}
+
+.frame-background-primary {background:#065E84;}
+.navbar-inverse .navbar-nav .show > .nav-link,
+.navbar-mainnavigation.navbar-inverse a:not(.active):hover {color:#065E84;}
+
+.frame-farbige_boxen div .col-12:nth-of-type(1) div, #page-content .frame-type-menu_subpages li:nth-of-type(1), #page-content .frame-type-menu_subpages li:nth-of-type(8), #page-content .frame-type-menu_subpages li:nth-of-type(11) {background: #065E84;}
+.frame-farbige_boxen div .col-12:nth-of-type(2) div, #page-content .frame-type-menu_subpages li:nth-of-type(2), #page-content .frame-type-menu_subpages li:nth-of-type(5), #page-content .frame-type-menu_subpages li:nth-of-type(12) {background: #06425C;}
+.frame-farbige_boxen div .col-12:nth-of-type(3) div, #page-content .frame-type-menu_subpages li:nth-of-type(3), #page-content .frame-type-menu_subpages li:nth-of-type(6), #page-content .frame-type-menu_subpages li:nth-of-type(9) {background: #6A7029;}
+.frame-farbige_boxen div .col-12:nth-of-type(4) div, #page-content .frame-type-menu_subpages li:nth-of-type(4), #page-content .frame-type-menu_subpages li:nth-of-type(7), #page-content .frame-type-menu_subpages li:nth-of-type(10) {background: #032438;}
+
+.cc-window {background: #433d3d;}
+
+.footer-section-content {
+    background-color: #000;
+    -webkit-transition: all .4s ease 0s;
+    transition:all .4s ease 0s;
+}
+.footer-section-content h5 {color:#fff;}
+.footer-section-content a:not(.btn), .footer-section-content a:not(.btn):hover {
+    color: #fff;
+}
+
+.footer-section-content a:not(.btn):hover {border-bottom:1px solid #fff;}

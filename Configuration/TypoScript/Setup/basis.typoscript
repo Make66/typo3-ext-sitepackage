@@ -1,0 +1,83 @@
+@import 'EXT:seo/Configuration/TypoScript/XmlSitemap/setup.typoscript'
+
+config {
+    spamProtectEmailAddresses = 1
+    spamProtectEmailAddresses_atSubst = (at)
+    additionalHeaders.90.header = t3versions: hide-major
+}
+
+page {
+    meta.keywords.field = keywords
+    includeCSS {
+        theme >
+        theme = fileadmin/templates/{$mandant}/theme.scss
+    }
+    10 {
+        partialRootPaths.1 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/Page/
+        partialRootPaths.2 = fileadmin/templates/{$mandant}/bootstrap_package/Resources/Private/Partials/Page/
+    }
+}
+
+# Angepasste ContentElemente (Bildueberschrift verlinkt für Rollover Effekt)
+lib.contentElement {
+    partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
+}
+
+# Bildgrößen
+lib.contentElement.settings.responsiveimages.variants {
+    default.width = 1900
+    large.width = 1700
+    medium.width = 1520
+    small.width = 1350
+    extrasmall.width = 1200
+}
+
+# AccessibilityMenu Definition
+lib.accessibilityMenu = HMENU
+lib.accessibilityMenu {
+    special = directory
+    special.value = {$plugin.sitepackage.accessibility.accessabilityPid}
+    1 = TMENU
+    1 {
+        wrap = <ul class="accessibility_menu"><li class="button-contrast"><a href="#"></a></li><li class="button-fontsize"><a href="#"></a></li>|</ul>
+        NO = 1
+        NO {
+            wrapItemAndSub = <li>|</li>
+            # A-Tag mit Attribut mit SeitenID
+            ATagParams.cObject = COA
+            ATagParams.cObject {
+                10 = TEXT
+                10.field = uid
+                10.wrap = class="button-|"
+            }
+            # Linktext bleibt der Seitentitel
+            stdWrap.field = title
+        }
+    }
+}
+
+#Update Template 4Cols (Bug: individual classes)
+tt_content.gridelements_pi1.templateRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapGrids/Resources/Private/Templates/
+# gridelements eats flexform settings when plugin in column
+tt_content.gridelements_pi1.dataProcessing.10.default.options.resolveChildFlexFormData = 0
+
+# Hintergrundbilder ausgeben
+temp.bild = IMG_RESOURCE
+temp.bild {
+    file {
+        import =  uploads/media/
+        import.data = levelmedia:3, slide
+        treatIdAsReference = 1
+        import.listNum = 0
+    }
+}
+page.headerData.13 < temp.bild
+page.headerData.13.stdWrap.wrap = <style type="text/css">#page-content { background-image: url(../../../|);}</style>
+
+plugin.sitepackage {
+    accessibility {
+        enable = {$plugin.sitepackage.accessibility.enable}
+        easySpeachPid = {$plugin.sitepackage.accessibility.easySpeachPid}
+        declarationPid = {$plugin.sitepackage.accessibility.declarationPid}
+    }
+}
