@@ -32,6 +32,8 @@ lib.contentElement.settings.responsiveimages.variants {
     extrasmall.width = 1200
 }
 
+lib.accessibilityMenu = TEXT
+[{$tx_sitepackage.settings.accessibility.enabled} == 1]
 # AccessibilityMenu Definition
 lib.accessibilityMenu = HMENU
 lib.accessibilityMenu {
@@ -55,7 +57,7 @@ lib.accessibilityMenu {
         }
     }
 }
-
+[END]
 #Update Template 4Cols (Bug: individual classes)
 tt_content.gridelements_pi1.templateRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapGrids/Resources/Private/Templates/
 # gridelements eats flexform settings when plugin in column
