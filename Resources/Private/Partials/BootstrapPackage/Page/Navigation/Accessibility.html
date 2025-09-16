@@ -1,0 +1,24 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:variable name="accessibilityEnable"><f:cObject typoscriptObjectPath="lib.accessibilityEnable"/></f:variable>
+<f:if condition="{accessibilityEnable} == '1'">
+  <!-- Service Button Accessibility Desktop-->
+  <f:asset.script identifier="accessibilityScript" src="EXT:sitepackage/Resources/Public/JavaScript/accessibility.js"/>
+  <div aria-expanded="false" aria-haspopup="true" class="servicebutton {type}" role="button" tabindex="0">
+    <label class="menu-icon" for="menu-toggle-{type}">
+      <svg fill="none" height="30" stroke="none"
+           style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+           viewBox="0 0 1135 1135" width="30"
+           xmlns="http://www.w3.org/2000/svg">
+        <circle class="stroke-black" cx="567.5" cy="567.5" fill="#FFFFFF" r="522" stroke="#000000" stroke-miterlimit="22.93" stroke-width="90.93"/>
+        <path class="fill-accessibility"
+              d="M278 338c-26 6-45 46-29 72 13 21 45 30 73 39 15 4 114 35 127 40 16 7 20 16 21 35 0 18-2 32-5 50-2 17-4 34-6 50-4 32-11 63-16 95-11 63-22 125-34 189-3 17-6 32 4 46 7 11 19 18 35 20 38 5 54-20 60-50 15-73 28-156 52-227 4-13 12-36 23-15 12 23 19 58 27 85 7 27 24 106 30 137 5 28 10 62 42 69 16 4 35-1 46-8 28-20 16-52 10-85-12-62-22-126-35-188-6-29-19-111-21-145-5-55 10-48 89-76 27-10 55-20 83-29 26-9 57-23 55-57-1-16-9-30-17-38-13-12-25-11-42-6-59 16-119 31-182 41-106 16-194 1-295-23-14-4-30-7-45-11-12-4-33-12-45-9z"
+              fill="#000000"/>
+        <path class="fill-accessibility" d="M563 160c-46 8-83 46-77 100 5 44 49 84 100 76 45-7 83-47 76-100-6-43-48-85-100-76z" fill="#000000"/>
+      </svg>
+      <span class="sr-only">Menü öffnen</span>
+    </label>
+    <input class="menu-checkbox-{type}" id="menu-toggle-{type}" type="checkbox" hidden />
+    <f:cObject typoscriptObjectPath="lib.accessibilityMenu"/>
+  </div>
+</f:if>

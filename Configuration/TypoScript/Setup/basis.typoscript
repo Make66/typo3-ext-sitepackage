@@ -32,32 +32,29 @@ lib.contentElement.settings.responsiveimages.variants {
     extrasmall.width = 1200
 }
 
-lib.accessibilityMenu = TEXT
-[{$plugin.sitepackage.accessibility.enable} == 1]
 # AccessibilityMenu Definition
-lib.accessibilityMenu = HMENU
-lib.accessibilityMenu {
-    special = directory
-    special.value = {$plugin.sitepackage.accessibility.accessabilityPid}
-    1 = TMENU
-    1 {
-        wrap = <ul class="accessibility_menu"><li class="button-contrast"><a href="#"></a></li><li class="button-fontsize"><a href="#"></a></li>|</ul>
-        NO = 1
-        NO {
-            wrapItemAndSub = <li>|</li>
-            # A-Tag mit Attribut mit SeitenID
-            ATagParams.cObject = COA
-            ATagParams.cObject {
-                10 = TEXT
-                10.field = uid
-                10.wrap = class="button-|"
+lib.accessibilityMenu = TEXT
+lib.accessibilityEnable = TEXT
+lib.accessibilityEnable.value = 0
+[{$tx_sitepackage.accessibility.enable} == 1]
+    lib.accessibilityEnable = TEXT
+    lib.accessibilityEnable.value = 1
+    lib.accessibilityMenu = HMENU
+    lib.accessibilityMenu {
+        special = directory
+        special.value = {$tx_sitepackage.accessibility.menuPid}
+        1 = TMENU
+        1 {
+            wrap = <ul class="accessibility_menu"><li class="button-contrast"><a href="#"></a></li><li class="button-fontsize"><a href="#"></a></li>|</ul>
+            NO = 1
+            NO {
+                wrapItemAndSub = <li>|</li>
+                stdWrap.field = title
             }
-            # Linktext bleibt der Seitentitel
-            stdWrap.field = title
         }
     }
-}
 [END]
+
 #Update Template 4Cols (Bug: individual classes)
 tt_content.gridelements_pi1.templateRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapGrids/Resources/Private/Templates/
 # gridelements eats flexform settings when plugin in column
@@ -76,10 +73,9 @@ temp.bild {
 page.headerData.13 < temp.bild
 page.headerData.13.stdWrap.wrap = <style type="text/css">#page-content { background-image: url(../../../|);}</style>
 
-plugin.sitepackage {
+plugin.tx_sitepackage {
     accessibility {
-        enable = {$plugin.sitepackage.accessibility.enable}
-        easySpeachPid = {$plugin.sitepackage.accessibility.easySpeachPid}
-        declarationPid = {$plugin.sitepackage.accessibility.declarationPid}
+        enable = {$tx_sitepackage.accessibility.enable}
+        menuPid = {$tx_sitepackage.accessibility.menuPid}
     }
 }

@@ -1,9 +1,7 @@
-plugin.sitepackage {
+tx_sitepackage {
     accessibility {
         enable = 0
-        accessabilityPid = 9166
-        easySpeechPid = 9167
-        declarationPid = 9168
+        menuPid = 0
     }
 }
 page.preloader {
