@@ -45,7 +45,7 @@ lib.accessibilityEnable.value = 0
         special.value = {$tx_sitepackage.accessibility.menuPid}
         1 = TMENU
         1 {
-            wrap = <ul class="accessibility_menu"><li class="button-contrast"><a href="#"></a></li><li class="button-fontsize"><a href="#"></a></li>|</ul>
+            wrap = <ul class="accessibility_menu"><li><a href="#" class="button-contrast"></a></li><li><a href="#" class="button-fontsize"></a></li>|</ul>
             NO = 1
             NO {
                 wrapItemAndSub = <li>|</li>
