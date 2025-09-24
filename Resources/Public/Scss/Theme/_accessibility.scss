@@ -1,39 +1,43 @@
 // === ACCESSIBILITY BUTTONS ===
+
 // Mobil-Version
 .servicebutton.mobil {
-  margin: 5px 10px 0 0;
+  margin: 0px 10px 0 0;
   background: none;
   text-shadow: none;
   border: 0;
   position: absolute;
-  left: 160px;
+  right: 80px;
   top: 15px;
+  left:auto;
   @include media-breakpoint-up(md) {
-    left: 220px;
+    right: 120px;
     top: 25px;
   }
   @include media-breakpoint-up(lg) {
     display: none;
   }
-}
 
-.servicebutton.mobil .accessibility_menu {
-  width: 90%;
-  margin: 25px 5% 0 5%;
-  border: 2px solid #b1b1b1;
-  left:0;
-  @include media-breakpoint-up(lg) {
-    width:auto;
-    margin:0;
+.accessibility_menu {
+    width: 90%;
+    margin: 25px 5% 0 5%;
+    border: 2px solid #b1b1b1;
+    left: 0;
+
+    @include media-breakpoint-up(lg) {
+      width: auto;
+      margin: 0;
+    }
   }
 }
 
-.navbar-mainnavigation.navbar-transition .servicebutton.mobil {top:10px;}
+.navbar-mainnavigation.navbar-transition .servicebutton.mobil {
+  top: 10px;
+}
 
 // Desktop-Version
 .servicebutton.desktop {
   display: none;
-
   @include media-breakpoint-up(lg) {
     display: block;
     margin: 8px 0 5px;
@@ -41,9 +45,22 @@
     text-shadow: none;
     border: 0;
   }
+
   @include media-breakpoint-up(xl) {
-    margin: 8px 10px 0 10px;
+    margin: 0 10px;
   }
+}
+
+.servicebutton.desktop:hover .menu-icon .fill-accessibility,
+.servicebutton.desktop:focus .menu-icon .fill-accessibility,
+.servicebutton mobil:hover .menu-icon .fill-accessibility,
+.servicebutton.mobil:focus .menu-icon .fill-accessibility {
+  fill: #7a7a7a;
+}
+
+.servicebutton.desktop .menu-icon .fill-accessibility,
+.servicebutton.desktop .menu-icon .stroke-black {
+  transition: fill 0.3s ease, stroke 0.3s ease;
 }
 
 // Gemeinsames Menü-Styling
@@ -59,65 +76,60 @@
   z-index: 1000;
   opacity: 0;
   transition: max-height 0.4s ease, opacity 0.4s ease;
-
-  li {
-    padding: 0.25rem 1rem;
-    text-align: left;
-
-    a {
-      text-decoration: none;
-      color: #333;
-
-      &:hover,
-      &:focus {
-        color: #014E7E;
-        outline: none;
-      }
-    }
-  }
 }
 
-// Menü aktivieren (sichtbar)
+.servicebutton .accessibility_menu li {
+  padding: 0.25rem 1rem;
+  text-align: left;
+}
+
+.servicebutton .accessibility_menu li a {
+  text-decoration: none;
+  color: #333!important;
+}
+
+.servicebutton .accessibility_menu li a:hover { color: #fff!important;}
+.servicebutton .accessibility_menu li:hover,
+.servicebutton .accessibility_menu li:hover a {background:#333; color:#fff!important;}
+
+.servicebutton .accessibility_menu li a:focus,
+.servicebutton .accessibility_menu li a:focus-visible {
+  color: #fff!important; background: #333;
+}
+
+.servicebutton .accessibility_menu li:has(a:focus),
+.servicebutton .accessibility_menu li:has(a:focus-visible) {
+  color: #fff; background: #333;
+}
+
 .menu-checkbox-mobil:checked + .accessibility_menu,
 .menu-checkbox-desktop:checked + .accessibility_menu {
   max-height: 300px;
   opacity: 1;
 }
 
-// Menü-Icon
 .servicebutton .menu-icon {
   display: inline-block;
-  width: 28px;
-  height: 28px;
-  font-size: 24px;
   cursor: pointer;
   user-select: none;
-  /* background-image: url('img/servicebutton.svg');*/
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
   transition: transform 0.2s ease, background-color 0.2s ease;
 
   &:hover,
   &:focus {
-    /* background-image: url('img/servicebutton_hover.svg');*/
-    transform: scale(1.2);
+    transform: scale(1.16);
     outline: none;
   }
-
   &:focus-visible {
     outline: 2px solid #007bff;
     outline-offset: 2px;
   }
 }
 
-// Verstecke Checkboxen
 .menu-checkbox-mobil,
 .menu-checkbox-desktop {
   display: none;
 }
 
-// Screenreader-only-Text
 .sr-only {
   position: absolute;
   width: 1px;
@@ -129,9 +141,8 @@
   border: 0;
 }
 
-// Skip-Link: zum Hauptinhalt springen
 .visually-hidden-focusable {
-  background: #015990;
+  background: #333;
   color: #fff;
   padding: 20px;
   position: absolute !important;
@@ -139,7 +150,8 @@
   z-index: 99999 !important;
 }
 
-// Sprachumschaltung (nur Desktop)
+a.visually-hidden-focusable:hover { color: #fff;} 
+
 .lang_desktop {
   position: absolute;
   right: 50px;

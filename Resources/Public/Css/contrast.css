@@ -1,36 +1,292 @@
-h2, h3, h4, h5, .accordion-button, .timeline-item-header-headline { background:none;}
-h1 span, .h1 span {border-bottom: 2px solid #000;}
+/* Setzt die Seite in Graustufen und erhöht den Kontrast */
+html {
+    filter: grayscale(100%) contrast(100%);
+    background-color: #fff;
+    color: #000;
+}
 
-h2, .carousel-item-type-text_and_image h2  {color:#014E7E!important;}
+/* Schatten entfernen */
+* {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
 
-a {color:#005980;}
-a:hover {color:#000;}
+/* Links */
+#page-content a,
+.frame a:not([class]),
+.frame a[class=""] {
+  color: #000;
+  font-weight: bold;
+  border-bottom: 1px solid #000 ;
+  text-decoration: none;
+}
 
-#page-header {border-image: linear-gradient(90deg,#0f6a91 0%,#0f6990 25%,#074762 25%,#074762 50%,#6a7029 50%,#6a7029 75%,#032438 75%) 1;}
+#page-content a:hover,
+.frame a:not([class]):hover {
+  border: none;
+  background: #000 ;
+  color: #fff!important;
+}
 
-#page-content a.btn {border:0;}
-.nav-link-text {font-weight: bold;}
-.navbar-mainnavigation .navbar-nav > li > .nav-link::before {background-color: #005D85;}
+/* Logo Navigation */
+.navbar-mainnavigation .navbar-brand-image > .navbar-brand-logo-normal {display:none;}
+.navbar-mainnavigation .navbar-brand-image > .navbar-brand-logo-inverted {display:block;}
 
-.frame-background-primary {background:#065E84;}
-.navbar-inverse .navbar-nav .show > .nav-link,
-.navbar-mainnavigation.navbar-inverse a:not(.active):hover {color:#065E84;}
+.navbar.navbar-mainnavigation {background:#fff!important;}
 
-.frame-farbige_boxen div .col-12:nth-of-type(1) div, #page-content .frame-type-menu_subpages li:nth-of-type(1), #page-content .frame-type-menu_subpages li:nth-of-type(8), #page-content .frame-type-menu_subpages li:nth-of-type(11) {background: #065E84;}
-.frame-farbige_boxen div .col-12:nth-of-type(2) div, #page-content .frame-type-menu_subpages li:nth-of-type(2), #page-content .frame-type-menu_subpages li:nth-of-type(5), #page-content .frame-type-menu_subpages li:nth-of-type(12) {background: #06425C;}
-.frame-farbige_boxen div .col-12:nth-of-type(3) div, #page-content .frame-type-menu_subpages li:nth-of-type(3), #page-content .frame-type-menu_subpages li:nth-of-type(6), #page-content .frame-type-menu_subpages li:nth-of-type(9) {background: #6A7029;}
-.frame-farbige_boxen div .col-12:nth-of-type(4) div, #page-content .frame-type-menu_subpages li:nth-of-type(4), #page-content .frame-type-menu_subpages li:nth-of-type(7), #page-content .frame-type-menu_subpages li:nth-of-type(10) {background: #032438;}
+.navbar-mainnavigation .navbar-nav > li > .nav-link::before {
+  background: #000;
+}
 
-.cc-window {background: #433d3d;}
+.navbar-nav .nav-link {color:#000!important;}
+.dropdown-item:hover,
+.dropdown-item:focus {
+  color:#fff;
+  background-color:#000;
+}
 
+.dropdown-menu {border: 2px solid rgba(0,0,0,0.6);}
+
+.dropdown-item {
+  font-weight: bold;
+  color: #000;
+}
+
+.navbar-transition {border-bottom:2px solid #333!important;}
+
+/* Visuelle Hilfe für den Fokus von interaktiven Elementen */
+a:focus, button:focus, input:focus {
+    outline: 3px solid black;
+}
+
+h1, h2, h3, h4, h5, h6,
+p, strong, em, li,
+.lead {
+  color:#000;
+  font-weight: 600;
+  background:none;
+  padding:0;
+}
+
+h3 {color:#494949;}
+
+/* Footer */
 .footer-section-content {
-    background-color: #000;
-    -webkit-transition: all .4s ease 0s;
-    transition:all .4s ease 0s;
-}
-.footer-section-content h5 {color:#fff;}
-.footer-section-content a:not(.btn), .footer-section-content a:not(.btn):hover {
-    color: #fff;
+  background-color: #212121;
 }
 
-.footer-section-content a:not(.btn):hover {border-bottom:1px solid #fff;}
+.footer-section-content h1,
+.footer-section-content h2,
+.footer-section-content h3,
+.footer-section-content h4,
+.footer-section-content h5 {
+  color:#adacac;
+}
+
+.footer-section-content p,
+.footer-section-content li,
+.footer-section-content strong {
+  color: #fff;
+}
+
+.footer-section-content a:not(.btn){
+  color: #fff;
+  border-bottom: 1px solid #fff;
+}
+
+.footer-section-content a:not(.btn):hover {
+  color: #000!important;
+  background:#fff;
+  text-decoration: none;
+}
+
+/* Accordion */
+.accordion-item {
+  border-bottom: 2px solid rgba(0,0,0,0.6);
+}
+
+.accordion-button {color:#000; }
+.accordion-button:hover {color:#333!important; border:0;}
+.accordion-button.collapsed:hover {color:#fff!important; background:#000; border:0;}
+.accordion-button.collapsed:hover::after {filter: grayscale(100%) brightness(1000%);
+  transform: rotate(-180deg);}
+
+.accordion-button:not(.collapsed) {
+  color: #000;
+}
+.accordion-button:focus {
+  box-shadow:0 0 0 0.25rem rgba(0,0,0,0.3);
+  border-color:#ccc;
+}
+
+.accordion-button:not(.collapsed)::after {filter: grayscale(100%);}
+
+/* Buttons */
+#page-content a.btn,
+button, .btn {
+  color: #000;
+  background: #ddd;
+  border: 2px solid #000;
+  font-weight: bold;
+}
+
+#page-content a.btn:hover,
+button:hover, .btn:hover, .btn:hover span {
+  background: #000 ;
+  color: #fff!important;
+  border: 2px solid #000;
+}
+
+/* Carousel */
+.carousel-header {
+  background: rgba(255, 255, 255, 1);
+  color: #000!important;
+  font-weight: bold;
+}
+
+.carousel-header {
+  background: rgba(255, 255, 255, 1);
+  color: #000!important;
+  font-weight: bold;
+}
+
+.carousel-subheader {  
+  color: #333!important;
+}
+
+/* Carousel: Ueberschriften */
+.carousel-item-header, 
+.carousel-item-bodytext,
+.carousel-text-inner,
+.carousel-box h1,
+.carousel-box h2,
+.carousel-box h3,
+.carousel-box h4,
+.carousel-item-type-text_and_image h1, 
+.carousel-item-type-text_and_image h2,
+.carousel-item-type-text_and_image h3,
+.carousel-item-type-text_and_image h4, 
+.carousel-item-type-text_and_image p {
+  color:#000!important; 
+}
+
+.carousel-subheader {  
+  color: #333!important;
+}
+
+.carousel-text-inner,
+.carousel-item,
+.carousel-item-type-call_to_action .carousel-box,
+.carousel-text {
+    background: #fff!important;
+    color: #000!important;
+    padding: 20px;
+  }
+
+/* Carousel: Button Pfeile */
+.carousel button {background:none;}
+.carousel-control.carousel-control-next {background:#fff;}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #000 ;
+}
+
+.carousel-control.carousel-control-prev,
+.carousel-control.carousel-control-next {background:#fff;}
+
+.carousel .carousel-control-icon::before {
+  width: 0.8em;
+  height: 0.8em;
+  display: block;
+  border-top: 2px solid #080808;
+  border-right: 2px solid #0B0B0B;
+}
+
+.carousel-subheader.button {background:#000; color:#fff;}
+.carousel-subheader.button:hover {background:#333; color:#fff;}
+
+/*Carousel: Text-Animation entfernen*/
+.carousel-item .fadeInDown, .carousel-item .fadeInLeft, .carousel-item .fadeInRight, .carousel-item .fadeInUp, .carousel-item .bounceIn, .fadeIn, .fadeUp  {
+  animation-name: unset;
+}
+
+/* Kalender*/
+.frame-kalenderkasten1 .media-body, 
+.frame-kalenderkasten2 .media-body {background: rgb(255, 255, 255, 1);}
+.frame-kalenderkasten1 .media-body h5, 
+.frame-kalenderkasten1 .media-body .h5, 
+.frame-kalenderkasten2 .media-body h5, 
+.frame-kalenderkasten2 .media-body .h5 {color:#000;}
+
+/* COOKIE CONSENT */
+.dp--revoke {background-color:#acacac;}
+.dp--revoke .dp--hover, .dp--icon-fingerprint::before {color:#000;}
+.cc-window {
+  background: #000;
+  color: #fff;
+}
+
+.cc-btn {background:#C9C9C9 !important; border: 2px solid #000;}
+.cc-btn:hover {background:#000 !important; color:#fff;}
+
+.cc-btn.cc-allow-all {
+  background-color:#fff!important;
+  color:#000!important;
+  border: 2px solid #000;
+}
+
+.cc-btn.cc-allow-all:hover {background:#fff !important; color:#000;}
+
+/*Thumnail*/
+.thumbnail-menu-caption-inner {
+  background: #000;
+  color:#fff;
+  padding: 10px;
+}
+
+/*Rahmen Bootstrap*/
+.frame-background-primary,
+.frame-background-secondary,
+.frame-background-tertiay,
+.frame-background-quantanary,
+.frame-background-light {
+	background:#ccc;
+	color:#000;
+}
+
+.frame-background-dark {
+background:#000;
+color:#fff
+}
+
+/*Rollover*/
+.frame-layout-rollover_image .caption {
+  background: rgb(255, 255, 255) !important;
+  color: #000;
+}
+
+.frame-layout-rollover_image .image:hover .caption {
+  opacity: 1;
+}
+
+.frame-layout-rollover_image figure img:hover {
+  transform: unset;
+}
+
+/*Taketool*/
+.box .textpic-text {background:#000; color:#fff;}
+.box.start p a {border:0;}
+
+.frame-zielseitensection ul li a {color:#000!important;}
+.frame-zielseitensection ul li a {color:#000!important;}
+
+.frame-background-hellgruen {background:#fff;}
+.frame-background-dunkelgruen {background:#d4d4d4;}
+
+.frame-farbige_boxen div .col-12 div {background:#000!important; color:#fff!important;}
+.frame-farbige_boxen .col-12 p, .frame-farbige_boxen .col-12 strong, .frame-farbige_boxen .col-12 a{color:#fff!important;}
+
+/* Taketool Kurstool */
+.tx-tool-pi1 div.anmeldung a {background:#000; color:#fff!important;}
+.tx-tool-pi1 div.anmeldung a:hover {background:#595959; color:#fff!important;}
+.tx-tool-pi1 div.head {color:#595959!important;}

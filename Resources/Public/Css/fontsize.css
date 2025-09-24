@@ -1,40 +1,53 @@
-:root {--bs-body-font-size: 1.4rem; --bs-body-line-height: 1.55;}
+/* Typography & Spacing */
+:root {
+  --bs-body-font-size: clamp(1.16rem, 1.5vw, 1.3rem); 
+  --bs-body-line-height: 1.55;
+}
+
+#mainnavigation .navbar-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Header */
+h1, h2, h3, h4, h5 {font-weight:bold; word-break: break-word; line-height: 1.3;}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem); /* 32–48px */
+}
+h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem); /* 28–40px */
+}
+h3 {
+  font-size: clamp(1.5rem, 3.5vw, 2rem); /* 24–32px */
+}
+h4 {
+  font-size: clamp(1.25rem, 3vw, 1.75rem); /* 20–28px */
+}
+h5 {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem); /* 18–24px */
+}
+h6 {
+  font-size: clamp(1rem, 2vw, 1.25rem); /* 16–20px */
+}
+
 
 .nav-link-text { font-weight: bold;}
 
-.nav-link-text,
-.dropdown-menu,
+.nav-link-text, 
+.dropdown-menu, 
 .servicebutton .accessibility_menu li a {
-    font-size: 1.35rem;
+    font-size: clamp(1.5rem, 3.5vw, 1.5rem);
 }
-
-.btn {font-size: 1.3rem;}
 
 .row.news-list-item .news-text .lead  {
-    font-size: clamp(1.3rem, 1.3vw, 1.6rem);
-    font-weight: 500;
-    line-height: 2rem;
+  font-size: clamp(1.13rem, 1.5vw, 1.35rem);
+  font-weight: bold;
+  line-height: 1.7rem;
 }
 
-.accordion-button {font-size: clamp(1.3rem, 1.3vw, 1.6rem);}
-
-h1, h2, h3, h4, h5 {font-weight:500; line-height: 1.3; word-break: break-word;}
-h1 {font-size: clamp(2.6rem, 2.8vw, 2.8rem);}
-h2 {font-size: clamp(2.4rem, 2.6vw, 2.6rem);}
-h3, h3.awesome {font-size: clamp(2.2rem, 2.3vw, 2.6rem);}
-h4,.filelink-heading {font-size: clamp(1.9rem, 2.2vw, 2.1rem);}
-h5 {font-size: clamp(1.7rem, 2vw, 2.1rem);}
-.btn {font-size: clamp(1.7rem, 2vw, 1.4rem);}
-
-.card-panel .card-header {font-size: clamp(1.3rem, 1.7vw, 1.4rem)!important;}
-.carousel .carousel-item h3 {font-size: clamp(2.5rem, 3vw, 4rem);}
-
+.accordion-button { font-size: clamp(1.3rem, 1.2vw, 1.3rem);}
 .lead {font-size: clamp(1.4rem, 1.5vw, 1.6rem);}
-
 #page-content .frame-type-menu_subpages li a {word-break: break-word;}
-
-figure .caption {
-    font-size: 1.1rem;
-}
-
 .footer-section .texticon-content p {font-size: clamp(1.2rem, 1.4vw, 1.5rem);}
