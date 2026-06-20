@@ -11,13 +11,15 @@
     ],
     "version": "1.0.0",
     "require": {
-        "typo3/cms-core": "^10.4 || ^11.5",
-        "typo3/cms-seo": "^10.4 || ^11.5"
+        "php": "^8.1 || ^8.2",
+        "typo3/cms-core": "^11.5 || ^12.4 || ^13.4",
+        "typo3/cms-seo": "^11.5 || ^12.4 || ^13.4"
 
     },
     "replace": {
         "gridelementsteam/gridelements":"*",
-        "laxap/bootstrap_grids":"*"
+        "laxap/bootstrap_grids":"*",
+        "typo3-ter/sitepackage": "self.version"
     },
     "autoload": {
         "psr-4": {
@@ -28,9 +30,6 @@
         "psr-4": {
             "Taketool\\Sitepackage\\Tests\\": "Tests"
         }
-    },
-    "replace": {
-        "typo3-ter/sitepackage": "self.version"
     },
     "extra": {
         "typo3/cms": {
