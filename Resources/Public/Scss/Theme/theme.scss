@@ -1,1 +1,22 @@
-// real theme.scss in fileadmin/{$mandant}/theme.scss
+// Per-mandant SCSS contract — see basis.typoscript's page.includeCSS (theme/global/custom).
+// Real files live in fileadmin/templates/{mandant}/, not in this extension:
+//
+// fileadmin/templates/{mandant}/_variables.scss
+//   $primary, $secondary, fonts, etc. Plain variable assignments (no !default),
+//   shared by theme.scss and global.scss below since each is its own SCSS compile.
+//
+// fileadmin/templates/{mandant}/theme.scss
+//   @import "variables";
+//   @import "EXT:bootstrap_package/Resources/Public/Scss/bootstrap5/theme";
+//   Rarely changes — this is the expensive one (all of Bootstrap 5 + components).
+//
+// fileadmin/templates/{mandant}/global.scss
+//   @import "variables";
+//   @import "EXT:sitepackage/Resources/Public/Scss/Theme/global";
+//   Glue file: pulls in this extension's shared, all-mandants design system.
+//   Occasional changes; when edited, only affects this includeCSS entry, not theme.
+//
+// fileadmin/templates/{mandant}/custom.scss
+//   @import "variables";
+//   // mandant-specific one-off rules
+//   Frequent changes — cheapest to recompile since it's its own entry too.

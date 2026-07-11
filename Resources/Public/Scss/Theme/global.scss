@@ -1,3 +1,12 @@
+// This file is imported from the mandant's own fileadmin/templates/{mandant}/global.scss
+// glue file (see basis.typoscript + that glue file), which imports the mandant's
+// variables first — so by the time we get here $primary/$secondary/etc. are
+// already set. We still need Bootstrap's own Sass tooling (no component CSS
+// output, just functions/mixins) for things like media-breakpoint-up() below.
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_functions";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_variables";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_maps";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_mixins";
 @import "fonts";
 
 body {

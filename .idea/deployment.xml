@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="ddev t3v9.taketools.com" autoUploadExternalChanges="true">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="ddev t3v14" confirmBeforeUploading="false" autoUploadExternalChanges="true">
+    <option name="confirmBeforeUploading" value="false" />
     <serverData>
+      <paths name="ddev t3v14">
+        <serverdata>
+          <mappings>
+            <mapping deploy="packages/sitepackage" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="ddev t3v9.taketools.com">
         <serverdata>
           <mappings>

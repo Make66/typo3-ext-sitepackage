@@ -1,6 +1,22 @@
-/public/fileadmin/templates/mbauer/theme.scss
+Each mandant gets three includeCSS entries (theme, global, custom — see
+basis.typoscript), compiled independently so editing one doesn't force
+recompiling the others (bootstrap_package's ScssParser recompiles the whole
+@import graph of whichever entry changed, per-entry):
+
+page.includeCSS.theme = fileadmin/templates/{mandant}/theme.scss
+ +- variables (mandant _variables.scss, plain assignments, no !default)
  +- ../../../typo3conf/ext/bootstrap_package/Resources/Public/Scss/bootstrap5/theme
- +- ../../.../typo3conf/ext/sitepackage/Resources/Public/Scss/Theme/global
+    (all of Bootstrap 5 + bootstrap_package components — expensive, rarely changes)
+
+page.includeCSS.global = fileadmin/templates/{mandant}/global.scss
+ +- variables (same mandant _variables.scss)
+ +- ../../../typo3conf/ext/sitepackage/Resources/Public/Scss/Theme/global
+    (shared design system reused by every mandant; itself pulls in just
+    Bootstrap's functions/variables/maps/mixins — no component CSS — for
+    things like media-breakpoint-up())
     +- ../Tool/tool_pi1
     +- ../Tool/tool_pi2
- +- "./bootstrap_package/Resources/Public/Scss/Theme/custom
+
+page.includeCSS.custom = fileadmin/templates/{mandant}/custom.scss
+ +- variables (same mandant _variables.scss)
+ +- mandant-specific one-off rules (frequent edits, cheapest to recompile)

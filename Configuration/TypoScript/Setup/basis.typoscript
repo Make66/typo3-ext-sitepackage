@@ -11,6 +11,10 @@ page {
     includeCSS {
         theme >
         theme = fileadmin/templates/{$mandant}/theme.scss
+        global >
+        global = fileadmin/templates/{$mandant}/global.scss
+        custom >
+        custom = fileadmin/templates/{$mandant}/custom.scss
     }
     10 {
         partialRootPaths.1 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/Page/

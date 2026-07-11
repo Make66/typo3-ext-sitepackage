@@ -90,6 +90,7 @@
       <path value="$USER_HOME$/PhpstormProjects/typo3_src-11.5.x/vendor/symfony/polyfill-php83" />
     </include_path>
   </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
   <component name="PhpStanOptionsConfiguration">
     <option name="transferred" value="true" />
   </component>
