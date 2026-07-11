@@ -1,0 +1,11 @@
+categories:
+  sitepackage:
+    label: 'Sitepackage'
+
+settings:
+  mandant:
+    category: sitepackage
+    label: 'Mandant folder name'
+    description: 'Selects fileadmin/templates/<mandant>/ for this site''s theme.scss/custom.scss.'
+    default: ''
+    type: string
