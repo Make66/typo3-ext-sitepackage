@@ -7,6 +7,9 @@
 @import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_variables";
 @import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_maps";
 @import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_mixins";
+// bootstrap_package's own variables layer (not the vendor Bootstrap ones above) —
+// needed for its custom $grid-float-breakpoint used by navigation-offcanvas.scss.
+@import "EXT:bootstrap_package/Resources/Public/Scss/bootstrap5/_variables";
 @import "fonts";
 
 body {
@@ -34,6 +37,8 @@ body {
 .navbar-mainnavigation .navbar-nav > li > .nav-link::before {
   background: $navbar-light-hover-color;
 }
+
+@import "navigation-offcanvas";
 
 /* Hintergrundfarbe Navbar Inverse*/
 .navbar-inverse, .navbar-inverse-transition, .navbar-inverse-transition.navbar-transition {

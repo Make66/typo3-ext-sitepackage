@@ -6,7 +6,7 @@
 <f:variable name="headerClass">{headerClass}{f:if(condition: logo.normal, then:' navbar-has-image')}</f:variable>
 <f:variable name="headerClass">{headerClass}{f:if(condition: theme.navigation.type, else:' navbar-top', then:' navbar-{theme.navigation.type} navbar-fixed-{theme.navigation.type}')}</f:variable>
 <header id="page-header" class="{headerClass}">
-  <div class="container">
+  <div class="container container-mainnavigation">
     <f:link.page pageUid="{rootPage}" class="navbar-brand navbar-brand-{f:if(condition: logo.normal, then: 'image', else: 'text')}" title="{settings.logo.linktitle}">
       <f:if condition="{logo.normal}">
         <f:then>
@@ -21,70 +21,24 @@
       </f:if>
     </f:link.page>
     <f:if condition="{mainnavigation}">
+      <f:asset.script identifier="offcanvasNavigationScript" src="EXT:sitepackage/Resources/Public/JavaScript/offcanvas-navigation.js"/>
       <f:render partial="Navigation/Accessibility" arguments="{type: 'mobil'}" />
-      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#mainnavigation" data-bs-target="#mainnavigation" aria-controls="mainnavigation" aria-expanded="false" aria-label="{f:translate(key: 'togglenavigation', extensionName: 'bootstrap_package')}">
+      <button class="navbar-toggler collapsed" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainnavigation" aria-controls="mainnavigation" aria-expanded="false" aria-label="{f:translate(key: 'togglenavigation', extensionName: 'bootstrap_package')}">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <nav id="mainnavigation" class="collapse navbar-collapse">
-        <f:render partial="DropIn/Navigation/MainBefore" arguments="{_all}" />
-        <f:render section="MainNavigation" arguments="{menu: mainnavigation, theme: theme}" />
-        <f:render partial="DropIn/Navigation/MainAfter" arguments="{_all}" />
+      <nav id="mainnavigation" class="offcanvas offcanvas-end navbar-collapse" tabindex="-1" aria-labelledby="mainnavigationLabel">
+        <div class="offcanvas-header">
+          <span class="offcanvas-title" id="mainnavigationLabel">{f:translate(key: 'main-navigation.label', extensionName: 'bootstrap_package')}</span>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="{f:translate(key: 'togglenavigation', extensionName: 'bootstrap_package')}"></button>
+        </div>
+        <div class="offcanvas-body">
+          <f:render partial="DropIn/Navigation/MainBefore" arguments="{_all}" />
+          <f:render partial="Navigation/MainNavigation" arguments="{_all}" />
+          <f:render partial="DropIn/Navigation/MainAfter" arguments="{_all}" />
+          <f:render partial="Navigation/Accessibility" arguments="{type: 'desktop'}" />
+        </div>
       </nav>
     </f:if>
   </div>
 </header>
-
-<f:section name="MainNavigation">
-  <f:if condition="{menu}">
-    <ul class="navbar-nav">
-      <f:for as="item" each="{menu}">
-        <f:if condition="{item.spacer}">
-          <f:then>
-    </ul>
-    <ul class="navbar-nav">
-      </f:then>
-      <f:else>
-        <li class="nav-item{f:if(condition: item.active, then:' active')}{f:if(condition: item.children, then:' dropdown dropdown-hover')}">
-          <a class="nav-link{f:if(condition: item.children, then:' dropdown-toggle')}" href="{item.link}" id="nav-item-{item.data.uid}" {f:if(condition: '{item.target}', then: '
-          target="{item.target}"')}{f:if(condition: '{item.target} == "_blank"', then: ' rel="noopener noreferrer"')} title="{item.title}"{f:if(condition: item.children, then:'
-          aria-haspopup="true" aria-expanded="false"')}>
-          <f:if condition="{theme.navigation.icon.enable} && {item.icon}">
-            <span class="nav-link-icon">
-                <bk2k:icon height="{theme.navigation.icon.height}" icon="{item.icon}" width="{theme.navigation.icon.width}"/>
-            </span>
-          </f:if>
-          <span class="nav-link-text">{item.title}<f:if condition="{item.current}"> <span class="visually-hidden">(current)</span></f:if></span>
-          </a>
-          <f:if condition="{item.children}">
-            <ul aria-labelledby="nav-item-{item.data.uid}" class="dropdown-menu">
-              <f:for as="child" each="{item.children}">
-                <f:if condition="{child.spacer}">
-                  <f:then>
-                    <li class="dropdown-divider"></li>
-                  </f:then>
-                  <f:else>
-                    <li>
-                      <a class="dropdown-item{f:if(condition: child.active, then:' active')}" href="{child.link}" {f:if(condition: '{child.target}', then: '
-                      target="{child.target}"')}{f:if(condition: '{child.target} == "_blank"', then: ' rel="noopener noreferrer"')} title="{child.title}">
-                      <f:if condition="{theme.navigation.dropdown.icon.enable} && {child.icon}">
-                        <span class="dropdown-icon">
-                            <bk2k:icon height="{theme.navigation.dropdown.icon.height}" icon="{child.icon}" width="{theme.navigation.dropdown.icon.width}"/>
-                        </span>
-                      </f:if>
-                      <span class="dropdown-text">{child.title}<f:if condition="{child.current}"> <span class="visually-hidden">(current)</span></f:if></span>
-                      </a>
-                    </li>
-                  </f:else>
-                </f:if>
-              </f:for>
-            </ul>
-          </f:if>
-        </li>
-      </f:else>
-    </f:if>
-  </f:for>
-  </ul>
-  <f:render partial="Navigation/Accessibility" arguments="{type: 'desktop'}" />
-  </f:if>
-</f:section>
 </html>
