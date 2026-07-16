@@ -1,0 +1,51 @@
+/* Offcanvas mobile navigation */
+
+// Mobile: panel sizing & basic chrome
+.navbar-mainnavigation #mainnavigation.offcanvas {
+  width: min(320px, 85vw);
+
+  .offcanvas-header {
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+  }
+
+  .offcanvas-title {
+    font-weight: 600;
+  }
+}
+
+// Desktop: undo Bootstrap's unconditional fixed/hidden offcanvas styling,
+// restore the pre-existing inline flex navbar behaviour above $grid-float-breakpoint.
+// (Mirrors components/navbar/_responsive.scss's own pattern, applied to .offcanvas.)
+@media (min-width: $grid-float-breakpoint) {
+  .navbar-mainnavigation #mainnavigation.offcanvas {
+    position: static;
+    top: auto;
+    bottom: auto;
+    z-index: auto;
+    width: auto;
+    height: auto;
+    max-width: none;
+    visibility: visible !important;
+    transform: none;
+    transition: none;
+    background-color: transparent;
+    box-shadow: none;
+    border: 0;
+
+    .offcanvas-header {
+      display: none;
+    }
+
+    .offcanvas-body {
+      padding: 0;
+      overflow-y: visible;
+      flex-grow: 0;
+    }
+  }
+
+  // Offcanvas backdrop must never show/trap scroll at desktop widths
+  // (defensive; guards against races e.g. resizing while the panel is open)
+  .offcanvas-backdrop {
+    display: none;
+  }
+}
