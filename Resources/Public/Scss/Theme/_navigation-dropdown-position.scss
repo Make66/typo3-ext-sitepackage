@@ -9,5 +9,10 @@
    Restore the offset manually, mirroring what Popper would have set. */
 .navbar-mainnavigation .dropdown-menu {
   top: 100%;
-  margin-top: var(--bs-dropdown-spacer, .125rem);
+  // No margin-top: a gap here is dead space for :hover purposes (the dropdown-menu
+  // is a DOM child of .nav-item, but the gap itself belongs to neither box), so
+  // moving the pointer across it from the nav-link to the menu below closes the
+  // menu mid-transit. Keeping the panel flush against the nav row keeps :hover
+  // (and :focus-within) continuous.
+  margin-top: 0;
 }
