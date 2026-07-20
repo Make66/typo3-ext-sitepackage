@@ -1,0 +1,16 @@
+/* Desktop: open submenus/mega menus on hover (and keyboard focus), since the
+   separate toggle button is redundant once hover reveals the dropdown.
+   The mobile offcanvas menu is untouched — .nav-link-toggle stays visible
+   and click-driven there, since hover doesn't apply on touch. */
+@media (min-width: $grid-float-breakpoint) {
+  .navbar-mainnavigation {
+    .nav-item:hover > .dropdown-menu,
+    .nav-item:focus-within > .dropdown-menu {
+      display: block;
+    }
+
+    .nav-link-toggle {
+      display: none;
+    }
+  }
+}
