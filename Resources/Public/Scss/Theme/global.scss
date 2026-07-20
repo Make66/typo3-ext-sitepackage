@@ -10,7 +10,7 @@
 // bootstrap_package's own variables layer (not the vendor Bootstrap ones above) —
 // needed for its custom $grid-float-breakpoint used by navigation-offcanvas.scss.
 @import "EXT:bootstrap_package/Resources/Public/Scss/bootstrap5/_variables";
-@import "fonts";
+@import "_fonts";
 
 body {
   font-family: "Source Sans Pro",sans-serif;
