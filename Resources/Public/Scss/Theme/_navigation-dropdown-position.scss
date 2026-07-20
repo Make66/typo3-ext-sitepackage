@@ -1,0 +1,13 @@
+/* Bootstrap's `top: 100%` offset for .dropdown-menu only applies via the
+   [data-bs-popper] attribute, which Popper.js sets at runtime. Vendor's navbar
+   markup uses data-bs-toggle="dropdown" data-bs-display="static" (see
+   MainNavigation.html), which disables Popper entirely — so that attribute,
+   and the top offset that comes with it, never appears. Without it the menu
+   falls back to its default "static position", which lands at the top of its
+   positioned ancestor (the header container for mega menus, the nav-item for
+   simple ones) and overlaps the nav row instead of appearing below it.
+   Restore the offset manually, mirroring what Popper would have set. */
+.navbar-mainnavigation .dropdown-menu {
+  top: 100%;
+  margin-top: var(--bs-dropdown-spacer, .125rem);
+}
