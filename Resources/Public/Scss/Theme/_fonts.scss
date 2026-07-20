@@ -253,6 +253,14 @@
 }
 
 @font-face {
+    font-family: 'SourceSans3';
+    src: url('../../Fonts/SourceSans3-Variable.woff2') format('woff2'),
+    url('../../Fonts/SourceSans3-Variable.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Train One';
     src: url('../../Fonts/Train-One-Regular.woff2') format('woff2'),
     url('../../Fonts/Train-One-Regular.woff') format('woff');
