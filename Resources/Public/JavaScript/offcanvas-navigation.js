@@ -14,20 +14,19 @@ document.addEventListener('DOMContentLoaded', function () {
         toggler.setAttribute('aria-expanded', 'true');
     });
 
-    // Mobile menu: submenus are open by default every time the panel opens.
+    // Auto-open the dropdown containing the current page, mobile-menu only.
     // Must wait for "shown" (past tense, fired after the offcanvas finishes
     // its opening transition and moves focus into the panel) rather than
-    // "show" (fired immediately on toggle) — opening the dropdowns while the
+    // "show" (fired immediately on toggle) — opening the dropdown while the
     // offcanvas's own focus trap is still settling makes Bootstrap's dropdown
-    // treat that focus shift as an outside interaction and auto-close them
-    // again within ~100ms. Users can still collapse/reopen individual ones by
-    // clicking their top-level link, which doubles as the dropdown toggle
-    // (see MainNavigation.html).
+    // treat that focus shift as an outside interaction and auto-close it
+    // again within ~100ms.
     offcanvasNav.addEventListener('shown.bs.offcanvas', function () {
         if (window.bootstrap && window.bootstrap.Dropdown) {
-            offcanvasNav.querySelectorAll('.navbar-nav > .nav-item > .nav-link-main[data-bs-toggle="dropdown"]').forEach(function (dropdownToggle) {
-                window.bootstrap.Dropdown.getOrCreateInstance(dropdownToggle).show();
-            });
+            const activeToggle = offcanvasNav.querySelector('.navbar-nav > .nav-item > .nav-link-main.active[data-bs-toggle="dropdown"]');
+            if (activeToggle) {
+                window.bootstrap.Dropdown.getOrCreateInstance(activeToggle).show();
+            }
         }
     });
 
