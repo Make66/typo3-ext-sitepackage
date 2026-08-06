@@ -33,6 +33,11 @@ fileadmin/templates/<mandant>/
                      # variables/maps/mixins partials (needed because this file
                      # is its own compile now, not appended after theme.scss);
                      # then all of the mandant's own rules, unchanged
+  img/logo.svg       # navbar-brand logo — wired globally in basis.typoscript
+                     # (works for every mandant, no per-mandant TypoScript needed)
+  img/logo_dark.svg  # OPTIONAL inverted/scrolled-state logo — new standard
+                     # filename (see step 10); needs one explicit condition
+                     # block added to basis.typoscript per mandant that has one
 ```
 
 `page.includeCSS` in `Configuration/TypoScript/Setup/basis.typoscript` already
@@ -154,15 +159,54 @@ already slightly broken by this file's presence; migrating fixes it.
    `custom.scss`), and diff the new `custom.scss` against the original to
    confirm only the header changed.
 
+10. **Check the logo actually renders.** If the navbar shows the site title as
+    text instead of an image, `page.logo.file` (a TS Constants Editor value,
+    invisible in files) is probably still the literal, never-expanded string
+    `fileadmin/templates/{$mandant}/img/logo.svg` — see the first bullet under
+    "Non-SCSS prerequisites" below; this is already patched globally in
+    `basis.typoscript`, so if it's still broken for a *new* mandant, look for
+    a differently-broken constant rather than assuming the global fix regressed.
+
+    The **inverted/scrolled-state logo** (`navbar-brand-logo-inverted`,
+    swapped in via `.navbar-transition` CSS once the user scrolls) is a
+    separate, per-mandant opt-in. Sitepackage's new standard filename is
+    `fileadmin/templates/<mandant>/img/logo_dark.svg` — if the mandant has
+    one, add a condition block to `basis.typoscript` (next to raumuehle's):
+    ```typoscript
+    ["{$mandant}" == "<mandant>"]
+        page.10.dataProcessing.1553883874.files.inverted = fileadmin/templates/{$mandant}/img/logo_dark.svg
+    [END]
+    ```
+    Two syntaxes that look correct here are not, both discovered live while
+    wiring this up for raumuehle:
+    - `[{$mandant} == "<mandant>"]` (no quotes around the constant) —
+      TypoScript substitutes it as a bare, unquoted token
+      (`[raumuehle == "raumuehle"]`), invalid ExpressionLanguage syntax, and
+      the condition just silently evaluates false — no error, no log entry,
+      the override simply never appears in the compiled
+      `var/cache/code/typoscript/setup-*.php`. Always quote the constant
+      yourself: `"{$mandant}"`.
+    - `[site.identifier == "<mandant>"]` — looks like the "proper" TYPO3
+      condition variable for this, but on this TYPO3 version it throws a hard
+      `Error: Cannot access protected property
+      TYPO3\CMS\Core\Site\Entity\Site::$identifier` (a real 500, not a silent
+      no-op) — the ExpressionLanguage variable resolver here does direct
+      property access rather than calling the public `getIdentifier()`
+      getter. Don't use it; the quoted-constant form above is what works.
+    Don't invent a universal `logo_dark.svg`-for-everyone default the way the
+    normal logo was fixed — filenames for the inverted logo weren't
+    consistent before this (calden uses `logo_inverted.svg`), so a global
+    default would silently 404 for every mandant not using this exact name.
+
 ## Non-SCSS prerequisites (already fixed project-wide, but good to know)
 
-Migrating raumuehle and weingut surfaced three bugs that have nothing to do
-with SCSS but block any mandant that uses `gridelements_pi1` content elements
-(grid/column layouts like "2cols", "4cols", etc.) — i.e. most of them. All
-three are now fixed centrally, so a fresh migration shouldn't need to touch
-them again, but if any of these errors resurface (e.g. after a from-scratch
-`composer install`, or on a mandant that hasn't hit this code path before),
-this is where to look — don't re-diagnose from scratch:
+Migrating raumuehle and weingut surfaced several bugs that have nothing to do
+with SCSS but block things most mandants use — grid/column content elements
+("2cols", "4cols", etc.) and the navbar-brand logo. All are now fixed
+centrally, so a fresh migration shouldn't need to touch them again, but if
+any of these errors resurface (e.g. after a from-scratch `composer install`,
+or on a mandant that hasn't hit this code path before), this is where to
+look — don't re-diagnose from scratch:
 
 - **`gridelementsteam/gridelements` silently never installed.**
   `packages/sitepackage/composer.json` had `"replace": {"gridelementsteam/gridelements": "*", ...}`
@@ -204,13 +248,128 @@ this is where to look — don't re-diagnose from scratch:
   (Use `backend.typoscript`, not `backend11.typoscript` — the latter is the
   TYPO3 v11 template set; this project is v12.)
 
-Both `@import` fixes and the `_variables-dark` fix from step 8 above only
-needed doing once, in shared files (`basis.typoscript`, sitepackage's
-`composer.json`, sitepackage's `global.scss`) — a mandant migration itself
-doesn't need to repeat any of this. It's documented here so that if a similar
-"works for one mandant, breaks on another" or "silently missing package"
-report comes up again, the `replace`/missing-`@import` pattern is the first
-thing to check, not the last.
+- **Desktop nav menu wraps onto multiple lines instead of laying out in one
+  row** (only becomes visible once a mandant's `global.scss` actually compiles
+  — i.e. right after migrating it). The bug is in
+  `packages/sitepackage/Resources/Public/Scss/Theme/_navigation-offcanvas.scss`,
+  which patches Bootstrap's `.offcanvas` component to behave like a classic
+  inline navbar above `$grid-float-breakpoint` (sitepackage's own `Main.html`
+  wraps the menu in `<nav class="offcanvas offcanvas-end navbar-collapse">`
+  instead of bk2k's default `<nav class="collapse navbar-collapse">` — compare
+  `packages/sitepackage/Resources/Private/Partials/BootstrapPackage/Page/Navigation/Main.html`
+  against the shipped default at
+  `vendor/bk2k/bootstrap-package/Resources/Private/Partials/Page/Navigation/Main.html`).
+  The file's own comment claimed to mirror `components/navbar/_responsive.scss`
+  — a file that **does not exist** in this project's installed
+  `bk2k/bootstrap-package` (`dev-BP_13_0`); it's only real in newer releases
+  (16.x, used by t3v14/calden). In 13.0.x the desktop flex-row switch lives in
+  `vendor/bk2k/bootstrap-package/Resources/Public/Scss/components/_navbar.scss`
+  and only applies `flex-direction: row` to `.navbar-nav` via a selector
+  requiring a `.collapse`-classed ancestor
+  (`.container > .collapse > .navbar-nav`) — our offcanvas nav has
+  `.navbar-collapse` but not `.collapse`, and adds an extra `.offcanvas-body`
+  wrapper the selector doesn't account for either way, so it never matches.
+  `.offcanvas-body` and `.navbar-nav` both silently fall back to Bootstrap's
+  default `flex-direction: column`. Fixed by adding the missing rules directly
+  to the existing desktop media query in `_navigation-offcanvas.scss`:
+  ```scss
+  .offcanvas-body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    // ...existing padding/overflow-y/flex-grow...
+    .navbar-nav {
+      flex-direction: row;
+    }
+  }
+  ```
+  If bk2k/bootstrap-package ever gets upgraded past 13.0.x on this project, an
+  upgrade to a version that actually ships `components/navbar/_responsive.scss`
+  may make this override partially redundant — check bk2k's own selectors
+  again before assuming the override is still needed as-is.
+
+  Getting the row to lay out at all still left two follow-up gaps, fixed in
+  the same rule block: the menu items had **no horizontal gap** (bk2k's own
+  `.nav-link { padding-left/right: $navbar-nav-link-padding-x; }` lives inside
+  that same non-matching selector, so it never applied either), and the whole
+  menu was **left-aligned inside its own box instead of pinned to the right of
+  the header** — Bootstrap core's `.navbar-collapse` sets `flex-grow: 1`, and
+  bk2k's media query only resets `flex-basis` back to `auto`, never
+  `flex-grow` back to `0`, so `<nav>` still stretches to fill the header row;
+  without an explicit `justify-content`, row content just hugs that stretched
+  box's own left edge rather than the header's right edge. Fixed with:
+  ```scss
+  .offcanvas-body {
+    // ...display/flex-direction/align-items from above...
+    justify-content: flex-end;
+    .navbar-nav {
+      flex-direction: row;
+      gap: $navbar-nav-link-padding-x; // reuses the mandant's own variable
+    }
+  }
+  ```
+  That still left the menu visually centered rather than right-aligned — a
+  *third* layer of Bootstrap default, on `<nav>` itself this time, not
+  `.offcanvas-body`. Bootstrap's base `.offcanvas` rule (as opposed to
+  `.offcanvas-body`) is **unconditional**: unlike `.offcanvas-lg`/`-xl` etc.,
+  plain `.offcanvas` never auto-expands at any breakpoint by Bootstrap's own
+  design, so its `display: flex; flex-direction: column;` applies to `<nav>`
+  at every width, and nothing above resets it. With `<nav>` stuck in column
+  mode, Bootstrap core's `.navbar-collapse { align-items: center; }` — same
+  `<nav>` element, since it carries both classes — centers on the *cross*
+  axis, which in column mode is horizontal, so `.offcanvas-body` (the only
+  visible child once `.offcanvas-header` is hidden) gets horizontally
+  centered inside `<nav>` regardless of its own `justify-content`. Fixed by
+  adding to the outer `.navbar-mainnavigation #mainnavigation.offcanvas` rule
+  (not the nested `.offcanvas-body` one):
+  ```scss
+  .navbar-mainnavigation #mainnavigation.offcanvas {
+    // ...position/visibility/etc. from above...
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  ```
+  `flex-direction: row` turns that inherited `align-items: center` back into
+  ordinary vertical centering, and `justify-content: flex-end` then pins the
+  shrink-wrapped `.offcanvas-body` to the right of the now-stretched `<nav>`
+  box. Moral for next time: when overriding Bootstrap's offcanvas for this
+  pattern, check `.offcanvas` (the panel element) and `.offcanvas-body` (its
+  inner content wrapper) as two *separate* rule sets needing their own
+  `flex-direction` reset — fixing one and assuming it covers the other is
+  exactly what caused this to take three passes.
+
+- **Navbar-brand logo renders as text (site title) instead of an image.**
+  `page.logo.file` is a TS Constants Editor value (invisible in files) that,
+  for at least one site, was literally set to the never-expanded string
+  `fileadmin/templates/{$mandant}/img/logo.svg` — someone tried to use
+  `{$mandant}` substitution *inside a constant's own value*, but TypoScript
+  only resolves `{$...}` references while parsing **setup**, never while
+  parsing another constant's default. `BK2K\BootstrapPackage\DataProcessing\StaticFilesProcessor`
+  then silently fails to load a file literally named `{$mandant}`, so
+  `logo.normal` ends up empty and Fluid's `<f:if condition="{logo.normal}">`
+  falls through to `<span>{siteTitle}</span>`. Fixed by overriding the
+  DataProcessor's input directly in `basis.typoscript` (setup, where
+  `{$mandant}` *does* resolve — same mechanism `includeCSS` already relies
+  on), bypassing the broken constant for every mandant at once, assuming the
+  `fileadmin/templates/<mandant>/img/logo.svg` convention every mandant
+  folder checked so far already follows:
+  ```typoscript
+  page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.svg
+  ```
+  The **inverted** logo (`files.inverted`) is deliberately *not* defaulted the
+  same way — see step 10 above for why, and for the per-mandant condition
+  syntax (and the two ways to get that condition wrong that were discovered
+  live while wiring up raumuehle's).
+
+All five fixes above only needed doing once, in shared files
+(`basis.typoscript`, sitepackage's `composer.json`, sitepackage's
+`global.scss` and `_navigation-offcanvas.scss`) — a mandant migration itself
+doesn't need to repeat any of this except the one-line per-mandant condition
+for an inverted logo. It's documented here so that if a similar "works for
+one mandant, breaks on another" or "silently missing package/rule" report
+comes up again, a version mismatch against bk2k/bootstrap-package, a missing
+`@import`/`replace`, or a constant that can't actually do what its value
+claims is the first thing to check, not the last.
 
 ## Reusable prompt
 

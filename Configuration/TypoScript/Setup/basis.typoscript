@@ -21,8 +21,47 @@ page {
     10 {
         partialRootPaths.1 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/Page/
         partialRootPaths.2 = fileadmin/templates/{$mandant}/bootstrap_package/Resources/Private/Partials/Page/
+
+        # {$page.logo.file} (TS Constants Editor, bootstrap_package's own
+        # constants.typoscript) is a plain string constant — TypoScript does not
+        # substitute {$mandant} (or any other constant) *inside* another
+        # constant's own value, only inside setup. Some site's DB-stored
+        # constants record was set to the literal, never-expanded string
+        # "fileadmin/templates/{$mandant}/img/logo.svg", so StaticFilesProcessor
+        # tries to load a file at that literal (invalid) path, fails silently,
+        # and the navbar-brand falls back to the site-title text. {$mandant}
+        # *does* correctly resolve here because this is setup, not a constant —
+        # same mechanism as includeCSS above — so overriding the DataProcessor's
+        # input directly bypasses the broken constant for every mandant at once.
+        dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.svg
     }
 }
+
+# Inverted/scrolled-state logo: sitepackage's new standard is that a mandant's
+# own inverted logo, if it has one, lives at fileadmin/templates/<mandant>/img/logo_dark.svg
+# (see SCSS_migration.md "Assets" section). Naming wasn't consistent before this
+# (e.g. calden uses logo_inverted.svg) so this is opted in per mandant via
+# condition rather than defaulted globally like the normal logo above — add one
+# more `[{$mandant} == "..."]` block here per mandant as they adopt
+# logo_dark.svg, instead of guessing a universal filename and silently 404ing
+# for everyone else.
+#
+# Two syntaxes that look reasonable here are actually broken on this TYPO3
+# version — noting both so nobody re-tries them:
+#   - `[{$mandant} == "raumuehle"]` — TypoScript substitutes the constant as a
+#     bare, unquoted token before the condition is evaluated
+#     (`[raumuehle == "raumuehle"]`), which is invalid ExpressionLanguage
+#     syntax and just silently evaluates false. Fix: quote the constant
+#     yourself in the condition text (`"{$mandant}"`), so substitution
+#     produces a valid quoted string on both sides.
+#   - `[site.identifier == "raumuehle"]` — TYPO3's condition ExpressionLanguage
+#     variable resolver here accesses `.identifier` via direct (reflection)
+#     property access, and `Site::$identifier` is `protected`, not public, on
+#     this TYPO3 version — throws a fatal `Error` (full site 500, not a silent
+#     no-op), caught live while testing this exact line.
+["{$mandant}" == "raumuehle"]
+    page.10.dataProcessing.1553883874.files.inverted = fileadmin/templates/{$mandant}/img/logo_dark.svg
+[END]
 
 # Angepasste ContentElemente (Bildueberschrift verlinkt für Rollover Effekt)
 lib.contentElement {

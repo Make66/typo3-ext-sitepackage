@@ -15,7 +15,39 @@
 
 // Desktop: undo Bootstrap's unconditional fixed/hidden offcanvas styling,
 // restore the pre-existing inline flex navbar behaviour above $grid-float-breakpoint.
-// (Mirrors components/navbar/_responsive.scss's own pattern, applied to .offcanvas.)
+//
+// bk2k/bootstrap-package's own desktop flex-row switch (components/_navbar.scss,
+// this project's installed 13.0.x — there is no components/navbar/_responsive.scss
+// here, that split only exists in newer bootstrap-package releases) only applies
+// `flex-direction: row` to `.navbar-nav` via a DOM-path-specific selector
+// (`.container > .collapse > .navbar-nav`) that requires a `.collapse` ancestor.
+// Our `<nav>` here is `.offcanvas.offcanvas-end.navbar-collapse` — no `.collapse`
+// class — and adds an extra `.offcanvas-body` wrapper, so that selector never
+// matches. Without the rules below, `.offcanvas-body` and `.navbar-nav` both
+// fall back to Bootstrap's default `flex-direction: column`, and the menu wraps
+// onto multiple lines instead of laying out in one row.
+//
+// Bootstrap core's own `.navbar-collapse` (Contrib/bootstrap5/scss/_navbar.scss)
+// sets `flex-grow: 1`, and bk2k's media query above only resets `flex-basis`
+// back to `auto` — it never resets `flex-grow` to 0 — so `<nav>` still stretches
+// to fill the header row. `justify-content: flex-end` on `.offcanvas-body` is
+// what actually pins the menu to the right edge of that stretched box; without
+// it the row's content just hugs the box's own left edge.
+//
+// One more layer: Bootstrap's base `.offcanvas` rule (Contrib/bootstrap5/scss/
+// _offcanvas.scss) is UNCONDITIONAL — unlike `.offcanvas-lg` etc., plain
+// `.offcanvas` never auto-expands at any breakpoint by design, so its
+// `display: flex; flex-direction: column;` applies to `<nav>` itself at every
+// width, and we never reset it below. With `<nav>` still column, Bootstrap
+// core's `.navbar-collapse { align-items: center; }` (also on `<nav>`, same
+// element) centers on the CROSS axis — which in column mode is *horizontal* —
+// so `.offcanvas-body` (the only visible child once `.offcanvas-header` is
+// hidden) gets horizontally centered inside `<nav>` instead of hugging the
+// right edge, no matter what `.offcanvas-body`'s own `justify-content` says.
+// `flex-direction: row` on `<nav>` below fixes that: it makes `align-items:
+// center` mean vertical centering (as bk2k's non-offcanvas navbar intends),
+// and `justify-content: flex-end` then pins the shrink-wrapped `.offcanvas-body`
+// to the right of the now-stretched `<nav>` box.
 @media (min-width: $grid-float-breakpoint) {
   .navbar-mainnavigation #mainnavigation.offcanvas {
     position: static;
@@ -31,15 +63,26 @@
     background-color: transparent;
     box-shadow: none;
     border: 0;
+    flex-direction: row;
+    justify-content: flex-end;
 
     .offcanvas-header {
       display: none;
     }
 
     .offcanvas-body {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
       padding: 0;
       overflow-y: visible;
       flex-grow: 0;
+
+      .navbar-nav {
+        flex-direction: row;
+        gap: $navbar-nav-link-padding-x;
+      }
     }
   }
 
