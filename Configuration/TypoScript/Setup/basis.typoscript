@@ -1,4 +1,6 @@
 @import 'EXT:seo/Configuration/TypoScript/XmlSitemap/setup.typoscript'
+@import 'EXT:bootstrap_grids/Configuration/TypoScript/Frontend/setup.typoscript'
+@import 'EXT:gridelements/Configuration/TypoScript/backend.typoscript'
 
 config {
     spamProtectEmailAddresses = 1

@@ -16,7 +16,6 @@
         "typo3/cms-seo": "^11.5 || ^12.4 || ^13.4 || ^14.3"
     },
     "replace": {
-        "gridelementsteam/gridelements":"*",
         "laxap/bootstrap_grids":"*",
         "typo3-ter/sitepackage": "self.version"
     },
