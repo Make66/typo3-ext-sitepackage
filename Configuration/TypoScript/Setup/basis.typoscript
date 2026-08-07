@@ -63,6 +63,50 @@ page {
     page.10.dataProcessing.1553883874.files.inverted = fileadmin/templates/{$mandant}/img/logo_dark.svg
 [END]
 
+# Per-mandant logo-format overrides: the blanket default above
+# (dataProcessing.1553883874.files.normal = .../img/logo.svg) only exists because
+# most mandants' own {$page.logo.file} TS constant is itself broken — literally
+# the unexpanded string "fileadmin/templates/{$mandant}/img/logo.svg" (same class
+# of bug as the raumuehle fix above; TypoScript constants can't reference other
+# constants like {$mandant} within their own default value, and this mistake was
+# made consistently across most of this install's ~37 sites' Constants Editor
+# records, not just raumuehle's). The blanket ".svg" default happens to match
+# what most of those broken constants actually intended, but silently breaks any
+# mandant whose real logo is a different format or filename — confirmed via a
+# full DB audit of every site's constants cross-referenced against what's
+# actually in each mandant's img/ folder. These 8 need their own real filename;
+# waschmaschinendoktor's own {$page.logo.file} constant is not even broken
+# (it's a correct, literal, working path) — it was simply being clobbered by the
+# blanket default above having no awareness of it. Add one more
+# ["{$mandant}" == "..."] block here (mandant folder name, not the site
+# identifier — they differ for several of these) whenever another mandant turns
+# up with a missing/wrong navbar logo; check its img/ folder and its own
+# {$page.logo.file} constant before assuming ".svg" is simply missing.
+["{$mandant}" == "cruisensight"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "theis"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "sdw"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "cme-beratung"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "lebenslagen"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "ogr-mainz"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "rv-oberstedten"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "waschmaschinendoktor"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+
 # Angepasste ContentElemente (Bildueberschrift verlinkt für Rollover Effekt)
 lib.contentElement {
     partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/

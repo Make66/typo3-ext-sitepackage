@@ -4,8 +4,7 @@
    MainNavigation.html), which disables Popper entirely — so that attribute,
    and the top offset that comes with it, never appears. Without it the menu
    falls back to its default "static position", which lands at the top of its
-   positioned ancestor (the header container for mega menus, the nav-item for
-   simple ones) and overlaps the nav row instead of appearing below it.
+   positioned ancestor and overlaps the nav row instead of appearing below it.
    Restore the offset manually, mirroring what Popper would have set. */
 .navbar-mainnavigation .dropdown-menu {
   top: 100%;
@@ -15,4 +14,49 @@
   // menu mid-transit. Keeping the panel flush against the nav row keeps :hover
   // (and :focus-within) continuous.
   margin-top: 0;
+}
+
+/* ...but `top: 100%` is only "just below the nav item" if the nav item is the
+   containing block, and here it isn't. Bootstrap sets `position: relative` for
+   dropdowns solely through the `.dropdown` class (Contrib/bootstrap5/scss/
+   _dropdown.scss), and MainNavigation.html never emits it — a parent item is
+   `<li class="nav-item nav-style-simple">`. With the <li> left static, the
+   containing block falls through .offcanvas (reset to `position: static` at
+   desktop widths, see _navigation-offcanvas.scss) and .container (static) all
+   the way up to .navbar-mainnavigation itself, which *is* positioned
+   (`position: relative`, plus `fixed` under .navbar-fixed-top).
+
+   So `top: 100%` resolved against the whole header: the panel opened at the
+   header's bottom edge instead of the nav link's. The header is sized by the
+   brand logo, which is taller than a row of text links, and the nav row is
+   vertically centred within it — so a dead band was left between the bottom of
+   the nav-link and the top of the panel. That band is inside .navbar-mainnavigation
+   but outside .nav-item, so dragging the pointer down through it dropped
+   `.nav-item:hover` and closed the menu before any item could be reached (the
+   `margin-top: 0` above removes only the menu's own margin, not this band).
+
+   Making the nav item the containing block puts the panel flush under its link,
+   so the hover path is continuous. Scoped to .nav-style-simple: mega menus
+   deliberately span the header container and must keep it as their containing
+   block. */
+.navbar-mainnavigation .nav-style-simple {
+  position: relative;
+}
+
+/* MainNavigationDropDown.html renders a plain <ul><li> (no classes) inside
+   `.dropdown-menu`, which is a <div> here, not a <ul> — so Bootstrap's own
+   `.dropdown-menu { list-style: none }` (Contrib/bootstrap5/scss/_dropdown.scss)
+   sits on the div and never reaches this nested <ul>. The browser's UA
+   stylesheet sets `list-style-type: disc` directly on that inner <ul>, which
+   inheritance from the div can't override, so bullets showed. */
+.navbar-mainnavigation .dropdown-menu li {
+  list-style: none;
+  padding-left: 8px;
+}
+
+/* Same gap as above: the browser's UA stylesheet also puts `padding-left: 40px`
+   directly on that inner <ul>, not on `.dropdown-menu`, so it isn't reachable
+   by overriding padding on the div. */
+.navbar-mainnavigation .dropdown-menu ul {
+  padding: 0;
 }

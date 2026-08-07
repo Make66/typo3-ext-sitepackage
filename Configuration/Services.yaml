@@ -1,0 +1,15 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Taketool\Sitepackage\:
+    resource: '../Classes/*'
+
+  Taketool\Sitepackage\Command\Mig12Command:
+    tags:
+      - name: 'console.command'
+        command: 'mig12'
+        description: 'Migrate all "powermail_pi1" plugins to the content element "Powermail" (TYPO3 v12 only)'
+        schedulable: false

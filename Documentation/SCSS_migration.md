@@ -72,18 +72,44 @@ already slightly broken by this file's presence; migrating fixes it.
      This is ground truth for what's actually rendering today and doesn't
      depend on a cache file existing.
 
-3. **Tell real customization apart from shared/global defaults.** Not every
-   constant that differs from vanilla Bootstrap is mandant-specific — some
-   (observed: `$blue: #164194`, `$red: #e30613`) are identical across
-   *every* taketool mandant checked, i.e. project-wide defaults set once by
-   the sitepackage/bootstrap_package extension's own shipped constants, not a
-   per-site choice. Confirm by spot-checking 2-3 other **live** mandant sites
-   the same way as step 2. Only port values into the new `_variables.scss`
-   that actually vary per site (typically: `$primary`, `$secondary`, and
-   whichever of `$teal`/`$pink`/`$indigo`/`$yellow` the site's design reuses
-   as accent colors — these four vary wildly site to site, unlike blue/red).
-   One variable is **not optional**: `$navbar-light-hover-color` has no
-   `!default` anywhere in the chain (`_navbar.scss`, sitepackage's
+3. **Do not assume a value is a safe-to-omit "shared default" just because
+   several sites show the same number.** An earlier version of this guide
+   claimed `$blue: #164194`, `$red: #e30613`, `$gray-100: #f1f1f1`,
+   `$font-size-base: 1.1rem`, and the h1–h5 `1.75/1.5/1.25/1/0.9` formula were
+   project-wide **code** defaults (`!default` values shipped by
+   bootstrap_package/sitepackage) safe to leave out of `_variables.scss`. That
+   was wrong, and the mistake shipped into several already-migrated mandants
+   before being caught (see "Optional follow-up" below) — **`waschmaschinendoktor`
+   was live-broken for a period as a direct result**: `$blue`/`$red`/`$gray-100`
+   fell back to raw Bootstrap (`#0d6efd`/`#dc3545`/`#f8f8f8`) and
+   `$font-size-base` fell back to unscaled `1rem` (cascading into every h1–h6
+   size and several Bootstrap component font-sizes) the moment its legacy
+   TS-constants block — the *only* place those values actually lived — was
+   removed. They looked "shared" only because most sites' individual
+   TS-constants records happened to repeat the same copy-pasted starter values
+   for those specific keys, not because any SCSS file anywhere defines them
+   with `!default`.
+
+   The only way to know if a value is a *real* code-level default: grep for it
+   with `!default` in `vendor/bk2k/bootstrap-package/Resources/Public/**/_variables*.scss`
+   (contrib and bk2k's own). If it's not there, it is **not safe to omit**,
+   no matter how many sites you spot-check and find it identical on — port it
+   into `_variables.scss` explicitly. In practice this means porting
+   `$blue`/`$red`/`$gray-100`/`$font-size-base`/the h1–h5 formula/
+   `$navbar-nav-link-padding-x` (or whatever flat heading sizes the site
+   actually uses) for **every** mandant, not just the ones that look different
+   from their neighbors — `$navbar-nav-link-padding-x` was the last one of
+   these to be caught (vendor default is `1rem`; every mandant checked so far
+   actually uses `0.8rem`, which is *not* the default, it's just as
+   consistently duplicated across TS-constants blocks as the others). `$primary`,
+   `$secondary`, and whichever of `$teal`/`$pink`/`$indigo`/`$yellow` the
+   site's design reuses as accent colors are still the values that vary most
+   dramatically site to site, but that doesn't mean the rest are safe
+   defaults — verify against the vendor source, not against a handful of
+   other sites.
+
+   One variable is **not optional** regardless: `$navbar-light-hover-color`
+   has no `!default` anywhere in the chain (`_navbar.scss`, sitepackage's
    `Theme/global.scss`) — omitting it is a hard compile error, not a visual
    regression.
 
@@ -361,15 +387,185 @@ look — don't re-diagnose from scratch:
   syntax (and the two ways to get that condition wrong that were discovered
   live while wiring up raumuehle's).
 
-All five fixes above only needed doing once, in shared files
+  **Update — this is not a one-off, and the blanket default above is itself
+  only a partial fix.** A full DB audit (`sys_template.constants` for all 37
+  sites, cross-referenced against each mandant's actual `img/` folder) found
+  the broken `{$mandant}`-in-a-constant mistake in `page.logo.file` on ~30 of
+  37 sites, not just raumuehle — evidently a mistake made consistently by
+  whoever set these sites up, not an isolated typo. The blanket
+  `.../img/logo.svg` default above happens to match what ~22 of those broken
+  constants actually intended (they use `.svg`), which is *why* it looked like
+  a complete fix at the time. It silently breaks the other ~8, whose real logo
+  is `.png` (or, for `waschmaschinendoktor`, a **correct, literal, non-broken**
+  constant that the blanket default was clobbering regardless — it doesn't
+  check whether a site's own constant is fine before overriding it). Fixed
+  with one `["{$mandant}" == "<mandant>"]` condition block per affected site,
+  right after the blanket default, each pointing at that mandant's real file:
+  ```typoscript
+  ["{$mandant}" == "cruisensight"]
+      page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+  [END]
+  ```
+  (repeated for `theis`, `sdw`, `cme-beratung`, `lebenslagen`, `ogr-mainz`,
+  `rv-oberstedten`, `waschmaschinendoktor`). Deliberately *not* fixed this way:
+  narrowing the blanket default to an empty-value-only fallback instead would
+  have been architecturally cleaner, but would have **newly broken** the ~22
+  sites currently relying on the blanket default to paper over their own
+  broken `{$mandant}` constant — those weren't touched, so don't remove or
+  narrow the blanket default without first fixing (or replicating this same
+  per-mandant override for) every site still depending on it. If another
+  mandant turns up with a missing or wrong navbar logo, check its own
+  `page.logo.file` constant (DB, not a file — `SELECT constants FROM
+  sys_template WHERE uid = ...`) and its `img/` folder before assuming
+  `.svg` is simply missing; add one more condition block here, not a new
+  investigation from scratch.
+
+- **`InvalidTemplateResourceException` for `Navigation/MainNavigationDropDown`
+  on any page with a sub-page under a top-level nav item** (i.e. any mandant
+  whose page tree isn't completely flat — found while bulk-migrating a batch
+  of mandants, three of which happened to have this in their nav). Nothing to
+  do with SCSS or compile order this time — `packages/sitepackage/Resources/Private/Partials/BootstrapPackage/Page/Navigation/MainNavigation.html`
+  renders `<f:render partial="Navigation/MainNavigationDropDown" .../>`
+  whenever a nav item has children, but that partial file simply never
+  existed anywhere in the project — not in sitepackage, not in
+  `vendor/bk2k/bootstrap-package` (whose own default `MainNavigation.html`
+  inlines its dropdown `<ul class="dropdown-menu">` directly rather than
+  delegating to a separate partial), not in any mandant override. A page
+  without nested nav items never hits the `<f:if condition="{item.children}">`
+  branch that renders it, which is why this went unnoticed until a mandant
+  with a real sub-navigation got migrated. Fixed by creating
+  `packages/sitepackage/Resources/Private/Partials/BootstrapPackage/Page/Navigation/MainNavigationDropDown.html`,
+  mirroring bk2k's own dropdown item markup/classes (`dropdown-item`,
+  `dropdown-icon`, `dropdown-text`) so it renders correctly with the Bootstrap
+  CSS already in place — no new SCSS needed. It recurses into its own partial
+  for a child's `children` (TYPO3's `MenuProcessor` is currently configured
+  for `levels = 2` in `vendor/bk2k/bootstrap-package/Configuration/TypoScript/setup.typoscript`,
+  so that recursion branch is inert today, but future-proofs it if `levels`
+  is ever raised — MainNavigation.html's own `dropdownStyle` "mega" vs
+  "simple" detection already anticipates that case). If you see this
+  exception again, it means this file went missing again, not that a new
+  mandant needs mandant-specific handling.
+
+- **`InvalidTemplateResourceException` for `ContentElements/Frame/General/BackgroundImage`
+  on any page whose content elements render through the animated frame
+  layout** (found independently by three different batches during the same
+  bulk migration this file's fixes came from). Not sitepackage's or bk2k's
+  bug this time — the third-party extension `baschte/content-animations`
+  (`vendor/baschte/content-animations`, `composer.json` requires
+  `"baschte/content-animations": "^2.4"`) ships its own replacement
+  `Layouts/ContentElements/Default.html` (one variant per TYPO3 version,
+  `v10`/`v11`/`v12`) that adds animation support on top of bk2k's own
+  content-element frame layout. Its `v12` variant renders
+  `<f:render partial="Frame/General/BackgroundImage" .../>` — but that exact
+  path never existed anywhere: bk2k's own real background-image partial is at
+  `Partials/ViewHelpers/Frame/BackgroundImage.html` (a different render
+  context, the `<bk2k:frame>` ViewHelper's own dedicated `partialRootPaths`,
+  not `lib.contentElement`'s `ContentElements` ones this layout actually
+  renders under), and the *only* thing under a literal `.../General/`
+  subfolder is the unrelated `Carousel/General/BackgroundImage.html`. A
+  content-animations version mismatch/typo, not something to fix upstream
+  from here. Fixed by creating the three files the broken reference actually
+  needs, under sitepackage's own `ContentElements` partial root (checked
+  before bk2k's own, so this is additive, not an override of anything real):
+  `Resources/Private/Partials/BootstrapPackage/ContentElements/Frame/General/{BackgroundImage,BackgroundImageStyle,BackgroundImageStyleNonce}.html`
+  — straight copies of bk2k's own proven `ViewHelpers/Frame/Background*`
+  content, just with the two inner `<f:render partial="...">` calls
+  repointed from `Frame/BackgroundImageStyle(Nonce)` to
+  `Frame/General/BackgroundImageStyle(Nonce)` to match where the sibling
+  files actually ended up. If `baschte/content-animations` ever ships a fixed
+  `v12/Default.html` (or gets upgraded past whatever version has this typo),
+  these three files become redundant but harmless — check its changelog
+  before assuming they're still needed.
+
+All seven fixes above only needed doing once, in shared files
 (`basis.typoscript`, sitepackage's `composer.json`, sitepackage's
-`global.scss` and `_navigation-offcanvas.scss`) — a mandant migration itself
-doesn't need to repeat any of this except the one-line per-mandant condition
-for an inverted logo. It's documented here so that if a similar "works for
+`global.scss`, `_navigation-offcanvas.scss`, and the two new
+`MainNavigationDropDown.html` / `Frame/General/Background*.html` partials) —
+a mandant migration itself doesn't need to repeat any of this except the
+one-line per-mandant condition for an
+inverted logo (and, per the update above, an occasional per-mandant logo
+*format* condition too). It's documented here so that if a similar "works for
 one mandant, breaks on another" or "silently missing package/rule" report
 comes up again, a version mismatch against bk2k/bootstrap-package, a missing
 `@import`/`replace`, or a constant that can't actually do what its value
 claims is the first thing to check, not the last.
+
+## Optional follow-up: retiring a mandant's legacy TS-constants `scss` block
+
+Every mandant migrated so far still has its *old* color/typography config
+sitting untouched in `sys_template.constants` — a `plugin.bootstrap_package {
+settings.scss { ... } }` block (DB only, invisible in files; find it via
+`SELECT constants FROM sys_template WHERE uid = ...`, not by searching the
+repo). `bk2k\BootstrapPackage\Classes\Service\CompileService::getVariablesFromConstants()`
+injects every value in that block as a Sass variable *before* each of
+`theme.scss`/`global.scss`/`custom.scss` compiles; `_variables.scss`'s own
+plain (non-`!default`) assignments then run immediately after and win. So in
+practice, for any value `_variables.scss` already sets, the matching TS
+constant is dead — redundant, not broken, just a second source of truth that
+can silently diverge from the first if someone edits the wrong one. This
+doesn't fix itself just by migrating a mandant's SCSS files; the gap has to be
+checked and closed deliberately, one mandant at a time.
+
+**Worked example — `waschmaschinendoktor`, including a mistake worth learning
+from.** Its TS-constants `scss` block had 20 keys. The first diff against its
+(already-migrated) `_variables.scss` found four genuinely missing keys —
+`frame-inner-spacing`, `navbar-dark-color`, `navbar-dark-hover-color`,
+`navbar-dark-active-color` (this mandant's navbar is *always* in `inverse`
+mode — `page.theme.navigation.style = inverse` — so those `navbar-dark-*`
+values are its primary navbar text colors, not a rarely-seen mobile-only edge
+case) — and treated the rest (`font-size-base`, the h1–h5 formula, `blue`,
+`red`, `gray-100`) as safe-to-skip shared defaults, per what this doc claimed
+at the time. That verification only checked `--bs-primary`/`--bs-secondary`,
+the `.navbar-inverse` hover color, and `--frame-spacing-xs` — all of which
+*did* match — so the block was removed from the DB looking fully verified.
+
+It wasn't. Those five "shared default" values were never real Sass `!default`s
+anywhere in the codebase (see step 3 above) — they were only ever supplied by
+that TS-constants block, and the site went live with `--bs-blue:#0d6efd`,
+`--bs-red:#dc3545`, `--bs-gray-100:#f8f8f8`, and `--bs-body-font-size:1rem`
+(cascading into every heading size) instead of its real values, for however
+long it took to notice. Fixed by porting all five into `_variables.scss` and
+re-verifying. The lesson, now reflected in step 3: **diff the full `--bs-*`
+custom-property set** (`curl ... | grep -oE -- '--bs-[a-z-]+:[^;]+;'`) between
+before-block-removed and after, not just the handful of variables you already
+suspect might be mandant-specific — a partial verification that happens to
+pass is not the same as a complete one.
+
+**Mechanics** (still correct, unchanged by the above): port every real gap
+into `_variables.scss`, confirm the compiled CSS is *fully* identical to the
+still-present TS-constants baseline — not just spot-checked — then remove only
+the `plugin.bootstrap_package { settings.scss { ... } }` block from that
+site's `constants` field via a direct, scoped `UPDATE sys_template ... WHERE
+uid = <that site only>`, leaving `page.logo.*`, `page.theme.*`,
+`plugin.tx_cookieconsent.settings`, etc. in the same field completely
+untouched (unrelated to SCSS, out of scope). Read the field fresh immediately
+before writing (PHP `PDO`, not the `mysql` CLI's batch/`-N` mode — that
+escapes real newlines/tabs in the field as literal backslash sequences, which
+will corrupt a naive re-parse of a multi-row export; fetching one field's true
+value directly avoids the whole problem), diff old vs. new in full before
+applying, and use a parameterized query — this field routinely contains `{`,
+`}`, `$`, quotes, and German umlauts, none of which should be hand-escaped
+into a shell command.
+
+**Update — done for every migrated mandant.** All ~35 sites have now had this
+same gap-audit-then-blank treatment (parallelized across several batches after
+`waschmaschinendoktor` established the procedure). The false-"shared-default"
+mistake described above recurred in every batch until the verification method
+was corrected to diff the *complete* `--bs-*`/`--frame-*` set rather than a
+handful of expected variables — by the end, confirmed real (non-`!default`)
+gaps across the whole install consistently included `$blue`, `$red`,
+`$gray-100`, `$font-size-base` + the h1–h5 formula (or a site's own flat
+overrides), `$navbar-nav-link-padding-x`, and `$body-bg` when it wasn't
+literally the vendor's own `#fff`/`#ffffff`. Every mandant's
+`sys_template.constants` no longer has a `plugin.bootstrap_package {
+settings.scss { ... } }` block — `_variables.scss` is now the sole source of
+truth for brand/typography values across the entire project. `mk` (no site
+config at all) was skipped, matching its exclusion from the original SCSS
+migration.
+
+If a *new* mandant is migrated in the future, its TS-constants block (if the
+site was set up the old way, with one) still needs this same audit — don't
+assume it's been retired just because every *currently existing* mandant has.
 
 ## Reusable prompt
 
