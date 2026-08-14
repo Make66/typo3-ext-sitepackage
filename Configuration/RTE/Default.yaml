@@ -1,0 +1,38 @@
+# Overrides bootstrap_package's own RTE preset (registered under the same
+# "bootstrap" preset name in ext_localconf.php) to remove toolbar buttons that
+# throw a CKEditor5 "toolbarview-item-unavailable" console error on every
+# editor init, because no plugin backing them is ever loaded:
+#
+# - PageBreak: comes from the legacy "insert" toolbarGroup (see typo3/cms-core's
+#   Classes/Configuration/CKEditor5Migrator.php, TOOLBAR_GROUPS_MAP['insert']).
+#   bootstrap_package/Configuration/RTE/Default.yaml still configures the
+#   toolbar via CKEditor4-style "toolbarGroups", which CKEditor5Migrator
+#   expands into individual buttons for compatibility. No CKEditor5 build in
+#   this project (TYPO3's fixed default plugin list, nor any importModules
+#   entry in any imported preset) ever registers a page-break plugin.
+# - Image (-> insertImage toolbar item): also from the "insert" toolbarGroup.
+#   bootstrap_package's own YAML already disables the Image plugin via
+#   "removePlugins: [image]" - deliberately, presumably in favour of a
+#   dedicated content element for images - but never removed the matching
+#   toolbar button, so it's been dead since the CKEditor5 switch.
+# - Font, FontSize (-> fontFamily/fontSize toolbar items): from the "styles"
+#   toolbarGroup. Neither TYPO3's fixed default plugin list nor bootstrap's
+#   own "extraPlugins" list registers the CKEditor5 Font plugin that would
+#   back these.
+#
+# The full removeButtons list is restated explicitly (not just the 4 new
+# entries) because TYPO3's YAML merge for sequential (list) keys overrides by
+# index, not by appending; restating it avoids relying on that merge behaviour.
+imports:
+    - { resource: "EXT:bootstrap_package/Configuration/RTE/Default.yaml" }
+
+editor:
+    config:
+        removeButtons:
+            - Anchor
+            - Underline
+            - Strike
+            - PageBreak
+            - Image
+            - Font
+            - FontSize

@@ -490,6 +490,93 @@ comes up again, a version mismatch against bk2k/bootstrap-package, a missing
 `@import`/`replace`, or a constant that can't actually do what its value
 claims is the first thing to check, not the last.
 
+### Update 2026-08-14: bk2k/bootstrap-package upgraded 13.0.x → 15.x
+
+`composer.json` now requires `bk2k/bootstrap-package: ^15.0` (was
+`dev-BP_13_0` when the fixes above were written). This is exactly the
+scenario the offcanvas bullet above warned about — v15 does ship a
+navbar-responsive layer 13.0.x lacked, so part of that override is now
+redundant, but v15 also changed enough markup/CSS elsewhere to introduce new
+bugs of its own. Found and fixed while debugging reports on
+`buergerstiftung.ddev.site` of black-on-black (then white-on-white) dropdown
+menus and a blank gap above the header:
+
+- **`MainNavigationDropDown.html` is stale.** The partial documented above
+  (mirroring bk2k 13.0.x's `dropdown-item`/`dropdown-icon`/`dropdown-text`
+  markup) predates v15's own native dropdown partial, which uses different
+  classes (`.nav-link-dropdown` inside a `.dropdown-nav` grid, not
+  `.dropdown-item`). Renamed sitepackage's copy aside
+  (`Navigation/MainNavigationDropDown.html.v13-override-disabled`) so v15's
+  own partial resolves instead. Harmless where nothing else depends on the
+  old classes; **not** effective on any mandant with its own fileadmin-level
+  `Navigation/Main.html` override that renders `.dropdown-item` inline
+  itself (see next point) — those never call this partial at all.
+
+- **Dark-skin (`.navbar-inverse`) dropdown text unreadable — black-on-black,
+  then white-on-white.** bk2k's `Scss/components/navbar/_style.scss` sets
+  `--bs-dropdown-color`/`--bs-dropdown-bg` for the panel under
+  `.navbar-inverse .dropdown-menu`, but never sets `--bs-dropdown-link-color`
+  (a separate variable `.dropdown-item` uses for its own text,
+  `Contrib/bootstrap5/scss/_dropdown.scss:36,181`) or `--bs-nav-link-color`
+  (what v15's `.nav-link-dropdown` uses instead). Both default to
+  `var(--bs-body-color)` — near-black — landing on the panel's now-dark
+  background. First fix pass set item text to white on hover/focus but
+  missed that `--bs-dropdown-link-hover-bg` (default `var(--bs-tertiary-bg)`,
+  a light neutral) was *also* never overridden — white text on a near-white
+  hover background. Fixed with a new partial,
+  `Resources/Public/Scss/Theme/_navigation-dropdown-inverse-color.scss`
+  (imported from `global.scss`), setting color **and** hover/focus
+  background directly on both `.dropdown-item` and `.nav-link-dropdown`
+  under `.navbar-inverse .dropdown-menu` — covers whichever of the (now
+  three) navigation-partial variants a given mandant renders, without
+  depending on bk2k's own variable chain for either.
+
+- **Dropdown panel too narrow, cutting off longer item text.** bk2k's
+  `.dropdown-menu { width: 100% }` (`Scss/components/navbar/_dropdown.scss`)
+  is only reset to `width: auto` at desktop under a
+  `.nav-style-simple`/`.nav-style-mega` class — added by bk2k's own
+  `MainNavigation.html` alongside the dropdown-menu it wraps. Several
+  mandants (`buergerstiftung` confirmed; likely `cruisensight`,
+  `kulturleben-rheinhessen`, `stiftung-friedenskirche`, `event-florist` too —
+  see their fileadmin-override notes in `MIGRATION_SUMMARY.md`) render
+  navigation from their *own*, older, fully-inline
+  `fileadmin/templates/<mandant>/.../Navigation/Main.html`, which predates
+  that class convention and never adds it — so the panel stayed pinned to
+  100% of its trigger `<li>`'s width (sized for the short top-level label),
+  clipping longer submenu text. Fixed with a new partial,
+  `Resources/Public/Scss/Theme/_navigation-dropdown-width.scss`, resetting
+  width for any non-mega `.dropdown-menu` regardless of that class.
+
+- **Blank gap above the header** (confirmed on `buergerstiftung`; likely
+  present anywhere else the pattern below appears). bk2k's `_fixed.scss`
+  changed `.navbar-fixed-top` from `position: fixed` (needs a page wrapper to
+  manually reserve space beneath it) to `position: sticky` (self-reserving,
+  in normal flow) somewhere between 13.0.x and 15.x. **35 of the ~37 mandant**
+  `fileadmin/templates/<mandant>/custom.scss` **files** still carry a
+  hand-tuned `.body-bg-top { padding-top: ...px; }` block (values from 70px
+  to 280px, varying per breakpoint and per mandant) written for the old
+  fixed-position behavior — now pure dead space stacked above the
+  self-reserving sticky header. Fixed **only on `buergerstiftung`** so far
+  (removed the block, replaced with a comment explaining why); the other
+  ~34 mandants still have the stale padding and have not been touched —
+  before bulk-fixing, confirm per-mandant whether `theme.navigation.type`
+  actually uses the fixed/sticky variant (some may use plain `navbar-top`,
+  where this padding could mean something else, e.g. clearing an
+  intentionally oversized overlapping logo rather than compensating for
+  fixed positioning) rather than assuming every occurrence of the pattern is
+  the same bug.
+
+None of this touched `vendor/bk2k/bootstrap-package` itself (wiped on every
+`composer update`) — all four fixes live under `packages/sitepackage/Resources/`,
+either a renamed-aside stale partial or new SCSS partials imported from
+`global.scss`.
+
+**Also noticed, not fixed as part of this**: `packages/sitepackage/ext_emconf.php`
+still declares `'bootstrap_package' => '13.0.0-13.99.99'` as its TYPO3
+extension dependency constraint, disagreeing with `composer.json`'s
+`bk2k/bootstrap-package: ^15.0`. Worth reconciling before it causes a
+confusing dependency-resolution error for someone who hasn't read this file.
+
 ## Optional follow-up: retiring a mandant's legacy TS-constants `scss` block
 
 Every mandant migrated so far still has its *old* color/typography config

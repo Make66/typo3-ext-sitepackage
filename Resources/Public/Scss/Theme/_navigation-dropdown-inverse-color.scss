@@ -1,0 +1,39 @@
+/* Dropdown link color on the dark (navbar-inverse) skin.
+
+   bootstrap-package's own .navbar-inverse .dropdown-menu rule (Scss/components/
+   navbar/_style.scss) sets --bs-dropdown-color and --bs-dropdown-bg for the dark
+   panel, but never touches --bs-dropdown-link-color — a separate variable that
+   individual .dropdown-item links use for their own text color (Contrib/
+   bootstrap5/scss/_dropdown.scss:36,181). That variable's default value is
+   var(--bs-body-color), i.e. $body-color ($gray-900) — the same near-black used
+   for --bs-dropdown-bg's var(--bs-dark). Result: near-black link text on a
+   near-black panel.
+
+   bootstrap-package's newer .nav-link-dropdown markup (v15's own
+   MainNavigationDropDown.html) has the same gap through a different variable:
+   .nav-link takes its color from --bs-nav-link-color (Bootstrap's Nav
+   component), which .navbar-inverse never sets either.
+
+   Setting color directly on both class names, rather than re-declaring the
+   right custom property per markup variant, keeps this working regardless of
+   which of taketools-com's several navigation partial forks (sitepackage's own
+   override, a mandant's own fileadmin override, or bootstrap-package's native
+   v15 partial) a given site ends up rendering.
+
+   Same gap on :hover/:focus: --bs-dropdown-link-hover-bg defaults to
+   var(--bs-tertiary-bg) (Contrib/bootstrap5/scss/_variables.scss:1255) — a
+   light neutral, never overridden for the dark skin either. Text was going
+   white while the hover background stayed near-white. Bootstrap's own
+   .dropdown-menu-dark hover treatment (same file, dropdown-dark-link-hover-bg)
+   uses a translucent white wash over the existing dark panel — reused here for
+   the same reason: it works regardless of the panel's exact dark shade. */
+.navbar-inverse .dropdown-menu .dropdown-item,
+.navbar-inverse .dropdown-menu .nav-link-dropdown {
+  color: var(--bs-gray-300);
+
+  &:hover,
+  &:focus {
+    color: #fff;
+    background-color: rgba(255, 255, 255, .15);
+  }
+}

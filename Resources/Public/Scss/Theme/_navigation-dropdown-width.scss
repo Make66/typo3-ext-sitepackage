@@ -1,0 +1,25 @@
+/* Dropdown panel width on markup that skips bootstrap-package's nav-style
+   classes.
+
+   bootstrap-package's own .dropdown-menu { width: 100% } (Scss/components/
+   navbar/_dropdown.scss) is reset to width: auto at desktop only under
+   .nav-style-simple/.nav-style-mega — classes added by bootstrap-package's own
+   MainNavigation.html (and sitepackage's former override) alongside the
+   dropdown-menu they wrap. Several mandants (e.g. buergerstiftung) render their
+   navigation from their own older, fully inline Main.html
+   (fileadmin/templates/{mandant}/.../Navigation/Main.html) that predates that
+   convention and never adds either class. Without the reset, "100%" resolves
+   against the dropdown's own positioned ancestor — the trigger <li>, sized to
+   fit only the short top-level label — so the panel comes out narrower than
+   the (longer) submenu item text, cutting it off instead of wrapping or
+   growing to fit.
+
+   Scoped to non-mega dropdowns only, mirroring bootstrap-package's own
+   .nav-style-simple behaviour: mega menus deliberately span the header
+   container and must keep their own explicit width rules. */
+@media (min-width: $grid-float-breakpoint) {
+  .navbar-mainnavigation .dropdown-menu:not(.dropdown-menu-mega) {
+    width: auto;
+    min-width: max-content;
+  }
+}
