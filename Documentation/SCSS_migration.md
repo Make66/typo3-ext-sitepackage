@@ -557,25 +557,96 @@ menus and a blank gap above the header:
   to 280px, varying per breakpoint and per mandant) written for the old
   fixed-position behavior — now pure dead space stacked above the
   self-reserving sticky header. Fixed **only on `buergerstiftung`** so far
-  (removed the block, replaced with a comment explaining why); the other
-  ~34 mandants still have the stale padding and have not been touched —
-  before bulk-fixing, confirm per-mandant whether `theme.navigation.type`
-  actually uses the fixed/sticky variant (some may use plain `navbar-top`,
-  where this padding could mean something else, e.g. clearing an
-  intentionally oversized overlapping logo rather than compensating for
-  fixed positioning) rather than assuming every occurrence of the pattern is
-  the same bug.
+  (removed the block, replaced with a comment explaining why).
+
+  **Update 2026-08-14 (later same day): fixed on the remaining 35 mandants
+  too.** Queried `sys_template.constants` for every mandant's
+  `page.theme.navigation.type` (the caution above, about some mandants
+  possibly using plain `navbar-top` where the padding might mean something
+  else) turned out moot in practice — **all 35** (`buergerstiftung` plus the
+  36 mandants total that carry this pattern) have
+  `page.theme.navigation.type = top`, i.e. every one of them renders
+  `navbar-top navbar-fixed-top` and is affected identically. Removed the
+  stale `padding-top` block from all 35 remaining
+  `fileadmin/templates/<mandant>/custom.scss` files (backed up first —
+  `public/fileadmin` isn't a git repo, unlike `packages/sitepackage`), same
+  fix as buergerstiftung. Two mandants (`7d`, `hochschullehre`) mix
+  unrelated `font-family` declarations into the same `.body-bg-top`
+  selector — only the `padding-top` lines were removed there, the font
+  rules were kept. Verified: braces balanced in all 35 files, spot-checked
+  6 sites live (`hochschullehre`, `blitzblume`, `kulturleben`, `stiftung`,
+  `cruise`, `event-florist`) — headers all render flush at the top with no
+  gap, nothing else visibly broke. `waschmaschinendoktor` returns HTTP 500
+  both before and after this change — confirmed unrelated
+  (`TYPO3Fluid\Fluid\Core\Parser\Exception`: the `<bk2k:format.trim>`
+  ViewHelper can't be resolved in a `Frame/General/BackgroundImage` partial
+  — a separate, pre-existing bug, not investigated further here).
 
 None of this touched `vendor/bk2k/bootstrap-package` itself (wiped on every
-`composer update`) — all four fixes live under `packages/sitepackage/Resources/`,
-either a renamed-aside stale partial or new SCSS partials imported from
-`global.scss`.
+`composer update`) — all four fixes live under `packages/sitepackage/Resources/`
+plus (for the whitespace fix) each mandant's own `fileadmin/templates/<mandant>/custom.scss`.
 
-**Also noticed, not fixed as part of this**: `packages/sitepackage/ext_emconf.php`
-still declares `'bootstrap_package' => '13.0.0-13.99.99'` as its TYPO3
-extension dependency constraint, disagreeing with `composer.json`'s
-`bk2k/bootstrap-package: ^15.0`. Worth reconciling before it causes a
-confusing dependency-resolution error for someone who hasn't read this file.
+**Also noticed while writing this up, since fixed**: `packages/sitepackage/ext_emconf.php`
+briefly disagreed with `composer.json` on the bk2k/bootstrap-package version
+(`'13.0.0-13.99.99'` as the TYPO3 extension dependency constraint vs.
+composer's `^15.0`) — already reconciled to `'15.0.0-15.99.99'` by the time
+this note was corrected, not something that needed action here.
+
+**Update 2026-08-14: stale dropdown partial removed.** The renamed-aside
+`Navigation/MainNavigationDropDown.html.v13-override-disabled` mentioned
+above has been deleted outright (it's in git history if ever needed again;
+`packages/sitepackage` is its own git repo).
+
+**Update 2026-08-14: two more buergerstiftung-specific bugs, and a recurring
+pattern across its sibling mandants.** Debugging live reports on
+`buergerstiftung.ddev.site` surfaced two bugs specific to its own
+`custom.scss` (not the shared sitepackage/vendor files above), both the same
+shape as everything else in this update — v15-era CSS beating a v13-era
+mandant override on specificity or box-model assumptions it no longer holds:
+
+- **Main navigation not centered.** `.navbar-nav { display:table; margin:0
+  auto; float:none }` is buergerstiftung's own centering trick: a
+  `display:table` element shrinks to fit its content, so auto-margins center
+  it. But bk2k v15's own `.navbar-mainnavigation .navbar-nav { width:100% }`
+  (`Scss/components/navbar/_dropdown.scss`) is a more specific selector and
+  wins the `width` property regardless of cascade order, forcing the table
+  to full width and leaving no slack for the margin to center into. Fixed by
+  adding a same-specificity `.navbar-mainnavigation .navbar-nav { width:
+  auto; }` override at the `lg` breakpoint in buergerstiftung's own
+  `custom.scss`.
+- **Header flickers horizontally while scrolling** (reported specifically on
+  `/spenden`, reproducible anywhere). `.logo` is `width:100%` with an
+  additional `margin: 10px 0 30px 5px` at desktop — since margin always sits
+  outside a border-box element regardless of box-sizing, that 5px left
+  margin permanently overflowed the page by 5px. bk2k's stock
+  `bootstrap.stickyheader.js` toggles a `.navbar-transition` class on a bare
+  `scrollY > 120` check with **no hysteresis** (confirmed empirically: it
+  flips on nearly every scroll tick while scroll position hovers near that
+  boundary), and `.navbar-transition .logo` resets margin to `0` — so the
+  5px overflow was appearing and disappearing several times a second during
+  normal scroll, i.e. the page width itself was flickering. Fixed by
+  dropping the redundant left margin (the existing `padding: 5px` already
+  gives the same visual inset without adding to the box's outer width).
+
+Both fixes are (deliberately) not portable back into shared sitepackage
+code: they're specific to *this* `.navbar-nav`/`.logo` CSS shape, not
+something every mandant does.
+
+However, **the same two bugs, from byte-identical copied CSS, were then
+confirmed on 3 of buergerstiftung's sibling mandants** — `event-florist`,
+`kulturleben-rheinhessen`, `stiftung-friedenskirche` (the same three that
+share buergerstiftung's own fileadmin-level `Navigation/Main.html`
+override, evidently built together as a set). A repo-wide grep for the
+`display: table; ... margin: 0 auto;` nav-centering pattern
+(`grep -l "display: table;" .../custom.scss | xargs grep -l "margin: 0 auto;"`)
+confirms these are the **only** four mandants with this exact code —
+`cruisensight` (the fourth mandant with its own `Main.html` override) uses a
+different, unaffected centering mechanism for its logo image only, not the
+nav. Applied the identical two fixes to all three. **If another
+mandant is ever reported with an uncentered main nav or a horizontally
+flickering header, grep for this same pattern before assuming it's a new
+bug** — it very likely means someone copied this same older centering CSS
+into a new mandant, in which case the same two fixes apply verbatim.
 
 ## Optional follow-up: retiring a mandant's legacy TS-constants `scss` block
 
