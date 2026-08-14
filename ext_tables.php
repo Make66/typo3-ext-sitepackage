@@ -7,8 +7,3 @@ if (!defined('TYPO3')) {
 }
 
 ExtensionManagementUtility::addStaticFile('sitepackage', 'Configuration/TypoScript', 'Taketool Sitepackage');
-
-// "Save + Close" hook
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['Backend\Template\Components\ButtonBar']['getButtonsHook'][] = 'Taketool\Sitepackage\Hooks\SaveCloseHook->addSaveCloseButton';
-// "Save + View" hook
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['Backend\Template\Components\ButtonBar']['getButtonsHook'][] = 'Taketool\Sitepackage\Hooks\SaveShowHook->addSaveShowButton';
