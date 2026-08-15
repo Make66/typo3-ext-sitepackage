@@ -18,6 +18,17 @@ page {
         custom >
         custom = fileadmin/templates/{$mandant}/custom.scss
     }
+
+    # Overrides bk2k/bootstrap-package's own bootstrap.stickyheader.min.js
+    # (registered in vendor/bk2k/bootstrap-package/Configuration/TypoScript/
+    # General/page.typoscript) with a version that adds scroll-threshold
+    # hysteresis — see Resources/Public/JavaScript/bootstrap.stickyheader.js
+    # for why (fixes header "flickering" while scrolling, seen on
+    # buergerstiftung, hochschullehre, and others).
+    includeJSFooterlibs {
+        bootstrap_stickyheader >
+        bootstrap_stickyheader = EXT:sitepackage/Resources/Public/JavaScript/bootstrap.stickyheader.js
+    }
     10 {
         partialRootPaths.1 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/Page/
         partialRootPaths.2 = fileadmin/templates/{$mandant}/bootstrap_package/Resources/Private/Partials/Page/
