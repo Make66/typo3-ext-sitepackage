@@ -20,3 +20,10 @@ services:
         command: 'fix-access-rights'
         description: 'Migrate legacy "table:field:value:ALLOW/DENY" be_groups.explicit_allowdeny entries to the format TYPO3 actually reads'
         schedulable: false
+
+  Taketool\Sitepackage\Command\NewsToFeUsersCommand:
+    tags:
+      - name: 'console.command'
+        command: 'news-to-fe-users'
+        description: 'Convert news records in a pid into fe_users records in a pid (built for the Hochschullehre "Mitglieder" folder, pid 2111)'
+        schedulable: false
