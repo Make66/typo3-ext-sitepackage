@@ -1,8 +1,169 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="ddev t3v14" confirmBeforeUploading="false" autoUploadExternalChanges="true">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="ddev taketool-eu" confirmBeforeUploading="false" confirmBeforeDeletion="false" autoUploadExternalChanges="true">
+    <option name="confirmBeforeDeletion" value="false" />
     <option name="confirmBeforeUploading" value="false" />
     <serverData>
+      <paths name="GUI3">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H10">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H10_test">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H11">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H13">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H14">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H15">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H15-take-tool.org">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H16">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H4">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H5">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H5 SFTP">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H7">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H8">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="H9 (1)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="coaches">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="coaches2">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ddev t3v10">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ddev t3v12">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ddev t3v13">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="ddev t3v14">
         <serverdata>
           <mappings>
@@ -21,6 +182,78 @@
         <serverdata>
           <mappings>
             <mapping deploy="sitepackage" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="h-rp">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="h14-kurstool">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="https://coaches2.ddev.site/">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="phpBB">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="salsa.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="stripe">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="t3v14">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="taketool-eu/sitepackage">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="taketools-com">
+        <serverdata>
+          <mappings>
+            <mapping local="$USER_HOME$/dev/ddev/t3v14/vendor/bk2k/bootstrap-package" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

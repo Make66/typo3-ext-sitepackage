@@ -689,21 +689,41 @@ before-block-removed and after, not just the handful of variables you already
 suspect might be mandant-specific — a partial verification that happens to
 pass is not the same as a complete one.
 
-**Mechanics** (still correct, unchanged by the above): port every real gap
-into `_variables.scss`, confirm the compiled CSS is *fully* identical to the
-still-present TS-constants baseline — not just spot-checked — then remove only
-the `plugin.bootstrap_package { settings.scss { ... } }` block from that
-site's `constants` field via a direct, scoped `UPDATE sys_template ... WHERE
-uid = <that site only>`, leaving `page.logo.*`, `page.theme.*`,
-`plugin.tx_cookieconsent.settings`, etc. in the same field completely
-untouched (unrelated to SCSS, out of scope). Read the field fresh immediately
-before writing (PHP `PDO`, not the `mysql` CLI's batch/`-N` mode — that
-escapes real newlines/tabs in the field as literal backslash sequences, which
-will corrupt a naive re-parse of a multi-row export; fetching one field's true
-value directly avoids the whole problem), diff old vs. new in full before
-applying, and use a parameterized query — this field routinely contains `{`,
-`}`, `$`, quotes, and German umlauts, none of which should be hand-escaped
-into a shell command.
+**Automated as of `mig12 --legacy-scss-constants`** (`Classes/Command/Mig12Command.php`).
+The command implements exactly the "port every real gap first, then only
+remove what's fully covered" rule below as a repeatable, dry-runnable step:
+for every `sys_template` row with a `plugin.bootstrap_package` block/dotted
+lines, it parses the DB keys and that mandant's `_variables.scss` keys and
+removes the DB side only if **every** DB key is also present in
+`_variables.scss` — anything short of that is reported (which key is
+missing) and left untouched, never guessed at. This directly encodes the
+`waschmaschinendoktor` lesson below: presence-in-`_variables.scss` is the
+only thing checked, precisely because that's the one fact that determines
+whether removing the DB value can change the compiled output (Sass variables
+are late-binding-wins, so a DB key that's *also* redefined in
+`_variables.scss` is already fully shadowed regardless of its value — only a
+key that exists **nowhere else** is a real risk). Still reads the field fresh
+immediately before writing and uses a parameterized query, per the mechanics
+below — just via TYPO3's own `ConnectionPool`/`QueryBuilder` instead of a
+one-off PDO script. Run `mig12 --legacy-scss-constants --dry-run` first and
+read its table before running for real.
+
+**Mechanics** (what the command above automates; still correct as manual
+fallback documentation, e.g. for a one-off row the command reports as unsafe):
+port every real gap into `_variables.scss`, confirm the compiled CSS is
+*fully* identical to the still-present TS-constants baseline — not just
+spot-checked — then remove only the `plugin.bootstrap_package { settings.scss
+{ ... } }` block from that site's `constants` field via a direct, scoped
+`UPDATE sys_template ... WHERE uid = <that site only>`, leaving `page.logo.*`,
+`page.theme.*`, `plugin.tx_cookieconsent.settings`, etc. in the same field
+completely untouched (unrelated to SCSS, out of scope). Read the field fresh
+immediately before writing (PHP `PDO`, not the `mysql` CLI's batch/`-N` mode —
+that escapes real newlines/tabs in the field as literal backslash sequences,
+which will corrupt a naive re-parse of a multi-row export; fetching one
+field's true value directly avoids the whole problem), diff old vs. new in
+full before applying, and use a parameterized query — this field routinely
+contains `{`, `}`, `$`, quotes, and German umlauts, none of which should be
+hand-escaped into a shell command.
 
 **Update — done for every migrated mandant.** All ~35 sites have now had this
 same gap-audit-then-blank treatment (parallelized across several batches after

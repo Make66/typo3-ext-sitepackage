@@ -11,7 +11,7 @@ services:
     tags:
       - name: 'console.command'
         command: 'mig12'
-        description: 'Migrate all "powermail_pi1" plugins to the content element "Powermail" (TYPO3 v12 only)'
+        description: 'Clean up legacy TYPO3 v11 data blocking the v12 migration: CType="list" plugin records, sys_category_record_mm duplicates, powermail NULL marketing columns, and (opt-in) fully-covered legacy bootstrap_package scss constants (see --help)'
         schedulable: false
 
   Taketool\Sitepackage\Command\FixExplicitAllowDenyFormatCommand:
