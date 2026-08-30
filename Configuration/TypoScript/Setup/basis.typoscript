@@ -123,6 +123,26 @@ lib.contentElement {
     partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
 }
 
+# bk2k's own tt_content.<CType> definitions (vendor/bk2k/bootstrap-package/
+# Configuration/TypoScript/ContentElement/Element/*.typoscript) each do their
+# own `=< lib.contentElement` copy inside bk2k's static template, included
+# before this one — a TypoScript parse-time snapshot, not a live reference,
+# so the partialRootPaths.30 addition above never reaches any of them. Only
+# bites when a CType actually renders the Frame/General/BackgroundImage
+# partial (animated frame + background image), so it went unnoticed for
+# most CTypes — see SCSS_migration.md's "InvalidTemplateResourceException
+# for ContentElements/Frame/General/BackgroundImage" section for the first
+# two occurrences (media2click_content/media2click_iframe, generic frame
+# layout). menu_section is the third: 500s site-wide wherever it's used
+# (e.g. a shared footer/sitemap element), since bk2k defines it the same
+# `=< lib.contentElement` way. Re-apply the fix directly on it and its
+# sibling menu_section_pages; if another bk2k CType turns up with the same
+# exception, add it here rather than re-diagnosing from scratch.
+tt_content {
+    menu_section.partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
+    menu_section_pages.partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
+}
+
 # Bildgrößen
 lib.contentElement.settings.responsiveimages.variants {
     default.width = 1900

@@ -582,6 +582,53 @@ menus and a blank gap above the header:
   ViewHelper can't be resolved in a `Frame/General/BackgroundImage` partial
   — a separate, pre-existing bug, not investigated further here).
 
+**Update 2026-08-30: the same `Frame/General/BackgroundImage` gap, third
+occurrence — `menu_section` on `taketool-eu`'s `scheer` mandant, plus the
+reason it was so hard to pin down.** Reported as a site-wide HTTP 500 on
+`scheer.ddev.site` (not this project — `taketool-eu`, a sibling project on
+the same shared `sitepackage`) right after that project's own
+`bk2k/bootstrap-package` bump to `^15.0`. Same
+`InvalidTemplateResourceException` for `ContentElements/Frame/General/BackgroundImage`,
+this time via `tt_content.menu_section` (bk2k's own "Menu/Sections: Index"
+CType, `Configuration/TypoScript/ContentElement/Element/MenuSection.typoscript`,
+`tt_content.menu_section =< lib.contentElement`) — a *shared* content
+element (site footer/sitemap), so it 500s every single page, not just one.
+This confirmed the original fix's real limitation, not a new bug:
+`lib.contentElement.partialRootPaths.30` only reaches CTypes that reference
+`lib.contentElement` *after* this file runs in the include cascade — bk2k
+defines nearly all of its own CTypes (`text`, `textmedia`, `menu_section`,
+~45 others) via the same `=< lib.contentElement` copy *inside its own
+static template*, always included before this one, so the fix structurally
+never covers any of them. It only "worked" broadly before because most
+content elements never actually render the animated-frame/background-image
+branch. Fixed the same way as before, applied directly on the specific
+CType rather than the shared object: `tt_content.menu_section.partialRootPaths.30`
+and the sibling `tt_content.menu_section_pages.partialRootPaths.30`, both
+pointing at the same three-file partial set. **If another bk2k CType turns
+up with this exception, add it here the same way — the underlying gap isn't
+fixed for any CType this file doesn't explicitly list.**
+
+Why this took far longer to diagnose than it should have, worth flagging
+generally: on `taketool-eu`, this fix (and, it turned out, *every* override
+in `Setup/basis.typoscript` and `Setup/dp_cookieconsent.typoscript` —
+including an already-shipped, unrelated cookie-consent JS fix) silently had
+zero effect for a while, with no error anywhere. Cause: that project's local
+checkout of this repo had `Configuration/TypoScript/Setup/` and
+`Configuration/TypoScript/Constants/` renamed to lowercase (`setup/`,
+`constants/`) on disk, while both `setup.typoscript`/`constants.typoscript`
+still `@import` the capitalized paths. macOS's case-insensitive filesystem
+hides this completely — every `cat`/`ls`/editor call resolves fine — but the
+Linux-based DDEV web container is case-sensitive, so every `@import` in both
+files failed silently there, and TYPO3's TypoScript parser doesn't error on
+an unresolvable `@import`, it just imports nothing. **If a `sitepackage`
+override appears correctly written and case-correct in `git`, but has zero
+observable effect on a Linux target, check the actual on-disk casing of
+`Configuration/TypoScript/Setup/` and `Constants/` on that target before
+re-diagnosing the TypoScript itself** — `git ls-files | grep -o
+'^Configuration/TypoScript/[^/]*/'` from within this repo confirms this
+repo's own casing is correct; the drift happened in the *consuming*
+project's checkout, not here.
+
 None of this touched `vendor/bk2k/bootstrap-package` itself (wiped on every
 `composer update`) — all four fixes live under `packages/sitepackage/Resources/`
 plus (for the whitespace fix) each mandant's own `fileadmin/templates/<mandant>/custom.scss`.
