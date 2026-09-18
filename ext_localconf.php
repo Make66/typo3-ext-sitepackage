@@ -23,3 +23,10 @@ if ($versionInformation->getMajorVersion() < 12) {
       @import "EXT:sitepackage/Configuration/page.tsconfig"
    ');
 }
+
+// Override bootstrap_package's "bootstrap" RTE preset (same preset name, own
+// file) to remove toolbar buttons with no backing CKEditor5 plugin - see
+// Configuration/RTE/Default.yaml for details. Requires sitepackage to load
+// after bootstrap_package, enforced via the 'bootstrap_package' dependency
+// in ext_emconf.php.
+$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['bootstrap'] = 'EXT:sitepackage/Configuration/RTE/Default.yaml';

@@ -3,3 +3,13 @@ plugin.tx_dp_cookieconsent._LOCAL_LANG.de {
     allowall = Alle akzeptieren.
     dismiss = Auswahl zulassen.
 }
+
+# Overrides dirkpersky/typo3-dp_cookieconsent's own dp_cookieconsent.js
+# (registered via page.includeJSFooter in vendor's
+# Configuration/TypoScript/setup.typoscript) with a copy that drops its
+# detectRobot()/Googlebot user-agent branch — see
+# Resources/Public/JavaScript/dp_cookieconsent.js for why.
+page.includeJSFooter {
+    dp_cookieconsent >
+    dp_cookieconsent = EXT:sitepackage/Resources/Public/JavaScript/dp_cookieconsent.js
+}

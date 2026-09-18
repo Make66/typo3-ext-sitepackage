@@ -1,4 +1,6 @@
 @import 'EXT:seo/Configuration/TypoScript/XmlSitemap/setup.typoscript'
+@import 'EXT:bootstrap_grids/Configuration/TypoScript/Frontend/setup.typoscript'
+@import 'EXT:gridelements/Configuration/TypoScript/backend.typoscript'
 
 config {
     spamProtectEmailAddresses = 1
@@ -16,15 +18,129 @@ page {
         custom >
         custom = fileadmin/templates/{$mandant}/custom.scss
     }
+
+    # Overrides bk2k/bootstrap-package's own bootstrap.stickyheader.min.js
+    # (registered in vendor/bk2k/bootstrap-package/Configuration/TypoScript/
+    # General/page.typoscript) with a version that adds scroll-threshold
+    # hysteresis — see Resources/Public/JavaScript/bootstrap.stickyheader.js
+    # for why (fixes header "flickering" while scrolling, seen on
+    # buergerstiftung, hochschullehre, and others).
+    includeJSFooterlibs {
+        bootstrap_stickyheader >
+        bootstrap_stickyheader = EXT:sitepackage/Resources/Public/JavaScript/bootstrap.stickyheader.js
+    }
     10 {
         partialRootPaths.1 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/Page/
         partialRootPaths.2 = fileadmin/templates/{$mandant}/bootstrap_package/Resources/Private/Partials/Page/
+
+        # {$page.logo.file} (TS Constants Editor, bootstrap_package's own
+        # constants.typoscript) is a plain string constant — TypoScript does not
+        # substitute {$mandant} (or any other constant) *inside* another
+        # constant's own value, only inside setup. Some site's DB-stored
+        # constants record was set to the literal, never-expanded string
+        # "fileadmin/templates/{$mandant}/img/logo.svg", so StaticFilesProcessor
+        # tries to load a file at that literal (invalid) path, fails silently,
+        # and the navbar-brand falls back to the site-title text. {$mandant}
+        # *does* correctly resolve here because this is setup, not a constant —
+        # same mechanism as includeCSS above — so overriding the DataProcessor's
+        # input directly bypasses the broken constant for every mandant at once.
+        dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.svg
     }
 }
+
+# Inverted/scrolled-state logo: sitepackage's new standard is that a mandant's
+# own inverted logo, if it has one, lives at fileadmin/templates/<mandant>/img/logo_dark.svg
+# (see SCSS_migration.md "Assets" section). Naming wasn't consistent before this
+# (e.g. calden uses logo_inverted.svg) so this is opted in per mandant via
+# condition rather than defaulted globally like the normal logo above — add one
+# more `[{$mandant} == "..."]` block here per mandant as they adopt
+# logo_dark.svg, instead of guessing a universal filename and silently 404ing
+# for everyone else.
+#
+# Two syntaxes that look reasonable here are actually broken on this TYPO3
+# version — noting both so nobody re-tries them:
+#   - `[{$mandant} == "raumuehle"]` — TypoScript substitutes the constant as a
+#     bare, unquoted token before the condition is evaluated
+#     (`[raumuehle == "raumuehle"]`), which is invalid ExpressionLanguage
+#     syntax and just silently evaluates false. Fix: quote the constant
+#     yourself in the condition text (`"{$mandant}"`), so substitution
+#     produces a valid quoted string on both sides.
+#   - `[site.identifier == "raumuehle"]` — TYPO3's condition ExpressionLanguage
+#     variable resolver here accesses `.identifier` via direct (reflection)
+#     property access, and `Site::$identifier` is `protected`, not public, on
+#     this TYPO3 version — throws a fatal `Error` (full site 500, not a silent
+#     no-op), caught live while testing this exact line.
+["{$mandant}" == "raumuehle"]
+    page.10.dataProcessing.1553883874.files.inverted = fileadmin/templates/{$mandant}/img/logo_dark.svg
+[END]
+
+# Per-mandant logo-format overrides: the blanket default above
+# (dataProcessing.1553883874.files.normal = .../img/logo.svg) only exists because
+# most mandants' own {$page.logo.file} TS constant is itself broken — literally
+# the unexpanded string "fileadmin/templates/{$mandant}/img/logo.svg" (same class
+# of bug as the raumuehle fix above; TypoScript constants can't reference other
+# constants like {$mandant} within their own default value, and this mistake was
+# made consistently across most of this install's ~37 sites' Constants Editor
+# records, not just raumuehle's). The blanket ".svg" default happens to match
+# what most of those broken constants actually intended, but silently breaks any
+# mandant whose real logo is a different format or filename — confirmed via a
+# full DB audit of every site's constants cross-referenced against what's
+# actually in each mandant's img/ folder. These 8 need their own real filename;
+# waschmaschinendoktor's own {$page.logo.file} constant is not even broken
+# (it's a correct, literal, working path) — it was simply being clobbered by the
+# blanket default above having no awareness of it. Add one more
+# ["{$mandant}" == "..."] block here (mandant folder name, not the site
+# identifier — they differ for several of these) whenever another mandant turns
+# up with a missing/wrong navbar logo; check its img/ folder and its own
+# {$page.logo.file} constant before assuming ".svg" is simply missing.
+["{$mandant}" == "cruisensight"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "theis"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "sdw"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "cme-beratung"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "lebenslagen"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "ogr-mainz"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "rv-oberstedten"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "waschmaschinendoktor"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
 
 # Angepasste ContentElemente (Bildueberschrift verlinkt für Rollover Effekt)
 lib.contentElement {
     partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
+}
+
+# bk2k's own tt_content.<CType> definitions (vendor/bk2k/bootstrap-package/
+# Configuration/TypoScript/ContentElement/Element/*.typoscript) each do their
+# own `=< lib.contentElement` copy inside bk2k's static template, included
+# before this one — a TypoScript parse-time snapshot, not a live reference,
+# so the partialRootPaths.30 addition above never reaches any of them. Only
+# bites when a CType actually renders the Frame/General/BackgroundImage
+# partial (animated frame + background image), so it went unnoticed for
+# most CTypes — see SCSS_migration.md's "InvalidTemplateResourceException
+# for ContentElements/Frame/General/BackgroundImage" section for the first
+# two occurrences (media2click_content/media2click_iframe, generic frame
+# layout). menu_section is the third: 500s site-wide wherever it's used
+# (e.g. a shared footer/sitemap element), since bk2k defines it the same
+# `=< lib.contentElement` way. Re-apply the fix directly on it and its
+# sibling menu_section_pages; if another bk2k CType turns up with the same
+# exception, add it here rather than re-diagnosing from scratch.
+tt_content {
+    menu_section.partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
+    menu_section_pages.partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
 }
 
 # Bildgrößen

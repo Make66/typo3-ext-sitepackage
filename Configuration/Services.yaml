@@ -1,0 +1,29 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Taketool\Sitepackage\:
+    resource: '../Classes/*'
+
+  Taketool\Sitepackage\Command\Mig12Command:
+    tags:
+      - name: 'console.command'
+        command: 'mig12'
+        description: 'Clean up legacy TYPO3 v11 data blocking the v12 migration: CType="list" plugin records, sys_category_record_mm duplicates, powermail NULL marketing columns, and (opt-in) fully-covered legacy bootstrap_package scss constants (see --help)'
+        schedulable: false
+
+  Taketool\Sitepackage\Command\FixExplicitAllowDenyFormatCommand:
+    tags:
+      - name: 'console.command'
+        command: 'fix-access-rights'
+        description: 'Migrate legacy "table:field:value:ALLOW/DENY" be_groups.explicit_allowdeny entries to the format TYPO3 actually reads'
+        schedulable: false
+
+  Taketool\Sitepackage\Command\NewsToFeUsersCommand:
+    tags:
+      - name: 'console.command'
+        command: 'news-to-fe-users'
+        description: 'Convert news records in a pid into fe_users records in a pid (built for the Hochschullehre "Mitglieder" folder, pid 2111)'
+        schedulable: false

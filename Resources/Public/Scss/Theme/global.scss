@@ -5,6 +5,7 @@
 // output, just functions/mixins) for things like media-breakpoint-up() below.
 @import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_functions";
 @import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_variables";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_variables-dark";
 @import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_maps";
 @import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_mixins";
 // bootstrap_package's own variables layer (not the vendor Bootstrap ones above) —
@@ -43,6 +44,8 @@ body {
 @import "navigation-offcanvas";
 @import "navigation-dropdown-position";
 @import "navigation-dropdown-hover";
+@import "navigation-dropdown-inverse-color";
+@import "navigation-dropdown-width";
 
 /* Hintergrundfarbe Navbar Inverse*/
 .navbar-inverse, .navbar-inverse-transition, .navbar-inverse-transition.navbar-transition {
