@@ -27,3 +27,10 @@ services:
         command: 'news-to-fe-users'
         description: 'Convert news records in a pid into fe_users records in a pid (built for the Hochschullehre "Mitglieder" folder, pid 2111)'
         schedulable: false
+
+  Taketool\Sitepackage\Command\CreateTenantPagesCommand:
+    tags:
+      - name: 'console.command'
+        command: 'create-tenant-pages'
+        description: 'Creates (or reuses) a tree of pages records from a JSON plan, via DataHandler - used by the newTenant skill for both the initial root+404 bootstrap and the later bulk page-tree creation'
+        schedulable: false

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-09-18T00:00:00Z" product-name="sitepackage">
+        <header/>
+        <body>
+            <trans-unit id="group.sitepackage" xml:space="preserve">
+                <source>Sitepackage</source>
+                <target>Sitepackage</target>
+            </trans-unit>
+
+            <trans-unit id="content_element.hero" xml:space="preserve">
+                <source>Hero</source>
+                <target>Hero</target>
+            </trans-unit>
+            <trans-unit id="content_element.hero.description" xml:space="preserve">
+                <source>Header, text and call-to-action over a selectable background image or color, with configurable width and height.</source>
+                <target>Überschrift, Text und Call-to-Action über einem wählbaren Hintergrundbild oder einer Hintergrundfarbe, mit einstellbarer Breite und Höhe.</target>
+            </trans-unit>
+            <trans-unit id="content_element.hero.cta_default" xml:space="preserve">
+                <source>Read more</source>
+                <target>Mehr erfahren</target>
+            </trans-unit>
+
+            <trans-unit id="palette.hero_appearance" xml:space="preserve">
+                <source>Hero appearance</source>
+                <target>Hero-Erscheinungsbild</target>
+            </trans-unit>
+
+            <trans-unit id="field.hero_cta_link" xml:space="preserve">
+                <source>Button link</source>
+                <target>Button-Link</target>
+            </trans-unit>
+            <trans-unit id="field.hero_cta_label" xml:space="preserve">
+                <source>Button label</source>
+                <target>Button-Beschriftung</target>
+            </trans-unit>
+
+            <trans-unit id="field.hero_width" xml:space="preserve">
+                <source>Width</source>
+                <target>Breite</target>
+            </trans-unit>
+            <trans-unit id="field.hero_width.full" xml:space="preserve">
+                <source>Full page width</source>
+                <target>Volle Seitenbreite</target>
+            </trans-unit>
+            <trans-unit id="field.hero_width.content" xml:space="preserve">
+                <source>Content width</source>
+                <target>Inhaltsbreite</target>
+            </trans-unit>
+
+            <trans-unit id="field.hero_height" xml:space="preserve">
+                <source>Height</source>
+                <target>Höhe</target>
+            </trans-unit>
+            <trans-unit id="field.hero_height.flat" xml:space="preserve">
+                <source>Flat</source>
+                <target>Flach</target>
+            </trans-unit>
+            <trans-unit id="field.hero_height.normal" xml:space="preserve">
+                <source>Normal</source>
+                <target>Normal</target>
+            </trans-unit>
+            <trans-unit id="field.hero_height.big" xml:space="preserve">
+                <source>Big</source>
+                <target>Groß</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

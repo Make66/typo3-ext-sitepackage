@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-09-18T00:00:00Z" product-name="sitepackage">
+        <header/>
+        <body>
+            <trans-unit id="group.sitepackage" xml:space="preserve">
+                <source>Sitepackage</source>
+            </trans-unit>
+
+            <trans-unit id="content_element.hero" xml:space="preserve">
+                <source>Hero</source>
+            </trans-unit>
+            <trans-unit id="content_element.hero.description" xml:space="preserve">
+                <source>Header, text and call-to-action over a selectable background image or color, with configurable width and height.</source>
+            </trans-unit>
+            <trans-unit id="content_element.hero.cta_default" xml:space="preserve">
+                <source>Read more</source>
+            </trans-unit>
+
+            <trans-unit id="palette.hero_appearance" xml:space="preserve">
+                <source>Hero appearance</source>
+            </trans-unit>
+
+            <trans-unit id="field.hero_cta_link" xml:space="preserve">
+                <source>Button link</source>
+            </trans-unit>
+            <trans-unit id="field.hero_cta_label" xml:space="preserve">
+                <source>Button label</source>
+            </trans-unit>
+
+            <trans-unit id="field.hero_width" xml:space="preserve">
+                <source>Width</source>
+            </trans-unit>
+            <trans-unit id="field.hero_width.full" xml:space="preserve">
+                <source>Full page width</source>
+            </trans-unit>
+            <trans-unit id="field.hero_width.content" xml:space="preserve">
+                <source>Content width</source>
+            </trans-unit>
+
+            <trans-unit id="field.hero_height" xml:space="preserve">
+                <source>Height</source>
+            </trans-unit>
+            <trans-unit id="field.hero_height.flat" xml:space="preserve">
+                <source>Flat</source>
+            </trans-unit>
+            <trans-unit id="field.hero_height.normal" xml:space="preserve">
+                <source>Normal</source>
+            </trans-unit>
+            <trans-unit id="field.hero_height.big" xml:space="preserve">
+                <source>Big</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -2375,6 +2375,47 @@ fieldset  {
   width: 100%;
 }
 
+/* Hero (tt_content.CType = sitepackage_hero) */
+// Width ("Full page width" / "Content width") reuses bootstrap_package's own
+// frame_layout field/CSS as-is (see TCA columnsOverrides in
+// EXT:sitepackage/Configuration/TCA/Overrides/tt_content.php) — no extra CSS
+// needed here. Height reuses frame-height-small/medium (already styled by
+// bootstrap_package's _frame.scss) for "flat"/"normal"; only frame-height-max
+// ("big") is left unstyled by the vendor on purpose, for projects to define —
+// this is that definition, scoped to .frame-hero so it doesn't change any
+// other content element that might use frame-height-max in the future.
+.frame-hero.frame-height-max {
+  min-height: calc(100vh - 90px);
+}
+
+.frame-hero .hero-body {
+  width: 100%;
+}
+
+.frame-hero .hero-title {
+  margin-bottom: .5rem;
+}
+
+.frame-hero .hero-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.frame-hero .hero-cta {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+}
+
+// Same white-text-on-photo treatment already used elsewhere in this file for
+// .box/.carousel-item backgrounds, applied here so hero text stays legible
+// over a background image regardless of the chosen background color.
+.frame-hero.frame-has-backgroundimage .hero-title,
+.frame-hero.frame-has-backgroundimage .hero-subtitle,
+.frame-hero.frame-has-backgroundimage .hero-text {
+  color: #fff;
+  text-shadow: 0 0 4px rgba(0, 0, 0, .6);
+}
+
 @import "accessibility";
 
   //
