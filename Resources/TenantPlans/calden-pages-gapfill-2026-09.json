@@ -1,0 +1,50 @@
+{
+  "pages": [
+    {
+      "title": "Wasseranalyse",
+      "pid": 8,
+      "slug": "/aktuelles/wasseranalyse"
+    },
+    {
+      "title": "Bauhof Grünflächen",
+      "pid": 8,
+      "slug": "/aktuelles/bauhof-gruenflaechen",
+      "children": [
+        {
+          "title": "Heckenschnitt",
+          "slug": "/aktuelles/bauhof-gruenflaechen/heckenschnitt"
+        }
+      ]
+    },
+    {
+      "title": "Pflichten der Grundstückseigentümer im Winter",
+      "pid": 8,
+      "slug": "/aktuelles/bauhof-winterdienst"
+    },
+    {
+      "title": "Bauhof Technik",
+      "pid": 13,
+      "slug": "/bauen/bauhof/bauhof-technik"
+    },
+    {
+      "title": "Personalausweis & Pass",
+      "pid": 17,
+      "slug": "/stadt-calden/buergerbuero/personalausweis-pass"
+    },
+    {
+      "title": "Beglaubigungen",
+      "pid": 17,
+      "slug": "/stadt-calden/buergerbuero/beglaubigungen"
+    },
+    {
+      "title": "Führerscheine & KFZ",
+      "pid": 17,
+      "slug": "/stadt-calden/buergerbuero/fuehrerscheine-kfz"
+    },
+    {
+      "title": "Anträge",
+      "pid": 17,
+      "slug": "/stadt-calden/buergerbuero/antraege"
+    }
+  ]
+}

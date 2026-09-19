@@ -5,3 +5,4 @@
 @import 'EXT:sitepackage/Configuration/TypoScript/Setup/powermail.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/Setup/sourceopt.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/Setup/hero.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/Setup/linkbox.typoscript'

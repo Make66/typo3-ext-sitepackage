@@ -2416,6 +2416,21 @@ fieldset  {
   text-shadow: 0 0 4px rgba(0, 0, 0, .6);
 }
 
+/* Linkbox (tt_content.CType = sitepackage_linkbox) */
+.linkbox-link {
+  display: flex;
+  align-items: center;
+  color: inherit;
+}
+
+.linkbox-link svg,
+.linkbox-link img {
+  margin-right: .5rem;
+  flex-shrink: 0;
+  width: 1.25em;
+  height: 1.25em;
+}
+
 @import "accessibility";
 
   //

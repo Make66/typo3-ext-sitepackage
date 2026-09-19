@@ -1,0 +1,23 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:bk2k="http://typo3.org/ns/BK2K/BootstrapPackage/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Main">
+
+    <f:if condition="{links}">
+        <ul class="list-group linkbox">
+            <f:for each="{links}" as="item">
+                <li class="list-group-item linkbox-item">
+                    <f:link.typolink parameter="{item.data.link}" class="linkbox-link">
+                        <f:if condition="{item.icon}">
+                            <bk2k:icon icon="{item.icon}" />
+                        </f:if>
+                        <span class="linkbox-item-text"><f:format.htmlspecialchars>{item.data.header}</f:format.htmlspecialchars></span>
+                    </f:link.typolink>
+                </li>
+            </f:for>
+        </ul>
+    </f:if>
+
+</f:section>
+</html>

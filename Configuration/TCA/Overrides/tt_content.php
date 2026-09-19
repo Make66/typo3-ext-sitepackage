@@ -117,4 +117,68 @@ call_user_func(function () {
             ],
         ],
     ];
+
+    // Linkbox content element: a simple box title plus an editable list of
+    // links (label + typolink + optional icon), stored as IRRE child records
+    // in tx_sitepackage_linkbox_item - same shape as bootstrap_package's own
+    // tx_bootstrappackage_icon_group_item, reusing its IconService for the
+    // optional per-link icon picker.
+    ExtensionManagementUtility::addTcaSelectItem(
+        'tt_content',
+        'CType',
+        [
+            'label' => $ll . 'content_element.linkbox',
+            'description' => $ll . 'content_element.linkbox.description',
+            'value' => 'sitepackage_linkbox',
+            'icon' => 'content-sitepackage-linkbox',
+            'group' => 'sitepackage',
+        ],
+        'sitepackage_hero',
+        'after'
+    );
+
+    $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['sitepackage_linkbox'] = 'content-sitepackage-linkbox';
+
+    $GLOBALS['TCA']['tt_content']['columns']['tx_sitepackage_linkbox_item'] = [
+        'label' => $ll . 'field.linkbox_items',
+        'config' => [
+            'type' => 'inline',
+            'foreign_table' => 'tx_sitepackage_linkbox_item',
+            'foreign_field' => 'tt_content',
+            'appearance' => [
+                'useSortable' => true,
+                'showSynchronizationLink' => true,
+                'showAllLocalizationLink' => true,
+                'showPossibleLocalizationRecords' => true,
+                'expandSingle' => true,
+                'enabledControls' => [
+                    'localize' => true,
+                ],
+            ],
+            'behaviour' => [
+                'mode' => 'select',
+            ],
+        ],
+    ];
+
+    $GLOBALS['TCA']['tt_content']['types']['sitepackage_linkbox'] = [
+        'showitem' => '
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                header, --linebreak--, header_layout, header_position,
+                tx_sitepackage_linkbox_item,
+            --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+                --palette--;;language,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                --palette--;;hidden,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,
+                categories,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
+                rowDescription,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended,
+        ',
+    ];
 });

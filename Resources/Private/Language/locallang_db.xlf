@@ -50,6 +50,32 @@
             <trans-unit id="field.hero_height.big" xml:space="preserve">
                 <source>Big</source>
             </trans-unit>
+
+            <trans-unit id="content_element.linkbox" xml:space="preserve">
+                <source>Linkbox</source>
+            </trans-unit>
+            <trans-unit id="content_element.linkbox.description" xml:space="preserve">
+                <source>A box title with an editable list of links, each with an optional icon.</source>
+            </trans-unit>
+            <trans-unit id="field.linkbox_items" xml:space="preserve">
+                <source>Links</source>
+            </trans-unit>
+
+            <trans-unit id="linkbox_item" xml:space="preserve">
+                <source>Link</source>
+            </trans-unit>
+            <trans-unit id="linkbox_item.hidden" xml:space="preserve">
+                <source>Hide this link</source>
+            </trans-unit>
+            <trans-unit id="linkbox_item.tt_content" xml:space="preserve">
+                <source>Content element</source>
+            </trans-unit>
+            <trans-unit id="linkbox_item.header" xml:space="preserve">
+                <source>Label</source>
+            </trans-unit>
+            <trans-unit id="linkbox_item.link" xml:space="preserve">
+                <source>Link</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -1,0 +1,31 @@
+# CTYPE: sitepackage_linkbox
+tt_content.sitepackage_linkbox >
+tt_content.sitepackage_linkbox =< lib.contentElement
+tt_content.sitepackage_linkbox {
+    templateName = Linkbox
+    templateRootPaths.30 = EXT:sitepackage/Resources/Private/Templates/ContentElements/
+
+    dataProcessing {
+        20 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+        20 {
+            table = tx_sitepackage_linkbox_item
+            pidInList.field = pid
+            where {
+                data = field:uid
+                intval = 1
+                wrap = tt_content=|
+            }
+            orderBy = sorting
+            as = links
+            dataProcessing {
+                10 = BK2K\BootstrapPackage\DataProcessing\IconsDataProcessor
+                10 {
+                    iconSet.field = icon_set
+                    iconIdentifier.field = icon_identifier
+                    iconFileFieldName = icon_file
+                    as = icon
+                }
+            }
+        }
+    }
+}

@@ -64,6 +64,40 @@
                 <source>Big</source>
                 <target>Groß</target>
             </trans-unit>
+
+            <trans-unit id="content_element.linkbox" xml:space="preserve">
+                <source>Linkbox</source>
+                <target>Linkbox</target>
+            </trans-unit>
+            <trans-unit id="content_element.linkbox.description" xml:space="preserve">
+                <source>A box title with an editable list of links, each with an optional icon.</source>
+                <target>Ein Boxtitel mit einer editierbaren Liste von Links, jeweils mit optionalem Icon.</target>
+            </trans-unit>
+            <trans-unit id="field.linkbox_items" xml:space="preserve">
+                <source>Links</source>
+                <target>Links</target>
+            </trans-unit>
+
+            <trans-unit id="linkbox_item" xml:space="preserve">
+                <source>Link</source>
+                <target>Link</target>
+            </trans-unit>
+            <trans-unit id="linkbox_item.hidden" xml:space="preserve">
+                <source>Hide this link</source>
+                <target>Diesen Link verbergen</target>
+            </trans-unit>
+            <trans-unit id="linkbox_item.tt_content" xml:space="preserve">
+                <source>Content element</source>
+                <target>Inhaltselement</target>
+            </trans-unit>
+            <trans-unit id="linkbox_item.header" xml:space="preserve">
+                <source>Label</source>
+                <target>Beschriftung</target>
+            </trans-unit>
+            <trans-unit id="linkbox_item.link" xml:space="preserve">
+                <source>Link</source>
+                <target>Link</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
