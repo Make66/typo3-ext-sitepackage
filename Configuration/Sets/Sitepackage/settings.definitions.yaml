@@ -9,3 +9,10 @@ settings:
     description: 'Selects fileadmin/templates/<mandant>/ for this site''s theme.scss/custom.scss.'
     default: ''
     type: string
+
+  page.theme.mainnavigation.levels:
+    category: sitepackage
+    label: 'Main navigation levels'
+    description: 'Page tree depth fetched for the main navigation (navbar + dropdown/mega menu). bk2k/bootstrap-package hardcodes this to 3; overridden here (setup.typoscript, page.10.dataProcessing.10.levels) so it can be changed per site.'
+    default: 3
+    type: int

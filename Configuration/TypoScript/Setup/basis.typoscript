@@ -45,6 +45,15 @@ page {
         # same mechanism as includeCSS above — so overriding the DataProcessor's
         # input directly bypasses the broken constant for every mandant at once.
         dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.svg
+
+        # bk2k/bootstrap-package hardcodes the mainnavigation MenuProcessor's
+        # `levels` to 3 (vendor/bk2k/bootstrap-package/Configuration/Sets/Full/
+        # TypoScript/General/page.typoscript, dataProcessing key 10) with no
+        # settings.definitions.yaml entry to override it, unlike footernavigation's
+        # `levels`. This exposes the same knob as a per-site setting so the
+        # mega menu's page-tree depth (navbar item -> dropdown column -> nested
+        # item) can be tuned without editing vendor code.
+        dataProcessing.10.levels = {$page.theme.mainnavigation.levels}
     }
 }
 
