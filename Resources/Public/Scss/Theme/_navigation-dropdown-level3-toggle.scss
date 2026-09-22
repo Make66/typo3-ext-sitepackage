@@ -1,0 +1,92 @@
+/* MainNavigationDropDown.html emits, for a level-2 item with level-3 children,
+   a <button class="nav-link nav-link-toggle"> as a sibling of the level-2
+   <a class="nav-link nav-link-dropdown">, both direct children of
+   <li class="nav-item nav-item-has-subnav-toggle">. Neither .nav-link
+   (components/navbar/_link.scss) nor .nav-item anywhere in this project sets
+   display:flex on the <li> itself — .nav-link's own flex properties
+   (flex-grow/flex-shrink) are inert until their parent actually lays out as a
+   flex container. Scoped to the new modifier class only (not bare .nav-item)
+   so level-1 items and childless level-2/3 items, which never get this
+   button, are untouched. */
+.navbar-mainnavigation .nav-item-has-subnav-toggle {
+    display: flex;
+    flex-wrap: wrap;
+    // Deliberately not align-items:center: a flex container sizes its cross
+    // axis to its tallest item's own content, and the button's only content
+    // is the small chevron indicator, so centering it would leave the button
+    // only a few pixels tall — an unusably small click/tap target. Stretch
+    // (the flex default) makes the button match the link's full row height
+    // instead; both children already center their own content internally
+    // via the generic .nav-link rule (components/navbar/_link.scss).
+
+    > .nav-link-dropdown {
+        flex: 1 1 auto;
+        // Without this a long level-2 title can't shrink below its intrinsic
+        // content width inside the flex row, pushing the toggle button (or
+        // the row itself) out past the dropdown-menu's edge.
+        min-width: 0;
+    }
+
+    // The collapse target (and Bootstrap's own .collapsing transition-state
+    // class applied to the same element) must drop to its own full-width row
+    // below the link+button row, not compete for space inside it.
+    > .collapse,
+    > .collapsing {
+        flex: 0 0 100%;
+    }
+}
+
+/* <button> has none of the UA-stylesheet resets an <a> gets for free, and
+   this is the first real <button> living inside .dropdown-menu (level-1's
+   equivalent toggle is an <a role="button">, not a <button>). Neutralise
+   default button chrome explicitly rather than relying on Bootstrap's Reboot
+   layer, so this survives independently of what else changes upstream.
+
+   `color` is set explicitly here, to Bootstrap's own dropdown-link color
+   variable rather than left to inherit: Bootstrap's Nav component paints
+   any .nav-link (this button included, and its sibling .nav-link-dropdown)
+   via --bs-nav-link-color, a variable the navbar sets once for its own bar
+   — never redefined for content nested one level down inside a
+   .dropdown-menu panel, which typically sits on a different (here: light)
+   background than the bar itself. The sibling link's own text is not
+   visibly affected only because its .nav-link-text span happens to be
+   recolored directly by this project's tenant-level CSS; this button has no
+   such span; only the visually-hidden accessible-name text and the chevron
+   built from `currentColor` (below), so the mismatch reached it undisguised
+   — a fully transparent chevron on a light panel. --bs-dropdown-link-color
+   is the variable Bootstrap's own .dropdown-item already uses for exactly
+   this panel, and resolves correctly regardless of the navbar's own skin. */
+.navbar-mainnavigation .nav-link-toggle {
+    background: none;
+    border: 0;
+    font: inherit;
+    cursor: pointer;
+    color: var(--bs-dropdown-link-color, var(--bs-body-color));
+}
+
+/* Reuse the existing rotating-chevron pattern (components/navbar/_link.scss)
+   but key it off this button's own aria-expanded instead of an ancestor
+   .show class: that pattern was built for the level-1 Bootstrap *Dropdown*,
+   which puts .show on the toggle element itself. Bootstrap's *Collapse*
+   component only instantiates (and starts managing .collapsed) lazily, on a
+   trigger's first click — so before any interaction, a server-rendered
+   "already expanded" branch (item.active) would still show an unrotated
+   chevron if this were keyed off .collapsed. aria-expanded has no such gap:
+   it's set correctly server-side from item.active and kept correct
+   afterward by Bootstrap on every toggle. */
+.navbar-mainnavigation .nav-link-toggle[aria-expanded="true"] > .nav-link-indicator:before {
+    transform: rotate(45deg);
+}
+
+/* A site's own theme may hide .nav-link-indicator globally (e.g. relying on
+   a hover/underline treatment instead of a chevron for the level-1 toggle,
+   which — unlike this one — spans a whole clickable nav row and so doesn't
+   need a chevron to be findable). This button is a small control living
+   next to, not instead of, its level-2 link: without a visible chevron it
+   has no affordance at all, so it must stay visible regardless of any such
+   theme-level rule. Scoped to .nav-link-toggle specifically (a class no
+   other control uses) so it overrides nothing for the level-1 toggle a
+   theme intentionally chose to keep chevron-less. */
+.navbar-mainnavigation .nav-link-toggle > .nav-link-indicator {
+    display: block;
+}
