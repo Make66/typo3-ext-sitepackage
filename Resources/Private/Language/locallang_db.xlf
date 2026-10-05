@@ -76,6 +76,120 @@
             <trans-unit id="linkbox_item.link" xml:space="preserve">
                 <source>Link</source>
             </trans-unit>
+
+            <trans-unit id="plugin.contact.title" xml:space="preserve">
+                <source>Sitepackage: Ansprechpartner</source>
+            </trans-unit>
+            <trans-unit id="plugin.contact.description" xml:space="preserve">
+                <source>List of contact cards (e.g. staff/organization directory) with an optional detail view, each picked from the Contact records in this folder.</source>
+            </trans-unit>
+
+            <trans-unit id="tx_sitepackage_domain_model_contact" xml:space="preserve">
+                <source>Contact</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.tab.allgemeines" xml:space="preserve">
+                <source>General</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.tab.kontakt" xml:space="preserve">
+                <source>Contact details</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.tab.beschreibung" xml:space="preserve">
+                <source>Description</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.palette.kontakt" xml:space="preserve">
+                <source>Contact details</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.salutation" xml:space="preserve">
+                <source>Salutation</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.first_name" xml:space="preserve">
+                <source>First name</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.last_name" xml:space="preserve">
+                <source>Last name</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.job_position" xml:space="preserve">
+                <source>Job title</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.department_text" xml:space="preserve">
+                <source>Department</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.room" xml:space="preserve">
+                <source>Room</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.photo" xml:space="preserve">
+                <source>Photo</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.phone" xml:space="preserve">
+                <source>Phone</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.mobile" xml:space="preserve">
+                <source>Mobile</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.email" xml:space="preserve">
+                <source>E-mail</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.website" xml:space="preserve">
+                <source>Website</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.description" xml:space="preserve">
+                <source>Description</source>
+            </trans-unit>
+
+            <trans-unit id="flexform.sheet.general" xml:space="preserve">
+                <source>General</source>
+            </trans-unit>
+            <trans-unit id="flexform.pluginType" xml:space="preserve">
+                <source>Mode</source>
+            </trans-unit>
+            <trans-unit id="flexform.pluginType.list" xml:space="preserve">
+                <source>List</source>
+            </trans-unit>
+            <trans-unit id="flexform.pluginType.show" xml:space="preserve">
+                <source>Detail</source>
+            </trans-unit>
+            <trans-unit id="flexform.persons" xml:space="preserve">
+                <source>Contacts to show</source>
+            </trans-unit>
+            <trans-unit id="flexform.displayMode" xml:space="preserve">
+                <source>Layout</source>
+            </trans-unit>
+            <trans-unit id="flexform.displayMode.single" xml:space="preserve">
+                <source>Stacked (wide cards)</source>
+            </trans-unit>
+            <trans-unit id="flexform.displayMode.multiple" xml:space="preserve">
+                <source>Grid</source>
+            </trans-unit>
+            <trans-unit id="flexform.singleViewPage" xml:space="preserve">
+                <source>Detail page</source>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems" xml:space="preserve">
+                <source>Fields to show</source>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.salutation" xml:space="preserve">
+                <source>Salutation</source>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.position" xml:space="preserve">
+                <source>Job title</source>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.department" xml:space="preserve">
+                <source>Department</source>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.room" xml:space="preserve">
+                <source>Room</source>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.phone" xml:space="preserve">
+                <source>Phone</source>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.email" xml:space="preserve">
+                <source>E-mail</source>
+            </trans-unit>
+            <trans-unit id="flexform.backToListPage" xml:space="preserve">
+                <source>Back-to-list page</source>
+            </trans-unit>
+            <trans-unit id="flexform.contact" xml:space="preserve">
+                <source>Pin to one contact</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

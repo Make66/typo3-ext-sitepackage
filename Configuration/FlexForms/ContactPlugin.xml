@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<T3DataStructure>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <sheetTitle>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.sheet.general</sheetTitle>
+                <type>array</type>
+                <el>
+
+                    <settings.pluginType>
+                        <onChange>reload</onChange>
+                        <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.pluginType</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0">
+                                    <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.pluginType.list</label>
+                                    <value>list</value>
+                                </numIndex>
+                                <numIndex index="1">
+                                    <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.pluginType.show</label>
+                                    <value>show</value>
+                                </numIndex>
+                            </items>
+                            <default>list</default>
+                        </config>
+                    </settings.pluginType>
+
+                    <settings.persons>
+                        <displayCond>FIELD:settings.pluginType:=:list</displayCond>
+                        <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.persons</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>tx_sitepackage_domain_model_contact</allowed>
+                            <size>5</size>
+                            <maxitems>99</maxitems>
+                        </config>
+                    </settings.persons>
+
+                    <settings.displayMode>
+                        <displayCond>FIELD:settings.pluginType:=:list</displayCond>
+                        <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayMode</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <default>single</default>
+                            <items>
+                                <numIndex index="0"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayMode.single</label><value>single</value></numIndex>
+                                <numIndex index="1"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayMode.multiple</label><value>multiple</value></numIndex>
+                            </items>
+                        </config>
+                    </settings.displayMode>
+
+                    <settings.singleViewPage>
+                        <displayCond>FIELD:settings.pluginType:=:list</displayCond>
+                        <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.singleViewPage</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.singleViewPage>
+
+                    <settings.displayItems>
+                        <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectCheckBox</renderType>
+                            <items>
+                                <numIndex index="0"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.salutation</label><value>salutation</value></numIndex>
+                                <numIndex index="1"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.position</label><value>position</value></numIndex>
+                                <numIndex index="2"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.department</label><value>department</value></numIndex>
+                                <numIndex index="3"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.room</label><value>room</value></numIndex>
+                                <numIndex index="4"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.phone</label><value>phone</value></numIndex>
+                                <numIndex index="5"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.email</label><value>email</value></numIndex>
+                            </items>
+                        </config>
+                    </settings.displayItems>
+
+                    <settings.backToListPage>
+                        <displayCond>FIELD:settings.pluginType:=:show</displayCond>
+                        <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.backToListPage</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.backToListPage>
+
+                    <settings.contact>
+                        <displayCond>FIELD:settings.pluginType:=:show</displayCond>
+                        <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.contact</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>tx_sitepackage_domain_model_contact</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.contact>
+
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>

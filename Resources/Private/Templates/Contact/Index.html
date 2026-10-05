@@ -1,0 +1,29 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="content">
+    <f:if condition="{contacts}">
+        <f:then>
+            <f:if condition="{displayMode} == 'multiple'">
+                <f:then>
+                    <div class="row row-cols-1 row-cols-md-2 g-3">
+                        <f:for each="{contacts}" as="contact">
+                            <div class="col"><f:render partial="Contact/Card" arguments="{contact: contact, displayItems: displayItems, singleViewPage: singleViewPage}" /></div>
+                        </f:for>
+                    </div>
+                </f:then>
+                <f:else>
+                    <f:for each="{contacts}" as="contact">
+                        <div class="mb-3"><f:render partial="Contact/Card" arguments="{contact: contact, displayItems: displayItems, singleViewPage: singleViewPage}" /></div>
+                    </f:for>
+                </f:else>
+            </f:if>
+        </f:then>
+        <f:else>
+            <p class="text-muted fst-italic">
+                <f:translate key="list.noContactFound" extensionName="sitepackage">Keine Ansprechpartner gefunden.</f:translate>
+            </p>
+        </f:else>
+    </f:if>
+</f:section>
+</html>

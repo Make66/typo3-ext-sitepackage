@@ -9,4 +9,8 @@ return [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => 'EXT:sitepackage/Resources/Public/Icons/ContentElements/linkbox.svg',
     ],
+    'sitepackage-contact' => [
+        'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        'source' => 'EXT:sitepackage/Resources/Public/Icons/contact.svg',
+    ],
 ];

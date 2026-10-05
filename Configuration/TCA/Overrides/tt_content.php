@@ -1,6 +1,7 @@
 <?php
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 if (!defined('TYPO3')) {
     die('Access denied.');
@@ -181,4 +182,30 @@ call_user_func(function () {
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended,
         ',
     ];
+
+    // Contact plugin: a staff/organization-directory card list + detail view,
+    // ported from taketool/tsa's own Contact plugin (which has no detail
+    // action and reads tsa's API-mirrored person table) onto a standalone,
+    // hand-editable domain model - see packages/sitepackage/CLAUDE.md for why.
+    $pluginIdentifier = ExtensionUtility::registerPlugin(
+        'Sitepackage',
+        'Contact',
+        $ll . 'plugin.contact.title',
+        'sitepackage-contact',
+        'sitepackage',
+        $ll . 'plugin.contact.description',
+    );
+
+    ExtensionManagementUtility::addPiFlexFormValue(
+        '*',
+        'FILE:EXT:sitepackage/Configuration/FlexForms/ContactPlugin.xml',
+        $pluginIdentifier
+    );
+
+    ExtensionManagementUtility::addToAllTCAtypes(
+        'tt_content',
+        '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin, pi_flexform',
+        $pluginIdentifier,
+        'after:palette:headers'
+    );
 });
