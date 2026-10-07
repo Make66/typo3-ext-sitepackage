@@ -123,11 +123,12 @@ already slightly broken by this file's presence; migrating fixes it.
    `rem` style — that's a deliberate calden-only design choice, not part of
    the standard.
 
-5. **Handle fonts.** If the mandant used a font previously supplied by the
-   legacy shared `EXT:sitepackage/Resources/Public/Scss/Theme/_fonts.scss`
-   (check `packages/sitepackage/Resources/Public/Fonts/` for the source
-   files), that font is **no longer bundled** by the new `global.scss` — copy
-   the woff/woff2 files into the mandant's own `Fonts/` and write a matching
+5. **Handle fonts.** The legacy shared `EXT:sitepackage/Resources/Public/Scss/
+   Theme/_fonts.scss` and its backing `packages/sitepackage/Resources/Public/
+   Fonts/` source files have been removed — fonts are never bundled by the
+   new `global.scss`. If the mandant needs a non-system typeface, source the
+   font file(s) yourself (vendor site, Google Fonts, etc.), copy the
+   woff/woff2 files into the mandant's own `Fonts/`, and write a matching
    `_fonts.scss` with `url('Fonts/<name>.woff2')`-style relative paths (see
    calden's `_fonts.scss`). Only declare the weights/styles that actually
    have files — don't invent a bold/italic face that doesn't exist.

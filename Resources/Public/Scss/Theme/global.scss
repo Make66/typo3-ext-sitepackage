@@ -16,7 +16,7 @@
 // a site only ships @font-face rules for fonts it actually uses.
 
 body {
-  font-family: var(--bs-font-sans-serif, "Source Sans Pro", sans-serif);
+  font-family: var(--bs-font-sans-serif, sans-serif);
 }
 
 :root {
