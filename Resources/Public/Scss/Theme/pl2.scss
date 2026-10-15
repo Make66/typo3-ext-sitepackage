@@ -1,0 +1,17 @@
+// Layout variant pl2 (Gonsenheim) — selected by site setting "layout".
+// Own includeCSS compile (see basis.typoscript), loaded after global and before
+// custom. It does not see fileadmin/templates/<mandant>/_variables.scss; Site
+// Settings (plugin.bootstrap_package.settings.scss.*) are injected by bk2k.
+// Scope all rules to .pl2 (set in Layouts/Page/Default.html).
+// See Documentation/SCSS_pipeline.md section 8.
+
+// Bootstrap variables, functions, mixins (no CSS output)
+@import "EXT:bootstrap_package/Resources/Public/Scss/bootstrap5/variables";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/functions";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/variables";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/mixins";
+@import "layout-variables";
+
+.pl2 {
+  // layout-specific rules for Gonsenheim go here
+}

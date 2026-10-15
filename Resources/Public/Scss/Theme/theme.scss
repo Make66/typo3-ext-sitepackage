@@ -20,3 +20,8 @@
 //   @import "variables";
 //   // mandant-specific one-off rules
 //   Frequent changes — cheapest to recompile since it's its own entry too.
+//
+// fileadmin/templates/{mandant}/ is not involved in the layout entry:
+// EXT:sitepackage/Resources/Public/Scss/Theme/{layout}.scss (pl0..pl3, site setting
+// "layout") is its own includeCSS compile between global and custom. It does not see
+// the mandant's _variables.scss — see Documentation/SCSS_pipeline.md section 8.

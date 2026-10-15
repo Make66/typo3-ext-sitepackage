@@ -15,6 +15,9 @@ page {
         theme = fileadmin/templates/{$mandant}/theme.scss
         global >
         global = fileadmin/templates/{$mandant}/global.scss
+        # Layout variant (site setting "layout": pl0..pl3), compiled after
+        # global and before custom so custom.scss can still override it.
+        layout = EXT:sitepackage/Resources/Public/Scss/Theme/{$layout}.scss
         custom >
         custom = fileadmin/templates/{$mandant}/custom.scss
     }
@@ -30,6 +33,7 @@ page {
         bootstrap_stickyheader = EXT:sitepackage/Resources/Public/JavaScript/bootstrap.stickyheader.js
     }
     10 {
+        layoutRootPaths.30 = EXT:sitepackage/Resources/Private/Layouts/Page/
         partialRootPaths.1 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/Page/
         partialRootPaths.2 = fileadmin/templates/{$mandant}/bootstrap_package/Resources/Private/Partials/Page/
 
@@ -121,6 +125,7 @@ page {
 # Angepasste ContentElemente (Bildueberschrift verlinkt für Rollover Effekt)
 lib.contentElement {
     partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
+    layoutRootPaths.30 = EXT:sitepackage/Resources/Private/Layouts/ContentElements/
 }
 
 # bk2k's own tt_content.<CType> definitions (vendor/bk2k/bootstrap-package/
@@ -141,6 +146,8 @@ lib.contentElement {
 tt_content {
     menu_section.partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
     menu_section_pages.partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
+    menu_section.layoutRootPaths.30 = EXT:sitepackage/Resources/Private/Layouts/ContentElements/
+    menu_section_pages.layoutRootPaths.30 = EXT:sitepackage/Resources/Private/Layouts/ContentElements/
 }
 
 # Bildgrößen

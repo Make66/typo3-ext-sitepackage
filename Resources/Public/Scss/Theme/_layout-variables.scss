@@ -1,0 +1,6 @@
+// Variables shared by all layout variants (pl0-pl3).
+// All !default so a per-site TypoScript constant
+// plugin.bootstrap_package.settings.scss.<name> (injected by bk2k as $<name>)
+// or the importing plN.scss can override them.
+$layout-gap:       $spacer !default;
+$layout-max-width: 1320px !default;

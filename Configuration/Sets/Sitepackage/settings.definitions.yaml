@@ -9,3 +9,14 @@ settings:
     description: 'Selects fileadmin/templates/<mandant>/ for this site''s theme.scss/custom.scss.'
     default: ''
     type: string
+  layout:
+    category: sitepackage
+    label: 'Layout'
+    description: 'Select one of the Base Layouts for this site'
+    default: 'pl0'
+    type: string
+    enum:
+      pl0: 'Mainz'
+      pl1: 'Budenheim'
+      pl2: 'Gonsenheim'
+      pl3: 'Hechtsheim'

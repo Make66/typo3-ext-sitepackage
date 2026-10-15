@@ -157,3 +157,48 @@ Where to make a change depends on intent:
 Given the consistent h1–h5 pattern already in place, leave `custom.scss` as
 the enforcement point unless fluid headings are actually wanted — in that
 case, delete the flat rules rather than fighting RFS with tuning variables.
+
+## 8. Layout variants (pl0–pl3)
+
+`basis.typoscript` adds a fourth `page.includeCSS` entry after `global`:
+
+```
+layout = EXT:sitepackage/Resources/Public/Scss/Theme/{$layout}.scss
+```
+
+`{$layout}` is the site setting `layout` (`pl0` Mainz, `pl1` Budenheim, `pl2`
+Gonsenheim, `pl3` Hechtsheim). Cascade order is
+**theme → global → layout → custom**. The page wrapper in
+`Layouts/Page/Default.html` carries the same value as a class, so each `plN.scss`
+scopes its rules to `.plN`.
+
+### What a layout file can see
+
+- **Site Settings**: bk2k injects every constant under
+  `plugin.bootstrap_package.settings.scss.*` as a SCSS variable into *every*
+  compile (`CompileService::getVariablesFromConstants` → `addVariables`), so
+  `$primary`, `$secondary` etc. work in `plN.scss`.
+- **Bootstrap**: each `plN.scss` imports bootstrap_package's `_variables` plus
+  Bootstrap's functions/variables/mixins (no CSS output), so `$spacer`,
+  breakpoints and mixins like `media-breakpoint-up()` are available.
+- **Not visible**: `fileadmin/templates/<mandant>/_variables.scss`. Each
+  includeCSS entry is its own compile and Sass `@import` cannot take a dynamic
+  path, so a shared `plN.scss` cannot import the mandant's file.
+
+### `custom.scss` still works
+
+`custom.scss` is unchanged: its own entry, `@import "variables"` of the
+mandant file first, and it loads last. It overrides `plN.scss` at equal
+specificity and is the place for mandant-specific tweaks to a layout that need
+the mandant's variables, e.g. `.pl1 .navbar { background: $primary; }`.
+
+### Where to put custom variable values
+
+| Scope | Where |
+|---|---|
+| One layout only | Top of that `plN.scss`, declared with `!default`. |
+| All four layouts | `Resources/Public/Scss/Theme/_layout-variables.scss` (imported by every `plN.scss`). |
+| Per mandant / per site | TypoScript constant `plugin.bootstrap_package.settings.scss.<name> = value`, e.g. in `Configuration/TypoScript/Custom/<mandant>.typoscript` or inside a `["{$mandant}" == "..."]` block. bk2k exposes it as `$<name>` in every compile (layout, global, custom). Values are plain strings (colours, lengths); no Sass maps or lists. |
+| Needs the mandant's own `_variables.scss` values | `custom.scss` (or `global.scss` via the mandant's glue file), not `plN.scss`. |
+
+Use `!default` in the extension files so an injected constant wins.
