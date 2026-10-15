@@ -6,10 +6,10 @@
 // See Documentation/SCSS_pipeline.md section 8.
 
 // Bootstrap variables, functions, mixins (no CSS output)
-@import "EXT:bootstrap_package/Resources/Public/Scss/bootstrap5/variables";
-@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/functions";
-@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/variables";
-@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/mixins";
+@import "EXT:bootstrap_package/Resources/Public/Scss/bootstrap5/_variables";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_functions";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_variables";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_mixins";
 @import "layout-variables";
 
 .pl0 {

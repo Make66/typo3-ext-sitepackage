@@ -135,7 +135,12 @@ page {
 lib.contentElement {
     partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
     layoutRootPaths.30 = EXT:sitepackage/Resources/Private/Layouts/ContentElements/
+    variables.siteLayout = TEXT
+    variables.siteLayout.value = {$layout}
 }
+
+page.10.variables.siteLayout = TEXT
+page.10.variables.siteLayout.value = {$layout}
 
 # bk2k's own tt_content.<CType> definitions (vendor/bk2k/bootstrap-package/
 # Configuration/TypoScript/ContentElement/Element/*.typoscript) each do their
