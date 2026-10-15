@@ -1,0 +1,13 @@
+plugin.tx_sitepackage_contact {
+    view {
+        templateRootPaths {
+            0 = EXT:sitepackage/Resources/Private/Templates/
+        }
+        partialRootPaths {
+            0 = EXT:sitepackage/Resources/Private/Partials/
+        }
+        layoutRootPaths {
+            0 = EXT:sitepackage/Resources/Private/Layouts/
+        }
+    }
+}

@@ -1,0 +1,42 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="content">
+    <div class="sitepackage-contact-detail row g-4">
+        <f:if condition="{contact.photo}">
+            <div class="col-12 col-md-4">
+                <f:for each="{contact.photo}" as="image" iteration="iterator">
+                    <f:if condition="{iterator.isFirst}">
+                        <f:image image="{image}" class="img-fluid rounded" alt="{contact.firstName} {contact.lastName}" />
+                    </f:if>
+                </f:for>
+            </div>
+        </f:if>
+        <div class="col">
+            <h1>
+                <f:if condition="{displayItems.salutation}">{contact.salutation} </f:if>{contact.firstName} {contact.lastName}
+            </h1>
+            <f:if condition="{displayItems.position} && {contact.jobPosition}">
+                <p class="mb-1 d-flex align-items-start gap-2"><i class="fa-solid fa-id-badge" aria-hidden="true"></i><span>{contact.jobPosition}</span></p>
+            </f:if>
+            <f:if condition="{displayItems.department} && {contact.departmentText}">
+                <p class="text-body-secondary mb-1 d-flex align-items-start gap-2"><i class="fa-solid fa-people-group" aria-hidden="true"></i><span>{contact.departmentText}</span></p>
+            </f:if>
+            <f:if condition="{displayItems.room} && {contact.room}">
+                <p class="text-body-secondary mb-1 d-flex align-items-start gap-2"><i class="fa-solid fa-door-open" aria-hidden="true"></i><span>{contact.room}</span></p>
+            </f:if>
+            <f:render partial="Contact/CommunicationsList" arguments="{contact: contact, displayItems: displayItems}" />
+            <f:if condition="{contact.description}">
+                <div class="mt-3">{contact.description -> f:format.html()}</div>
+            </f:if>
+            <f:if condition="{backToListPage}">
+                <p class="mt-3">
+                    <f:link.page pageUid="{backToListPage}" class="btn btn-primary">
+                        <f:translate key="action.backToList" extensionName="sitepackage">zurück</f:translate>
+                    </f:link.page>
+                </p>
+            </f:if>
+        </div>
+    </div>
+</f:section>
+</html>

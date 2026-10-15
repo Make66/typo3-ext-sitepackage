@@ -1,0 +1,56 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:bk2k="http://typo3.org/ns/BK2K/BootstrapPackage/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<bk2k:data.imageVariants as="variants" variants="{settings.responsiveimages.variants}" />
+<f:variable name="backendlayoutConfig">{settings.responsiveimages.backendlayout.{backendlayout}}</f:variable>
+<f:variable name="columnConfig">{backendlayoutConfig.{data.colPos}}</f:variable>
+<f:if condition="{columnConfig}">
+    <bk2k:data.imageVariants as="variants" variants="{variants}" multiplier="{columnConfig.multiplier}" gutters="{columnConfig.gutters}" corrections="{columnConfig.corrections}" />
+</f:if>
+
+<f:variable name="heightMap" value="{flat: 'small', normal: 'medium', big: 'max'}" />
+
+<bk2k:frame
+    id="c{data.uid}"
+    type="{data.CType}"
+    frameClass="hero"
+    layout="{data.frame_layout}"
+    frameAttributes="{frameAttributes}"
+    height="{heightMap.{data.tx_sitepackage_hero_height}}"
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    variants="{variants}"
+    backgroundColor="{data.background_color_class}"
+    backgroundImage="{backgroundImage.0}"
+    backgroundImageOptions="{data.background_image_options}"
+>
+    <f:if condition="{data._LOCALIZED_UID}"><a id="c{data._LOCALIZED_UID}"></a></f:if>
+    <div class="hero-body">
+        <f:if condition="{data.header}">
+            <f:switch expression="{data.header_layout}">
+                <f:case value="1"><h1 class="hero-title"><f:format.htmlspecialchars>{data.header}</f:format.htmlspecialchars></h1></f:case>
+                <f:case value="3"><h3 class="hero-title"><f:format.htmlspecialchars>{data.header}</f:format.htmlspecialchars></h3></f:case>
+                <f:case value="100"><f:comment> -- do not show header -- </f:comment></f:case>
+                <f:defaultCase><h2 class="hero-title"><f:format.htmlspecialchars>{data.header}</f:format.htmlspecialchars></h2></f:defaultCase>
+            </f:switch>
+        </f:if>
+        <f:if condition="{data.subheader}">
+            <p class="hero-subtitle"><f:format.htmlspecialchars>{data.subheader}</f:format.htmlspecialchars></p>
+        </f:if>
+        <f:if condition="{data.bodytext}">
+            <div class="hero-text"><f:format.html>{data.bodytext}</f:format.html></div>
+        </f:if>
+        <f:if condition="{data.header_link}">
+            <p class="hero-cta">
+                <f:link.typolink parameter="{data.header_link}" class="btn btn-primary btn-lg">
+                    <f:if condition="{data.readmore_label}">
+                        <f:then>{data.readmore_label}</f:then>
+                        <f:else><f:translate key="LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:content_element.hero.cta_default" /></f:else>
+                    </f:if>
+                </f:link.typolink>
+            </p>
+        </f:if>
+    </div>
+</bk2k:frame>
+</html>

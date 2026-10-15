@@ -1,1 +1,1 @@
-page.includeCSS.fontawesome = 'EXT:sitepackage/Resources/Public/Fonts/fontawesome/css/fontawesome.min.css'
+page.includeCSS.fontawesome = EXT:sitepackage/Resources/Public/Fonts/fontawesome/css/all.min.css

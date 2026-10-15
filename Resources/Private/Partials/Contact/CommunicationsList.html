@@ -1,0 +1,29 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<ul class="sitepackage-contact-list list-unstyled">
+    <f:if condition="{displayItems.phone} && {contact.phone}">
+        <li class="d-flex align-items-start gap-2">
+            <i class="fa-solid fa-phone" aria-hidden="true"></i>
+            <span><a href="tel:{contact.phone -> f:format.raw()}">{contact.phone}</a></span>
+        </li>
+    </f:if>
+    <f:if condition="{contact.mobile}">
+        <li class="d-flex align-items-start gap-2">
+            <i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>
+            <span><a href="tel:{contact.mobile -> f:format.raw()}">{contact.mobile}</a></span>
+        </li>
+    </f:if>
+    <f:if condition="{displayItems.email} && {contact.email}">
+        <li class="d-flex align-items-start gap-2">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            <span><f:link.email email="{contact.email}">{contact.email}</f:link.email></span>
+        </li>
+    </f:if>
+    <f:if condition="{contact.website}">
+        <li class="d-flex align-items-start gap-2">
+            <i class="fa-solid fa-globe" aria-hidden="true"></i>
+            <span><f:link.external uri="{contact.website}" target="_blank" rel="noopener">{contact.website}</f:link.external></span>
+        </li>
+    </f:if>
+</ul>
+</html>

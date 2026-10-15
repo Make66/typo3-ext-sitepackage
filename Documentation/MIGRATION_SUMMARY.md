@@ -1055,3 +1055,16 @@ by `raumuehle` and `weingut-haupt`.
   in this batch.
 - No shared files (`basis.typoscript`, sitepackage's `composer.json`,
   `global.scss`, `_navigation-offcanvas.scss`) were edited.
+
+## 2026-10-07 — shared legacy font store removed
+
+The `packages/sitepackage/Resources/Public/Fonts/` directory referenced
+throughout this log as "the shared legacy font store" (and its backing
+`Resources/Public/Scss/Theme/_fonts.scss`) has been deleted — every font in
+it was already superseded by each mandant's own migrated `Fonts/` +
+`_fonts.scss`, and the file was no longer `@import`ed anywhere. The
+individual entries above still accurately describe where each mandant's
+fonts came from at the time; that shared source path just no longer exists
+for future migrations to pull from (see `SCSS_migration.md` step 5).
+`Fonts/fontawesome/` was **not** affected — it's a separate, still-wired
+dependency.

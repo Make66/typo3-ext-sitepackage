@@ -1,12 +1,22 @@
 <?php
 
+use Taketool\Sitepackage\Controller\ContactController;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 if (!defined('TYPO3')) {
     die('Access denied.');
 }
+
+ExtensionUtility::configurePlugin(
+    'Sitepackage',
+    'Contact',
+    [ContactController::class => 'index,show'],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+);
 
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['textfile_ext'] = 'txt,ts,typoscript,html,htm,css,scss,tmpl,js,sql,xml,csv,xlf,yaml,yml';
 

@@ -11,7 +11,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Sitepackage',
-    'description' => 'Container elements and other stuff',
+    'description' => 'Container elements and other stuff based on Bootstrap-Package by Benjamin Kott',
     'category' => 'backend',
     'author' => 'Martin Keller',
     'author_email' => 'martin.keller@taketool.de',
@@ -24,7 +24,7 @@ $EM_CONF[$_EXTKEY] = [
         'depends' => [
             'typo3' => '12.4.0-14.5.99',
             'container' => '1.0.0-2.9.99',
-            'bootstrap_package' => '15.0.0-15.99.99',
+            'bootstrap_package' => '15.0.0-16.99.99',
         ],
         'conflicts' => [],
         'suggests' => [],
