@@ -13,8 +13,8 @@ Bootstrap5's own set only registers `theme`:
 page.includeCSS.theme = EXT:bootstrap_package/Resources/Public/Scss/bootstrap5/theme.scss
 ```
 
-This extension overrides that and adds two more entries, in
-`Configuration/TypoScript/Setup/basis.typoscript:11-18`:
+This extension overrides that and adds three more entries, in
+`Configuration/TypoScript/Setup/basis.typoscript:12-23`:
 
 ```
 page.includeCSS {
@@ -22,6 +22,7 @@ page.includeCSS {
     theme  = fileadmin/templates/{$mandant}/theme.scss
     global >
     global = fileadmin/templates/{$mandant}/global.scss
+    layout = EXT:sitepackage/Resources/Public/Scss/Theme/{$layout}.scss
     custom >
     custom = fileadmin/templates/{$mandant}/custom.scss
 }
@@ -66,10 +67,12 @@ that and recompiles into the *same* filename.
 
 Insertion order in the merged TypoScript array wins:
 
-**theme.css → global.css → custom.css**
+**theme.css → global.css → plN.css (layout) → custom.css**
 
 `custom.scss` therefore has the highest cascade precedence, and the raw
-Bootstrap5 `theme.scss` the lowest.
+Bootstrap5 `theme.scss` the lowest. The `layout` entry (`pl0`..`pl3`, see
+section 8) sits between `global` and `custom`, so `custom.scss` can still
+override a layout variant.
 
 ## 5. Relevant extension configuration
 
@@ -116,7 +119,7 @@ because of Bootstrap's RFS (responsive font-size) scaling:
   ```
 
   Because `custom.css` loads last in the cascade (`theme.css → global.css →
-  custom.css`, see point 4) and this is a flat property assignment (no
+  plN.css → custom.css`, see point 4) and this is a flat property assignment (no
   `rfs()`), it wins at every breakpoint and is what actually pins h1 to a
   flat size across all viewport widths. Without it, h1 would render
   RFS-scaled (noticeably smaller than 3rem on narrow viewports).
@@ -160,7 +163,7 @@ case, delete the flat rules rather than fighting RFS with tuning variables.
 
 ## 8. Layout variants (pl0–pl3)
 
-`basis.typoscript` adds a fourth `page.includeCSS` entry after `global`:
+The `layout` entry shown in section 1 is a fourth `page.includeCSS` entry, placed after `global`:
 
 ```
 layout = EXT:sitepackage/Resources/Public/Scss/Theme/{$layout}.scss
