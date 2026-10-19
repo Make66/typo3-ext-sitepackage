@@ -4,4 +4,5 @@ tt_content.sitepackage_hero =< lib.contentElement
 tt_content.sitepackage_hero {
     templateName = Hero
     templateRootPaths.30 = EXT:sitepackage/Resources/Private/Templates/ContentElements/
+    templateRootPaths.31 = EXT:sitepackage/Resources/Private/_{$layout}/Templates/ContentElements/
 }

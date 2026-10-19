@@ -205,3 +205,38 @@ the mandant's variables, e.g. `.pl1 .navbar { background: $primary; }`.
 | Needs the mandant's own `_variables.scss` values | `custom.scss` (or `global.scss` via the mandant's glue file), not `plN.scss`. |
 
 Use `!default` in the extension files so an injected constant wins.
+
+## 9. Layout variants for Fluid (page level)
+
+The `layout` site setting also selects Fluid overrides, mirroring the SCSS
+cascade. Each variant is a folder `Resources/Private/_plN/` (lowercase, because
+`{$layout}` is used verbatim and the server is case-sensitive; the leading
+underscore keeps the variants grouped apart from `Layouts`, `Partials` and
+`Templates` in any sort order) that mirrors the
+base tree and holds **only the files it overrides**:
+
+```
+Resources/Private/_plN/Layouts/Page/
+Resources/Private/_plN/Partials/BootstrapPackage/Page/
+```
+
+Fluid searches root paths from the highest index down, so the order is
+**extension base → layout variant → mandant `fileadmin` override**
+(`basis.typoscript`, `page.10`):
+
+| Root | Base | `plN` | Mandant |
+|---|---|---|---|
+| `layoutRootPaths` | `.30` | `.31` | – |
+| `partialRootPaths` | `.1` | `.2` | `.3` |
+
+Content elements and plugins follow the same pattern; every variant root is
+the base index plus one (or `10` for the Contact plugin):
+
+| Root | Base | `plN` |
+|---|---|---|
+| `lib.contentElement` partials / layouts | `.30` | `.31` (`…/_plN/Partials/BootstrapPackage/ContentElements/`, `…/_plN/Layouts/ContentElements/`) |
+| `menu_section`, `menu_section_pages` partials / layouts | `.30` | `.31` (repeated by hand, because bk2k copies `lib.contentElement` at parse time) |
+| `sitepackage_hero`, `sitepackage_linkbox` templates | `.30` | `.31` (`…/_plN/Templates/ContentElements/`) |
+| `plugin.tx_sitepackage_contact.view` templates / partials / layouts | `0` | `10` (`…/_plN/Templates/`, `Partials/`, `Layouts/`) |
+
+A new bk2k CType that copies `lib.contentElement` needs its own `.31` lines.

@@ -33,9 +33,13 @@ page {
         bootstrap_stickyheader = EXT:sitepackage/Resources/Public/JavaScript/bootstrap.stickyheader.js
     }
     10 {
+        # Fluid searches the highest index first: extension base < layout
+        # variant (pl0..pl3, only overrides) < mandant fileadmin override.
         layoutRootPaths.30 = EXT:sitepackage/Resources/Private/Layouts/Page/
+        layoutRootPaths.31 = EXT:sitepackage/Resources/Private/_{$layout}/Layouts/Page/
         partialRootPaths.1 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/Page/
-        partialRootPaths.2 = fileadmin/templates/{$mandant}/bootstrap_package/Resources/Private/Partials/Page/
+        partialRootPaths.2 = EXT:sitepackage/Resources/Private/_{$layout}/Partials/BootstrapPackage/Page/
+        partialRootPaths.3 = fileadmin/templates/{$mandant}/bootstrap_package/Resources/Private/Partials/Page/
 
         # {$page.logo.file} (TS Constants Editor, bootstrap_package's own
         # constants.typoscript) is a plain string constant — TypoScript does not
@@ -135,6 +139,8 @@ page {
 lib.contentElement {
     partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
     layoutRootPaths.30 = EXT:sitepackage/Resources/Private/Layouts/ContentElements/
+    partialRootPaths.31 = EXT:sitepackage/Resources/Private/_{$layout}/Partials/BootstrapPackage/ContentElements/
+    layoutRootPaths.31 = EXT:sitepackage/Resources/Private/_{$layout}/Layouts/ContentElements/
     variables.siteLayout = TEXT
     variables.siteLayout.value = {$layout}
 }
@@ -156,12 +162,16 @@ page.10.variables.siteLayout.value = {$layout}
 # (e.g. a shared footer/sitemap element), since bk2k defines it the same
 # `=< lib.contentElement` way. Re-apply the fix directly on it and its
 # sibling menu_section_pages; if another bk2k CType turns up with the same
-# exception, add it here rather than re-diagnosing from scratch.
+# exception, add it here (including its layout-variant .31 paths) rather than re-diagnosing from scratch.
 tt_content {
     menu_section.partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
     menu_section_pages.partialRootPaths.30 = EXT:sitepackage/Resources/Private/Partials/BootstrapPackage/ContentElements/
     menu_section.layoutRootPaths.30 = EXT:sitepackage/Resources/Private/Layouts/ContentElements/
     menu_section_pages.layoutRootPaths.30 = EXT:sitepackage/Resources/Private/Layouts/ContentElements/
+    menu_section.partialRootPaths.31 = EXT:sitepackage/Resources/Private/_{$layout}/Partials/BootstrapPackage/ContentElements/
+    menu_section_pages.partialRootPaths.31 = EXT:sitepackage/Resources/Private/_{$layout}/Partials/BootstrapPackage/ContentElements/
+    menu_section.layoutRootPaths.31 = EXT:sitepackage/Resources/Private/_{$layout}/Layouts/ContentElements/
+    menu_section_pages.layoutRootPaths.31 = EXT:sitepackage/Resources/Private/_{$layout}/Layouts/ContentElements/
 }
 
 # Bildgrößen

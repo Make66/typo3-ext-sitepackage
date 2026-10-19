@@ -4,6 +4,7 @@ tt_content.sitepackage_linkbox =< lib.contentElement
 tt_content.sitepackage_linkbox {
     templateName = Linkbox
     templateRootPaths.30 = EXT:sitepackage/Resources/Private/Templates/ContentElements/
+    templateRootPaths.31 = EXT:sitepackage/Resources/Private/_{$layout}/Templates/ContentElements/
 
     dataProcessing {
         20 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
