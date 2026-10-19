@@ -7,3 +7,4 @@
 @import 'EXT:sitepackage/Configuration/TypoScript/Setup/hero.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/Setup/linkbox.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/Setup/contact.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/Setup/a11y.typoscript'

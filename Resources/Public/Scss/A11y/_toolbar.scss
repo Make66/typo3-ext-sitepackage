@@ -1,0 +1,367 @@
+// Barrierefreiheit: Leiste und -Menue — see Documentation/A11yToolbar.md
+// --------------------------------------------------
+
+$a11y-icon-path:       "../../Icons/A11y/" !default;
+$a11y-item-size:       40px !default;
+$a11y-item-gap:        .35rem !default;
+$a11y-item-bg:         #e9ecef !default;
+$a11y-item-color:      #000 !default;
+$a11y-item-icon-color: $primary !default;
+$a11y-burger-width:    40px !default;
+$a11y-burger-gap:      1rem !default;
+$a11y-bar-height:      85px !default;
+$a11y-navbar-right:    15px !default;
+
+$a11y-icons: (
+    font:      'schriftgroesse.svg',
+    spacing:   'buchstabenabstand.svg',
+    typeface:  'schriftart.svg',
+    contrast:  'kontrast.svg',
+    more:      'einstellungen.svg',
+    statement: 'barrierefreiheit.svg',
+    easy:      'leichte_sprache.svg'
+) !default;
+
+// Breakpoints passend zur Navigation (Burger-Menue unterhalb von $grid-float-breakpoint)
+@mixin a11y-desktop {
+    @media (min-width: $grid-float-breakpoint) {
+        @content;
+    }
+}
+@mixin a11y-mobile {
+    @media (max-width: #{$grid-float-breakpoint - .02}) {
+        @content;
+    }
+}
+
+//
+// Einstellungen anwenden
+// --------------------------------------------------
+:root {
+    --a11y-font-scale: 1;
+    --a11y-letter-spacing: 0em;
+}
+html {
+    font-size: calc(100% * var(--a11y-font-scale));
+}
+body {
+    letter-spacing: var(--a11y-letter-spacing);
+}
+
+// Schriftart (Icon-Fonts ausnehmen)
+:root[data-a11y-font="arial"] :where(body, body *):not([class*="bootstrappackageicon"]) {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+:root[data-a11y-font="times"] :where(body, body *):not([class*="bootstrappackageicon"]) {
+    font-family: "Times New Roman", Times, serif !important;
+}
+
+// Kontrast: starker Kontrast 
+:root[data-a11y-contrast="high"] {
+    --frame-color: #ffffff;
+    --frame-background: #000000;
+    --frame-link-color: #ffff00;
+    --frame-link-hover-color: #ffffff;
+    body,
+    .section,
+    .frame,
+    .navbar,
+    .dropdown-menu,
+    .card,
+    .breadcrumb-section,
+    .footer-section,
+    .a11y-panel {
+        background: #000000 !important;
+        color: #ffffff !important;
+    }
+    a,
+    .nav-link {
+        color: #ffff00 !important;
+        text-decoration: underline;
+    }
+    .btn,
+    .a11y-item {
+        background: #000000 !important;
+        color: #ffff00 !important;
+        border: 2px solid #ffff00 !important;
+        svg {
+            color: inherit;
+        }
+    }
+}
+
+// Kontrast: invers und Schwarz-Weiss
+:root[data-a11y-contrast="invert"] {
+    filter: invert(1) hue-rotate(180deg);
+    img,
+    picture,
+    video,
+    .carousel-backgroundimage,
+    .frame-backgroundimage {
+        filter: invert(1) hue-rotate(180deg);
+    }
+}
+:root[data-a11y-contrast="bw"] {
+    filter: grayscale(1) contrast(1.4);
+}
+
+// Grosser Mauszeiger
+:root[data-a11y-cursor] {
+    &,
+    * {
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'><path d='M3 2l7 19 3-8 8-3z' fill='black' stroke='white' stroke-width='1.5'/></svg>") 3 2, auto !important;
+    }
+    a,
+    button,
+    [role="button"],
+    label,
+    input,
+    select {
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'><path d='M3 2l7 19 3-8 8-3z' fill='yellow' stroke='black' stroke-width='1.5'/></svg>") 3 2, pointer !important;
+    }
+}
+
+// Elemente hervorgehoben
+:root[data-a11y-highlight] {
+    a {
+        text-decoration: underline !important;
+        text-decoration-thickness: 2px !important;
+        font-weight: bold;
+    }
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    h1, h2, h3, h4, h5, h6 {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+    }
+}
+
+// Bilder verbergen
+:root[data-a11y-hide-images] {
+    img,
+    picture,
+    video,
+    .carousel-backgroundimage-container,
+    .frame-backgroundimage-container {
+        display: none !important;
+    }
+}
+
+// Positionierung der Leiste
+// --------------------------------------------------
+
+// Headerelement nach oben verkleinern
+.navbar-mainnavigation {
+    @include a11y-desktop {
+  padding-top: calc((var(--mainnavigation-nav-height) - var(--mainnavigation-link-height)) / 3);
+ }
+}
+// Mobil/Tablet: fest oben rechts, links neben dem Burger-Button.
+// Desktop: normal im Fluss ueber dem Header, rechtsbuendig.
+#a11y-window {
+    @include a11y-mobile {
+        position: fixed !important; // .container-mainnavigation setzt sonst position: relative
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 0;
+        z-index: 1055;
+        pointer-events: none; // Klicks gehen durch die leere Fläche
+        // max-width, margin und padding bleiben vom .container erhalten:
+        // das Fenster ist so breit wie der Header-Container
+
+        .a11y-tools {
+            position: absolute;
+            top: calc((#{$a11y-bar-height} - #{$a11y-item-size}) / 2);
+            // Containerpadding + Burger + Abstand
+            right: calc(var(--bs-gutter-x, 1.5rem) * .5 + #{$a11y-burger-width} + #{$a11y-burger-gap});
+            pointer-events: auto;
+        }
+    }
+    @include a11y-desktop {
+        position: relative;
+    }
+}
+
+
+.a11y-tools {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end; // alles rechts
+    gap: $a11y-item-gap;
+    padding-right:$a11y-navbar-right;
+}
+
+//
+// Graue Kaesten (Links und Button)
+// --------------------------------------------------
+.a11y-item, .a11y-tools button.a11y-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    width: $a11y-item-size;
+    height: $a11y-item-size;
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    line-height: 1;
+    color: $a11y-item-color;
+    background: $a11y-item-bg;
+    border: 0;
+    border-radius: $border-radius;
+    text-decoration: none;
+    cursor: pointer;
+    svg {
+        flex-shrink: 0;
+        width: 1.7rem;
+        height: 1.7rem;
+        color: $a11y-item-icon-color;
+    }
+    &:hover {
+        color: $a11y-item-color;
+        background: darken($a11y-item-bg, 5%);
+        text-decoration: none;
+    }
+    &:focus-visible {
+        outline: 2px solid #000000;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 4px #ffffff;
+    }
+    @include a11y-desktop {
+        width: auto;
+        height: auto;
+        padding: .3rem 0.5rem;
+        border-radius: 0 0 $border-radius $border-radius; // haengt am oberen Rand
+    }
+}
+
+// A11y-Icons: sanfter Hover-Effekt
+.a11y-item svg,
+.a11y-toggle svg {
+    transition: transform 0.25s ease;
+}
+
+.a11y-item:hover svg,
+.a11y-toggle:hover svg {
+    transform: scale(1.12);
+}
+
+// Suche und Kontakt auf Mobilgeräten ausblenden
+.a11y-item-search,
+.a11y-item-contact {
+    @include a11y-mobile {
+        display: none;
+    }
+}
+
+//
+// Panel
+// --------------------------------------------------
+.a11y-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: min(30rem, calc(100vw - 2rem));
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    padding: 1.5rem;
+    text-align: left;
+    color: $body-color;
+    background: $white;
+    border: 1px solid $primary;
+    box-shadow: $box-shadow;
+    z-index: 9999;
+    &[hidden] {
+        display: none;
+    }
+    // Mobil: unter der Kopfleiste, ueber die volle Breite
+    @include a11y-mobile {
+        position: fixed;
+        top: $a11y-bar-height;
+        left: 1rem;
+        right: 1rem;
+        width: auto;
+        max-height: calc(100vh - #{$a11y-bar-height} - 1rem);
+        max-height: calc(100dvh - #{$a11y-bar-height} - 1rem);
+    }
+}
+.a11y-group {
+    margin: 0 0 1.25rem;
+    padding: 0;
+    border: 0;
+}
+.a11y-heading {
+    float: none;
+    width: auto;
+    margin: 0 0 .5rem;
+    padding: 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: $primary;
+}
+.a11y-buttons {
+    display: flex;
+    gap: .5rem;
+    .btn {
+        min-width: 3rem;
+    }
+}
+.a11y-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem 1rem;
+    label {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+    }
+    input {
+        flex-shrink: 0;
+    }
+}
+.a11y-options-single {
+    grid-template-columns: 1fr;
+}
+.a11y-more {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5rem;
+    margin-bottom: 1rem;
+}
+
+//
+// Icons vor Ueberschriften und Links (SVG-Dateien als Maske)
+// --------------------------------------------------
+[class*="a11y-icon-"]:before {
+    content: '';
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    margin-right: .5rem;
+    vertical-align: -.35em;
+    background-color: currentColor;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
+@each $name, $file in $a11y-icons {
+    .a11y-icon-#{$name}:before {
+        -webkit-mask-image: url("#{$a11y-icon-path}#{$file}");
+        mask-image: url("#{$a11y-icon-path}#{$file}");
+    }
+}
+
+@media print {
+    #a11y-window {
+        display: none;
+    }
+}

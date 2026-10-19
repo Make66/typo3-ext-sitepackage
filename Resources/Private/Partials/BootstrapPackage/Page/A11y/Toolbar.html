@@ -1,0 +1,85 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{settings.a11y.enable}">
+<f:asset.script identifier="a11y-tools" src="EXT:sitepackage/Resources/Public/JavaScript/a11y.js" priority="1" />
+<div id="a11y-window">
+    <div class="container container-mainnavigation">
+        <div class="a11y-tools" id="a11y-tools">
+            <f:if condition="{settings.a11y.searchPid}">
+                <f:link.page pageUid="{settings.a11y.searchPid}" class="a11y-item a11y-item-search" title="Suche">
+                    <svg aria-hidden="true" focusable="false" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="6"/><path d="M15 15l6 6"/></svg>
+                    <span class="visually-hidden">Suche</span>
+                </f:link.page>
+            </f:if>
+            <f:if condition="{settings.a11y.contactPid}">
+                <f:link.page pageUid="{settings.a11y.contactPid}" class="a11y-item a11y-item-contact" title="Kontakt">
+                    <svg aria-hidden="true" focusable="false" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18v14H3z"/><path d="M3 6l9 7 9-7"/></svg>
+                    <span class="visually-hidden">Kontakt</span>
+                </f:link.page>
+            </f:if>
+            <button type="button" class="a11y-toggle" aria-expanded="false" aria-controls="a11y-panel">
+                <svg aria-hidden="true" focusable="false" width="35" height="35" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="4" r="2"/><path d="M4 8h16v2h-6v4l2 7h-2l-2-6-2 6H8l2-7v-4H4z"/></svg>
+                <span class="visually-hidden">Einstellungen zur Barrierefreiheit</span>
+            </button>
+
+            <div class="a11y-panel" id="a11y-panel" role="region" aria-label="Einstellungen zur Barrierefreiheit" hidden>
+
+                <section class="a11y-group" aria-labelledby="a11y-h-font">
+                    <h2 class="a11y-heading a11y-icon-font" id="a11y-h-font">Schriftgröße</h2>
+                    <div class="a11y-buttons">
+                        <button type="button" class="btn btn-default" data-a11y-step="fontStep:1" aria-label="Schrift vergrößern">+</button>
+                        <button type="button" class="btn btn-default" data-a11y-step="fontStep:-1" aria-label="Schrift verkleinern">&minus;</button>
+                    </div>
+                </section>
+
+                <section class="a11y-group" aria-labelledby="a11y-h-spacing">
+                    <h2 class="a11y-heading a11y-icon-spacing" id="a11y-h-spacing">Buchstabenabstand</h2>
+                    <div class="a11y-buttons">
+                        <button type="button" class="btn btn-default" data-a11y-step="spacingStep:1" aria-label="Buchstabenabstand vergrößern">+</button>
+                        <button type="button" class="btn btn-default" data-a11y-step="spacingStep:-1" aria-label="Buchstabenabstand verkleinern">&minus;</button>
+                    </div>
+                </section>
+
+                <fieldset class="a11y-group">
+                    <legend class="a11y-heading a11y-icon-typeface">Andere Schriftart wählen</legend>
+                    <div class="a11y-options">
+                        <label><input type="radio" name="font" value="default"> Standard</label>
+                        <label><input type="radio" name="font" value="arial"> Arial</label>
+                        <label><input type="radio" name="font" value="times"> Times New Roman</label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="a11y-group">
+                    <legend class="a11y-heading a11y-icon-contrast">Kontrast</legend>
+                    <div class="a11y-options">
+                        <label><input type="radio" name="contrast" value="default"> Standard</label>
+                        <label><input type="radio" name="contrast" value="invert"> invers</label>
+                        <label><input type="radio" name="contrast" value="bw"> Schwarz-Weiß</label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="a11y-group">
+                    <legend class="a11y-heading a11y-icon-more">Weitere Funktionen</legend>
+                    <div class="a11y-options a11y-options-single">
+                        <label class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" name="cursor"> großer Mauszeiger</label>
+                        <label class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" name="highlight"> Elemente hervorgehoben</label>
+                        <label class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" name="hideImages"> Bilder verbergen</label>
+                    </div>
+                </fieldset>
+
+                <f:if condition="{settings.a11y.statementPid} || {settings.a11y.easyLanguagePid}">
+                    <p class="a11y-more">
+                        <f:if condition="{settings.a11y.statementPid}">
+                            <f:link.page pageUid="{settings.a11y.statementPid}" class="a11y-icon-statement">Erklärung zur Barrierefreiheit</f:link.page>
+                        </f:if>
+                        <f:if condition="{settings.a11y.easyLanguagePid}">
+                            <f:link.page pageUid="{settings.a11y.easyLanguagePid}" class="a11y-icon-easy">Leichte Sprache</f:link.page>
+                        </f:if>
+                    </p>
+                </f:if>
+                <button type="button" class="btn btn-default" data-a11y-reset>Einstellungen zurücksetzen</button>
+            </div>
+        </div>
+    </div>
+</div>
+</f:if>
+</html>

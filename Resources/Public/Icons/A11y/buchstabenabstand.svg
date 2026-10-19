@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xodm="http://www.corel.com/coreldraw/odm/2003" xml:space="preserve" width="3071px" height="3071px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 725.66 725.66">
+ <defs>
+  <style type="text/css">
+   
+    .fil1 {fill:none}
+    .fil2 {fill:#2B2A29}
+    .fil0 {fill:#2B2A29;fill-rule:nonzero}
+   
+  </style>
+ </defs>
+ <g id="Ebene_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+  <polygon class="fil0" points="321.29,473.99 321.29,104.86 189.76,104.86 189.76,29.8 542.14,29.8 542.14,104.86 411.24,104.86 411.24,473.99 "></polygon>
+  <g>
+   <path class="fil0" d="M699.07 608.52l-136.8 68.1 0.22 -136.69 136.58 68.59zm-526.97 -12.02l397.44 0.65 -0.03 22.33 -397.45 -0.65 0.04 -22.33zm-129.56 10.96l136.8 -68.15 -0.22 136.69 -136.58 -68.54z"></path>
+  </g>
+  <rect class="fil1" width="725.66" height="725.66"></rect>
+  <polygon class="fil2" points="171.78,571.91 578.2,571.91 578.2,644.07 171.78,644.07 "></polygon>
+ </g>
+</svg>

@@ -1,8 +1,47 @@
 categories:
   sitepackage:
     label: 'Sitepackage'
+  sitepackage.a11y:
+    label: 'Barrierefreiheit'
+    parent: sitepackage
 
 settings:
+  sitepackage.a11y.enable:
+    category: sitepackage.a11y
+    label: 'Barrierefreiheits-Leiste aktivieren'
+    description: 'Renders the a11y toolbar (DropIn PageBefore) and loads its JS/CSS. See Documentation/A11yToolbar.md.'
+    default: false
+    type: bool
+  sitepackage.a11y.statementPid:
+    category: sitepackage.a11y
+    label: 'Seite "Erklärung zur Barrierefreiheit"'
+    description: 'Page uid; 0 hides the link.'
+    default: 0
+    type: int
+  sitepackage.a11y.easyLanguagePid:
+    category: sitepackage.a11y
+    label: 'Seite "Leichte Sprache"'
+    description: 'Page uid; 0 hides the link.'
+    default: 0
+    type: int
+  sitepackage.a11y.contactPid:
+    category: sitepackage.a11y
+    label: 'Kontaktseite'
+    description: 'Page uid; 0 hides the link.'
+    default: 0
+    type: int
+  sitepackage.a11y.searchPid:
+    category: sitepackage.a11y
+    label: 'Suchseite'
+    description: 'Page uid; 0 hides the link.'
+    default: 0
+    type: int
+  plugin.bootstrap_package.settings.scss.a11y-item-bg:
+    category: sitepackage.a11y
+    label: '$a11y-item-bg'
+    description: 'Background of the toolbar boxes (search, contact, toggle).'
+    default: '#e9ecef'
+    type: string
   mandant:
     category: sitepackage
     label: 'Mandant folder name'

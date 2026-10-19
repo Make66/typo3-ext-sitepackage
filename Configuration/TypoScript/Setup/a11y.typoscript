@@ -1,0 +1,16 @@
+# Barrierefreiheits-Leiste — see Documentation/A11yToolbar.md
+page.10.settings.a11y {
+    enable = {$sitepackage.a11y.enable}
+    statementPid = {$sitepackage.a11y.statementPid}
+    easyLanguagePid = {$sitepackage.a11y.easyLanguagePid}
+    contactPid = {$sitepackage.a11y.contactPid}
+    searchPid = {$sitepackage.a11y.searchPid}
+}
+
+["{$sitepackage.a11y.enable}" == "1"]
+    page.includeCSS {
+        a11y = EXT:sitepackage/Resources/Public/Scss/A11y/a11y.scss
+        custom >
+        custom = fileadmin/templates/{$mandant}/custom.scss
+    }
+[END]
