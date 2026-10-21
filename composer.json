@@ -2,18 +2,18 @@
     "name": "taketool/sitepackage",
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
-    "description": "Container elements and other stuff",
+    "description": "Sitepackage for t3v13+14 on Bootstrap-Package by Benjamin Kott",
     "authors": [
         {
             "name": "Martin Keller",
             "role": "Developer"
         }
     ],
-    "version": "12.0.0",
+    "version": "13.0.0",
     "require": {
-        "typo3/cms-core": "^12.4 || ^13.4 || ^14.3",
-        "typo3/cms-seo": "^12.4 || ^13.4 || ^14.3",
-        "bk2k/bootstrap-package": "^15.0 || ^16.0"
+        "typo3/cms-core": "^13.4 || ^14.3",
+        "b13/container": "^4.1.0",
+        "bk2k/bootstrap-package": "^16.0"
     },
     "replace": {
         "laxap/bootstrap_grids":"*",
@@ -35,4 +35,3 @@
         }
     }
 }
-
