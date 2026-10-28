@@ -1,0 +1,111 @@
+// ============================================================
+// SCHRIFTBIBLIOTHEK – Auswahl über die Site-Settings
+// font-body-key / font-heading-key. Dateien: Resources/Public/Fonts/
+// Siehe Documentation/Fonts.md.
+// ============================================================
+
+$font-library: (
+  system: (
+    stack: (Arial, Helvetica, sans-serif),
+    files: ()
+  ),
+  overpass: (
+    stack: ("Overpass", Arial, Helvetica, sans-serif),
+    files: ("Overpass-VF.woff2": 100 900),
+    italic: ("Overpass-Italic-VF.woff2": 100 900)
+  ),
+  merriweathersans: (
+    stack: ("Merriweather Sans", Arial, Helvetica, sans-serif),
+    files: ("MerriweatherSans-VF.woff2": 300 800),
+    italic: ("MerriweatherSans-Italic-VF.woff2": 300 800)
+  ),
+  merriweather: (
+    stack: ("Merriweather", Georgia, "Times New Roman", serif),
+    files: ("Merriweather-VF.woff2": 300 900),
+    italic: ("Merriweather-Italic-VF.woff2": 300 900)
+  ),
+  sourcesans3: (
+    stack: ("Source Sans 3", Arial, Helvetica, sans-serif),
+    files: ("SourceSans3-VF.woff2": 200 900),
+    italic: ("SourceSans3-Italic-VF.woff2": 200 900)
+  ),
+  roboto: (
+    stack: ("Roboto", Arial, Helvetica, sans-serif),
+    files: ("Roboto-VF.woff2": 100 900),
+    italic: ("Roboto-Italic-VF.woff2": 100 900)
+  ),
+  robotocondensed: (
+    stack: ("Roboto Condensed", "Arial Narrow", Arial, sans-serif),
+    files: ("RobotoCondensed-VF.woff2": 100 900),
+    italic: ("RobotoCondensed-Italic-VF.woff2": 100 900)
+  ),
+  urbanist: (
+    stack: ("Urbanist", Helvetica, Arial, sans-serif),
+    files: ("Urbanist-VF.woff2": 100 900),
+    italic: ("Urbanist-Italic-VF.woff2": 100 900)
+  ),
+  opensans: (
+    stack: ("Open Sans", Arial, Helvetica, sans-serif),
+    files: ("OpenSans-VF.woff2": 300 800),
+    italic: ("OpenSans-Italic-VF.woff2": 300 800)
+  ),
+  montserrat: (
+    stack: ("Montserrat", Arial, Helvetica, sans-serif),
+    files: ("Montserrat-VF.woff2": 100 900),
+    italic: ("Montserrat-Italic-VF.woff2": 100 900)
+  ),
+  notosans: (
+    stack: ("Noto Sans", Arial, Helvetica, sans-serif),
+    files: ("NotoSans-VF.woff2": 100 900),
+    italic: ("NotoSans-Italic-VF.woff2": 100 900)
+  )
+) !default;
+
+$font-body-key:    system !default;
+$font-heading-key: body !default;      // body = wie Fließtext
+@if $font-heading-key == body {
+  $font-heading-key: $font-body-key;
+}
+
+
+@function font-library-entry($key) {
+  @if not map-has-key($font-library, $key) {
+    @warn "Schrift '#{$key}' fehlt in $font-library – verwende 'system'.";
+    @return map-get($font-library, system);
+  }
+  @return map-get($font-library, $key);
+}
+
+@function font-library-stack($key) {
+  @return map-get(font-library-entry($key), stack);
+}
+
+@function font-library-family($key) {
+  @return nth(font-library-stack($key), 1);
+}
+
+// Nächstliegender vorhandener Schnitt; ohne Dateien (system) unverändert.
+@function font-library-weight($key, $weight) {
+  $files: map-get(font-library-entry($key), files);
+  @if length($files) == 0 {
+    @return $weight;
+  }
+
+  $best: null;
+  $distance: null;
+  @each $file, $range in $files {
+    $min: nth($range, 1);
+    $max: nth($range, length($range));
+    @if $weight >= $min and $weight <= $max {
+      @return $weight;
+    }
+    $nearest: if($weight < $min, $min, $max);
+    @if $distance == null or abs($weight - $nearest) < $distance {
+      $best: $nearest;
+      $distance: abs($weight - $nearest);
+    }
+  }
+
+  @warn "Schrift '#{$key}' hat keinen Schnitt #{$weight} – verwende #{$best}.";
+  @return $best;
+}

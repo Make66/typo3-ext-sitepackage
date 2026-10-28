@@ -2,16 +2,1061 @@
 // Own includeCSS compile (see basis.typoscript), loaded after global and before
 // custom. It does not see fileadmin/templates/<mandant>/_variables.scss; Site
 // Settings (plugin.bootstrap_package.settings.scss.*) are injected by bk2k.
-// Scope all rules to .pl2 (set in Layouts/Page/Default.html).
 // See Documentation/SCSS_pipeline.md section 8.
 
-// Bootstrap variables, functions, mixins (no CSS output)
-@import "EXT:bootstrap_package/Resources/Public/Scss/bootstrap5/_variables";
-@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_functions";
-@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_variables";
-@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_mixins";
 @import "layout-variables";
 
-.pl2 {
-  // layout-specific rules for Gonsenheim go here
+// Bootstrap variables, functions, mixins (no CSS output)
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_functions";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_variables";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_maps";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_mixins";
+
+
+// ============================================================
+// MIXINS
+// ============================================================
+
+// Externer Link: alles mit target="_blank"
+@mixin external {
+  &[target="_blank"] {
+    @content;
+  }
+}
+
+// Animierte Unterstreichung (über background → ::after bleibt frei,
+// dadurch funktioniert .stretched-link überall)
+// $idle = Stärke der Linie im Ruhezustand:
+//   0%   = unsichtbar (Linie erscheint erst beim Hover)
+//   35%  = dezent sichtbar
+//   100% = voll sichtbar
+@mixin link-underline($idle: 0%) {
+  $idle-color: unquote("color-mix(in srgb, currentColor #{$idle}, transparent)");
+
+  text-decoration: none;
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient($idle-color, $idle-color);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 1px, 100% 1px;
+  transition: background-size $transition;
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+// Icon (Maske, nimmt die Textfarbe an) als ::before
+@mixin link-icon($icon) {
+  &::before {
+    content: "";
+    display: inline-block;
+    flex: 0 0 $link-icon-size;
+    width: $link-icon-size;
+    height: $link-icon-size;
+    margin-right: .4rem;
+    vertical-align: -2px;
+    background-color: currentColor;
+    -webkit-mask: url($icon) no-repeat center / contain;
+    mask: url($icon) no-repeat center / contain;
+    transition: transform .2s ease;
+  }
+}
+
+// Einheitliche Card-Fläche (Radius, Rahmen, Schatten)
+@mixin card-surface {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid $card-border-color;
+  border-radius: $card-radius;
+  box-shadow: $card-shadow;
+}
+
+@mixin card-hover {
+  transition: transform $transition, box-shadow $transition;
+
+  &:hover {
+    transform: translateY($card-hover-lift);
+    box-shadow: $card-shadow-hover;
+  }
+}
+
+
+// Überschrift: Farbe, Schrift, Schnitt und Größe.
+// Mobil (unter md) = Größe × $scale, aber nie kleiner als der Fließtext.
+@mixin heading($color, $family, $weight, $size, $scale: $heading-mobile-scale) {
+  $mobile: $size * $scale;
+  @if $scale < 1 and $mobile < $font-size-base {
+    $mobile: $font-size-base;
+  }
+
+  color: $color;
+  font-family: $family;
+  font-weight: $weight;
+  line-height: 1.25;
+  font-size: $mobile;
+
+  @include media-breakpoint-up(md) { font-size: $size; }
+}
+
+
+// ============================================================
+// 1. BASIS & TYPOGRAFIE
+// ============================================================
+
+:root {
+  --bs-font-sans-serif: #{inspect($font-body)};
+  --bs-body-font-weight: #{$font-weight-body};
+}
+
+h1, .h1 {
+  @include heading($h1-color, $h1-font-family, $h1-font-weight, $h1-size);
+
+  // Kurzer Akzent-Balken unter dem Seitentitel
+  @if $h1-bar-width != 0 {
+    &::after {
+      content: "";
+      display: block;
+      width: $h1-bar-width;
+      height: $h1-bar-height;
+      margin-top: $h1-bar-margin;
+      border-radius: 999px;
+      background: $h1-bar-color;
+    }
+  }
+}
+
+// Kein Balken bei Überschriften im Carousel
+.carousel h1::after,
+.carousel .h1::after { content: none; }
+
+h2, .h2 {
+  @include heading($h2-color, $h2-font-family, $h2-font-weight, $h2-size);
+
+  // Keine zweite Linie per ::after (z. B. aus Theme/global.scss)
+  &::after { content: none !important; }
+}
+
+// Falls die Überschrift im Frame-Header schmaler als die Spalte ist:
+// volle Breite, damit die graue Linie über die ganze Zeile läuft
+.frame-header h2 { display: block; }
+
+h3, .h3 {
+  @include heading($h3-color, $h3-font-family, $h3-font-weight, $h3-size);
+  background: none;
+  padding: 0;
+}
+
+h4, .h4 { @include heading($h4-color, $h4-font-family, $h4-font-weight, $h4-size); }
+h5, .h5 { @include heading($h5-color, $h5-font-family, $h5-font-weight, $h5-size); }
+
+// h6: kleines Label (nicht skaliert, Scale = 1)
+h6, .h6 {
+  @include heading($h6-color, $h6-font-family, $h6-font-weight, $h6-size, 1);
+  text-transform: $h6-transform;
+  letter-spacing: $h6-letter-spacing;
+}
+
+// Mehr Abstand über einer Überschrift, die auf Text, Listen oder Tabellen folgt
+:is(p, ul, ol, table, figure) + :is(h2, h3, h4, h5, h6) { margin-top: $heading-space-above; }
+
+strong { font-weight: 900; }
+.scroll-top { bottom: 90px !important; }
+.bg-info { background: $primary !important; }
+
+
+// ============================================================
+// 2. LINKS  (Content + Footer)
+//    · alle Links:  animierte Unterstreichung
+//    · Textlinks:   Pfeil vor dem Link (intern) / Symbol (extern)
+//    · Opt-out:     Klasse .no-link-icon
+// ============================================================
+
+#page-content,
+#page-footer {
+
+  // 2a) Unterstreichung für alle Links außer Buttons / Menü / Anker
+  //     und außer den SVG-Icons der Icon-Gruppen (keine Linie unter dem Icon)
+  a[href]:not(.btn):not(.nav-link):not(.page-link):not(.icongroup-item-icon a) {
+    @include link-underline;
+    font-family: $font-link;
+  }
+
+  // 2b) Pfeil vor Textlinks
+  a[href]:is(
+    p a,
+    td a,
+    .card-footer a,
+    li:not(.breadcrumb-item):not(.page-item):not(.nav-item) a,
+    .stretched-link
+  ):not(.btn):not(.no-link-icon):not(:empty):not(:has(img, svg)):not(.apicodo-event-row a):not(.frame-type-social_links a) {
+
+    @include link-icon($icon-arrow);
+
+    @include external {
+      &::before {
+        -webkit-mask-image: url($icon-external);
+        mask-image: url($icon-external);
+      }
+    }
+
+    &:hover::before { transform: translateX(3px); }
+  }
+
+  // 2c) Buttons: Pfeil hinten (außer Button hat schon ein Icon)
+  .btn:not(:has(.btn-icon)):not(.stretched-link) {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+
+    &::after {
+      content: "";
+      flex: 0 0 $link-icon-size;
+      width: $link-icon-size;
+      height: $link-icon-size;
+      background-color: currentColor;
+      -webkit-mask: url($icon-arrow) no-repeat center / contain;
+      mask: url($icon-arrow) no-repeat center / contain;
+      transition: transform .2s ease;
+    }
+
+    @include external {
+      &::after {
+        -webkit-mask-image: url($icon-external);
+        mask-image: url($icon-external);
+      }
+    }
+
+    &:hover::after { transform: translateX(3px); }
+  }
+}
+
+// Footer-Links
+#page-footer .footer-section-content a[href]:not(.btn):not(:empty) {
+  color: #fff;
+  letter-spacing: .2px;
+  &:hover { color: #fff !important; }
+}
+
+#page-footer .footer-section-content-column ul {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+// Buttons
+.btn-primary, .btn-primary:hover { color: #fff; }
+.btn-outline-primary { border: .1rem solid $primary; }
+.btn-outline-primary:hover { color: #fff; }
+
+.btn.btn-outline-default {
+  border: .1rem solid $grey;
+  color: $primary;
+  &:hover { color: $secondary; border-color: $primary; }
+}
+
+// Frame-Hintergründe
+.frame-background-primary .element-header { text-shadow: none !important; }
+.frame-background-primary .card-title { color: #000 !important; text-shadow: none !important; }
+.frame-background-primary,
+.frame-background-secondary,
+.frame-background-secondary .element-header,
+.frame-background-tertiary,
+.frame-background-tertiary .element-header { color: #fff; }
+
+// Fokus-Rahmen für komplett klickbare Karten
+.card:has(.stretched-link:focus-visible),
+.apicodo-card:has(.stretched-link:focus-visible) {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+
+// ============================================================
+// 3. NAVIGATION
+// ============================================================
+
+.navbar-mainnavigation .nav-style-mega .dropdown-menu {
+  @include media-breakpoint-up(lg) { max-width: 1060px; }
+}
+
+.nav-link-text {
+  color: $navbar-font-color;
+  font-size: $navbar-font-size;
+  font-weight: $navbar-font-weight;
+  font-family: $navbar-family;
+  letter-spacing: .008rem;
+}
+
+.navbar-mainnavigation .nav-link:not(.nav-link-toggle)::before { display: none; }
+
+.dropdown-menu { box-shadow: none; border: 0; }
+
+// Externe Links im Menü (Desktop, Dropdown und Offcanvas)
+.navbar-mainnavigation .nav-link {
+  @include external {
+    .nav-link-text {
+      @include link-icon($icon-external);
+      &::before { margin-right: .35rem; }
+    }
+  }
+}
+
+// ---------- Desktop (ab lg) ----------
+@include media-breakpoint-up(lg) {
+
+  .navbar-mainnavigation {
+
+    .nav-link:focus-visible {
+      outline: 3px solid $primary;
+      outline-offset: 3px;
+      box-shadow: none;
+    }
+    .nav-link-dropdown:focus-visible { outline-offset: -3px; }
+
+    // Hauptebene: Unterstrich-Animation
+    .navbar-nav > li > .nav-link {
+      position: relative;
+
+      .nav-link-text {
+        position: relative;
+        display: inline-block;
+
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: -4px;
+          width: 100%;
+          height: 3px;
+          background-color: $navbar-active-color;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform $transition;
+        }
+      }
+
+      &:hover .nav-link-text::after,
+      &.active .nav-link-text::after { transform: scaleX(1); }
+    }
+
+    .nav-link-indicator { display: none; }
+
+    .dropdown-menu li { padding: 0; }
+  }
+
+  .dropdown-menu {
+    border: 1px solid #e9ecef;
+    box-shadow: 0 8px 20px rgba(#000, .06);
+
+    .nav-link-text::after { display: none; }
+
+    .nav-link.nav-link-dropdown {
+      border-bottom: 1px solid $primary;
+      transition: background-color $transition, color $transition;
+      &::after { display: none; }
+
+      &:hover {
+        background-color: $navbar-active-color;
+        .nav-link-text { color: #fff; }
+      }
+    }
+  }
+
+  .dropdown-nav .nav-link-text {
+    font-size: $navbar-link-dropdown-size;
+    font-weight: $navbar-link-dropdown-weight;
+  }
+
+  // Mega-Menü: 3 Spalten
+  .dropdown-menu-mega {
+    .dropdown-nav[data-level="2"] {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px 30px;
+      list-style: none;
+      padding: 0;
+    }
+    .nav-item { break-inside: avoid; }
+  }
+}
+
+// ---------- Mobil / Offcanvas (unter lg) ----------
+@include media-breakpoint-down(lg) {
+
+  .navbar-mainnavigation { --mainnavigation-nav-height: 80px; }
+
+  .offcanvas {
+    .offcanvas-body { width: 100%; }
+
+    .navbar-nav > .nav-item > .nav-link {
+      border-bottom: 1px solid $primary;
+      padding: 15px 0;
+    }
+
+    .nav-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
+      color: $navbar-font-color;
+    }
+
+    .nav-link.active .nav-link-text { color: $navbar-active-color; }
+
+    .dropdown-menu .nav-link-text {
+      font-size: $navbar-link-dropdown-size;
+      font-weight: $navbar-link-dropdown-weight;
+    }
+
+    .nav-link-indicator::before {
+      border-top: 2px solid currentColor;
+      border-left: 2px solid currentColor;
+      padding: .55em 0 0 .55em;
+    }
+  }
+}
+
+// Hover-Effekt SVG-Icons im Menü
+.nav-link-main .nav-link-icon svg { transition: transform .25s ease-in-out; }
+.nav-link-main:hover .nav-link-icon svg { transform: scale(1.25); }
+
+// Hamburger
+.navbar-toggler {
+  height: 45px;
+  width: 45px;
+  &:hover { transform: scale(1.07); }
+}
+.navbar-toggler-icon,
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after { width: 35px; height: 4px; }
+.navbar-toggler.collapsed .navbar-toggler-icon::after  { top: 12px; }
+.navbar-toggler.collapsed .navbar-toggler-icon::before { top: -12px; }
+
+.navbar-toggler:hover .burger-line:nth-child(1),
+.navbar-toggler:hover .burger-line:nth-child(3) { background: $navbar-active-color; }
+@include media-breakpoint-up(md) {
+  .navbar-toggler:hover .burger-line:nth-child(1) { transform: translateY(-2px); }
+  .navbar-toggler:hover .burger-line:nth-child(3) { transform: translateY(2px); }
+}
+
+// Offcanvas-Header
+.offcanvas-header {
+  width: 100%;
+  .btn-close { padding: 10px; opacity: 1; transition: all $transition; }
+  .btn-close:hover { transform: rotate(90deg); }
+}
+.offcanvas-title { position: relative; }
+
+
+// ============================================================
+// 4. BREADCRUMB
+// ============================================================
+
+.breadcrumb-section { background-color: $breadcrumb-section-bg; }
+
+.breadcrumb {
+  flex-wrap: nowrap;            // eine Zeile: bei Platzmangel wird gekürzt statt umgebrochen
+
+  li { white-space: nowrap; }
+
+  .breadcrumb-item + .breadcrumb-item::before { content: "›"; margin: 0 .3rem; }
+
+  // Flex entfernt das Leerzeichen zwischen Haus-Symbol und Wort
+  // (sonst bleibt dort bei gekürztem Text ein kleiner Unterstrich stehen)
+  .breadcrumb-item:first-child .breadcrumb-link {
+    display: inline-flex;
+    align-items: baseline;
+  }
+
+  .breadcrumb-item:first-child a::before {
+    content: "";
+    display: inline-block;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-right: .4rem;
+    background-color: var(--bs-primary);
+    -webkit-mask: url("#{$icon-home}") no-repeat center / contain;
+    mask: url("#{$icon-home}") no-repeat center / contain;
+    transform: translateY(3px);
+  }
+
+  .breadcrumb-item { min-width: 0; overflow: hidden; }
+
+  // Bei Platzmangel schrumpfen alle Einträge schrittweise mit "…".
+  // Je höher der zweite flex-Wert, desto stärker wird der Eintrag gekürzt:
+  // "Startseite" am stärksten, dann mittlere Ebenen, die aktuelle Seite am wenigsten.
+
+  // 1. "Startseite": schrumpft nicht automatisch, sondern wird je nach
+  //    Bildschirmbreite gekürzt: "Startseite" → "Start…" → nur das Haus-Symbol
+  .breadcrumb-item:first-child {
+    flex: 0 0 auto;
+    overflow: visible;
+  }
+
+  .breadcrumb-item:first-child .breadcrumb-text {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+
+    @include media-breakpoint-down(md) { max-width: 3.5em; }   // "Start…"
+    @include media-breakpoint-down(sm) { max-width: 0; }       // nur Haus-Symbol
+  }
+
+  // 2. Mittlere Ebenen (z. B. "Rathaus")
+  .breadcrumb-item:not(:first-child):not(.active) { flex: 0 2 auto; }
+
+  // 3. Aktuelle Seite
+  .breadcrumb-item.active { flex: 0 1 auto; }
+
+  // Kürzen mit "…" (Link bzw. Titel der aktuellen Seite als Textbox)
+  .breadcrumb-item:not(:first-child) .breadcrumb-link,
+  .breadcrumb-item.active .breadcrumb-link-title {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+
+// ============================================================
+// 5. CARDS  (eine einheitliche Optik für alle Karten)
+// ============================================================
+
+.card,
+.apicodo-card,
+.apicodo-event-row,
+.frame-icon-frame .frame-inner {
+  @include card-surface;
+}
+
+.card-group-element-item .card,
+.apicodo-card {
+  @include card-hover;
+}
+
+.card-panel .card-header { font-size: unset !important; }
+.card-panel-primary .card-header { color: #fff; }
+
+// ---------- Card Group ----------
+.card-group-element-item .card {
+  position: relative;
+  color: #000;
+
+  .card-img-top { overflow: hidden; }
+  .card-img-top img { width: 100%; height: auto; display: block; transition: transform .4s ease; }
+  &:hover .card-img-top img { transform: scale(1.03); }
+
+  .card-body { padding: 20px; }
+  .card-title { line-height: 1.8rem; }
+  .card-footer { padding: 0 20px 20px; background: transparent; border: 0; }
+}
+
+// ---------- Apicodo Artikelkarten ----------
+.apicodo {
+
+  .apicodo-card {
+    position: relative;
+    height: 100%;
+  }
+
+  .apicodo-card .card-img-top {
+    display: block;
+    width: 100%;
+    height: unquote("clamp(220px, 20vw, #{$card-image-height})");
+    object-fit: cover;
+    border: 0;
+    transition: transform .5s ease;
+  }
+  .apicodo-card:hover .card-img-top { transform: scale(1.03); }
+
+  .apicodo-card .card-body {
+    display: flex;
+    flex-direction: column;
+    padding: $card-pad;
+    @include media-breakpoint-down(md) { padding: $card-pad * .85; }
+  }
+
+  // Datum mit Marker
+  .apicodo-card .card-subtitle {
+    position: relative;
+    margin-bottom: .75rem !important;
+    padding-left: 1rem;
+    font-family: $font-family-base;
+    font-weight: 400;
+    line-height: 1.3;
+    color: $primary !important;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: .1em;
+      left: 0;
+      width: 4px;
+      height: 1em;
+      border-radius: 2px;
+      background-color: $primary;
+    }
+  }
+
+  .apicodo-card .card-title {
+    margin-bottom: .75rem;
+    font-family: $headings-font-family;
+    font-size: unquote("clamp(1.2rem, calc(1.1rem + .4vw), #{$card-title-size})");
+    font-weight: 600;
+    line-height: 1.3;
+    color: $headings-color;
+  }
+
+  .apicodo-card .card-text {
+    flex: 1 1 auto;               // schiebt "Weiterlesen" nach unten
+    margin-bottom: 1.5rem;
+    line-height: 1.55;
+    color: $grey;
+  }
+
+  // "Weiterlesen": Optik des Links kommt aus Abschnitt 2
+  .apicodo-card .stretched-link {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: .25rem 0;
+    font-weight: 600;
+    line-height: 1.4;
+    color: $primary;
+  }
+  .apicodo-card:hover .stretched-link {
+    color: $link-hover-color;
+    background-size: 100% 1px;
+    &::before { transform: translateX(3px); }
+  }
+
+  h3.card-title { padding: 0; border: 0; margin-bottom: 1.3rem; }
+}
+
+// ---------- Apicodo Event-Liste ----------
+.apicodo-event-row__title {
+  border-bottom: 0;
+  padding: .2rem 0;
+  font-size: 1rem;
+  @include media-breakpoint-up(lg) { padding: .35rem 0; font-size: 1.25rem; }
+}
+
+.apicodo-event-row__date {
+  min-width: 3rem !important;
+  padding: .5rem .2rem !important;
+  @include media-breakpoint-up(lg) { min-width: 4.5rem !important; padding: 1rem !important; }
+}
+
+.apicodo-event-row__day {
+  font-size: 1.4rem !important;
+  @include media-breakpoint-up(lg) { font-size: 1.75rem !important; }
+}
+
+.apicodo-event-row__image {
+  width: 4.5rem !important;
+  aspect-ratio: 4 / 3;
+  flex: 0 0 auto;
+  @include media-breakpoint-up(lg) { width: 8rem !important; }
+
+  img {
+    aspect-ratio: auto !important;
+    display: block;
+    padding: .5rem .5rem .5rem .2rem;
+    @include media-breakpoint-up(lg) { padding: .5rem; }
+  }
+}
+
+.apicodo-event-row__info {
+  padding: .5rem .2rem !important;
+  @include media-breakpoint-up(lg) { padding: 1rem !important; }
+}
+
+// Der Link der Event-Zeile ist unsichtbar und macht nur die ganze Zeile klickbar
+.apicodo .apicodo-event-row .stretched-link {
+  display: block;
+  height: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.badge.bg-secondary,
+.border-secondary.text-dark {
+  background-color: #fff !important;
+  border: 1px solid #d2d2d2 !important;
+  color: $primary !important;
+  padding: .35em .7em .2em;
+}
+
+
+// ============================================================
+// 6. ICON-KACHELN (Startseite Quicklinks)
+// ============================================================
+
+.frame-startpage-quicklinks {
+
+  .icongroup { --icongroup-gap: 20px; }
+
+  .icongroup-columns-4 .icongroup-item {
+    width: calc((100% - var(--icongroup-gap)) / 2);
+    border-radius: $card-radius;
+
+    @include media-breakpoint-up(md) { width: calc((100% - (var(--icongroup-gap) * 2)) / 3); }
+    @include media-breakpoint-up(xl) { width: calc((100% - (var(--icongroup-gap) * 5)) / 6); }
+  }
+
+  .icongroup-item {
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+    padding: 20px;
+    background: #fff;
+    transition: background $transition;
+
+    .icongroup-item-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+
+      svg {
+        width: 50px;
+        height: 50px;
+        transition: transform .25s ease;
+        .fil0 { fill: $primary; }
+        .fil1 { fill: $grey; }
+      }
+    }
+
+    .icongroup-item-text-header {
+      margin: 0;
+      font-size: $icongroup-title-size;
+      font-weight: 500;
+      border-bottom: 0;
+      a, span { color: #000; display: inline-block; }
+    }
+
+    .icongroup-item-text p { margin: .5rem 0 0; color: #6b7280; line-height: 1.6; }
+
+    // Hover auf die ganze Kachel
+    &:hover {
+      background: #f0f0f0;
+      .icongroup-item-icon svg { transform: translateY(-4px); }
+      // Linie läuft beim Hover über die ganze Kachel ein
+      // (!important, weil die globale Link-Regel in Abschnitt 2 sonst gewinnt)
+      .icongroup-item-text-header a { color: $primary; background-size: 100% 1px !important; }
+    }
+  }
+}
+
+// ============================================================
+// 7. ICONGRUPPE MIT RAHMEN
+// ============================================================
+
+.frame-icon-frame {
+  --frame-spacing: 15px;
+
+  .frame-container {
+    margin-top: auto;
+    width: auto;
+    padding: unset;
+    background: none;
+    box-shadow: none;
+    color: #000;
+  }
+  h1, h2, h3, h4 { color: #000; }
+}
+
+.frame-icon-frame {
+  .icongroup { --icongroup-gap: 20px; --icongroup-icon-size: 45px; }
+  .frame-inner { padding: 20px; }
+  .icongroup-item-text-header { margin-bottom: 0; font-size: $icongroup-title-size; font-weight: 600; }
+  .icongroup-item-icon svg { color: $primary; }
+
+  .icongroup.icongroup-align-center .icongroup-item {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    transition: none;
+    padding: 5px 0;
+    margin: 0 !important;
+  }
+}
+
+
+// ============================================================
+// 8. COOKIE
+// ============================================================
+
+#cookieconsent {
+  .cc-window {
+    max-width: 380px;
+    padding: 20px;
+    background: #fff;
+    color: #333;
+    border-radius: $card-radius;
+    box-shadow: $card-shadow-hover;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .cc-container { display: flex; flex-direction: column; gap: 15px; }
+  .cc-message { color: #555; }
+  .cc-link { color: $secondary; text-decoration: underline; }
+  .cc-btn {
+    background: $primary;
+    color: #fff;
+    border: 0;
+    border-radius: 6px;
+    padding: 8px 20px;
+    cursor: pointer;
+    &:hover { background: $secondary !important; }
+  }
+}
+
+// ============================================================
+// 9. SUCHBOX
+// ============================================================
+
+.frame-search {
+  padding: 0 0 30px;
+  @include media-breakpoint-up(lg) { padding: 0 0 70px; }
+}
+
+.frame-search fieldset.kesearch_searchbox { background: transparent; border: 0; }
+.frame-search .kesearch_searchbox { display: flex; justify-content: center; }
+.frame-search .kesearchbox { display: flex; flex: 1; max-width: 800px; }
+
+.frame-search .kesearchbox input[type="search"] {
+  flex: 1;
+  padding: 14px 20px;
+  border: 1px solid $card-border-color;
+  border-radius: 8px 0 0 8px;
+  background: rgba(#fff, .9);
+}
+
+.frame-search .submitbutt { display: flex; }
+.frame-search span.submitbutt input { margin: 0 0 .5em !important; }
+
+.frame-search .submitbutt input[type="submit"] {
+  width: 50px;
+  border: 0;
+  cursor: pointer;
+  border-radius: 0 8px 8px 0;
+  background: $grey url($icon-search) no-repeat center / 25px;
+  text-indent: -9999px;
+}
+.frame-search span.submitbutt input:hover { background-color: $primary !important; }
+
+.frame-search .resetbutt,
+.frame-search .tx-kesearch-pi1 .clearer { display: none !important; }
+
+// ---------- Overlap ----------
+.frame-layout-overlap .frame-container-default {
+  margin-top: -110px;
+  z-index: 9;
+  @include media-breakpoint-up(lg) { margin-top: -150px; }
+}
+
+// ============================================================
+// 10. CAROUSEL
+// ============================================================
+
+.carousel .item {
+  height: 65vh;
+  @include media-breakpoint-up(xl) { height: 78vh; }
+}
+
+.carousel .carousel-item {
+  h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 { color: #000; text-shadow: none; }
+}
+
+.carousel.carousel-small {
+  .item {
+    height: 300px;
+    @include media-breakpoint-up(md) { height: 400px; }
+    @include media-breakpoint-up(lg) { height: 550px; }
+    @include media-breakpoint-up(xl) { height: 600px; }
+  }
+
+  .carousel-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    padding: 40px 20px;
+    @include media-breakpoint-up(md) { padding: 60px 40px; }
+    @include media-breakpoint-up(lg) { padding: 80px 60px; }
+  }
+
+  .carousel-content-inner { max-width: none; margin: 0; width: 100%; }
+
+  .carousel-text-inner {
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    margin: unset;
+    padding: 20px 24px;
+    background: rgba(#fff, .85);
+    backdrop-filter: blur(6px);
+    color: #000;
+    text-shadow: none;
+    box-shadow: 0 10px 30px rgba(#000, .08);
+  }
+}
+
+
+// ============================================================
+// 11. SONSTIGE KOMPONENTEN
+// ============================================================
+
+.accordion-button {
+  font-size: $accordion-button-font-size;
+  font-weight: $accordion-button-font-weight;
+}
+
+
+// ============================================================
+// 12. LAYOUT "BOX + BILD"  (frame-layout-box_image_text)
+//    Text in einer Box, die das Bild daneben leicht überlappt.
+//    Bild rechts = .textpic-right (Standard), Bild links = .textpic-left
+//    Box-Farbe nach frame-background-primary / -secondary / -light
+// ============================================================
+
+.frame-layout-box_image_text {
+
+  // Der Frame selbst bekommt keine Hintergrundfarbe – nur die Box
+  --frame-background: transparent;
+
+  &,
+  .frame-group-container,
+  .frame-group-inner,
+  .frame-container,
+  .frame-inner { background: none; }
+
+  // ---------- Raster ----------
+  .textpic {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);     // mobil: Bild oben, Box darunter
+    align-items: center;
+
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: minmax(0, #{$box-ratio-text}fr) minmax(0, #{$box-ratio-image}fr);
+    }
+  }
+
+  .textpic-item {
+    width: auto;
+    max-width: none;
+    flex: none;
+    order: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  // ---------- Bild ----------
+  .textpic-gallery {
+    align-self: stretch;
+
+    .gallery-row { display: block; height: 100%; margin: 0; }
+    .gallery-item { width: 100%; height: 100%; margin: 0; padding: 0; }
+    figure, picture { display: block; height: 100%; margin: 0; }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: $box-image-height-mobile;
+      object-fit: cover;
+      border-radius: $card-radius;
+
+      @include media-breakpoint-up(lg) { min-height: $box-image-height; }
+    }
+  }
+
+  // ---------- Box ----------
+  .textpic-text {
+    position: relative;
+    z-index: 2;
+    padding: $box-pad-mobile;
+    margin: (-$box-overlap-mobile) 1rem 0;     // mobil: ragt nach oben ins Bild
+    border-radius: $card-radius;
+    box-shadow: $card-shadow-hover;
+
+    // Standard (ohne Hintergrund-Auswahl) = light
+    background: nth(map-get($box-colors, light), 1);
+    color: nth(map-get($box-colors, light), 2);
+
+    @include media-breakpoint-up(lg) { padding: $box-pad; }
+
+    // Inhalt der Box übernimmt die Textfarbe der Box
+    :is(h1, h2, h3, h4, h5, h6) {
+      color: inherit;
+      border-color: unquote("color-mix(in srgb, currentColor 35%, transparent)");
+    }
+    a[href] { color: inherit; }
+    > :last-child,
+    p:last-child { margin-bottom: 0; }
+  }
+
+  // Farben je Hintergrund (Box-Farbe + Textfarbe)
+  @each $name, $pair in $box-colors {
+    &.frame-background-#{$name} .textpic-text {
+      background: nth($pair, 1);
+      color: nth($pair, 2);
+    }
+  }
+
+  // ---------- Desktop: Box und Bild nebeneinander, Box überlappt ----------
+  @include media-breakpoint-up(lg) {
+
+    .textpic-gallery,
+    .textpic-text { grid-row: 1; }
+
+    // Bild rechts (Standard)
+    .textpic-text    { grid-column: 1; margin: 0 (-$box-overlap) 0 0; }
+    .textpic-gallery { grid-column: 2; }
+
+    // Bild links
+    .textpic-left {
+      grid-template-columns: minmax(0, #{$box-ratio-image}fr) minmax(0, #{$box-ratio-text}fr);
+
+      .textpic-gallery { grid-column: 1; }
+      .textpic-text    { grid-column: 2; margin: 0 0 0 (-$box-overlap); }
+    }
+  }
+}
+
+
+// ============================================================
+// 13. FOOTER
+// ============================================================
+
+.footer-section-content {
+  background-color: $page-footer-background;
+  color: $page-footer-color;
+  padding-bottom: 2rem;
+
+  .element-header { color: $page-footer-color-header; border: 0; }
+}
+
+#page-footer {
+  position: relative;
+
+  .table > :not(caption) > * > * { background-color: transparent; color: #fff; }
+
+  .icongroup { --icongroup-icon-size: 20px; --icongroup-gap: 20px; }
+  .icongroup-item-text-header { font-size: 1em; font-family: $font-footer; }
 }

@@ -1,24 +1,24 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{settings.a11y.enable}">
 <f:asset.script identifier="a11y-tools" src="EXT:sitepackage/Resources/Public/JavaScript/a11y.js" priority="1" />
-<div id="a11y-window">
+<div id="a11y-window" class="a11y-window--{settings.a11y.position -> f:or(alternative: 'top')}">
     <div class="container container-mainnavigation">
         <div class="a11y-tools" id="a11y-tools">
             <f:if condition="{settings.a11y.searchPid}">
                 <f:link.page pageUid="{settings.a11y.searchPid}" class="a11y-item a11y-item-search" title="Suche">
-                    <svg aria-hidden="true" focusable="false" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="6"/><path d="M15 15l6 6"/></svg>
-                    <span class="visually-hidden">Suche</span>
+                    <f:render section="Icon" arguments="{name: 'search', position: settings.a11y.position}" />
+                    <span class="a11y-label">Suche</span>
                 </f:link.page>
             </f:if>
             <f:if condition="{settings.a11y.contactPid}">
                 <f:link.page pageUid="{settings.a11y.contactPid}" class="a11y-item a11y-item-contact" title="Kontakt">
-                    <svg aria-hidden="true" focusable="false" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18v14H3z"/><path d="M3 6l9 7 9-7"/></svg>
-                    <span class="visually-hidden">Kontakt</span>
+                    <f:render section="Icon" arguments="{name: 'contact', position: settings.a11y.position}" />
+                    <span class="a11y-label">Kontakt</span>
                 </f:link.page>
             </f:if>
             <button type="button" class="a11y-toggle" aria-expanded="false" aria-controls="a11y-panel">
-                <svg aria-hidden="true" focusable="false" width="35" height="35" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="4" r="2"/><path d="M4 8h16v2h-6v4l2 7h-2l-2-6-2 6H8l2-7v-4H4z"/></svg>
-                <span class="visually-hidden">Einstellungen zur Barrierefreiheit</span>
+                <f:render section="Icon" arguments="{name: 'toggle', position: settings.a11y.position}" />
+                <span class="a11y-label">Einstellungen zur Barrierefreiheit</span>
             </button>
 
             <div class="a11y-panel" id="a11y-panel" role="region" aria-label="Einstellungen zur Barrierefreiheit" hidden>
@@ -82,4 +82,25 @@
     </div>
 </div>
 </f:if>
+
+<f:section name="Icon">
+<f:if condition="{position} == 'right'">
+    <f:then>
+        <span class="a11y-circle" aria-hidden="true">
+            <f:switch expression="{name}">
+                <f:case value="search"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></f:case>
+                <f:case value="contact"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></f:case>
+                <f:case value="toggle"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><path d="m9 20 3-6 3 6"/><path d="m6 8 6 2 6-2"/><path d="M12 10v4"/></svg></f:case>
+            </f:switch>
+        </span>
+    </f:then>
+    <f:else>
+        <f:switch expression="{name}">
+            <f:case value="search"><svg aria-hidden="true" focusable="false" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="6"/><path d="M15 15l6 6"/></svg></f:case>
+            <f:case value="contact"><svg aria-hidden="true" focusable="false" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18v14H3z"/><path d="M3 6l9 7 9-7"/></svg></f:case>
+            <f:case value="toggle"><svg aria-hidden="true" focusable="false" width="35" height="35" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="4" r="2"/><path d="M4 8h16v2h-6v4l2 7h-2l-2-6-2 6H8l2-7v-4H4z"/></svg></f:case>
+        </f:switch>
+    </f:else>
+</f:if>
+</f:section>
 </html>

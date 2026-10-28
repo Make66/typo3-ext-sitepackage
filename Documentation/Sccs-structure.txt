@@ -20,3 +20,8 @@ page.includeCSS.global = fileadmin/templates/{mandant}/global.scss
 page.includeCSS.custom = fileadmin/templates/{mandant}/custom.scss
  +- variables (same mandant _variables.scss)
  +- mandant-specific one-off rules (frequent edits, cheapest to recompile)
+
+page.includeCSS.layout = EXT:sitepackage/Resources/Public/Scss/Theme/{layout}.scss
+ +- _layout-variables (shared !default values; mandant _variables.scss is NOT visible)
+ +- Bootstrap functions/variables/maps/mixins
+ +- all rules of that layout (see SCSS_pipeline.md section 8)

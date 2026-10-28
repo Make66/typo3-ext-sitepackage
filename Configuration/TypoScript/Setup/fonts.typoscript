@@ -1,1 +1,6 @@
 page.includeCSS.fontawesome = EXT:sitepackage/Resources/Public/Fonts/fontawesome/css/all.min.css
+
+# Documentation/Fonts.md
+["{$plugin.bootstrap_package.settings.scss.font-body-key}" != "system" || ("{$plugin.bootstrap_package.settings.scss.font-heading-key}" != "system" && "{$plugin.bootstrap_package.settings.scss.font-heading-key}" != "body")]
+    page.includeCSS.fonts = EXT:sitepackage/Resources/Public/Scss/Fonts/fonts.scss
+[END]

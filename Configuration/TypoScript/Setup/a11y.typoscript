@@ -5,6 +5,7 @@ page.10.settings.a11y {
     easyLanguagePid = {$sitepackage.a11y.easyLanguagePid}
     contactPid = {$sitepackage.a11y.contactPid}
     searchPid = {$sitepackage.a11y.searchPid}
+    position = {$sitepackage.a11y.position}
 }
 
 ["{$sitepackage.a11y.enable}" == "1"]
@@ -13,4 +14,14 @@ page.10.settings.a11y {
         custom >
         custom = fileadmin/templates/{$mandant}/custom.scss
     }
+[END]
+
+# Suchseite im Hauptmenü: mobil sichtbar, ab lg (992px) ausgeblendet – ID aus sitepackage.a11y.searchPid
+["{$sitepackage.a11y.enable}" == "1" && {$sitepackage.a11y.searchPid} > 0]
+    page.cssInline.20 = TEXT
+    page.cssInline.20.value (
+#nav-item-{$sitepackage.a11y.searchPid} { justify-content: left; }
+.navbar-transition #nav-item-{$sitepackage.a11y.searchPid} .nav-link-icon svg { fill: #333; }
+@media (min-width: 992px) { #nav-item-{$sitepackage.a11y.searchPid} { display: none; } }
+    )
 [END]

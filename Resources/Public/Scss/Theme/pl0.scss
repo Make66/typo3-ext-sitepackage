@@ -2,16 +2,14 @@
 // Own includeCSS compile (see basis.typoscript), loaded after global and before
 // custom. It does not see fileadmin/templates/<mandant>/_variables.scss; Site
 // Settings (plugin.bootstrap_package.settings.scss.*) are injected by bk2k.
-// Scope all rules to .pl0 (set in Layouts/Page/Default.html).
 // See Documentation/SCSS_pipeline.md section 8.
 
-// Bootstrap variables, functions, mixins (no CSS output)
-@import "EXT:bootstrap_package/Resources/Public/Scss/bootstrap5/_variables";
-@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_functions";
-@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_variables";
-@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_mixins";
 @import "layout-variables";
 
-.pl0 {
-  // layout-specific rules for Mainz go here
-}
+// Bootstrap variables, functions, mixins (no CSS output)
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_functions";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_variables";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_maps";
+@import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_mixins";
+
+// layout-specific rules for Mainz go here

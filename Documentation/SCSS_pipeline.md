@@ -131,6 +131,22 @@ because of Bootstrap's RFS (responsive font-size) scaling:
 sure the flat override rule in `custom.scss` still references the same
 variable (don't hardcode a literal value there) so the two stay in sync.
 
+### `Resources/Public/Scss/Theme/_variables.scss` is not imported
+
+`Theme/global.scss` used to `@import "variables"` a second time (plus a
+duplicate functions/variables/maps/mixins block) after the navigation partials.
+Sass resolves a relative `@import` against the importing file's own directory
+first, so that line picked up the sitepackage's own `Theme/_variables.scss`,
+not the mandant's. That file has no `!default` assignments, so in the `global`
+compile it silently overwrote every mandant's `$primary`, fonts, etc. with one
+hardcoded set of values (`$primary: #28803f`, Overpass/Poppins).
+
+Those lines are commented out now; the `global` compile sees only the
+mandant's `_variables.scss` (imported by its glue file). `Theme/_variables.scss`
+is no longer imported anywhere. Mandant values belong in
+`fileadmin/templates/<mandant>/_variables.scss`. If the file is ever wanted
+back as shared fallbacks, every assignment in it needs `!default`.
+
 ## 7. Does the custom.scss override break RFS? Where to address it
 
 Yes — functionally it bypasses RFS entirely for that selector, it doesn't just
@@ -171,40 +187,140 @@ layout = EXT:sitepackage/Resources/Public/Scss/Theme/{$layout}.scss
 
 `{$layout}` is the site setting `layout` (`pl0` Mainz, `pl1` Budenheim, `pl2`
 Gonsenheim, `pl3` Hechtsheim). Cascade order is
-**theme → global → layout → custom**. The page wrapper in
-`Layouts/Page/Default.html` carries the same value as a class, so each `plN.scss`
-scopes its rules to `.plN`.
+**theme → global → layout → custom**. The site setting is the only place the
+layout is selected; no mandant file names it.
 
 ### What a layout file can see
 
 - **Site Settings**: bk2k injects every constant under
   `plugin.bootstrap_package.settings.scss.*` as a SCSS variable into *every*
   compile (`CompileService::getVariablesFromConstants` → `addVariables`), so
-  `$primary`, `$secondary` etc. work in `plN.scss`.
-- **Bootstrap**: each `plN.scss` imports bootstrap_package's `_variables` plus
-  Bootstrap's functions/variables/mixins (no CSS output), so `$spacer`,
-  breakpoints and mixins like `media-breakpoint-up()` are available.
+  `$primary`, `$secondary` etc. in `plN.scss` are the **site setting** values.
+- **`Theme/_layout-variables.scss`**: imported by every `plN.scss`; supplies
+  all other values (fonts, sizes, card/box settings, icons) as `!default`.
 - **Not visible**: `fileadmin/templates/<mandant>/_variables.scss`. Each
   includeCSS entry is its own compile and Sass `@import` cannot take a dynamic
-  path, so a shared `plN.scss` cannot import the mandant's file.
+  path, so a shared `plN.scss` cannot import the mandant's file. A mandant's
+  fonts, font sizes or a `$primary` that differs from its site setting do
+  **not** reach the layout.
+- **`url()` paths** are resolved by bk2k relative to the entry file
+  (`ScssParser::compileScss`, `registerFunction('url', …)`), here the
+  sitepackage `Theme/` folder — a mandant-relative path like `img/pfeil.svg`
+  does not work in `plN.scss`; use data URIs or absolute `https://` URLs.
 
-### `custom.scss` still works
+### Files
 
-`custom.scss` is unchanged: its own entry, `@import "variables"` of the
-mandant file first, and it loads last. It overrides `plN.scss` at equal
-specificity and is the place for mandant-specific tweaks to a layout that need
-the mandant's variables, e.g. `.pl1 .navbar { background: $primary; }`.
+| File | Content |
+|---|---|
+| `Theme/_layout-variables.scss` | Standard values, all `!default`. Imported by `plN.scss` and by the mandant glue files `theme`/`global`/`custom` right after the mandant's `variables`, so in those three compiles mandant values override them. Must not use Bootstrap variables or functions — Bootstrap is imported after it. |
+| `Theme/plN.scss` | Complete, self-contained rule set of one layout: `_layout-variables`, Bootstrap tooling, the layout's mixins (`external`, `link-underline`, `link-icon`, `card-surface`, `card-hover`, `heading`), then all rules. pl1 and pl2 deliberately duplicate most rules so each layout can change independently. pl0/pl3 have no rules yet. |
+| `<mandant>/_variables.scss` | Mandant values for `theme`, `global` and `custom`. No CSS output. |
+| `<mandant>/custom.scss` | Mandant-only rules, and overrides of layout rules where the mandant needs its own fonts/sizes/colours/icons (it loads after the layout and sees `_variables.scss`). |
+
+Rules are not scoped to `.plN`: no template sets that class, and the layout
+CSS is only loaded for sites using that layout anyway.
+
+### Variables injected by bk2k
+
+A `!default` in `_layout-variables.scss` loses against an injected site
+setting. Three keys are therefore assigned **without** `!default`, from
+intermediate variables:
+
+| Bootstrap/bk2k variable | Set via |
+|---|---|
+| `$font-family-sans-serif` | `$font-body` |
+| `$link-color` | `$text-link-color` |
+| `$link-hover-color` | `$text-link-hover-color` |
 
 ### Where to put custom variable values
 
 | Scope | Where |
 |---|---|
+| All layouts | `Resources/Public/Scss/Theme/_layout-variables.scss`, with `!default`. |
 | One layout only | Top of that `plN.scss`, declared with `!default`. |
-| All four layouts | `Resources/Public/Scss/Theme/_layout-variables.scss` (imported by every `plN.scss`). |
-| Per mandant / per site | TypoScript constant `plugin.bootstrap_package.settings.scss.<name> = value`, e.g. in `Configuration/TypoScript/Custom/<mandant>.typoscript` or inside a `["{$mandant}" == "..."]` block. bk2k exposes it as `$<name>` in every compile (layout, global, custom). Values are plain strings (colours, lengths); no Sass maps or lists. |
-| Needs the mandant's own `_variables.scss` values | `custom.scss` (or `global.scss` via the mandant's glue file), not `plN.scss`. |
+| Per site, affecting the layout | Site setting `plugin.bootstrap_package.settings.scss.<name>` (plain strings, no maps). |
+| Per mandant, affecting theme/global/custom only | `fileadmin/templates/<mandant>/_variables.scss`. |
 
-Use `!default` in the extension files so an injected constant wins.
+### Theme settings
+
+Site settings in `Configuration/Sets/Sitepackage/settings.definitions.yaml`,
+categories *Sitepackage › Typografie / Navigation / Breadcrumb / Cards /
+Footer*. All are `plugin.bootstrap_package.settings.scss.<name>`, so bk2k
+injects them into every compile; `_layout-variables.scss` picks them up via
+`!default`.
+
+| Setting | SCSS variable(s) |
+|---|---|
+| `font-body-key`, `font-heading-key` | `$font-body`, `$font-heading` via the font library — see `Fonts.md` |
+| `font-weight-body` | `$font-weight-body` |
+| `heading-font-weight` / `heading-font-weight-bold` | `$h3/h5/h6-font-weight` / `$h1/h2/h4-font-weight`, `$headings-font-weight` |
+| `font-size-base` | `$font-size-base` |
+| `heading-scale` (`compact`/`normal`/`large`) | `$h1-size`…`$h6-size` from `$heading-scales` |
+| `navbar-font-color` | `$navbar-font-color` |
+| `navbar-active-color` | `$navbar-active-color` (main-level underline, dropdown hover, active offcanvas item, burger hover); empty = `$primary` |
+| `breadcrumb-section-bg` | `$breadcrumb-section-bg` |
+| `card-radius` | `$card-radius` (→ `$card-border-radius`) |
+| `page-footer-background`, `page-footer-color`, `page-footer-color-header` | same names |
+
+The defaults equal the previous `_layout-variables.scss` values, so sites
+without these settings compile unchanged.
+
+`heading-scale` sets the **desktop** size. pl1 (and Bootstrap's own headings in
+pl0/pl3) shrink fluidly below `$rfs-breakpoint` via RFS
+(`calc(1.345rem + 1.14vw)` for a 2.2rem h1); pl2 switches in one step at `md`
+(`$heading-mobile-scale`).
+
+**Do not also set these in a mandant's `_variables.scss`.** That file assigns
+without `!default` and therefore beats the injected setting in theme, global
+and custom — but the layout compile never sees it, so the page would mix two
+values. Values covered by a setting belong in the site settings only.
+
+### Footer meta bar
+
+`global.scss` lays out bk2k's `footer-section-meta` (all mandants, all
+layouts) as one row on ≥ md: copyright left, meta menu centred, social links
+right (`grid-template-columns: 1fr auto 1fr`, so the menu stays centred
+whatever the copyright length). Below md the blocks stack centred in the
+order meta menu → social → copyright.
+
+Imprint/privacy links therefore belong in the **meta menu**
+(`page.theme.meta.enable`, `page.theme.meta.navigationValue`), not in the
+footer navigation. A footer navigation with entries (and `theme.contact`) gets
+a full-width row above; an empty one (`footernavigation.enable` is on by
+default, so bk2k renders the wrapper even without `navigationValue`) is hidden
+via `:not(:has(li))`. `theme.language` gets a full-width row below.
+
+This is CSS only; bk2k's `Structure/FooterMeta.html` is not overridden, so
+bk2k updates do not collide. bk2k wraps meta menu, copyright and social links
+in `.footer-info-section`; `display: contents` on that wrapper turns them into
+direct grid items of `.frame-inner` next to `.footer-menu-section`.
+
+The background comes from bk2k's `$darker` (`#212529`) unless a layout sets
+`$page-footer-meta-background` (`_layout-variables.scss`, default `#212529`).
+pl1 sets it to `#333` at the top of `pl1.scss` and applies it to
+`.footer-section-meta` (also `--frame-background`); pl0/pl2/pl3 keep bk2k's
+colour. Links in the meta bar are always white (`global.scss` sets
+`--frame-link-color`/`--frame-link-hover-color` on `.footer-section-meta
+.frame`); the text colour stays bk2k's, computed for `$darker`. Both assume a
+dark background; a light value would also need `--frame-color` and the link
+colour changed.
+
+The link rules of pl1/pl2 (section 2: "2a" animated hover underline, "2b"
+arrow icon before text links) are general and contain no meta-bar
+exceptions. The exceptions live in `global.scss` under `.footer-section-meta`:
+no arrow before `.footer-navigation-link` and the social links, no underline
+on the social links (a Social Links content element in
+`footer-section-content` keeps its underline). They need `!important`
+because the layout compile loads after global and its selectors carry
+`#page-footer` specificity. In pl0/pl3, which have no such link rules, they
+are no-ops.
+
+### Verifying a refactoring
+
+`var/scsscheck/compile.php` (project root, run inside ddev:
+`ddev exec php var/scsscheck/compile.php <site> <entry.scss>`) compiles one
+entry the way bk2k does (injected site settings, `EXT:` imports, `url()`
+rewriting).
 
 ## 9. Layout variants for Fluid (page level)
 
