@@ -23,7 +23,9 @@ inline comments — see the pinned project-wide memory on this.
 
 Pre-existing topic files not pulled in here (open directly when relevant):
 `SCSS_pipeline.md`/`SCSS_migration.md`/`MIGRATION_SUMMARY.md` (the per-tenant
-SCSS compilation chain and its migration history), `MainNavigationLevels.md`
+SCSS compilation chain and its migration history; §8 "Theme settings" lists
+the typography/navigation/breadcrumb/cards/footer site settings), `Fonts.md`
+(central font library in `Resources/Public/Fonts/`, selected by site setting), `MainNavigationLevels.md`
 (mega-menu depth), `StickyHeader.md` (the shrinking-header JS),
 `A11yToolbar.md` (opt-in Barrierefreiheits-Leiste, site settings
 `sitepackage.a11y.*`), and two one-off

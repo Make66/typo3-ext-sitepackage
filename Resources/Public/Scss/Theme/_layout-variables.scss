@@ -1,6 +1,230 @@
-// Variables shared by all layout variants (pl0-pl3).
-// All !default so a per-site TypoScript constant
-// plugin.bootstrap_package.settings.scss.<name> (injected by bk2k as $<name>)
-// or the importing plN.scss can override them.
-$layout-gap:       $spacer !default;
+// ============================================================
+// LAYOUT-VARIABLEN – gemeinsame Standardwerte für alle Mandanten
+// und alle Layouts (pl0–pl3). Siehe Documentation/SCSS_pipeline.md §8.
+//
+// Reihenfolge in jedem Compile (theme, global, custom):
+//   1. fileadmin/templates/<mandant>/_variables.scss  (Kundenwerte)
+//   2. diese Datei                                       (Standardwerte)
+//   3. Bootstrap
+// Alles hier ist !default: ein Wert aus der Mandanten-Datei gewinnt.
+// Ausnahme: Variablen, die bk2k als Site-Setting injiziert
+// (font-family-sans-serif, link-color, link-hover-color), werden ohne
+// !default gesetzt – sonst gewönne der injizierte Standardwert.
+// Keine Bootstrap-Variablen/-Funktionen verwenden (Bootstrap lädt erst danach).
+// Werte mit Site-Setting: Documentation/SCSS_pipeline.md §8 „Theme-Settings“.
+// ============================================================
+
+@import "EXT:sitepackage/Resources/Public/Scss/Fonts/_font-library";
+
+
+// ------------------------------------------------------------
+// 1. Farben
+//    $primary / $secondary / $tertiary: Site-Setting oder _variables.scss
+// ------------------------------------------------------------
+$grey: #5b5b5b !default;
+
+$container-max-widths-xxl: 1440px !default;
+
+$layout-gap:       1rem !default;
 $layout-max-width: 1320px !default;
+
+
+// ------------------------------------------------------------
+// 2. Schriftarten
+//    Site-Settings font-body-key / font-heading-key (Fonts/_font-library.scss)
+// ------------------------------------------------------------
+$font-body:         font-library-stack($font-body-key) !default;
+$font-heading:      font-library-stack($font-heading-key) !default;
+$font-heading-bold: $font-heading !default;
+$font-link:         $font-body !default;
+$font-footer:       $font-body !default;    // Icon-Gruppen im Footer
+$navbar-family:     $font-body !default;
+
+$font-weight-body:  400 !default;
+$font-weight-body:  font-library-weight($font-body-key, $font-weight-body);
+
+
+// ------------------------------------------------------------
+// 3. Schriftgrößen
+//    Site-Settings font-size-base / heading-scale
+// ------------------------------------------------------------
+$font-size-base: 1rem !default;
+
+$heading-scale: normal !default;
+$heading-scales: (
+  compact: (h1: 2rem,   h2: 1.7rem, h3: 1.45rem, h4: 1.3rem,  h5: 1.15rem, h6: 1rem),
+  normal:  (h1: 2.2rem, h2: 1.9rem, h3: 1.6rem,  h4: 1.45rem, h5: 1.2rem,  h6: 1rem),
+  large:   (h1: 2.5rem, h2: 2rem,   h3: 1.7rem,  h4: 1.45rem, h5: 1.3rem,  h6: 1rem)
+) !default;
+$heading-sizes: map-get($heading-scales, $heading-scale);
+
+$h1-size: map-get($heading-sizes, h1) !default;
+$h2-size: map-get($heading-sizes, h2) !default;
+$h3-size: map-get($heading-sizes, h3) !default;
+$h4-size: map-get($heading-sizes, h4) !default;
+$h5-size: map-get($heading-sizes, h5) !default;
+$h6-size: map-get($heading-sizes, h6) !default;
+
+$navbar-font-size:          1.35rem !default;
+$navbar-link-dropdown-size: 1.2rem !default;
+$card-title-size:           1.35rem !default;
+$icongroup-title-size:      1.25rem !default;
+$accordion-button-font-size: 1rem !default;
+
+// pl1: fließende Skalierung (Bootstrap RFS)
+// Größen bis $rfs-base-value bleiben fix, größere schrumpfen fließend
+// unterhalb von $rfs-breakpoint. Untergrenze = base + (Größe − base) / factor.
+$enable-rfs:     true !default;
+$rfs-base-value: 1.25rem !default;
+$rfs-breakpoint: 1200px !default;      // ab dieser Breite gilt die volle Größe
+$rfs-factor:     10 !default;          // kleiner = schrumpft weniger (muss > 1 sein)
+
+// 1 = nicht verkleinern. Nie kleiner als der Fließtext ($font-size-base);
+// h6 wird nicht skaliert.
+$heading-mobile-scale: .85 !default;
+
+
+// ------------------------------------------------------------
+// 4. Überschriften
+//    Je Ebene: Farbe · Schriftart · Schriftschnitt
+// ------------------------------------------------------------
+
+// Site-Settings heading-font-weight (h3, h5, h6) und
+// heading-font-weight-bold (h1, h2, h4)
+$heading-font-weight:      500 !default;
+$heading-font-weight-bold: $heading-font-weight !default;
+
+// Abstand über Überschriften, die auf Text/Listen/Tabellen folgen
+$heading-space-above: 1.75rem !default;
+
+// h1 – Seitentitel, kurzer Balken darunter
+$h1-color:       #222 !default;
+$h1-font-family: $font-heading-bold !default;
+$h1-font-weight: font-library-weight($font-heading-key, $heading-font-weight-bold) !default;
+$h1-bar-width:   4rem !default;        // 0 = kein Balken
+$h1-bar-height:  3px !default;
+$h1-bar-margin:  .2rem !default;       // Abstand Text → Balken
+$h1-bar-color:   $primary !default;
+
+// h2 – Abschnitt, dünne graue Linie über die ganze Breite
+$h2-color:          $primary !default;
+$h2-font-family:    $font-heading-bold !default;
+$h2-font-weight:    font-library-weight($font-heading-key, $heading-font-weight-bold) !default;
+
+// h3 – Akzentfarbe
+$h3-color:       $primary !default;
+$h3-font-family: $font-heading !default;
+$h3-font-weight: font-library-weight($font-heading-key, $heading-font-weight) !default;
+
+// h4, h5
+$h4-color:       #222 !default;
+$h4-font-family: $font-heading-bold !default;
+$h4-font-weight: font-library-weight($font-heading-key, $heading-font-weight-bold) !default;
+
+$h5-color:       #222 !default;
+$h5-font-family: $font-heading !default;
+$h5-font-weight: font-library-weight($font-heading-key, $heading-font-weight) !default;
+
+// h6 – kleines Label in Großbuchstaben
+$h6-color:          $grey !default;
+$h6-font-family:    $font-heading !default;
+$h6-font-weight:    font-library-weight($font-heading-key, $heading-font-weight) !default;
+$h6-transform:      uppercase !default;     // none = normale Schreibweise
+$h6-letter-spacing: .02em !default;
+
+
+// ------------------------------------------------------------
+// 5. Links
+// ------------------------------------------------------------
+$text-link-color:       $primary !default;
+$text-link-hover-color: mix(#000, $text-link-color, 20%) !default;
+
+$link-icon-size: 14px !default;
+
+// Icons als Data-URI oder Pfad relativ zum Mandanten-Ordner ('img/pfeil.svg')
+$icon-arrow:    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M9.586 8L6.05 11.536l.707.707L11 8 6.757 3.757l-.707.707z'/%3E%3C/svg%3E" !default;
+$icon-external: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M10.05 8.657l-.707-.707L14.293 3l.706.707z'/%3E%3Cpath fill='black' d='M13 8.536V12H3V5h6.464l1-1H2.5a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V7.535l-1 1.001zM15.573 6.573l-4.146-4.146A.25.25 0 0 1 11.604 2h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177z'/%3E%3C/svg%3E" !default;
+$icon-home:     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpath d='M3 10l9-7 9 7M5 10v10h14V10'/%3E%3C/svg%3E" !default;
+$icon-search:   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 282.27 282.23'%3E%3Cpath fill='white' fill-rule='evenodd' d='M106.03 21.77c12.65,-1.44 27.85,1.98 38.33,6.1 25.66,10.09 45.48,32.14 52.94,58.83 5.53,19.81 4.31,38.85 -2.99,57.6 -22.18,56.97 -96.84,75.96 -143.81,32.73 -16.03,-14.75 -26.44,-33.55 -28.79,-60.72 -2.24,-25.91 9.68,-51.24 23.42,-65.81 10.9,-11.57 25.84,-21.68 41.66,-25.63 10.88,-2.71 8.9,-1.93 19.24,-3.1zm71.19 178.53c1.79,0.9 65.33,64.98 70.04,69.67 2.77,2.77 7.77,8.76 12.53,10.88 13.24,5.88 26.57,-8.1 21.31,-20.62 -2.11,-5.01 -7.9,-9.78 -10.74,-12.63l-70.14 -70.03 5.11 -7.83c9.51,-14.42 14.49,-31.93 16.36,-49.33 2.35,-21.87 -3.85,-46.53 -14,-64.28 -6.33,-11.06 -14.39,-21.02 -23.83,-28.99 -9.35,-7.89 -19.47,-14.75 -32.73,-19.71 -28.64,-10.7 -59.17,-10.01 -87.37,3.15 -51.09,23.85 -77.44,84.46 -56.59,139.75 6.82,18.08 18.3,34.07 32.88,46.15 36.78,30.47 89.91,34 129.28,9.11 2.64,-1.66 5.06,-3.55 7.89,-5.29z'/%3E%3C/svg%3E" !default;
+
+
+// ------------------------------------------------------------
+// 6. Cards & Boxen  (gilt für ALLE Karten einheitlich)
+// ------------------------------------------------------------
+$card-radius:       .75rem !default;
+$card-border-color: #dfe3e6 !default;
+$card-shadow:       0 2px 10px rgba(#000, .08) !default;
+$card-shadow-hover: 0 10px 28px rgba(#000, .14) !default;
+$card-hover-lift:   -4px !default;         // 0 = kein Anheben beim Hover
+$card-pad:          1.5rem !default;
+$card-image-height: 270px !default;        // max. Bildhöhe (schrumpft mobil)
+
+$transition: .3s ease !default;
+
+
+// ------------------------------------------------------------
+// 7. Navigation
+// ------------------------------------------------------------
+$navbar-font-color:           #333 !default;
+$navbar-active-color:         '' !default;     // Hover/aktiv; leer = $primary
+@if $navbar-active-color == '' {
+  $navbar-active-color: $primary;
+}
+$navbar-font-weight:          500 !default;
+$navbar-link-dropdown-weight: 500 !default;
+
+
+// ------------------------------------------------------------
+// 8. Sonstiges
+// ------------------------------------------------------------
+$accordion-button-font-weight: bold !default;     // nur pl2
+
+$breadcrumb-section-bg: #f1f1f1 !default;
+
+$page-footer-background:   #5b5b5b !default;
+$page-footer-color:        #fff !default;
+$page-footer-color-header: #fff !default;
+$page-footer-meta-background: #212529 !default;  // bk2k $darker
+
+
+// ------------------------------------------------------------
+// 9. Layout "Box + Bild"  (frame-layout-box_image_text)
+//    Text-Box überlappt das Bild leicht. Die Box-Farbe richtet sich
+//    nach dem Hintergrund des Elements (frame-background-…).
+// ------------------------------------------------------------
+$box-ratio-text:          5 !default;      // Breite Box : Bild (Spaltenverhältnis)
+$box-ratio-image:         7 !default;
+$box-overlap:             4rem !default;   // Desktop: wie weit die Box ins Bild ragt
+$box-overlap-mobile:      3rem !default;   // Mobil: wie weit die Box nach oben ins Bild ragt
+$box-pad:                 2.5rem !default;
+$box-pad-mobile:          1.5rem !default;
+$box-image-height:        32rem !default;  // Mindesthöhe des Bildes (Desktop)
+$box-image-height-mobile: 16rem !default;
+
+// Box-Farbe und Textfarbe je Hintergrund: (Hintergrund, Text)
+// Ohne Hintergrund-Auswahl gilt "light".
+$box-colors: (
+  primary:   ($primary, #fff),
+  secondary: ($secondary, #fff),
+  light:     (#f1f3f5, #222)
+) !default;
+
+
+// ------------------------------------------------------------
+// 10. Bootstrap angleichen
+// ------------------------------------------------------------
+$font-family-sans-serif: $font-body;              // von bk2k injiziert → ohne !default
+$link-color:             $text-link-color;        // von bk2k injiziert → ohne !default
+$link-hover-color:       $text-link-hover-color;  // von bk2k injiziert → ohne !default
+
+$font-weight-base:     $font-weight-body !default;
+$headings-font-family: $font-heading !default;
+$headings-font-weight: font-library-weight($font-heading-key, $heading-font-weight) !default;
+$headings-color:       #222 !default;
+$h1-font-size: $h1-size !default;
+$h2-font-size: $h2-size !default;
+$h3-font-size: $h3-size !default;
+$h4-font-size: $h4-size !default;
+$h5-font-size: $h5-size !default;
+$h6-font-size: $h6-size !default;
+$card-border-radius: $card-radius !default;

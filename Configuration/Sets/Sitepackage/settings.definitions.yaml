@@ -4,6 +4,21 @@ categories:
   sitepackage.a11y:
     label: 'Barrierefreiheit'
     parent: sitepackage
+  sitepackage.typo:
+    label: 'Typografie'
+    parent: sitepackage
+  sitepackage.navigation:
+    label: 'Navigation'
+    parent: sitepackage
+  sitepackage.breadcrumb:
+    label: 'Breadcrumb'
+    parent: sitepackage
+  sitepackage.cards:
+    label: 'Cards'
+    parent: sitepackage
+  sitepackage.footer:
+    label: 'Footer'
+    parent: sitepackage
 
 settings:
   sitepackage.a11y.enable:
@@ -36,6 +51,15 @@ settings:
     description: 'Page uid; 0 hides the link.'
     default: 0
     type: int
+  sitepackage.a11y.position:
+    category: sitepackage.a11y
+    label: 'Position der Leiste'
+    description: 'top = oben rechts über dem Header; right = vertikal am rechten Rand (Desktop), mobil wie top.'
+    default: 'top'
+    type: string
+    enum:
+      top: 'Toolbar: oben rechts'
+      right: 'Toolbar: vertikal rechts'
   plugin.bootstrap_package.settings.scss.a11y-item-bg:
     category: sitepackage.a11y
     label: '$a11y-item-bg'
@@ -65,3 +89,130 @@ settings:
     description: 'Page tree depth fetched for the main navigation (navbar + dropdown/mega menu). bk2k/bootstrap-package hardcodes this to 3; overridden here (setup.typoscript, page.10.dataProcessing.10.levels) so it can be changed per site.'
     default: 3
     type: int
+  plugin.bootstrap_package.settings.scss.font-body-key:
+    category: sitepackage.typo
+    label: 'Schrift Fließtext'
+    description: 'Schriften aus Resources/Public/Scss/Fonts/_font-library.scss. See Documentation/Fonts.md.'
+    default: 'system'
+    type: string
+    enum:
+      system: 'Systemschrift (Arial)'
+      overpass: 'Overpass'
+      merriweathersans: 'Merriweather Sans'
+      merriweather: 'Merriweather (Serif)'
+      sourcesans3: 'Source Sans 3'
+      roboto: 'Roboto'
+      robotocondensed: 'Roboto Condensed'
+      urbanist: 'Urbanist'
+      opensans: 'Open Sans'
+      montserrat: 'Montserrat'
+      notosans: 'Noto Sans'
+  plugin.bootstrap_package.settings.scss.font-heading-key:
+    category: sitepackage.typo
+    label: 'Schrift Überschriften'
+    default: 'body'
+    type: string
+    enum:
+      body: 'Wie Fließtext'
+      system: 'Systemschrift (Arial)'
+      overpass: 'Overpass'
+      merriweathersans: 'Merriweather Sans'
+      merriweather: 'Merriweather (Serif)'
+      sourcesans3: 'Source Sans 3'
+      roboto: 'Roboto'
+      robotocondensed: 'Roboto Condensed'
+      urbanist: 'Urbanist'
+      opensans: 'Open Sans'
+      montserrat: 'Montserrat'
+      notosans: 'Noto Sans'
+  plugin.bootstrap_package.settings.scss.font-weight-body:
+    category: sitepackage.typo
+    label: 'Schriftschnitt Fließtext'
+    default: '400'
+    type: string
+    enum:
+      '300': 'Light (300)'
+      '400': 'Regular (400)'
+  plugin.bootstrap_package.settings.scss.heading-font-weight:
+    category: sitepackage.typo
+    label: 'Schriftschnitt Überschriften h3, h5, h6'
+    description: 'Fehlt der Schnitt in der gewählten Schrift, wird der nächstliegende verwendet.'
+    default: '500'
+    type: string
+    enum: &heading-weights
+      '300': 'Light (300)'
+      '400': 'Regular (400)'
+      '500': 'Medium (500)'
+      '600': 'SemiBold (600)'
+      '700': 'Bold (700)'
+      '800': 'ExtraBold (800)'
+  plugin.bootstrap_package.settings.scss.heading-font-weight-bold:
+    category: sitepackage.typo
+    label: 'Schriftschnitt Überschriften h1, h2, h4'
+    description: 'Fehlt der Schnitt in der gewählten Schrift, wird der nächstliegende verwendet.'
+    default: '500'
+    type: string
+    enum: *heading-weights
+  plugin.bootstrap_package.settings.scss.font-size-base:
+    category: sitepackage.typo
+    label: 'Schriftgröße Fließtext'
+    default: '1rem'
+    type: string
+    enum:
+      '1rem': 'Normal (16px)'
+      '1.0625rem': 'Etwas größer (17px)'
+      '1.15rem': 'Mittel (18,4px)'
+      '1.2rem': 'Groß (19,2px)'
+      '1.25rem': 'Sehr groß (20px)'
+  plugin.bootstrap_package.settings.scss.heading-scale:
+    category: sitepackage.typo
+    label: 'Größe der Überschriften'
+    description: 'Desktop-Größe; kleinere Bildschirme skalieren fließend (RFS). Werte: $heading-scales in Theme/_layout-variables.scss.'
+    default: 'normal'
+    type: string
+    enum:
+      compact: 'Kompakt (h1 2rem)'
+      normal: 'Normal (h1 2,2rem)'
+      large: 'Groß (h1 2,5rem)'
+  plugin.bootstrap_package.settings.scss.navbar-font-color:
+    category: sitepackage.navigation
+    label: 'Navigation Schriftfarbe'
+    default: '#333'
+    type: color
+  plugin.bootstrap_package.settings.scss.navbar-active-color:
+    category: sitepackage.navigation
+    label: 'Navigation Hover-/Aktiv-Farbe'
+    description: 'Hex-Wert, z. B. #2b9a4b. Leer = Primärfarbe.'
+    default: ''
+    type: string
+  plugin.bootstrap_package.settings.scss.breadcrumb-section-bg:
+    category: sitepackage.breadcrumb
+    label: 'Breadcrumb Hintergrund'
+    default: '#f1f1f1'
+    type: color
+  plugin.bootstrap_package.settings.scss.card-radius:
+    category: sitepackage.cards
+    label: 'Cards Eckenradius'
+    default: '.75rem'
+    type: string
+    enum:
+      '0': 'Eckig'
+      '.25rem': 'Klein (4px)'
+      '.5rem': 'Mittel (8px)'
+      '.75rem': 'Rund (12px)'
+      '1rem': 'Sehr rund (16px)'
+  plugin.bootstrap_package.settings.scss.page-footer-background:
+    category: sitepackage.footer
+    label: 'Footer Hintergrundfarbe'
+    default: '#5b5b5b'
+    type: color
+  plugin.bootstrap_package.settings.scss.page-footer-color:
+    category: sitepackage.footer
+    label: 'Footer Schriftfarbe'
+    default: '#fff'
+    type: color
+  plugin.bootstrap_package.settings.scss.page-footer-color-header:
+    category: sitepackage.footer
+    label: 'Footer Überschriftenfarbe'
+    default: '#fff'
+    type: color

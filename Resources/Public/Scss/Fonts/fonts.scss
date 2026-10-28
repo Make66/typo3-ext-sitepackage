@@ -1,0 +1,33 @@
+// ============================================================
+// @font-face nur für die gewählten Schriften (Site-Settings
+// font-body-key / font-heading-key). Eigener includeCSS-Eintrag,
+// damit url() relativ zu diesem Ordner aufgelöst wird.
+// Siehe Documentation/Fonts.md.
+// ============================================================
+
+@import "font-library";
+
+$font-keys: ($font-body-key);
+@if $font-heading-key != $font-body-key {
+  $font-keys: append($font-keys, $font-heading-key);
+}
+
+@each $key in $font-keys {
+  $family: font-library-family($key);
+
+  $entry: font-library-entry($key);
+
+  @each $style, $files in (normal: map-get($entry, files), italic: map-get($entry, italic)) {
+    @if $files {
+      @each $file, $range in $files {
+        @font-face {
+          font-family: $family;
+          src: url("../../Fonts/#{$file}") format("woff2");
+          font-weight: $range;
+          font-style: $style;
+          font-display: swap;
+        }
+      }
+    }
+  }
+}

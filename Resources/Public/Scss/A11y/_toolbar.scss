@@ -6,11 +6,24 @@ $a11y-item-size:       40px !default;
 $a11y-item-gap:        .35rem !default;
 $a11y-item-bg:         #e9ecef !default;
 $a11y-item-color:      #000 !default;
-$a11y-item-icon-color: $primary !default;
+$a11y-item-bg-dark:    contrast-ratio($a11y-item-bg, #fff) > contrast-ratio($a11y-item-bg, $primary) !default;
+$a11y-item-icon-color: if($a11y-item-bg-dark, #fff, $primary) !default;
+$a11y-item-hover-bg:   if($a11y-item-bg-dark, $a11y-item-bg, darken($a11y-item-bg, 5%)) !default;
+$card-radius:          $border-radius !default;
+$a11y-panel-radius:    $card-radius !default;
 $a11y-burger-width:    40px !default;
 $a11y-burger-gap:      1rem !default;
 $a11y-bar-height:      85px !default;
 $a11y-navbar-right:    15px !default;
+$a11y-label-duration:  .45s !default;
+$a11y-label-easing:    cubic-bezier(.22, 1, .36, 1) !default;
+// Variante "right": Icon im farbigen Kreis
+$a11y-side-item-size:    56px !default;
+$a11y-side-circle-size:  42px !default;
+$a11y-side-icon-size:    22px !default;
+$a11y-side-circle-bg:    $primary !default;
+$a11y-side-circle-color: #fff !default;
+$a11y-side-item-color:   if($a11y-item-bg-dark, #fff, $primary) !default;
 
 $a11y-icons: (
     font:      'schriftgroesse.svg',
@@ -88,6 +101,11 @@ body {
             color: inherit;
         }
     }
+    .a11y-circle {
+        color: inherit !important;
+        background: transparent !important;
+        border: 2px solid currentColor;
+    }
 }
 
 // Kontrast: invers und Schwarz-Weiss
@@ -153,8 +171,8 @@ body {
 // Positionierung der Leiste
 // --------------------------------------------------
 
-// Headerelement nach oben verkleinern
-.navbar-mainnavigation {
+// Headerelement nach oben verkleinern (nur wenn die Leiste ueber dem Header steht)
+:root:has(.a11y-window--top) .navbar-mainnavigation:not(.navbar-transition) {
     @include a11y-desktop {
   padding-top: calc((var(--mainnavigation-nav-height) - var(--mainnavigation-link-height)) / 3);
  }
@@ -224,7 +242,7 @@ body {
     }
     &:hover {
         color: $a11y-item-color;
-        background: darken($a11y-item-bg, 5%);
+        background: $a11y-item-hover-bg;
         text-decoration: none;
     }
     &:focus-visible {
@@ -251,6 +269,119 @@ body {
     transform: scale(1.12);
 }
 
+// Beschriftung: nur fuer Screenreader (Variante "right" zeigt sie im ausgefahrenen Kasten)
+.a11y-label {
+    @include visually-hidden();
+}
+
+// Variante "right": Desktop vertikal am rechten Rand, mobil wie "top"
+.a11y-window--right {
+    .a11y-circle {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        color: $a11y-side-circle-color;
+        background: $a11y-side-circle-bg;
+        border-radius: 50%;
+        transition: transform .25s ease;
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+    // spezifischer als ".a11y-tools button.a11y-toggle svg" (Icon-Farbe $primary)
+    .a11y-tools .a11y-circle svg {
+        color: inherit;
+    }
+    // Kasten behaelt beim Hover die Hintergrundfarbe aus dem Site-Setting
+    .a11y-item,
+    .a11y-tools button.a11y-toggle {
+        color: $a11y-side-item-color;
+        &:hover {
+            color: $a11y-side-item-color;
+            background: $a11y-item-bg;
+        }
+    }
+    .a11y-item:hover,
+    .a11y-toggle:hover {
+        svg {
+            transform: none;
+        }
+        .a11y-circle {
+            transform: scale(1.06);
+        }
+    }
+    @include a11y-desktop {
+        // Volle Hoehe statt transform-Zentrierung, damit das Panel position: fixed nutzen kann
+        .a11y-tools {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0;
+            z-index: 1055;
+            pointer-events: none;
+            > * {
+                pointer-events: auto;
+            }
+        }
+        // Kasten ist immer voll breit und steckt bis auf das Icon rechts ausserhalb
+        // des Bildschirms; Hover/Fokus schiebt ihn samt Wort heraus
+        .a11y-item,
+        .a11y-tools button.a11y-toggle {
+            gap: .75rem;
+            height: $a11y-side-item-size;
+            padding: 0 1.25rem 0 (($a11y-side-item-size - $a11y-side-circle-size) * .5);
+            white-space: nowrap;
+            border-radius: ($a11y-side-item-size * .5) 0 0 ($a11y-side-item-size * .5);
+            box-shadow: $box-shadow;
+            transform: translateX(calc(100% - #{$a11y-side-item-size}));
+            transition: transform $a11y-label-duration $a11y-label-easing;
+            &:hover,
+            &:focus-visible,
+            &[aria-expanded="true"] {
+                transform: translateX(0);
+            }
+        }
+        .a11y-label {
+            position: static !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            overflow: visible !important;
+            clip: auto !important;
+            white-space: nowrap !important;
+        }
+        .a11y-circle {
+            width: $a11y-side-circle-size;
+            height: $a11y-side-circle-size;
+            svg {
+                width: $a11y-side-icon-size;
+                height: $a11y-side-icon-size;
+            }
+        }
+        .a11y-panel {
+            position: fixed;
+            top: 1rem;
+            right: calc(#{$a11y-side-item-size} + .5rem);
+            max-height: calc(100vh - 2rem);
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .a11y-item,
+        .a11y-toggle,
+        .a11y-circle {
+            transition: none !important;
+        }
+    }
+}
+
 // Suche und Kontakt auf Mobilgeräten ausblenden
 .a11y-item-search,
 .a11y-item-contact {
@@ -274,6 +405,7 @@ body {
     color: $body-color;
     background: $white;
     border: 1px solid $primary;
+    border-radius: $a11y-panel-radius;
     box-shadow: $box-shadow;
     z-index: 9999;
     &[hidden] {
