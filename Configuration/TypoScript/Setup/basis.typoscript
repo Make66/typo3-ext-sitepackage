@@ -107,7 +107,7 @@ page {
 # what most of those broken constants actually intended, but silently breaks any
 # mandant whose real logo is a different format or filename — confirmed via a
 # full DB audit of every site's constants cross-referenced against what's
-# actually in each mandant's img/ folder. These 8 need their own real filename;
+# actually in each mandant's img/ folder. These need their own real filename;
 # waschmaschinendoktor's own {$page.logo.file} constant is not even broken
 # (it's a correct, literal, working path) — it was simply being clobbered by the
 # blanket default above having no awareness of it. Add one more
@@ -138,6 +138,9 @@ page {
 [END]
 ["{$mandant}" == "waschmaschinendoktor"]
     page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.png
+[END]
+["{$mandant}" == "simmern"]
+    page.10.dataProcessing.1553883874.files.normal = fileadmin/templates/{$mandant}/img/logo.webp
 [END]
 
 # Angepasste ContentElemente (Bildueberschrift verlinkt für Rollover Effekt)
