@@ -6,6 +6,8 @@ services:
 
   Taketool\Sitepackage\:
     resource: '../Classes/*'
+    # calendarize is optional (composer "suggest"); its listeners are registered in Services.php
+    exclude: '../Classes/EventListener/Calendarize/*'
 
   Taketool\Sitepackage\Command\Mig12Command:
     tags:
@@ -28,3 +30,9 @@ services:
         description: 'Convert news records in a pid into fe_users records in a pid (built for the Hochschullehre "Mitglieder" folder, pid 2111)'
         schedulable: false
 
+  Taketool\Sitepackage\Command\ContactSlugCommand:
+    tags:
+      - name: 'console.command'
+        command: 'sitepackage:contact-slugs'
+        description: 'Generate URL slugs for contact records that have none (needed by Configuration/Routes/Contact.yaml)'
+        schedulable: false

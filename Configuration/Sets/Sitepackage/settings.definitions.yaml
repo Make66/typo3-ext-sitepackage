@@ -19,6 +19,12 @@ categories:
   sitepackage.footer:
     label: 'Footer'
     parent: sitepackage
+  sitepackage.calendarize:
+    label: 'Kalender (calendarize)'
+    parent: sitepackage
+  sitepackage.routing:
+    label: 'Sprechende URLs (Route Enhancer)'
+    parent: sitepackage
 
 settings:
   sitepackage.a11y.enable:
@@ -216,3 +222,27 @@ settings:
     label: 'Footer Überschriftenfarbe'
     default: '#fff'
     type: color
+  sitepackage.calendarize.monthCategoryFilter:
+    category: sitepackage.calendarize
+    label: 'Kategorie-Filter in der Monatsansicht'
+    description: 'Shows category filter links above the calendarize month view. See Documentation/Calendarize.md.'
+    default: true
+    type: bool
+  sitepackage.routing.calendarizePages:
+    category: sitepackage.routing
+    label: 'Seiten mit Kalender-URLs (calendarize)'
+    description: 'Page uids where Configuration/Routes/Calendarize.yaml is active, in addition to pages with "Contains plugin" = Calendarize. See Documentation/RouteEnhancers.md.'
+    default: []
+    type: stringlist
+  sitepackage.routing.newsPages:
+    category: sitepackage.routing
+    label: 'Seiten mit News-URLs'
+    description: 'Page uids where Configuration/Routes/News.yaml is active, in addition to pages with "Contains plugin" = news plugins. See Documentation/RouteEnhancers.md.'
+    default: []
+    type: stringlist
+  sitepackage.routing.contactPages:
+    category: sitepackage.routing
+    label: 'Seiten mit Ansprechpartner-URLs'
+    description: 'Page uids where Configuration/Routes/Contact.yaml is active, in addition to pages with "Contains plugin" = Sitepackage: Ansprechpartner. See Documentation/RouteEnhancers.md.'
+    default: []
+    type: stringlist

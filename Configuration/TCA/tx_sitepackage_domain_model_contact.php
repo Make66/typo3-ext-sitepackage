@@ -33,7 +33,7 @@ return [
         '1' => [
             'showitem' => '
                 --div--;LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.tab.allgemeines,
-                    salutation, first_name, last_name, --linebreak--, job_position, department_text, room, photo,
+                    salutation, first_name, last_name, --linebreak--, slug, --linebreak--, job_position, department_text, room, photo,
                 --div--;LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.tab.kontakt,
                     --palette--;;kontakt,
                 --div--;LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.tab.beschreibung,
@@ -80,6 +80,22 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim,required',
+            ],
+        ],
+        'slug' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.slug',
+            'config' => [
+                'type' => 'slug',
+                'size' => 40,
+                'generatorOptions' => [
+                    'fields' => ['first_name', 'last_name'],
+                    'fieldSeparator' => '-',
+                    'prefixParentPageSlug' => false,
+                ],
+                'fallbackCharacter' => '-',
+                'eval' => 'uniqueInPid',
+                'default' => '',
             ],
         ],
         'job_position' => [

@@ -80,6 +80,9 @@
             <trans-unit id="plugin.contact.title" xml:space="preserve">
                 <source>Sitepackage: Ansprechpartner</source>
             </trans-unit>
+            <trans-unit id="pages.module.contact" xml:space="preserve">
+                <source>Sitepackage: Ansprechpartner</source>
+            </trans-unit>
             <trans-unit id="plugin.contact.description" xml:space="preserve">
                 <source>List of contact cards (e.g. staff/organization directory) with an optional detail view, each picked from the Contact records in this folder.</source>
             </trans-unit>
@@ -107,6 +110,9 @@
             </trans-unit>
             <trans-unit id="tx_sitepackage_domain_model_contact.last_name" xml:space="preserve">
                 <source>Last name</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.slug" xml:space="preserve">
+                <source>URL segment</source>
             </trans-unit>
             <trans-unit id="tx_sitepackage_domain_model_contact.job_position" xml:space="preserve">
                 <source>Job title</source>
@@ -189,6 +195,15 @@
             </trans-unit>
             <trans-unit id="flexform.contact" xml:space="preserve">
                 <source>Pin to one contact</source>
+            </trans-unit>
+            <trans-unit id="calendarize.month.today" xml:space="preserve">
+                <source>Today</source>
+            </trans-unit>
+            <trans-unit id="field.category_color" xml:space="preserve">
+                <source>Color</source>
+            </trans-unit>
+            <trans-unit id="field.category_color.description" xml:space="preserve">
+                <source>Shown in the calendar month view (event sublines and category filter). Empty: a color is assigned automatically.</source>
             </trans-unit>
         </body>
     </file>
