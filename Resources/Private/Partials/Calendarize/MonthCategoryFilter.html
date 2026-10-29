@@ -1,0 +1,33 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment><!-- Category filter links for the month view, buttons in the category color, see Documentation/Calendarize.md --></f:comment>
+<nav class="calendarize-category-filter mb-3" aria-label="{f:translate(key: 'calendarize.categoryFilter', extensionName: 'sitepackage', default: 'Kategorien')}">
+	<f:variable name="allLabel"><f:translate key="calendarize.categoryFilter.all" extensionName="sitepackage" default="Alle" /></f:variable>
+	<f:variable name="allActive" value="1" />
+	<f:if condition="{categoryFilter}"><f:variable name="allActive" value="0" /></f:if>
+	<f:render section="FilterLink" arguments="{date: date, contentObject: contentObject, settings: settings, active: allActive, label: allLabel}" />
+	<f:for each="{categories}" as="category">
+		<f:variable name="isActive" value="0" />
+		<f:if condition="{category.uid} == {categoryFilter.0}"><f:variable name="isActive" value="1" /></f:if>
+		<f:render section="FilterLink" arguments="{date: date, contentObject: contentObject, settings: settings, customSearch: {categories: {0: category.uid}}, active: isActive, label: category.title, color: '{categoryColors.{category.uid}}'}" />
+	</f:for>
+</nav>
+
+<f:section name="FilterLink">
+	<f:variable name="colorClass"><f:if condition="{color}"> btn-category</f:if></f:variable>
+	<f:variable name="colorStyle"><f:if condition="{color}">--category-color: {color}</f:if></f:variable>
+	<f:if condition="{active}">
+		<f:then>
+			<f:link.action action="month" controller="Calendar" extensionName="Calendarize" pluginName="Calendar"
+				pageUid="{settings.monthPid}" section="c{contentObject.uid}"
+				arguments="{year: '{date -> f:format.date(format: \'Y\')}', month: '{date -> f:format.date(format: \'n\')}', customSearch: customSearch}"
+				class="btn btn-sm btn-primary active mb-1{colorClass}" style="{colorStyle}" additionalAttributes="{aria-current: 'true'}">{label}</f:link.action>
+		</f:then>
+		<f:else>
+			<f:link.action action="month" controller="Calendar" extensionName="Calendarize" pluginName="Calendar"
+				pageUid="{settings.monthPid}" section="c{contentObject.uid}"
+				arguments="{year: '{date -> f:format.date(format: \'Y\')}', month: '{date -> f:format.date(format: \'n\')}', customSearch: customSearch}"
+				class="btn btn-sm btn-outline-primary mb-1{colorClass}" style="{colorStyle}">{label}</f:link.action>
+		</f:else>
+	</f:if>
+</f:section>
+</html>

@@ -1,0 +1,75 @@
+# See Documentation/RouteEnhancers.md
+routeEnhancers:
+  News:
+    type: Extbase
+    limitToPages:
+      - 'sitepackagePluginPage("news", "newsplugins")'
+    extension: News
+    plugin: Pi1
+    routes:
+      - routePath: '/'
+        _controller: 'News::list'
+      - routePath: '/{news_page_label}-{page}'
+        _controller: 'News::list'
+        _arguments:
+          page: 'currentPage'
+      - routePath: '/{news_category_label}/{category-name}/{news_page_label}-{page}'
+        _controller: 'News::list'
+        _arguments:
+          category-name: overwriteDemand/categories
+          page: 'currentPage'
+      - routePath: '/{news_category_label}/{category-name}'
+        _controller: 'News::list'
+        _arguments:
+          category-name: overwriteDemand/categories
+      - routePath: '/{news_tag_label}/{tag-name}/{news_page_label}-{page}'
+        _controller: 'News::list'
+        _arguments:
+          tag-name: overwriteDemand/tags
+          page: 'currentPage'
+      - routePath: '/{news_tag_label}/{tag-name}'
+        _controller: 'News::list'
+        _arguments:
+          tag-name: overwriteDemand/tags
+      - routePath: '/{news_detail_label}/{news-title}'
+        _controller: 'News::detail'
+        _arguments:
+          news-title: news
+    defaultController: 'News::list'
+    defaults:
+      page: '0'
+    aspects:
+      news-title:
+        type: NewsTitle
+      page:
+        type: StaticRangeMapper
+        start: '1'
+        end: '100'
+      category-name:
+        type: NewsCategory
+      tag-name:
+        type: NewsTag
+      news_page_label:
+        type: LocaleModifier
+        default: 'page'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'seite'
+      news_category_label:
+        type: LocaleModifier
+        default: 'category'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'kategorie'
+      news_tag_label:
+        type: LocaleModifier
+        default: 'tag'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'schlagwort'
+      news_detail_label:
+        type: LocaleModifier
+        default: 'article'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'artikel'

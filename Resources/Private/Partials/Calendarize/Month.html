@@ -1,0 +1,155 @@
+{namespace c=HDNET\Calendarize\ViewHelpers}
+<f:comment><!-- Override of EXT:calendarize: prev/next/today buttons keep the category filter, today's cell is marked, a subline per event category in its color, weekday header row, event titles with start/end time are listed even without a detail page (Documentation/Calendarize.md) --></f:comment>
+<f:comment><!-- without a dateTime argument, the modify viewhelper starts from the current date --></f:comment>
+<f:variable name="today" value="{c:dateTime.modify(modification: 'today')}" />
+<f:variable name="shownMonth" value="{date -> f:format.date(format: 'Ym')}" />
+<f:variable name="todayMonth" value="{today -> f:format.date(format: 'Ym')}" />
+
+<table class="table table-bordered calendarize-month">
+	<thead>
+		<tr>
+			<th colspan="7">
+				<div class="month-nav">
+					<div class="month-nav-prev">
+						<f:if condition="{settings.monthPid}">
+							<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:'{date -> c:dateTime.modify(modification: \'first day of last month\')}')}">
+								<f:render section="MonthLink" arguments="{date: '{date -> c:dateTime.modify(modification: \'first day of last month\')}', settings: settings, contentObject: contentObject, categoryFilter: categoryFilter, direction: 'prev'}" />
+							</f:if>
+						</f:if>
+					</div>
+					<div class="month-nav-title">
+						<f:format.date pattern="MMMM y">{date}</f:format.date>
+						<f:if condition="{settings.monthPid} && {shownMonth} != {todayMonth}">
+							<div class="month-nav-today">
+								<f:render section="MonthLink" arguments="{date: today, settings: settings, contentObject: contentObject, categoryFilter: categoryFilter, direction: 'today'}" />
+							</div>
+						</f:if>
+					</div>
+					<div class="month-nav-next">
+						<f:if condition="{settings.monthPid}">
+							<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:'{date -> c:dateTime.modify(modification: \'first day of next month\')}')}">
+								<f:render section="MonthLink" arguments="{date: '{date -> c:dateTime.modify(modification: \'first day of next month\')}', settings: settings, contentObject: contentObject, categoryFilter: categoryFilter, direction: 'next'}" />
+							</f:if>
+						</f:if>
+					</div>
+				</div>
+			</th>
+		</tr>
+		<tr class="weekdays">
+			<c:loop.daysInWeek date="{date}" iteration="day" weekStartsAt="{settings.weekStart}">
+				<th scope="col">
+					<abbr class="d-lg-none" title="{f:format.date(date: day.calendar.date, pattern: 'EEEE')}"><f:format.date pattern="EEE">{day.calendar.date}</f:format.date></abbr>
+					<span class="d-none d-lg-inline"><f:format.date pattern="EEEE">{day.calendar.date}</f:format.date></span>
+				</th>
+			</c:loop.daysInWeek>
+		</tr>
+	</thead>
+	<tbody class="regularMonthView">
+		<c:loop.weeksInMonth date="{date}" iteration="week" weekStartsAt="{settings.weekStart}">
+			<tr>
+				<c:loop.daysInWeek date="{week.calendar.date}" iteration="day" weekStartsAt="{settings.weekStart}">
+					<f:if condition="{c:dateTime.indexOnDay(indices: indices, day:day.calendar.date)}">
+						<f:then>
+							<td class="active hasEvents{f:if(condition: '{date->f:format.date(format: \'d.m.Y\')} == {day.calendar.date->f:format.date(format: \'d.m.Y\')} && !{ignoreSelectedDay}', then: ' selectedDay')}{f:if(condition: '{today->f:format.date(format: \'d.m.Y\')} == {day.calendar.date->f:format.date(format: \'d.m.Y\')}', then: ' today')} {f:if(condition: '{date->f:format.date(format: \'m\')} != {day.calendar.date->f:format.date(format: \'m\')}', then: 'not-current-month')}">
+								<f:if condition="{settings.dayPid}">
+									<f:then>
+										<c:link.day pageUid="{settings.dayPid}" date="{day.calendar.date}">
+											<f:format.date format="j">{day.calendar.date}</f:format.date>
+										</c:link.day>
+									</f:then>
+									<f:else>
+										<f:format.date format="j">{day.calendar.date}</f:format.date>
+									</f:else>
+								</f:if>
+								<ul class="events">
+									<f:for each="{indices}" as="index">
+										<f:if condition="{c:dateTime.indexOnDay(index: index, day:day.calendar.date)}">
+											<li>
+												<f:if condition="{index.allDay}">
+													<f:else>
+														<span class="events-time">
+															<f:format.date format="{f:translate(key: 'timeFormat')}">{index.startDateComplete}</f:format.date><f:if condition="{index.openEndTime}">
+																<f:else>–<f:format.date format="{f:translate(key: 'timeFormat')}">{index.endDateComplete}</f:format.date></f:else>
+															</f:if>
+														</span>
+													</f:else>
+												</f:if>
+												<f:if condition="{settings.detailPid}">
+													<f:then>
+														<c:link.index index="{index}" pageUid="{settings.detailPid}">
+															<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+														</c:link.index>
+													</f:then>
+													<f:else>
+														<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+													</f:else>
+												</f:if>
+												<f:if condition="{index.originalObject.categories}">
+													<span class="events-categories">
+														<f:for each="{index.originalObject.categories}" as="category">
+															<span class="events-category" style="--category-color: {categoryColors.{category.uid}}" title="{category.title}"></span>
+														</f:for>
+													</span>
+												</f:if>
+											</li>
+										</f:if>
+									</f:for>
+								</ul>
+							</td>
+						</f:then>
+						<f:else>
+							<td class="{f:if(condition: '{date->f:format.date(format: \'d.m.Y\')} == {day.calendar.date->f:format.date(format: \'d.m.Y\')} && !{ignoreSelectedDay}', then: 'selectedDay')}{f:if(condition: '{today->f:format.date(format: \'d.m.Y\')} == {day.calendar.date->f:format.date(format: \'d.m.Y\')}', then: ' today')} {f:if(condition: '{date->f:format.date(format: \'m\')} != {day.calendar.date->f:format.date(format: \'m\')}', then: 'not-current-month')}">
+								<f:format.date format="j">{day.calendar.date}</f:format.date>
+							</td>
+						</f:else>
+					</f:if>
+				</c:loop.daysInWeek>
+			</tr>
+		</c:loop.weeksInMonth>
+	</tbody>
+</table>
+
+<f:if condition="{settings.useMomentFullCalendarIo}">
+	<div id="fullCalendarIo" class="fullCalendarIo" data-language="{c:language()}">&nbsp;</div>
+
+	<script type="text/javascript">
+		let monthEvents = [];
+		let monthEventsCurrentDate = '<f:format.date format="Y-m-d">{date}</f:format.date>';
+		let monthFirstDay = '{settings.weekStart}';
+		<f:for each="{indices}" as="index">
+			tmp = {};
+			tmp.id = {index.uid};
+			tmp.allDay = false;
+			tmp.title = <f:format.raw><c:jsQuote><f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" /></c:jsQuote></f:format.raw>;
+			tmp.start = '<f:format.date format="{f:if(condition: index.allDay, then: 'Y-m-d', else: 'c')}">{index.startDateComplete}</f:format.date>';
+			tmp.end =  '<f:format.date format="{f:if(condition: index.allDay, then: 'Y-m-d', else: 'c')}" base="{index.endDateComplete}">+{f:if(condition: index.allDay, then: '1', else: '0')} day</f:format.date>';
+			<f:if condition="{index.allDay}">
+				tmp.allDay = true;
+			</f:if>
+			tmp.url = '<c:uri.index index="{index}" pageUid="{settings.detailPid}" />';
+			monthEvents.push(tmp);
+		</f:for>
+	</script>
+</f:if>
+
+<f:section name="MonthLink">
+	<f:if condition="{categoryFilter}">
+		<f:then>
+			<f:link.action action="month" controller="Calendar" extensionName="Calendarize" pluginName="Calendar"
+				pageUid="{settings.monthPid}" section="c{contentObject.uid}"
+				arguments="{year: '{date -> f:format.date(format: \'Y\')}', month: '{date -> f:format.date(format: \'n\')}', customSearch: {categories: categoryFilter}}"
+				class="btn btn-sm {f:if(condition: '{direction} == \'today\'', then: 'btn-link', else: 'btn-outline-primary')}"><f:render section="MonthLinkLabel" arguments="{date: date, direction: direction}" /></f:link.action>
+		</f:then>
+		<f:else>
+			<c:link.month pageUid="{settings.monthPid}" date="{date}" section="c{contentObject.uid}" class="btn btn-sm {f:if(condition: '{direction} == \'today\'', then: 'btn-link', else: 'btn-outline-primary')}"><f:render section="MonthLinkLabel" arguments="{date: date, direction: direction}" /></c:link.month>
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="MonthLinkLabel">
+	<f:switch expression="{direction}">
+		<f:case value="prev"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i> <f:format.date pattern="MMMM">{date}</f:format.date></f:case>
+		<f:case value="today"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i> <f:translate key="LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:calendarize.month.today" /></f:case>
+		<f:defaultCase><f:format.date pattern="MMMM">{date}</f:format.date> <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></f:defaultCase>
+	</f:switch>
+</f:section>

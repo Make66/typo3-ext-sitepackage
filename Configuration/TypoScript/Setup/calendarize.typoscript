@@ -1,0 +1,4 @@
+plugin.tx_calendarize.settings {
+    # Category filter links in the month view, see Documentation/Calendarize.md
+    monthCategoryFilter = {$sitepackage.calendarize.monthCategoryFilter}
+}
