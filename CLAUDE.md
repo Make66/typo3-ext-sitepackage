@@ -28,5 +28,6 @@ the typography/navigation/breadcrumb/cards/footer site settings), `Fonts.md`
 (central font library in `Resources/Public/Fonts/`, selected by site setting), `MainNavigationLevels.md`
 (mega-menu depth), `StickyHeader.md` (the shrinking-header JS),
 `A11yToolbar.md` (opt-in Barrierefreiheits-Leiste, site settings
-`sitepackage.a11y.*`), and two one-off
+`sitepackage.a11y.*`), `IconSet.md` (own bootstrap_package icon set from
+`Resources/Public/Icons/Set/`), and two one-off
 upgrade commands, `Mig12Cleanup.md` and `NewsToFeUsersImport.md`.
