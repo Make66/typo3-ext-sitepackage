@@ -63,9 +63,14 @@ the toolbar already has a search link, so the menu item is hidden from `lg`
 `typo3temp/assets/css/*.css` file) when `enable` is set and `searchPid > 0`:
 
 - `#nav-item-<searchPid>`: `justify-content: left`; `display: none` from 992px.
+- `.nav-item:has(> #nav-item-<searchPid>)`: `display: none` from 992px.
 - `.navbar-transition #nav-item-<searchPid> .nav-link-icon svg`: `fill: #333`.
 
-`#nav-item-<uid>` is the id bk2k's main navigation puts on each `<li>`. Before
+`#nav-item-<uid>` is the id the main navigation puts on each item's link
+(`<a class="nav-link">`), not on the surrounding `<li class="nav-item">`.
+Hiding only the link leaves the `<li>` with its padding and, in pl3, its
+`border-bottom` divider, so on desktop an empty line remained where the search
+item was. The `:has()` rule hides the whole `<li>`. Before
 this, every mandant's `custom.scss` had the rule with the uid hard-coded
 (`#nav-item-137` kleinich, `#nav-item-78` calden); setting `searchPid` in the
 site's `settings.yaml` is now enough. Mandant tweaks (e.g. a different icon
@@ -100,6 +105,21 @@ Both variants use the same `Toolbar.html` and `a11y.js`; the template puts
   the circle becomes an outline. Sizes and colours: `$a11y-side-item-size`,
   `$a11y-side-circle-size`, `$a11y-side-icon-size`, `$a11y-side-circle-bg`,
   `$a11y-side-circle-color`, `$a11y-side-item-color` (label text) (overridable like the other `$a11y-*` variables).
+
+Layout pl3 moves the toolbar into the header, in one row directly left of the
+burger (like guetersloh.de), on all breakpoints: its own
+`_pl3/.../DropIn/Page/PageBefore.html` is empty, and
+`_pl3/.../Navigation/Main.html` renders `A11y/Toolbar` right before the
+`.navbar-toggler`. Inside the header's flex row the boxes stay vertically
+centred in the shrunk (`.navbar-transition`) state too, which a `fixed`
+offset could not. `pl3.scss` section 6 resets the `fixed`/hanging styles from
+`_toolbar.scss` and the reduced header top padding. Below
+`$grid-float-breakpoint` it also hides `#a11y-window` while the burger menu
+(`#mainnavigation.offcanvas`) is open (`.show`/`.showing`), because the
+toolbar would otherwise sit on top of the offcanvas next to its close
+button. On desktop it stays visible under the backdrop. A pl3 mandant with its own
+fileadmin `DropIn/Page/PageBefore.html` would get the toolbar twice — it must
+not render `A11y/Toolbar` there.
 
 The `.a11y-tools` column is full-height with `pointer-events: none` instead of
 `transform`-centred, because a transformed ancestor would turn the panel's

@@ -177,12 +177,13 @@ settings:
   plugin.bootstrap_package.settings.scss.navbar-font-color:
     category: sitepackage.navigation
     label: 'Navigation Schriftfarbe'
-    default: '#333'
-    type: color
+    description: 'Hex-Wert, z. B. #333. Leer = Layout-Standard (#333, pl3: #fff).'
+    default: ''
+    type: string
   plugin.bootstrap_package.settings.scss.navbar-active-color:
     category: sitepackage.navigation
     label: 'Navigation Hover-/Aktiv-Farbe'
-    description: 'Hex-Wert, z. B. #2b9a4b. Leer = Primärfarbe.'
+    description: 'Hex-Wert, z. B. #2b9a4b. Leer = Layout-Standard (Primärfarbe, pl3: #333).'
     default: ''
     type: string
   plugin.bootstrap_package.settings.scss.breadcrumb-section-bg:

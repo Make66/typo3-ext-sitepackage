@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Ebene_2" data-name="Ebene 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260.19 260.19">
+<svg xmlns="http://www.w3.org/2000/svg" id="Ebene_2" data-name="Ebene 2" viewBox="0 0 260.19 260.19">
   <defs>
     <style>
-     .fil0 {fill:black}
+    .primary {fill:black}
+    .white {fill:#FEFEFE}
     </style>
   </defs>
   <g id="Ebene_1-2" data-name="Ebene 1">
-    <path class="fil0" d="M246.68,0H13.51C6.05,0,0,6.05,0,13.51v233.18c0,7.46,6.05,13.51,13.51,13.51h233.18c7.46,0,13.51-6.05,13.51-13.51V13.51c0-7.46-6.05-13.51-13.51-13.51ZM129.62,19.91l109.72,82.94H19.91L129.62,19.91ZM67.77,239.34H19.91v-126.13h47.87v126.13ZM154.03,239.34h-47.87v-67.89h47.87v67.89ZM130.32,161.52c-13.34,0-24.16-10.82-24.16-24.16s10.82-24.16,24.16-24.16,24.16,10.82,24.16,24.16-10.82,24.16-24.16,24.16ZM240.28,239.34h-47.87v-126.13h47.87v126.13Z"/>
+    <rect class="white" width="260.19" height="260.19" rx="13.51" ry="13.51"></rect>
+    <rect class="primary" x="19.91" y="113.2" width="47.87" height="126.13"></rect>
+    <rect class="primary" x="192.42" y="113.2" width="47.87" height="126.13"></rect>
+    <rect class="primary" x="106.16" y="171.45" width="47.87" height="67.89"></rect>
+    <polygon class="primary" points="129.62 19.91 19.91 102.84 239.34 102.84 129.62 19.91"></polygon>
+    <circle class="primary" cx="130.32" cy="137.36" r="24.16"></circle>
   </g>
 </svg>

@@ -52,9 +52,9 @@ $font-size-base: 1rem !default;
 
 $heading-scale: normal !default;
 $heading-scales: (
-  compact: (h1: 2rem,   h2: 1.7rem, h3: 1.45rem, h4: 1.3rem,  h5: 1.15rem, h6: 1rem),
-  normal:  (h1: 2.2rem, h2: 1.9rem, h3: 1.6rem,  h4: 1.45rem, h5: 1.2rem,  h6: 1rem),
-  large:   (h1: 2.5rem, h2: 2rem,   h3: 1.7rem,  h4: 1.45rem, h5: 1.3rem,  h6: 1rem)
+  compact: (h1: 2rem,   h2: 1.7rem, h3: 1.45rem, h4: 1.3rem,  h5: 1.15rem, h6: $font-size-base),
+  normal:  (h1: 2.2rem, h2: 1.9rem, h3: 1.6rem,  h4: 1.45rem, h5: 1.2rem,  h6: $font-size-base),
+  large:   (h1: 2.5rem, h2: 2rem,   h3: 1.7rem,  h4: 1.45rem, h5: 1.3rem,  h6: $font-size-base)
 ) !default;
 $heading-sizes: map-get($heading-scales, $heading-scale);
 
@@ -165,10 +165,15 @@ $transition: .3s ease !default;
 // ------------------------------------------------------------
 // 7. Navigation
 // ------------------------------------------------------------
-$navbar-font-color:           #333 !default;
-$navbar-active-color:         '' !default;     // Hover/aktiv; leer = $primary
+$navbar-font-color:           '' !default;     // leer = $navbar-font-color-default
+$navbar-active-color:         '' !default;     // Hover/aktiv; leer = $navbar-active-color-default
+$navbar-font-color-default:   #333 !default;
+$navbar-active-color-default: $primary !default;
+@if $navbar-font-color == '' {
+  $navbar-font-color: $navbar-font-color-default;
+}
 @if $navbar-active-color == '' {
-  $navbar-active-color: $primary;
+  $navbar-active-color: $navbar-active-color-default;
 }
 $navbar-font-weight:          500 !default;
 $navbar-link-dropdown-weight: 500 !default;
@@ -207,6 +212,13 @@ $box-colors: (
   primary:   ($primary, #fff),
   secondary: ($secondary, #fff),
   light:     (#f1f3f5, #222)
+) !default;
+
+// Zusätzliche Element-Hintergrundfarbe "primary light" (frame-background-primary-light),
+// Auswahl im Backend über page.tsconfig.
+$primary-light: mix(#fff, $primary, 85%) !default;
+$frame-backgrounds: (
+  'primary-light': ('background': $primary-light)
 ) !default;
 
 

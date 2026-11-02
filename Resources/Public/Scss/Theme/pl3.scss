@@ -2,8 +2,10 @@
 // Own includeCSS compile (see basis.typoscript), loaded after global and before
 // custom. It does not see fileadmin/templates/<mandant>/_variables.scss; Site
 // Settings (plugin.bootstrap_package.settings.scss.*) are injected by bk2k.
-// See Documentation/SCSS_pipeline.md section 8.
+// See Documentation/SCSS_pipeline.md section 8 ("pl3 — Hechtsheim").
 
+$navbar-font-color-default:   #fff;
+$navbar-active-color-default: #333;
 @import "layout-variables";
 
 // Bootstrap variables, functions, mixins (no CSS output)
@@ -11,5 +13,875 @@
 @import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_variables";
 @import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_maps";
 @import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_mixins";
+// bootstrap_package's own variables layer — needed for $grid-float-breakpoint.
+@import "EXT:bootstrap_package/Resources/Public/Scss/bootstrap5/_variables";
 
-// layout-specific rules for Hechtsheim go here
+
+
+// ============================================================
+// MIXINS
+// ============================================================
+
+// Externer Link: alles mit target="_blank"
+@mixin external {
+  &[target="_blank"] {
+    @content;
+  }
+}
+
+// Icon (Maske, nimmt die Textfarbe an) als ::before
+@mixin link-icon($icon) {
+  &::before {
+    content: "";
+    display: inline-block;
+    flex: 0 0 $link-icon-size;
+    width: $link-icon-size;
+    height: $link-icon-size;
+    margin-right: .4rem;
+    vertical-align: -2px;
+    background-color: currentColor;
+    -webkit-mask: url($icon) no-repeat center / contain;
+    mask: url($icon) no-repeat center / contain;
+  }
+}
+
+
+// ============================================================
+// 0. EXTERNE LINKS (Content + Footer, Ausnahmen wie pl2)
+// ============================================================
+#page-content,
+#page-footer {
+  a[href][target="_blank"]:is(
+    p a,
+    td a,
+    .card-footer a,
+    li:not(.breadcrumb-item):not(.page-item):not(.nav-item) a,
+    .stretched-link
+  ):not(.btn):not(.no-link-icon):not(:empty):not(:has(img, svg)):not(.apicodo-event-row a):not(.frame-type-social_links a) {
+    @include link-icon($icon-external);
+  }
+
+  .btn[target="_blank"]:not(:has(.btn-icon)):not(.stretched-link) {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+
+    &::after {
+      content: "";
+      flex: 0 0 $link-icon-size;
+      width: $link-icon-size;
+      height: $link-icon-size;
+      background-color: currentColor;
+      -webkit-mask: url($icon-external) no-repeat center / contain;
+      mask: url($icon-external) no-repeat center / contain;
+    }
+  }
+}
+
+
+// ============================================================
+// 1. ICONGROUP ALS KACHELN
+// ============================================================
+.icongroup {
+  --icongroup-gap: 1rem;
+  --icongroup-icon-size: 3rem;
+
+  .icongroup-item {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem 1.25rem;
+    border-radius: $border-radius;
+    background-color: $white;
+    box-shadow: 0 .125rem .75rem rgba($black, .08);
+    transition: background-color .2s ease, box-shadow .2s ease, transform .2s ease;
+
+    &:hover,
+    &:focus-within {
+      background-color: $primary;
+      box-shadow: 0 .5rem 1.5rem rgba($black, .14);
+      transform: translateY(-2px);
+    }
+  }
+
+  .icongroup-item-icon {
+    order: 0;
+    margin: 0;
+
+    svg {
+      color: $primary;
+
+      .primary,
+      .grey {
+        fill: #000;
+      }
+    }
+  }
+
+  .icongroup-item-text {
+    text-align: left;
+  }
+
+  .icongroup-item-text-header {
+    margin-bottom: .25rem;
+    font-size: $icongroup-title-size;
+    font-weight: $font-weight-bold;
+    line-height: 1.25;
+
+    a {
+      color: $body-color;
+      text-decoration: none;
+      background-image: none;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+      }
+    }
+  }
+
+  .icongroup-item:is(:hover, :focus-within) {
+    .icongroup-item-text,
+    .icongroup-item-text-header a,
+    .icongroup-item-text-subheader,
+    .icongroup-item-text p {
+      color: $white;
+    }
+
+    .icongroup-item-icon svg {
+      color: $white;
+
+      .primary,
+      .grey {
+        fill: $white;
+      }
+    }
+  }
+
+  .icongroup-item-text-subheader {
+    margin-bottom: 0;
+    font-size: .95rem;
+    color: $text-muted;
+  }
+}
+
+
+// ============================================================
+// 2. APICODO-CARDS MIT BILD-OVERLAY
+// ============================================================
+.apicodo-card:has(> .card-img-top) {
+  position: relative;
+  isolation: isolate;
+  min-height: 30rem;
+  overflow: hidden;
+  border: 0;
+  background-color: $gray-900;
+  color: $white;
+
+  > .card-img-top {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    border-radius: 0;
+    transition: transform .4s ease;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to top, rgba($black, .8) 0%, rgba($black, .35) 65%, rgba($black, 0) 100%);
+  }
+
+  &:hover > .card-img-top,
+  &:focus-within > .card-img-top {
+    transform: scale(1.05);
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .card-title,
+  .card-text,
+  .stretched-link,
+  .stretched-link:is(:hover, :focus) {
+    color: $white;
+  }
+
+  .card-title {
+    font-weight: 600;
+
+    &::after {
+      content: "";
+      display: block;
+      height: 2px;
+      margin-top: .75rem;
+      background-color: $white;
+    }
+  }
+
+  .text-muted {
+    color: rgba($white, .85) !important;
+  }
+}
+
+
+// ============================================================
+// 3. APICODO-EVENTS ALS CARDS
+// ============================================================
+.apicodo-event-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: $layout-gap * 1.5;
+}
+
+.apicodo-event-row {
+  height: 100%;
+  margin-bottom: 0 !important;
+  overflow: hidden;
+  border: 0;
+  box-shadow: 0 .125rem .75rem rgba($black, .08);
+  transition: box-shadow .2s ease;
+
+  &:hover,
+  &:focus-within {
+    box-shadow: 0 .5rem 1.5rem rgba($black, .14);
+  }
+
+  > .row {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: 100%;
+  }
+
+  .apicodo-event-row__image {
+    order: -1;
+    width: 100%;
+
+    img {
+      display: block;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      transition: transform .4s ease;
+    }
+  }
+
+  &:hover .apicodo-event-row__image img {
+    transform: scale(1.05);
+  }
+
+  .apicodo-event-row__date {
+    position: absolute;
+    top: .75rem;
+    left: .75rem;
+    z-index: 1;
+    width: auto;
+    min-width: 3.5rem;
+    padding: .4rem .6rem;
+    border-radius: $border-radius;
+    background-color: $white;
+    color: $body-color;
+    box-shadow: 0 .125rem .5rem rgba($black, .2);
+  }
+
+  .apicodo-event-row__day {
+    font-size: 1.5rem;
+  }
+
+  .apicodo-event-row__info {
+    flex: 1 1 auto;
+    justify-content: flex-start;
+    min-height: 10rem;
+    padding: 1.75rem 1.75rem 2.25rem;
+
+    > .badge {
+      order: -2;
+    }
+  }
+
+  .apicodo-event-row__meta {
+    order: -1;
+    margin-bottom: .75rem !important;
+  }
+
+  .apicodo-event-row__title {
+    margin: 0;
+    font-weight: $font-weight-bold;
+  }
+}
+
+.apicodo-event-row:not(:has(.apicodo-event-row__image)) .apicodo-event-row__date {
+  position: static;
+  align-self: flex-start;
+  margin: 1.25rem 1.25rem 0;
+  box-shadow: none;
+  background-color: var(--bs-tertiary-bg, #{$gray-100});
+}
+
+
+// ============================================================
+// 4. BURGER-MENÜ AUCH AM DESKTOP
+// ============================================================
+@media (min-width: $grid-float-breakpoint) {
+  .navbar-mainnavigation {
+    .navbar-toggler {
+      display: inline-block;
+      margin-left: auto;
+    }
+
+    #mainnavigation.offcanvas {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: var(--bs-offcanvas-zindex);
+      width: min(560px, 100vw);
+      height: auto;
+      max-width: 100%;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+      background-color: var(--bs-offcanvas-bg);
+      border-left: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color);
+      box-shadow: var(--bs-offcanvas-box-shadow);
+      transform: translateX(100%);
+      transition: var(--bs-offcanvas-transition);
+
+      &:not(.show):not(.showing):not(.hiding) {
+        visibility: hidden !important;
+      }
+
+      &.showing,
+      &.show:not(.hiding) {
+        transform: none;
+      }
+
+      .offcanvas-header {
+        display: flex;
+      }
+
+      .offcanvas-body {
+        display: block;
+        flex-grow: 1;
+        padding: var(--bs-offcanvas-padding-y) var(--bs-offcanvas-padding-x);
+        overflow-y: auto;
+
+        .navbar-nav {
+          flex-direction: column;
+          gap: 0;
+        }
+      }
+    }
+
+    .nav-spacer {
+      display: none;
+    }
+
+    .navbar-nav .dropdown-menu {
+      position: static;
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+    }
+
+    .nav-item:hover > .dropdown-menu:not(.show),
+    .nav-item:focus-within > .dropdown-menu:not(.show) {
+      display: none;
+    }
+  }
+
+  body .offcanvas-backdrop {
+    display: block;
+  }
+}
+
+
+// ============================================================
+// 5. HAMBURGER-MENÜ OPTIK
+// ============================================================
+$pl3-nav-bg:                 $primary !default;
+$pl3-nav-color:              $navbar-font-color !default;
+$pl3-nav-accent:             $navbar-active-color !default;
+$pl3-nav-divider:            rgba($white, .3) !default;
+$pl3-nav-font-size:          1.6rem !default;
+$pl3-nav-dropdown-font-size: 1.2rem !default;
+
+.navbar-mainnavigation .offcanvas {
+  --bs-offcanvas-bg: var(--pl3-nav-bg, #{$pl3-nav-bg});
+  --bs-offcanvas-color: var(--pl3-nav-color, #{$pl3-nav-color});
+  --bs-offcanvas-border-width: 0;
+  --bs-offcanvas-padding-x: 1.5rem;
+  --bs-nav-link-color: var(--pl3-nav-color, #{$pl3-nav-color});
+  --bs-nav-link-hover-color: var(--pl3-nav-accent, #{$pl3-nav-accent});
+  --bs-dropdown-link-color: var(--pl3-nav-color, #{$pl3-nav-color});
+  align-items: stretch;
+  color: var(--pl3-nav-color, #{$pl3-nav-color});
+
+  @include media-breakpoint-up(md) {
+    --bs-offcanvas-padding-x: 2.5rem;
+  }
+
+  .offcanvas-header {
+    align-self: stretch;
+    justify-content: flex-end;
+    padding: 1.5rem 1.5rem .5rem;
+  }
+
+  .offcanvas-title {
+    @include visually-hidden;
+  }
+
+  .btn-close {
+    --bs-btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath d='M2 2l12 12M14 2L2 14' stroke='%23fff' stroke-width='1.6'/%3e%3c/svg%3e");
+    --bs-btn-close-opacity: 1;
+    --bs-btn-close-hover-opacity: .85;
+    --bs-btn-close-filter: none;
+    width: 1.75rem;
+    height: 1.75rem;
+    margin: 0;
+    padding: .6rem;
+    background-color: var(--pl3-nav-accent, #{$pl3-nav-accent});
+    background-size: 1.75rem;
+    border-radius: 0;
+  }
+
+  .navbar-nav {
+    gap: 0;
+
+    &::before {
+      display: none;
+    }
+
+    > .nav-item {
+      padding: .6rem 0;
+      border-bottom: 1px solid var(--pl3-nav-divider, #{$pl3-nav-divider});
+    }
+  }
+
+  .nav-link {
+    padding-left: 0;
+    padding-right: 0;
+    color: var(--pl3-nav-color, #{$pl3-nav-color});
+
+    @include external {
+      .nav-link-text {
+        @include link-icon($icon-external);
+
+        &::before {
+          margin-right: .35rem;
+        }
+      }
+    }
+  }
+
+  .nav-link:not(.nav-link-toggle)::before {
+    display: none;
+  }
+
+  .nav-link-text {
+    font-family: $navbar-family;
+    font-weight: $font-weight-bold;
+    color: inherit;
+    @include font-size($pl3-nav-font-size);
+
+    &::after {
+      display: none;
+    }
+  }
+
+  .nav-link.active,
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    color: var(--pl3-nav-accent, #{$pl3-nav-accent});
+
+    .nav-link-text {
+      color: inherit;
+    }
+  }
+
+  .dropdown-menu {
+    margin: 0;
+    padding: 0 0 .5rem 1.25rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+
+    .nav-link {
+      padding-top: .3rem;
+      padding-bottom: .3rem;
+    }
+
+    .nav-link-text {
+      @include font-size($pl3-nav-dropdown-font-size);
+    }
+  }
+
+  .dropdown-nav {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .nav-link-toggle {
+    padding: .3rem 0 .3rem 1rem;
+    color: var(--pl3-nav-color, #{$pl3-nav-color});
+  }
+
+  .nav-link-indicator {
+    position: relative;
+    flex: 0 0 auto;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: auto;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      padding: 0;
+      border: 0;
+      background-color: currentColor;
+      transform: translate(-50%, -50%);
+    }
+
+    &::after {
+      width: 2px;
+      height: 100%;
+    }
+  }
+
+  .dropdown-menu .nav-link-indicator {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .nav-link-main.show > .nav-link-indicator::after,
+  .nav-link-toggle[aria-expanded="true"] > .nav-link-indicator::after {
+    display: none;
+  }
+}
+
+body .offcanvas-backdrop {
+  background-color: $white;
+
+  &.show {
+    opacity: .7;
+  }
+}
+
+
+// ============================================================
+// 5b. RAHMEN "CAROUSEL STARTSEITE"
+// ============================================================
+.frame-carousel_startseite {
+  --frame-spacing: 0;
+
+  .frame-container {
+    max-width: none;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .carousel-item-type-header .carousel-text-inner {
+    width: 100%;
+  }
+}
+
+@for $i from 1 through 6 {
+  h#{$i}.awesome,
+  .h#{$i}.awesome {
+    font-weight: $headings-font-weight;
+  }
+}
+
+$pl3-carousel-mobile-image-height: max(20vh, 240px) !default;
+
+@include media-breakpoint-down(sm) {
+  .frame-carousel_startseite .carousel {
+    .item {
+      height: auto;
+      padding-right: 0;
+      padding-left: 0;
+      --carousel-item-color: #{$white};
+      --carousel-item-link-color: #{$white};
+      --carousel-item-link-hover-color: #{$white};
+    }
+
+    .carousel-backgroundimage-container {
+      position: relative;
+      height: $pl3-carousel-mobile-image-height;
+    }
+
+    .carousel-content {
+      height: auto;
+      min-height: 250px;
+      padding: 1.5rem;
+      color: $white;
+      background-color: $primary;
+    }
+
+    .carousel-item-type-background_image .carousel-content {
+      position: absolute;
+      inset: 0;
+      min-height: 0;
+      padding: 0;
+      background-color: transparent;
+    }
+
+    .carousel-control {
+      bottom: auto;
+      height: $pl3-carousel-mobile-image-height;
+    }
+
+    .carousel-indicators {
+      top: $pl3-carousel-mobile-image-height;
+      bottom: auto;
+      transform: translateY(-100%);
+    }
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .frame-carousel_startseite .carousel {
+    .carousel-backgroundimage {
+      filter: contrast(1.2);
+    }
+
+    .carousel-backgroundimage-container::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(30deg, rgba($black, .45) 45%, rgba($black, 0) 70%);
+    }
+
+    .carousel-item-type-background_image .carousel-backgroundimage-container::after {
+      background: linear-gradient(30deg, rgba($black, .2) 30%, rgba($black, 0) 60%);
+    }
+  }
+}
+
+
+// ============================================================
+// 6. A11Y-LEISTE IM HEADER, BURGER-LINIEN
+// ============================================================
+$a11y-item-bg: #e9ecef !default;
+
+.navbar-mainnavigation .navbar-brand {
+  align-self: center;
+}
+
+.navbar-mainnavigation .navbar-toggler {
+  width: 3rem;
+  height: 3rem;
+
+  .navbar-toggler-icon,
+  .navbar-toggler-icon::before,
+  .navbar-toggler-icon::after {
+    width: 45px;
+    height: 4px;
+    border-radius: 2px;
+  }
+
+  &.collapsed {
+    .navbar-toggler-icon::before {
+      top: -12px;
+    }
+
+    .navbar-toggler-icon::after {
+      top: 12px;
+    }
+  }
+}
+
+body #a11y-window {
+  position: static !important;
+  height: auto;
+  margin-left: auto;
+  pointer-events: auto;
+
+  > .container {
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .a11y-tools {
+    position: relative;
+    top: auto;
+    right: auto;
+    align-items: center;
+    margin-right: 1rem;
+    padding-right: 0;
+  }
+
+  .a11y-item,
+  .a11y-tools button.a11y-toggle {
+    height: 3rem;
+    min-width: 3rem;
+    padding: 0 .25rem;
+    border-radius: $border-radius;
+
+    &:hover {
+      background: $a11y-item-bg;
+    }
+
+    svg {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    &:hover svg {
+      transform: scale(1.2);
+    }
+  }
+
+  + .navbar-toggler {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: $grid-float-breakpoint) {
+  :root:has(.a11y-window--top) body .navbar-mainnavigation:not(.navbar-transition) {
+    padding-top: calc((var(--mainnavigation-nav-height) - var(--mainnavigation-link-height)) / 2);
+  }
+}
+
+@media (max-width: #{$grid-float-breakpoint - .02}) {
+  body:has(#mainnavigation.offcanvas:is(.show, .showing)) #a11y-window {
+    display: none;
+  }
+}
+
+
+// ============================================================
+// 7. SUCHBEREICH (ke_search, frame_class "search")
+// ============================================================
+$pl3-search-max-width: 860px !default;
+$pl3-search-height:    3.75rem !default;
+$pl3-search-overlap:   3rem !default;
+$pl3-search-icon:      url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'%3e%3ccircle cx='10.5' cy='10.5' r='6.5'/%3e%3cpath d='M15.5 15.5 21 21'/%3e%3c/svg%3e") !default;
+
+.frame-search {
+  --frame-spacing: 0;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+
+  @include media-breakpoint-up(md) {
+    padding-top: 0;
+  }
+
+  &.frame-layout-overlap {
+    display: flow-root;
+    padding-bottom: 0;
+  }
+
+  &.frame-layout-overlap .frame-container-default {
+    z-index: 9;
+
+    @include media-breakpoint-up(md) {
+      margin-top: -$pl3-search-overlap;
+    }
+  }
+
+  .tx-kesearch-pi1 .kesearch_searchbox {
+    display: flex;
+    align-items: stretch;
+    max-width: $pl3-search-max-width;
+    margin: 0 auto;
+    padding: .5rem;
+    border: 0;
+    border-radius: $border-radius;
+    background-color: $white;
+    box-shadow: 0 .5rem 1.5rem rgba($black, .14);
+  }
+
+  div.kesearchbox {
+    display: flex;
+    flex: 1 1 auto;
+    margin: 0;
+  }
+
+  #ke_search_sword {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: $pl3-search-height;
+    padding: 0 1.25rem;
+    border: 0;
+    background: transparent;
+    color: $body-color;
+    @include font-size(1.25rem);
+
+    &::placeholder {
+      color: $text-muted;
+    }
+
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  .kesearch_searchbox:focus-within {
+    box-shadow: 0 0 0 3px rgba($primary, .35), 0 .5rem 1.5rem rgba($black, .14);
+  }
+
+  span.submitbutt {
+    display: flex;
+  }
+
+  span.submitbutt input[type="submit"] {
+    width: $pl3-search-height;
+    min-height: $pl3-search-height;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: $border-radius;
+    background: $primary $pl3-search-icon no-repeat center / 1.5rem;
+    color: transparent;
+    text-indent: -9999px;
+    transition: background-color .2s ease;
+
+    &:hover {
+      background-color: shade-color($primary, 15%);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $primary;
+      outline-offset: 2px;
+    }
+
+    @include media-breakpoint-up(md) {
+      width: auto;
+      padding: 0 1.75rem 0 3.5rem;
+      background-position: 1.25rem center;
+      color: $white;
+      font-weight: $font-weight-bold;
+      text-indent: 0;
+    }
+  }
+
+  .resetbutt,
+  .clearer {
+    display: none !important;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .frame-carousel_startseite:has(+ .frame-search.frame-layout-overlap) .carousel .carousel-indicators {
+    bottom: $pl3-search-overlap + .5rem;
+  }
+}

@@ -159,6 +159,15 @@ h6, .h6 {
   letter-spacing: $h6-letter-spacing;
 }
 
+// .awesome (z. B. Carousel-Überschriften) erweitert bk2k zu .display-N mit
+// font-weight 300 – stattdessen den Schnitt der jeweiligen Überschrift nehmen
+@each $level, $weight in (1: $h1-font-weight, 2: $h2-font-weight, 3: $h3-font-weight, 4: $h4-font-weight, 5: $h5-font-weight, 6: $h6-font-weight) {
+  h#{$level}.awesome,
+  .h#{$level}.awesome {
+    font-weight: $weight;
+  }
+}
+
 // Mehr Abstand über einer Überschrift, die auf Text, Listen oder Tabellen folgt
 :is(p, ul, ol, table, figure) + :is(h2, h3, h4, h5, h6) { margin-top: $heading-space-above; }
 
@@ -456,8 +465,6 @@ strong { font-weight: 900; }
 // 4. BREADCRUMB
 // ============================================================
 
-.breadcrumb-section { background-color: $breadcrumb-section-bg; }
-
 .breadcrumb {
   flex-wrap: nowrap;            // eine Zeile: bei Platzmangel wird gekürzt statt umgebrochen
 
@@ -731,8 +738,8 @@ strong { font-weight: 900; }
         width: 50px;
         height: 50px;
         transition: transform .25s ease;
-        .fil0 { fill: $primary; }
-        .fil1 { fill: $grey; }
+        .primary { fill: $primary; }
+        .grey { fill: $grey; }
       }
     }
 

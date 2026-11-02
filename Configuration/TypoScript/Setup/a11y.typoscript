@@ -22,6 +22,6 @@ page.10.settings.a11y {
     page.cssInline.20.value (
 #nav-item-{$sitepackage.a11y.searchPid} { justify-content: left; }
 .navbar-transition #nav-item-{$sitepackage.a11y.searchPid} .nav-link-icon svg { fill: #333; }
-@media (min-width: 992px) { #nav-item-{$sitepackage.a11y.searchPid} { display: none; } }
+@media (min-width: 992px) { #nav-item-{$sitepackage.a11y.searchPid}, .nav-item:has(> #nav-item-{$sitepackage.a11y.searchPid}) { display: none; } }
     )
 [END]

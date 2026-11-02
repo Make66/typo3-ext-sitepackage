@@ -1,0 +1,52 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:bk2k="http://typo3.org/ns/BK2K/BootstrapPackage/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:asset.script identifier="sitepackageAssetPath" priority="true">
+  const sitepackage_assetPath = "{f:uri.resource(path:'EXT:sitepackage/Resources/Public/', extensionName: 'sitepackage')}"
+</f:asset.script>
+<f:variable name="headerClass">bp-page-header navbar navbar-mainnavigation navbar-{theme.navigation.style}</f:variable>
+<f:variable name="headerClass">{headerClass}{f:if(condition: logo.normal, then:' navbar-has-image')}</f:variable>
+<f:variable name="headerClass">{headerClass}{f:if(condition: theme.navigation.type, else:' navbar-top', then:' navbar-{theme.navigation.type} navbar-fixed-{theme.navigation.type}')}</f:variable>
+<header id="page-header" class="{headerClass}">
+  <div class="container container-mainnavigation">
+    <f:link.page pageUid="{rootPage}" class="navbar-brand navbar-brand-{f:if(condition: logo.normal, then: 'image', else: 'text')}" title="{settings.logo.linktitle}">
+      <f:if condition="{logo.normal}">
+        <f:then>
+          <img class="navbar-brand-logo-normal" src="{f:uri.image(image: logo.normal)}" alt="{logoAlt}" height="{settings.logo.height}" width="{settings.logo.width}">
+          <f:if condition="{logo.inverted}">
+            <img class="navbar-brand-logo-inverted" src="{f:uri.image(image: logo.inverted)}" alt="{logoAlt}" height="{settings.logo.height}" width="{settings.logo.width}">
+          </f:if>
+        </f:then>
+        <f:else>
+          <span>{siteTitle}</span>
+        </f:else>
+      </f:if>
+    </f:link.page>
+    <div class="header-tools">
+      <f:if condition="{settings.a11y.searchPid}">
+        <f:link.page pageUid="{settings.a11y.searchPid}" class="header-tools-search" title="Suche">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+          <span class="header-tools-label">Suche</span>
+        </f:link.page>
+      </f:if>
+      <f:render partial="Navigation/Accessibility" arguments="{type: 'desktop'}" />
+    </div>
+    <f:if condition="{mainnavigation}">
+      <f:asset.script identifier="offcanvasNavigationScript" src="EXT:sitepackage/Resources/Public/JavaScript/offcanvas-navigation.js"/>
+      <f:render partial="Navigation/Accessibility" arguments="{type: 'mobil'}" />
+      <button class="navbar-toggler collapsed" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainnavigation" aria-controls="mainnavigation" aria-expanded="false" aria-label="{f:translate(key: 'togglenavigation', extensionName: 'bootstrap_package')}">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <nav id="mainnavigation" class="offcanvas offcanvas-end navbar-collapse" tabindex="-1" aria-labelledby="mainnavigationLabel">
+        <div class="offcanvas-header">
+          <span class="offcanvas-title" id="mainnavigationLabel">{siteTitle}</span>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="{f:translate(key: 'togglenavigation', extensionName: 'bootstrap_package')}"></button>
+        </div>
+        <div class="offcanvas-body">
+          <f:render partial="DropIn/Navigation/MainBefore" arguments="{_all}" />
+          <f:render partial="Navigation/MainNavigation" arguments="{_all}" />
+          <f:render partial="DropIn/Navigation/MainAfter" arguments="{_all}" />
+        </div>
+      </nav>
+    </f:if>
+  </div>
+</header>
+</html>

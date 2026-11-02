@@ -28,6 +28,7 @@ TCEFORM.tt_content.frame_class {
         accordioninfo = Accordion Infobutton
         accordionkalender = Accordion Kalender
         bilder_grau = Bilder Grau
+        carousel_startseite = Carousel Startseite
         infokasten_tuerkis  = Infokasten Türkis
         infokasten_grau  = Infokasten Grau
     }
@@ -47,6 +48,7 @@ TCEFORM.tt_content.background_color_class {
     addItems {
         schmuckfarbe = Schmuckfarbe
         verlauf = Farbverlauf
+        primary-light = primary light
     }
 }
 

@@ -4,6 +4,35 @@
 // Settings (plugin.bootstrap_package.settings.scss.*) are injected by bk2k.
 // See Documentation/SCSS_pipeline.md section 8.
 
+// Layout-eigene Werte (pl0). Beim Duplizieren hier anpassen.
+$pl0-ink:                 #1d232a !default;    // dunkle Überschriften
+$pl0-muted:               #5f6b76 !default;
+$pl0-divider:             #dde2e6 !default;
+$pl0-surface:             #f4f6f7 !default;
+$pl0-focus-ring:          2px solid currentColor !default;
+
+$pl0-header-bg:           #fff !default;
+$pl0-header-top-height:   88px !default;       // obere Zeile (Logo + Werkzeuge)
+$pl0-nav-bg:              $primary !default;   // Menüleiste
+$pl0-nav-color:           #fff !default;
+$pl0-nav-hover-bg:        rgba(#000, .18) !default;
+$pl0-nav-indicator:       3px !default;
+$pl0-dropdown-accent:     3px !default;        // Oberkante Dropdown
+
+$pl0-card-accent:         $primary !default;
+$pl0-card-accent-width:   4px !default;
+$pl0-card-accent-hover:   7px !default;
+
+$pl0-label-size:          .8rem !default;      // Label (Untertitel) über h2
+$pl0-label-spacing:       .08em !default;
+
+$pl0-carousel-height:     70vh !default;
+$pl0-carousel-height-xl:  78vh !default;
+$page-footer-meta-background: #1d232a !default;
+
+$pl0-icon-plus:  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M7 1h2v14H7z'/%3E%3Cpath fill='black' d='M1 7h14v2H1z'/%3E%3C/svg%3E" !default;
+$pl0-icon-minus: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M1 7h14v2H1z'/%3E%3C/svg%3E" !default;
+
 @import "layout-variables";
 
 // Bootstrap variables, functions, mixins (no CSS output)
@@ -12,4 +41,1139 @@
 @import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_maps";
 @import "EXT:bootstrap_package/Resources/Public/Contrib/bootstrap5/scss/_mixins";
 
-// layout-specific rules for Mainz go here
+
+// ============================================================
+// MIXINS
+// ============================================================
+
+// Externer Link: alles mit target="_blank"
+@mixin external {
+  &[target="_blank"] {
+    @content;
+  }
+}
+
+// Unterstreichung über background (::after bleibt frei für .stretched-link)
+// $idle = Sichtbarkeit der Linie im Ruhezustand (0% … 100%)
+@mixin link-underline($idle: 100%) {
+  $idle-color: unquote("color-mix(in srgb, currentColor #{$idle}, transparent)");
+
+  text-decoration: none;
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient($idle-color, $idle-color);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 2px, 100% 1px;
+  transition: background-size $transition, color $transition;
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 2px, 100% 1px;
+  }
+}
+
+// Icon (Maske, nimmt die Textfarbe an) als ::before
+@mixin link-icon($icon) {
+  &::before {
+    content: "";
+    display: inline-block;
+    flex: 0 0 $link-icon-size;
+    width: $link-icon-size;
+    height: $link-icon-size;
+    margin-right: .35rem;
+    vertical-align: -2px;
+    background-color: currentColor;
+    -webkit-mask: url($icon) no-repeat center / contain;
+    mask: url($icon) no-repeat center / contain;
+    transition: transform .2s ease;
+  }
+}
+
+// Flache Card-Fläche mit farbiger Oberkante (::before liegt über Bild/Kopf), ohne Schatten
+@mixin card-surface {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid $card-border-color;
+  border-radius: $card-radius;
+  box-shadow: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    height: $pl0-card-accent-width;
+    background: $pl0-card-accent;
+    pointer-events: none;
+    transition: height $transition;
+  }
+}
+
+// Hover: Oberkante wird dicker, Titel in Primary (kein Anheben)
+@mixin card-hover($title: ".card-title") {
+  #{$title} { transition: color $transition; }
+
+  &:hover {
+    &::before { height: $pl0-card-accent-hover; }
+    #{$title} { color: $primary; }
+  }
+}
+
+// Überschrift: Farbe, Schrift, Schnitt und Größe (fließend über Bootstrap-RFS)
+@mixin heading($color, $family, $weight, $size) {
+  color: $color;
+  font-family: $family;
+  font-weight: $weight;
+  line-height: 1.2;
+  @include font-size($size);
+}
+
+// Kleines Label in Großbuchstaben (Untertitel, Meta-Zeilen, Footer-Titel)
+@mixin label($color: $primary) {
+  font-family: $font-family-base;
+  font-size: $pl0-label-size;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: $pl0-label-spacing;
+  text-transform: uppercase;
+  color: $color;
+}
+
+// Sichtbarer Tastatur-Fokus
+@mixin focus-ring($offset: 2px) {
+  &:focus-visible {
+    outline: $pl0-focus-ring;
+    outline-offset: $offset;
+    box-shadow: none;
+  }
+}
+
+
+// ============================================================
+// 1. BASIS & TYPOGRAFIE
+// ============================================================
+
+:root {
+  --bs-font-sans-serif: #{inspect($font-body)};
+  --bs-body-font-weight: #{$font-weight-body};
+  --bs-border-radius: #{$card-radius};
+}
+
+h1, .h1 { @include heading($pl0-ink, $h1-font-family, $h1-font-weight, $h1-size); margin-bottom: 1.25rem; letter-spacing: -.01em; }
+h2, .h2 { @include heading($pl0-ink, $h2-font-family, $h2-font-weight, $h2-size); letter-spacing: -.005em; }
+h3, .h3 { @include heading($h3-color, $h3-font-family, $h3-font-weight, $h3-size); }
+h4, .h4 { @include heading($pl0-ink, $h4-font-family, $h4-font-weight, $h4-size); }
+h5, .h5 { @include heading($pl0-ink, $h5-font-family, $h5-font-weight, $h5-size); }
+
+h6, .h6 {
+  @include heading($h6-color, $h6-font-family, $h6-font-weight, $h6-size);
+  text-transform: $h6-transform;
+  letter-spacing: $h6-letter-spacing;
+}
+
+// .awesome (z. B. Carousel-Überschriften) erweitert bk2k zu .display-N mit
+// font-weight 300 – stattdessen den Schnitt der jeweiligen Überschrift nehmen
+@each $level, $weight in (1: $h1-font-weight, 2: $h2-font-weight, 3: $h3-font-weight, 4: $h4-font-weight, 5: $h5-font-weight, 6: $h6-font-weight) {
+  h#{$level}.awesome,
+  .h#{$level}.awesome {
+    font-weight: $weight;
+  }
+}
+
+:is(p, ul, ol, table, figure) + :is(h2, h3, h4, h5, h6) { margin-top: $heading-space-above; }
+
+// Untertitel als Label ÜBER der Überschrift (bk2k rendert ihn danach)
+.frame-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
+
+  > :is(h1, h2, h3, h4, h5, h6) { margin-bottom: 0; }
+
+  .element-subheader {
+    order: -1;
+    margin: 0 0 .4rem;
+    @include label;
+  }
+
+  .element-subheader.text-center { align-self: center; }
+  .element-subheader.text-end { align-self: flex-end; }
+}
+
+strong, b { font-weight: 700; }
+.lead { color: $pl0-muted; }
+hr { border-color: $pl0-divider; opacity: 1; }
+.bg-info { background: $primary !important; }
+.scroll-top { bottom: 90px !important; }
+
+.table {
+  --bs-table-border-color: #{$pl0-divider};
+  > thead > tr > * { @include label($pl0-ink); border-bottom: 2px solid $pl0-ink; }
+}
+
+
+// ============================================================
+// 2. LINKS & BUTTONS
+// ============================================================
+
+#page-content,
+#page-footer {
+
+  a[href]:not(.btn):not(.nav-link):not(.page-link):not(.icongroup-item-icon a) {
+    @include link-underline(35%);
+    @include focus-ring;
+  }
+
+  a[href][target="_blank"]:is(p a, td a, li:not(.nav-item):not(.page-item) a):not(.btn):not(.no-link-icon):not(:empty):not(:has(img, svg)) {
+    @include link-icon($icon-external);
+  }
+}
+
+// Buttons: eckig, Großbuchstaben-Label
+.btn {
+  --bs-btn-border-radius: 0;
+  --bs-btn-padding-x: 1.4rem;
+  --bs-btn-padding-y: .65rem;
+  --bs-btn-font-size: .9rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  @include focus-ring;
+}
+
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-color: #fff;
+  --bs-btn-hover-bg: #{$pl0-ink};
+  --bs-btn-hover-border-color: #{$pl0-ink};
+}
+
+.btn-outline-primary {
+  --bs-btn-border-width: 2px;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-color: #fff;
+}
+
+.frame-background-primary,
+.frame-background-secondary,
+.frame-background-tertiary {
+  color: #fff;
+
+  :is(h1, h2, h3, h4, h5, h6, .element-header, .element-subheader) { color: inherit; text-shadow: none; }
+  .card :is(h1, h2, h3, h4, h5, h6) { color: $pl0-ink; }
+  .btn-primary { --bs-btn-bg: #fff; --bs-btn-color: #{$pl0-ink}; --bs-btn-border-color: #fff; }
+}
+
+.card:has(.stretched-link:focus-visible),
+.apicodo-card:has(.stretched-link:focus-visible),
+.apicodo-event-row:has(.stretched-link:focus-visible) {
+  outline: 2px solid $primary;
+  outline-offset: 3px;
+}
+
+
+// ============================================================
+// 3. HEADER & NAVIGATION
+//    ab lg zweizeilig: oben Logo + Werkzeuge (weiß),
+//    darunter Menüleiste über die volle Breite ($pl0-nav-bg)
+// ============================================================
+
+.navbar-mainnavigation {
+  background-color: $pl0-header-bg;
+  box-shadow: none;
+
+  .nav-link { @include focus-ring(-3px); }
+  .nav-link:not(.nav-link-toggle)::before { display: none; }
+
+  .nav-link {
+    @include external {
+      .nav-link-text { @include link-icon($icon-external); }
+    }
+  }
+}
+
+.nav-link-text {
+  font-family: $navbar-family;
+  font-weight: $navbar-font-weight;
+  @include font-size($navbar-font-size);
+  transition: color $transition;
+}
+
+// Werkzeuge oben rechts (Suche, Barrierefreiheit) – nur Desktop
+.header-tools {
+  display: none;
+  align-items: center;
+  gap: 1.25rem;
+
+  .header-tools-search {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .45rem .9rem;
+    border: 1px solid $pl0-divider;
+    color: $pl0-ink;
+    text-decoration: none;
+    @include label($pl0-ink);
+    transition: border-color $transition, color $transition;
+    @include focus-ring;
+
+    &:hover { border-color: $primary; color: $primary; }
+  }
+
+  .servicebutton.desktop { margin: 0; }
+}
+
+// ---------- Desktop (ab lg) ----------
+@include media-breakpoint-up(lg) {
+
+  .navbar-mainnavigation {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    > .container-mainnavigation {
+      flex-wrap: wrap;
+      gap: 0 2rem;
+    }
+
+    .navbar-brand {
+      order: 1;
+      display: flex;
+      align-items: center;
+      min-height: $pl0-header-top-height;
+      transition: min-height $transition;
+    }
+
+    .header-tools {
+      order: 2;
+      display: flex;
+      margin-left: auto;
+    }
+
+    // Menüleiste: volle Bildschirmbreite in $pl0-nav-bg
+    #mainnavigation.offcanvas {
+      order: 3;
+      flex: 0 0 100%;
+      justify-content: flex-start;
+      background-color: $pl0-nav-bg;
+      // border-image mit seitlichem Überstand: volle Breite ohne clip-path
+      // (Dropdowns bleiben sichtbar) und ohne horizontale Scrollleiste
+      border-image: unquote("conic-gradient(#{$pl0-nav-bg} 0 0) fill 0 / 0 / 0 100vmax");
+
+      .offcanvas-body { justify-content: flex-start; flex-grow: 1; }
+      .offcanvas-body .navbar-nav { gap: 0; }
+    }
+
+    // Ebene 1: weiß auf Farbe, Hover/aktiv = dunklere Fläche + Strich
+    .navbar-nav > .nav-item > .nav-link {
+      position: relative;
+      height: 100%;
+      padding: 1rem 1.1rem;
+      transition: background-color $transition;
+
+      .nav-link-text { color: $pl0-nav-color; }
+
+      &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: $pl0-nav-indicator;
+        background-color: $pl0-nav-color;
+        transform: scaleX(0);
+        transition: transform $transition;
+      }
+
+      &:hover,
+      &.active,
+      &[aria-expanded="true"] { background-color: $pl0-nav-hover-bg; }
+
+      &.active::after,
+      &[aria-expanded="true"]::after { transform: scaleX(1); }
+
+      &:focus-visible { outline-color: $pl0-nav-color; }
+    }
+
+    .navbar-nav > .nav-item > .nav-link .nav-link-indicator { display: none; }
+  }
+
+  // Sticky: obere Zeile kompakter
+  .navbar-mainnavigation.navbar-transition .navbar-brand { min-height: $pl0-header-top-height * .7; }
+
+  // Dropdown-Panel: weiß, eckig, farbige Oberkante
+  .navbar-mainnavigation .dropdown-menu {
+    padding: 1.5rem;
+    border: 0;
+    border-top: $pl0-dropdown-accent solid $pl0-nav-bg;
+    border-radius: 0;
+    box-shadow: 0 16px 32px rgba(#000, .12);
+  }
+
+  .navbar-mainnavigation .nav-style-mega .dropdown-menu { max-width: $layout-max-width; }
+
+  // Ebene 2: fett, mit Trennlinie
+  .navbar-mainnavigation .dropdown-nav[data-level="2"] {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    > .nav-item { padding-left: 0; }
+
+    > .nav-item > .nav-link-dropdown {
+      padding: .55rem 0;
+      border-bottom: 1px solid $pl0-divider;
+
+      .nav-link-text {
+        color: $pl0-ink;
+        font-size: $navbar-link-dropdown-size;
+        font-weight: 600;
+      }
+
+      &:hover .nav-link-text,
+      &.active .nav-link-text { color: $primary; }
+    }
+  }
+
+  // Ebene 3: eingerückt mit Hilfslinie
+  .navbar-mainnavigation .dropdown-nav[data-level="3"] {
+    margin: .35rem 0 .75rem;
+    padding: 0 0 0 .9rem;
+    list-style: none;
+    border-left: 2px solid $pl0-divider;
+
+    .nav-link-dropdown {
+      padding: .25rem 0;
+
+      .nav-link-text {
+        font-size: $font-size-base;
+        font-weight: 400;
+        color: $pl0-muted;
+      }
+
+      &:hover .nav-link-text,
+      &.active .nav-link-text { color: $primary; }
+    }
+  }
+
+  // Mega-Menü: 3 Spalten
+  .navbar-mainnavigation .dropdown-menu-mega .dropdown-nav[data-level="2"] {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .25rem 2.5rem;
+    align-items: start;
+  }
+}
+
+// ---------- Mobil / Offcanvas (unter lg) ----------
+@include media-breakpoint-down(lg) {
+
+  .navbar-mainnavigation {
+    --mainnavigation-nav-height: 72px;
+    border-bottom: $pl0-nav-indicator solid $pl0-nav-bg;
+  }
+
+  .navbar-mainnavigation #mainnavigation.offcanvas {
+    .offcanvas-header {
+      background: $pl0-nav-bg;
+      color: $pl0-nav-color;
+      border-bottom: 0;
+    }
+    .offcanvas-title { color: $pl0-nav-color; }
+    .btn-close { filter: invert(1) grayscale(1) brightness(2); opacity: 1; }
+  }
+
+  .offcanvas {
+    .offcanvas-body { width: 100%; }
+
+    .dropdown-menu {
+      padding: 0;
+      border: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px;
+      padding: .5rem 0;
+    }
+
+    .nav-link-text { color: $navbar-font-color; }
+    .nav-link.active > .nav-link-text { color: $primary; }
+
+    .navbar-nav > .nav-item { border-bottom: 1px solid $pl0-divider; }
+    .navbar-nav > .nav-item > .nav-link .nav-link-text { font-weight: 700; }
+
+    .dropdown-nav {
+      margin: 0;
+      padding: 0 0 .5rem 1rem;
+      list-style: none;
+
+      .nav-link-text {
+        font-size: $navbar-link-dropdown-size;
+        font-weight: $navbar-link-dropdown-weight;
+      }
+    }
+
+    .dropdown-nav[data-level="3"] {
+      margin-left: .25rem;
+      border-left: 2px solid $pl0-divider;
+
+      .nav-link { min-height: 40px; }
+      .nav-link-text { font-size: $font-size-base; font-weight: 400; color: $pl0-muted; }
+    }
+
+    .nav-link-indicator::before {
+      border-top: 2px solid currentColor;
+      border-left: 2px solid currentColor;
+    }
+  }
+}
+
+// Hamburger
+.navbar-toggler {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  @include focus-ring;
+}
+.navbar-toggler:hover .burger-line { background: $primary; }
+
+.offcanvas-header .btn-close { transition: transform $transition; }
+.offcanvas-header .btn-close:hover { transform: rotate(90deg); }
+
+
+// ============================================================
+// 4. BREADCRUMB  (schlichte Zeile mit Unterkante)
+// ============================================================
+
+.breadcrumb-section {
+  border-bottom: 1px solid $pl0-divider;
+  font-size: .875rem;
+}
+
+.breadcrumb {
+  flex-wrap: nowrap;
+  margin: 0;
+  padding: .7rem 0;
+
+  li { white-space: nowrap; }
+
+  .breadcrumb-item + .breadcrumb-item::before { content: "/"; color: $pl0-divider; }
+  .breadcrumb-item.active { color: $pl0-ink; font-weight: 600; }
+  .breadcrumb-item { min-width: 0; overflow: hidden; }
+  .breadcrumb-item a { color: $pl0-muted; }
+
+  .breadcrumb-item:first-child {
+    flex: 0 0 auto;
+    overflow: visible;
+  }
+
+  .breadcrumb-item:first-child .breadcrumb-link {
+    display: inline-flex;
+    align-items: baseline;
+  }
+
+  .breadcrumb-item:first-child a::before {
+    content: "";
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    margin-right: .35rem;
+    background-color: currentColor;
+    -webkit-mask: url("#{$icon-home}") no-repeat center / contain;
+    mask: url("#{$icon-home}") no-repeat center / contain;
+    transform: translateY(2px);
+  }
+
+  .breadcrumb-item:first-child .breadcrumb-text {
+    @include media-breakpoint-down(sm) {
+      display: inline-block;
+      max-width: 0;
+      overflow: hidden;
+      vertical-align: bottom;
+    }
+  }
+
+  .breadcrumb-item:not(:first-child):not(.active) { flex: 0 2 auto; }
+  .breadcrumb-item.active { flex: 0 1 auto; }
+
+  .breadcrumb-item:not(:first-child) .breadcrumb-link,
+  .breadcrumb-item.active .breadcrumb-link-title {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+
+// ============================================================
+// 5. CARDS  (flach, farbige Oberkante)
+// ============================================================
+
+.card,
+.apicodo-card {
+  @include card-surface;
+}
+
+.card-group-element-item .card,
+.apicodo-card {
+  @include card-hover;
+}
+
+.card-body { padding: $card-pad; }
+
+.card-title {
+  font-family: $headings-font-family;
+  font-weight: 700;
+  line-height: 1.25;
+  color: $pl0-ink;
+  @include font-size($card-title-size);
+}
+
+.card-footer {
+  padding: 0 $card-pad $card-pad;
+  background: transparent;
+  border: 0;
+}
+
+.card-panel .card-header {
+  @include label($pl0-ink);
+  padding-top: 1rem;
+  background: $pl0-surface;
+  border-bottom-color: $card-border-color;
+}
+.card-panel-primary .card-header { background: $primary; color: #fff; }
+
+// ---------- Card Group ----------
+.card-group-element-item .card {
+  position: relative;
+
+  .card-img-top img { display: block; width: 100%; height: auto; }
+}
+
+// ---------- Apicodo Artikelkarten ----------
+.apicodo {
+
+  .apicodo-card {
+    position: relative;
+    height: 100%;
+  }
+
+  .apicodo-card .card-img-top {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    max-height: $card-image-height;
+    object-fit: cover;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .apicodo-card .card-body {
+    display: flex;
+    flex-direction: column;
+    @include media-breakpoint-down(md) { padding: $card-pad * .85; }
+  }
+
+  .apicodo-card .card-subtitle {
+    margin-bottom: .5rem !important;
+    @include label;
+    color: $primary !important;
+  }
+
+  .apicodo-card .card-title { margin-bottom: .75rem; }
+
+  .apicodo-card .card-text {
+    flex: 1 1 auto;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    color: $pl0-muted;
+  }
+
+  .apicodo-card .stretched-link {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    @include label;
+    background: none;
+
+    @include link-icon($icon-arrow);
+  }
+  .apicodo-card:hover .stretched-link::before { transform: translateX(3px); }
+
+  h3.card-title { padding: 0; border: 0; }
+}
+
+// ---------- Apicodo Event-Liste (Zeilen mit Trennlinien) ----------
+.apicodo-event-row {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  border: 0;
+  border-bottom: 1px solid $pl0-divider;
+  border-radius: 0;
+  box-shadow: none;
+  transition: background-color $transition;
+
+  &:hover { background-color: $pl0-surface; }
+}
+
+.apicodo-event-row__date {
+  min-width: 3.5rem !important;
+  padding: .5rem !important;
+  background: $primary !important;
+  color: #fff !important;
+  text-align: center;
+  @include media-breakpoint-up(lg) { min-width: 5rem !important; padding: 1rem !important; }
+}
+
+.apicodo-event-row__day {
+  font-size: 1.6rem !important;
+  font-weight: 700;
+  line-height: 1;
+  @include media-breakpoint-up(lg) { font-size: 2rem !important; }
+}
+
+.apicodo-event-row__title {
+  margin: 0;
+  padding: .2rem 0;
+  border: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: $pl0-ink;
+  transition: color $transition;
+  @include media-breakpoint-up(lg) { font-size: 1.2rem; }
+}
+.apicodo-event-row:hover .apicodo-event-row__title { color: $primary; }
+
+.apicodo-event-row__image {
+  width: 5rem !important;
+  aspect-ratio: 4 / 3;
+  flex: 0 0 auto;
+  @include media-breakpoint-up(lg) { width: 8rem !important; }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto !important;
+    object-fit: cover;
+  }
+}
+
+.apicodo-event-row__info {
+  padding: .5rem .75rem !important;
+  color: $pl0-muted;
+  @include media-breakpoint-up(lg) { padding: 1rem 1.25rem !important; }
+}
+
+.apicodo .apicodo-event-row .stretched-link {
+  display: block;
+  height: 0;
+  padding: 0;
+  overflow: visible;
+  background: none;
+}
+
+.badge.bg-secondary,
+.border-secondary.text-dark {
+  padding: .35em .7em;
+  background-color: transparent !important;
+  border: 1px solid currentColor !important;
+  border-radius: 0;
+  @include label;
+  color: $primary !important;
+}
+
+
+// ============================================================
+// 6. ACCORDION & TABS
+// ============================================================
+
+.accordion {
+  --bs-accordion-bg: transparent;
+  --bs-accordion-border-width: 0;
+  --bs-accordion-border-radius: 0;
+  --bs-accordion-inner-border-radius: 0;
+  --bs-accordion-btn-padding-y: 1.1rem;
+  --bs-accordion-btn-padding-x: 0;
+  --bs-accordion-btn-focus-box-shadow: none;
+  --bs-accordion-btn-color: #{$pl0-ink};
+  --bs-accordion-active-bg: transparent;
+  --bs-accordion-active-color: #{$primary};
+  --bs-accordion-body-padding-x: 0;
+  --bs-accordion-btn-icon-width: 1rem;
+  --bs-accordion-btn-icon-transform: none;
+  border-top: 1px solid $pl0-ink;
+}
+
+.accordion-item { border-bottom: 1px solid $pl0-divider; }
+
+.accordion-button {
+  font-size: $accordion-button-font-size;
+  font-weight: 700;
+  @include focus-ring(-2px);
+
+  // Plus / Minus statt Chevron (Maske → Textfarbe)
+  &::after {
+    background-image: none;
+    background-color: currentColor;
+    -webkit-mask: url($pl0-icon-plus) no-repeat center / contain;
+    mask: url($pl0-icon-plus) no-repeat center / contain;
+  }
+
+  &:not(.collapsed)::after {
+    -webkit-mask-image: url($pl0-icon-minus);
+    mask-image: url($pl0-icon-minus);
+  }
+}
+
+.accordion-body { padding-top: 0; padding-bottom: 1.5rem; }
+
+.nav-tabs {
+  --bs-nav-tabs-border-color: #{$pl0-divider};
+  --bs-nav-tabs-border-radius: 0;
+  gap: 0;
+
+  .nav-link {
+    margin-bottom: -1px;
+    border: 1px solid transparent;
+    border-top: $pl0-card-accent-width solid transparent;
+    @include label($pl0-muted);
+    @include focus-ring(-2px);
+
+    &:hover { color: $primary; }
+
+    &.active {
+      color: $pl0-ink;
+      background: #fff;
+      border-color: $pl0-divider;
+      border-top-color: $primary;
+      border-bottom-color: #fff;
+    }
+  }
+}
+
+.tab-content { padding-top: 1.5rem; }
+
+
+// ============================================================
+// 7. ICONS & ICON-GRUPPEN
+// ============================================================
+
+.icongroup-item-icon svg { color: $primary; }
+
+.icongroup-item-text-header {
+  margin-bottom: .25rem;
+  font-size: $icongroup-title-size;
+  font-weight: 700;
+  color: $pl0-ink;
+}
+
+// ---------- Rahmen um Icongruppe ----------
+.frame-icon-frame {
+  --frame-spacing: 15px;
+
+  .frame-inner {
+    @include card-surface;
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+
+  .frame-container {
+    width: auto;
+    padding: unset;
+    background: none;
+    box-shadow: none;
+  }
+
+  .icongroup { --icongroup-gap: 1.25rem; --icongroup-icon-size: 40px; }
+
+  .icongroup.icongroup-align-center .icongroup-item {
+    margin: 0 !important;
+    padding: .25rem 0;
+    border: 0;
+    box-shadow: none;
+  }
+}
+
+// ---------- Startseite Quicklinks (Kacheln) ----------
+.frame-startpage-quicklinks {
+
+  .icongroup { --icongroup-gap: 1rem; }
+
+  .icongroup-columns-4 .icongroup-item {
+    width: calc((100% - var(--icongroup-gap)) / 2);
+    @include media-breakpoint-up(md) { width: calc((100% - (var(--icongroup-gap) * 2)) / 3); }
+    @include media-breakpoint-up(xl) { width: calc((100% - (var(--icongroup-gap) * 5)) / 6); }
+  }
+
+  .icongroup-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .75rem;
+    padding: 1.4rem 1.1rem 1.1rem;
+    @include card-surface;
+    @include card-hover(".icongroup-item-text-header a");
+
+    .icongroup-item-icon svg {
+      width: 40px;
+      height: 40px;
+      .fil0 { fill: $primary; }
+      .fil1 { fill: $grey; }
+    }
+
+    .icongroup-item-text-header {
+      margin: 0;
+      font-size: $font-size-base;
+      a, span { color: $pl0-ink; background: none; }
+      a::after { content: ""; position: absolute; inset: 0; }   // ganze Kachel klickbar
+    }
+
+    .icongroup-item-text p { margin: .25rem 0 0; color: $pl0-muted; }
+  }
+}
+
+
+// ============================================================
+// 8. SUCHE  (ke_search)
+// ============================================================
+
+.frame-search {
+  padding: 0 0 2rem;
+  @include media-breakpoint-up(lg) { padding: 0 0 4rem; }
+
+  fieldset.kesearch_searchbox { background: transparent; border: 0; }
+  .kesearch_searchbox { display: flex; justify-content: center; }
+  .kesearchbox { display: flex; flex: 1; max-width: 760px; }
+
+  .kesearchbox input[type="search"] {
+    flex: 1;
+    min-height: 56px;
+    padding: .75rem 1.25rem;
+    border: 2px solid $pl0-ink;
+    border-right: 0;
+    border-radius: 0;
+    background: #fff;
+
+    &:focus { outline: 0; border-color: $primary; }
+  }
+
+  .submitbutt { display: flex; }
+  span.submitbutt input { margin: 0 !important; }
+
+  .submitbutt input[type="submit"] {
+    width: 60px;
+    border: 0;
+    border-radius: 0;
+    background: $pl0-nav-bg url($icon-search) no-repeat center / 22px;
+    text-indent: -9999px;
+    cursor: pointer;
+    transition: background-color $transition;
+
+    &:hover { background-color: $pl0-ink; }
+    @include focus-ring;
+  }
+
+  .resetbutt,
+  .tx-kesearch-pi1 .clearer { display: none !important; }
+}
+
+// Ergebnisliste
+.tx-kesearch-pi1 {
+  .result-list-item {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid $pl0-divider;
+  }
+  .result-title { font-size: 1.15rem; font-weight: 700; }
+  .result-teaser { color: $pl0-muted; }
+  .hit { padding: 0 .15em; background: rgba($primary, .14); color: inherit; }
+}
+
+// ---------- Overlap (Suchbox ragt ins Bild) ----------
+.frame-layout-overlap .frame-container-default {
+  margin-top: -100px;
+  z-index: 9;
+  @include media-breakpoint-up(lg) { margin-top: -140px; }
+}
+
+
+// ============================================================
+// 9. SLIDER / CAROUSEL
+// ============================================================
+
+.carousel .item {
+  height: $pl0-carousel-height;
+  @include media-breakpoint-up(xl) { height: $pl0-carousel-height-xl; }
+}
+
+// Bildunterschrift als Farbfläche unten links
+.carousel-text-inner {
+  max-width: 600px;
+  margin: 0;
+  padding: 1.5rem 1.75rem;
+  background: $primary;
+  color: #fff;
+  text-shadow: none;
+
+  :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) { color: #fff; text-shadow: none; }
+  .carousel-subheader { @include label(#fff); opacity: .85; }
+  .btn-primary { --bs-btn-bg: #fff; --bs-btn-color: #{$pl0-ink}; --bs-btn-border-color: #fff; }
+  > :last-child { margin-bottom: 0; }
+}
+
+.carousel-content {
+  align-items: flex-end;
+  padding-bottom: 3.5rem;
+}
+
+.carousel-indicators {
+  justify-content: flex-start;
+  margin: 0 0 1.25rem;
+  padding-left: calc(var(--bs-gutter-x, 1.5rem) * .5);
+
+  [data-bs-target] {
+    width: 28px;
+    height: 3px;
+    border: 0;
+    background-color: #fff;
+    opacity: .6;
+    transition: opacity $transition, width $transition;
+  }
+  .active { width: 48px; opacity: 1; }
+}
+
+.carousel-control {
+  width: 3.5rem;
+  opacity: 1;
+
+  .carousel-control-icon {
+    width: 44px;
+    height: 44px;
+    background-color: rgba($pl0-ink, .55);
+    background-size: 45%;
+    transition: background-color $transition;
+  }
+
+  &:hover .carousel-control-icon { background-color: $primary; }
+}
+
+.carousel.carousel-small .item {
+  height: 300px;
+  @include media-breakpoint-up(md) { height: 420px; }
+  @include media-breakpoint-up(lg) { height: 560px; }
+}
+
+// ---------- Video-Carousel ----------
+figure.video {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+
+  video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+  }
+}
+
+
+// ============================================================
+// 10. COOKIE
+// ============================================================
+
+#cookieconsent {
+  .cc-window {
+    max-width: 380px;
+    padding: 1.25rem;
+    background: #fff;
+    color: $pl0-ink;
+    border-top: $pl0-card-accent-width solid $primary;
+    border-radius: 0;
+    box-shadow: 0 16px 32px rgba(#000, .14);
+    font-size: .95rem;
+    line-height: 1.5;
+  }
+  .cc-container { display: flex; flex-direction: column; gap: 1rem; }
+  .cc-message { color: $pl0-muted; }
+  .cc-link { color: $primary; text-decoration: underline; }
+  .cc-btn {
+    padding: .6rem 1.25rem;
+    border: 0;
+    border-radius: 0;
+    background: $primary;
+    color: #fff;
+    @include label(#fff);
+    cursor: pointer;
+    &:hover { background: $pl0-ink; }
+  }
+}
+
+
+// ============================================================
+// 11. FOOTER
+// ============================================================
+
+.footer-section-content {
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+  background-color: $page-footer-background;
+  color: $page-footer-color;
+  border-top: $pl0-card-accent-width solid $primary;
+
+  .element-header {
+    @include label($page-footer-color-header);
+    margin-bottom: 1rem;
+    border: 0;
+  }
+
+  a[href]:not(.btn) { color: $page-footer-color; }
+  a[href]:not(.btn):hover { color: $page-footer-color-header; }
+}
+
+.footer-section-meta {
+  background: $page-footer-meta-background;
+  --frame-background: #{$page-footer-meta-background};
+}
+
+#page-footer {
+  position: relative;
+
+  .footer-section-content-column ul {
+    margin-left: 0;
+    padding-left: 0;
+    list-style: none;
+
+    li + li { margin-top: .35rem; }
+  }
+
+  .table > :not(caption) > * > * { background-color: transparent; color: inherit; }
+
+  .icongroup { --icongroup-icon-size: 20px; --icongroup-gap: 1rem; }
+  .icongroup-item-icon svg { color: currentColor; }
+  .icongroup-item-text-header { font-size: 1em; font-family: $font-footer; font-weight: 400; color: inherit; }
+}
+
+
+// A11y-Leiste ausblenden, sobald das Burger-Menü geöffnet wird
+body:has(.navbar-mainnavigation .navbar-toggler[aria-expanded="true"]) #a11y-window {
+  display: none !important;
+}
