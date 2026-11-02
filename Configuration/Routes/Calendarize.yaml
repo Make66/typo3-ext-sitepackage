@@ -1,0 +1,11 @@
+# See Documentation/RouteEnhancers.md
+imports:
+  - resource: 'EXT:calendarize/Configuration/Yaml/RouteEnhancers.yaml'
+
+routeEnhancers:
+  Calendarize:
+    limitToPages:
+      - 'sitepackagePluginPage("calendarize")'
+  CalendarizeBooking:
+    limitToPages:
+      - 'sitepackagePluginPage("calendarize")'

@@ -27,6 +27,13 @@ SCSS compilation chain and its migration history; §8 "Theme settings" lists
 the typography/navigation/breadcrumb/cards/footer site settings), `Fonts.md`
 (central font library in `Resources/Public/Fonts/`, selected by site setting), `MainNavigationLevels.md`
 (mega-menu depth), `StickyHeader.md` (the shrinking-header JS),
+`Calendarize.md` (optional `lochmueller/calendarize`: template overrides and
+the month view category filter and colors, site setting `sitepackage.calendarize.*`),
+`Categories.md` (the `sys_category.tx_sitepackage_color` field: setup, editor
+steps, where it is used),
+`RouteEnhancers.md` (speaking URLs: `Configuration/Routes/*.yaml` imported per
+site, limited to marked pages via `sitepackagePluginPage()`, site settings
+`sitepackage.routing.*`),
 `A11yToolbar.md` (opt-in Barrierefreiheits-Leiste, site settings
 `sitepackage.a11y.*`), `IconSet.md` (own bootstrap_package icon set from
 `Resources/Public/Icons/Set/`), and two one-off

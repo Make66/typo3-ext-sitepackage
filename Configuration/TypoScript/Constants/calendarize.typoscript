@@ -1,1 +1,2 @@
 plugin.tx_calendarize.view.partialRootPath = EXT:sitepackage/Resources/Private/Partials/Calendarize/
+plugin.tx_calendarize.view.templateRootPath = EXT:sitepackage/Resources/Private/Templates/Calendarize/

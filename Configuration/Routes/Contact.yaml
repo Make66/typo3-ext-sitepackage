@@ -1,0 +1,23 @@
+# See Documentation/RouteEnhancers.md
+routeEnhancers:
+  SitepackageContact:
+    type: Extbase
+    limitToPages:
+      - 'sitepackagePluginPage("contact")'
+    extension: Sitepackage
+    plugin: Contact
+    routes:
+      - routePath: '/{contact_label}/{contact}'
+        _controller: 'Contact::show'
+    defaultController: 'Contact::index'
+    aspects:
+      contact:
+        type: PersistedAliasMapper
+        tableName: tx_sitepackage_domain_model_contact
+        routeFieldName: slug
+      contact_label:
+        type: LocaleModifier
+        default: 'contact'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'kontakt'

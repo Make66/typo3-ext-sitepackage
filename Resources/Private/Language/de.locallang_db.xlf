@@ -98,6 +98,18 @@
                 <source>Link</source>
                 <target>Link</target>
             </trans-unit>
+            <trans-unit id="calendarize.month.today" xml:space="preserve">
+                <source>Today</source>
+                <target>Heute</target>
+            </trans-unit>
+            <trans-unit id="field.category_color" xml:space="preserve">
+                <source>Color</source>
+                <target>Farbe</target>
+            </trans-unit>
+            <trans-unit id="field.category_color.description" xml:space="preserve">
+                <source>Shown in the calendar month view (event sublines and category filter). Empty: a color is assigned automatically.</source>
+                <target>Wird in der Kalender-Monatsansicht verwendet (Linie unter den Terminen und Kategorie-Filter). Leer: Farbe wird automatisch vergeben.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

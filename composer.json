@@ -15,6 +15,9 @@
         "b13/container": "^4.1.0",
         "bk2k/bootstrap-package": "^16.0"
     },
+    "suggest": {
+        "lochmueller/calendarize": "Event calendar; sitepackage ships templates, partials and a month view category filter for it (see Documentation/Calendarize.md)"
+    },
     "replace": {
         "laxap/bootstrap_grids":"*",
         "typo3-ter/sitepackage": "self.version"
