@@ -14,7 +14,7 @@ TCEFORM.tt_content.frame_class {
         newslayout2 = News Layout 2 (Pfeil)
         infokastenstart  = Infokasten
         rahmen100 = Rahmen 100%
-        rahmen_ohne_abstand = Rahmen ohne Abstand
+        volle_breite = Volle Breite (mit Hintergrund)
         ampel = Ampel
         rahmen_ueberlappen = Überlappen
         rahmen_streifen  = Streifen
@@ -28,7 +28,6 @@ TCEFORM.tt_content.frame_class {
         accordioninfo = Accordion Infobutton
         accordionkalender = Accordion Kalender
         bilder_grau = Bilder Grau
-        carousel_startseite = Carousel Startseite
         infokasten_tuerkis  = Infokasten Türkis
         infokasten_grau  = Infokasten Grau
     }
