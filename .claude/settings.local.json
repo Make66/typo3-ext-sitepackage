@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -i '' '/<TCEforms type=\"array\">/,/<\\\\/TCEforms>/!b;s/.*<TCEforms type=\"array\">//;s/<\\\\/TCEforms>.*//' /Users/martin/github/typo3-ext-sitepackage/Configuration/FlexForm/tabs4.xml)",
+      "Bash(sed -i '' '/^[[:space:]]*$/d' /Users/martin/github/typo3-ext-sitepackage/Configuration/FlexForm/tabs4.xml)",
+      "Bash(git commit *)",
+      "Read(//Users/martin/dev/ddev/t3v14/vendor/typo3/cms-core/Classes/Utility/**)",
+      "Read(//Users/martin/dev/ddev/t3v14/**)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(curl -sk \"https://t3v14.ddev.site/\")",
+      "Bash(ssh h19 *)",
+      "Bash(curl -sk \"https://calden.ddev.site/\" -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(curl -sk \"https://calden.ddev.site/\")",
+      "Bash(curl -sk \"https://calden.ddev.site/\" -H \"Cache-Control: no-cache\")",
+      "Bash(curl -sk -D - \"https://calden.ddev.site/\" -o /dev/null)",
+      "Bash(curl -sk \"https://calden.ddev.site/?nocache=$\\(date +%s\\)\")",
+      "Bash(curl -sk -D - \"https://calden.ddev.site/\" -o /tmp/calden.html)",
+      "Bash(python3 -c ' *)",
+      "Bash(grep -oE 'class=\\\\\"[^\\\\\"]*message[^\\\\\"]*\\\\\">[^<]{0,300}' /tmp/calden.html)",
+      "Bash(python3 *)",
+      "Bash(curl -sk \"https://calden.ddev.site/\" -o /tmp/calden2.html -w \"%{http_code}\\\\n\")",
+      "Bash(curl -sk \"https://calden.ddev.site/\" -o /tmp/calden3.html -w \"%{http_code}\\\\n\")",
+      "Bash(curl *)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(ls config/sites/calden/)",
+      "Bash(find config/sites/calden -type f)",
+      "Bash(xargs -I{} echo {})",
+      "Bash(ls -la fileadmin/templates/)",
+      "Bash(find fileadmin/templates/calden -maxdepth 1)",
+      "Bash(find fileadmin *)",
+      "Bash(php -r ' *)",
+      "Bash(grep *)",
+      "Bash(mkdir -p /Users/martin/dev/ddev/t3v14/public/fileadmin/templates/calden/Fonts)",
+      "Bash(cp /Users/martin/github/typo3-ext-sitepackage/Resources/Public/Fonts/Arvo-Regular.woff2 /Users/martin/github/typo3-ext-sitepackage/Resources/Public/Fonts/Arvo-Regular.woff /Users/martin/github/typo3-ext-sitepackage/Resources/Public/Fonts/Arvo-Bold.woff2 /Users/martin/github/typo3-ext-sitepackage/Resources/Public/Fonts/Arvo-Bold.woff /Users/martin/github/typo3-ext-sitepackage/Resources/Public/Fonts/Arvo-Italic.woff2 /Users/martin/github/typo3-ext-sitepackage/Resources/Public/Fonts/Arvo-Italic.woff /Users/martin/github/typo3-ext-sitepackage/Resources/Public/Fonts/Arvo-BoldItalic.woff2 /Users/martin/github/typo3-ext-sitepackage/Resources/Public/Fonts/Arvo-BoldItalic.woff /Users/martin/github/typo3-ext-sitepackage/Resources/Public/Fonts/Overpass-VF.woff2 /Users/martin/github/typo3-ext-sitepackage/Resources/Public/Fonts/Overpass-VF.woff /Users/martin/github/typo3-ext-sitepackage/Resources/Public/Fonts/SourceSans3-Variable.woff2 /Users/martin/github/typo3-ext-sitepackage/Resources/Public/Fonts/SourceSans3-Variable.woff /Users/martin/dev/ddev/t3v14/public/fileadmin/templates/calden/Fonts/)"
+    ]
+  }
+}
