@@ -9,3 +9,4 @@
 @import 'EXT:sitepackage/Configuration/TypoScript/Setup/contact.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/Setup/a11y.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/Setup/calendarize.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/Setup/chatbot.typoscript'

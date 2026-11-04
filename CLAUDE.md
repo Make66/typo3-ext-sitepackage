@@ -44,6 +44,7 @@ steps, where it is used),
 `RouteEnhancers.md` (speaking URLs: `Configuration/Routes/*.yaml` imported per
 site, limited to marked pages via `sitepackagePluginPage()`, site settings
 `sitepackage.routing.*`),
+`ChatbotPage.md` (page type 1730: reduced HTML for chatbot fetch),
 `SchemaOrg.md` (JSON-LD structured data: organization/website/breadcrumb from site settings
 `sitepackage.schema.*`, `Person` in the Contact templates), `A11yToolbar.md` (opt-in Barrierefreiheits-Leiste, site settings
 `sitepackage.a11y.*`), `IconSet.md` (own bootstrap_package icon set from

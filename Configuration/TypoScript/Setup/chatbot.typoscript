@@ -1,0 +1,19 @@
+chatbot = PAGE
+chatbot {
+    typeNum = 1730
+    config {
+        disableAllHeaderCode = 1
+        admPanel = 0
+        sendCacheHeaders = 1
+        additionalHeaders.10.header = Content-Type: text/html; charset=utf-8
+        additionalHeaders.20.header = X-Robots-Tag: noindex
+    }
+    10 = FLUIDTEMPLATE
+    10 {
+        file = EXT:sitepackage/Resources/Private/Templates/Chatbot/Page.html
+    }
+}
+
+[request.getQueryParams()['type'] == 1730]
+    lib.contentElement.layoutRootPaths.40 = EXT:sitepackage/Resources/Private/Layouts/Chatbot/ContentElements/
+[END]
