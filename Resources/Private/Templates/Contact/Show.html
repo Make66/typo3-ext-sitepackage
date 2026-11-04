@@ -2,6 +2,7 @@
       data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="content">
+    <f:render partial="Contact/SchemaPerson" arguments="{contact: contact, displayItems: displayItems, asProfilePage: 1}" />
     <div class="sitepackage-contact-detail row g-4">
         <f:if condition="{contact.photo}">
             <div class="col-12 col-md-4">

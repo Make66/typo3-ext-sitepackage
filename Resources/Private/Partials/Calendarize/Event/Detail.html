@@ -89,6 +89,10 @@
 	</f:if>-->
 </f:alias>
 
+<f:alias map="{event: index.originalObject}">
+	<f:render partial="Event/SchemaEvent" arguments="{index: index, event: event}" />
+</f:alias>
+
 <c:ifExtensionLoaded extensionKey="schema">
 	<f:render partial="{index.configuration.partialIdentifier}/StructuredData/Detail" arguments="{index: index}"/>
 </c:ifExtensionLoaded>

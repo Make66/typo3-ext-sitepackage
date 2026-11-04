@@ -1,0 +1,45 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:sp="http://typo3.org/ns/Taketool/Sitepackage/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:variable name="ldStart"></f:variable>
+<f:variable name="ldEnd"></f:variable>
+<f:if condition="{index.allDay}">
+    <f:then>
+        <f:variable name="ldStart"><f:format.date format="Y-m-d">{index.startDate}</f:format.date></f:variable>
+        <f:if condition="{index.endDate}">
+            <f:variable name="ldEnd"><f:format.date format="Y-m-d">{index.endDate}</f:format.date></f:variable>
+        </f:if>
+    </f:then>
+    <f:else>
+        <f:variable name="ldStart"><f:format.date format="c">{index.startDateComplete}</f:format.date></f:variable>
+        <f:if condition="{index.openEndTime}">
+            <f:else>
+                <f:variable name="ldEnd"><f:format.date format="c">{index.endDateComplete}</f:format.date></f:variable>
+            </f:else>
+        </f:if>
+    </f:else>
+</f:if>
+<f:variable name="ldStatus">https://schema.org/EventScheduled</f:variable>
+<f:if condition="{index.state} == 'canceled'">
+    <f:variable name="ldStatus">https://schema.org/EventCancelled</f:variable>
+</f:if>
+<f:variable name="ldImage"></f:variable>
+<f:for each="{event.images}" as="image" iteration="iterator">
+    <f:if condition="{iterator.isFirst} && {image.originalResource.type} != 4">
+        <f:variable name="ldImage"><f:uri.image image="{image}" absolute="1" maxWidth="1200" /></f:variable>
+    </f:if>
+</f:for>
+<f:variable name="ldDescription"><f:if condition="{event.abstract}"><f:then>{event.abstract}</f:then><f:else>{event.description -> f:format.stripTags() -> f:format.crop(maxCharacters: 300, respectWordBoundaries: 1)}</f:else></f:if></f:variable>
+<sp:schemaOrg.jsonLd data="{
+    '@type': 'Event',
+    name: event.title,
+    description: ldDescription,
+    startDate: ldStart,
+    endDate: ldEnd,
+    eventStatus: ldStatus,
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {'@type': 'Place', name: event.location},
+    organizer: {'@type': 'Organization', name: event.organizer},
+    image: ldImage
+}" />
+</html>

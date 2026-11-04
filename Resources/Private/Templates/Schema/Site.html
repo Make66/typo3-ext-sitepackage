@@ -1,0 +1,6 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:sp="http://typo3.org/ns/Taketool/Sitepackage/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:for each="{schemaOrgNodes}" as="node"><sp:schemaOrg.jsonLd data="{node}" />
+</f:for>
+</html>

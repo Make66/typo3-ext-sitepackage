@@ -16,6 +16,7 @@
         "bk2k/bootstrap-package": "^16.0"
     },
     "suggest": {
+        "brotkrueml/schema": "Full schema.org engine. When installed, sitepackage's own minimal JSON-LD output is switched off (see Documentation/SchemaOrg.md)",
         "lochmueller/calendarize": "Event calendar; sitepackage ships templates, partials and a month view category filter for it (see Documentation/Calendarize.md)"
     },
     "replace": {

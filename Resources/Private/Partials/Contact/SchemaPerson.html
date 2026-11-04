@@ -1,0 +1,34 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:sp="http://typo3.org/ns/Taketool/Sitepackage/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:variable name="ldImage"></f:variable>
+<f:for each="{contact.photo}" as="image" iteration="iterator">
+    <f:if condition="{iterator.isFirst}">
+        <f:variable name="ldImage"><f:uri.image image="{image}" absolute="1" maxWidth="600" /></f:variable>
+    </f:if>
+</f:for>
+<f:variable name="ldPosition"><f:if condition="{displayItems.position}">{contact.jobPosition}</f:if></f:variable>
+<f:variable name="ldDepartment"><f:if condition="{displayItems.department}">{contact.departmentText}</f:if></f:variable>
+<f:variable name="ldPhone"><f:if condition="{displayItems.phone}">{contact.phone}</f:if></f:variable>
+<f:variable name="ldEmail"><f:if condition="{displayItems.email}">{contact.email}</f:if></f:variable>
+<f:variable name="ldPerson" value="{
+    '@type': 'Person',
+    name: '{contact.firstName} {contact.lastName}',
+    givenName: contact.firstName,
+    familyName: contact.lastName,
+    jobTitle: ldPosition,
+    worksFor: {'@type': 'Organization', name: ldDepartment},
+    telephone: ldPhone,
+    email: ldEmail,
+    image: ldImage,
+    url: contact.website
+}" />
+<f:if condition="{asProfilePage}">
+    <f:then>
+        <sp:schemaOrg.jsonLd data="{'@type': 'ProfilePage', mainEntity: ldPerson}" />
+    </f:then>
+    <f:else>
+        <sp:schemaOrg.jsonLd data="{ldPerson}" />
+    </f:else>
+</f:if>
+</html>

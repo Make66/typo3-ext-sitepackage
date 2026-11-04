@@ -25,8 +25,82 @@ categories:
   sitepackage.routing:
     label: 'Sprechende URLs (Route Enhancer)'
     parent: sitepackage
+  sitepackage.schema:
+    label: 'Strukturierte Daten (schema.org)'
+    parent: sitepackage
 
 settings:
+  sitepackage.schema.enable:
+    category: sitepackage.schema
+    label: 'Organization/WebSite-Markup ausgeben'
+    description: 'JSON-LD with Organization and WebSite on every page. See Documentation/SchemaOrg.md.'
+    default: false
+    type: bool
+  sitepackage.schema.breadcrumb:
+    category: sitepackage.schema
+    label: 'BreadcrumbList-Markup ausgeben'
+    description: 'JSON-LD BreadcrumbList from the rootline (independent of the Organization switch).'
+    default: true
+    type: bool
+  sitepackage.schema.type:
+    category: sitepackage.schema
+    label: 'Typ der Organisation'
+    default: 'Organization'
+    type: string
+    enum:
+      Organization: 'Organisation / Verein'
+      GovernmentOrganization: 'Behörde / Kommune'
+      LocalBusiness: 'Lokales Unternehmen'
+      EducationalOrganization: 'Bildungseinrichtung'
+      NGO: 'Gemeinnützige Organisation'
+  sitepackage.schema.name:
+    category: sitepackage.schema
+    label: 'Name'
+    description: 'Empty disables Organization and WebSite markup.'
+    default: ''
+    type: string
+  sitepackage.schema.logo:
+    category: sitepackage.schema
+    label: 'Logo (URL oder Pfad)'
+    description: 'Absolute URL or path relative to the site root, e.g. fileadmin/templates/x/logo.png.'
+    default: ''
+    type: string
+  sitepackage.schema.street:
+    category: sitepackage.schema
+    label: 'Straße und Hausnummer'
+    default: ''
+    type: string
+  sitepackage.schema.postalCode:
+    category: sitepackage.schema
+    label: 'PLZ'
+    default: ''
+    type: string
+  sitepackage.schema.city:
+    category: sitepackage.schema
+    label: 'Ort'
+    default: ''
+    type: string
+  sitepackage.schema.country:
+    category: sitepackage.schema
+    label: 'Land (ISO-Code)'
+    default: 'DE'
+    type: string
+  sitepackage.schema.telephone:
+    category: sitepackage.schema
+    label: 'Telefon'
+    default: ''
+    type: string
+  sitepackage.schema.email:
+    category: sitepackage.schema
+    label: 'E-Mail'
+    default: ''
+    type: string
+  sitepackage.schema.sameAs:
+    category: sitepackage.schema
+    label: 'Profile (sameAs), eine URL pro Zeile'
+    description: 'Social media, Wikipedia, Wikidata.'
+    default: ''
+    type: text
   sitepackage.a11y.enable:
     category: sitepackage.a11y
     label: 'Barrierefreiheits-Leiste aktivieren'

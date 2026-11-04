@@ -238,3 +238,9 @@ plugin.tx_sitepackage {
         menuPid = {$tx_sitepackage.accessibility.menuPid}
     }
 }
+# schema.org JSON-LD (Organization, WebSite, BreadcrumbList) — see Documentation/SchemaOrg.md
+page.headerData.9100 = FLUIDTEMPLATE
+page.headerData.9100 {
+    file = EXT:sitepackage/Resources/Private/Templates/Schema/Site.html
+    dataProcessing.10 = Taketool\Sitepackage\DataProcessing\SchemaOrgProcessor
+}
