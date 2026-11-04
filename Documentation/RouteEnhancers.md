@@ -25,7 +25,8 @@ expression on the page record that is already loaded.
 | `Calendarize.yaml` | `Calendarize`, `CalendarizeBooking` | all calendarize plugins (`tx_calendarize_calendar`), booking | `/events/month/2026/11`, `/events/event/<slug>` (de: `monat`, `termin`) |
 | `News.yaml` | `News` | `tx_news_pi1` (all news plugins) | `/news/article/<slug>`, `/news/page-2`, `/news/category/<slug>`, `/news/tag/<slug>` (de: `artikel`, `seite`, `kategorie`, `schlagwort`) |
 | `Contact.yaml` | `SitepackageContact` | `tx_sitepackage_contact` | `/team/contact/<first-last>` (de: `kontakt`) |
-| `All.yaml` | – | imports the three files above | |
+| `Apicodo.yaml` | `ApicodoArticles`, `ApicodoArticleEvents`, `ApicodoCalendarEvents`, `ApicodoSnips`, `ApicodoSnipEvents`, plus the apicodo keys of the `Sitemap` enhancer | `tx_apicodo_*` (taketool/apicodo) | `/artikel/<title>-<id>`, `/termin/<title>-<uuid>` (de; en: `article`, `appointment`), see apicodo `Documentation/07_xmlSitemap.md` |
+| `All.yaml` | – | imports all files above | |
 
 The path labels are `LocaleModifier`s: `de_*` locales get the German label,
 all other locales get the English one.
@@ -75,6 +76,7 @@ for the page:
    | `calendarize` | Calendarize (`calendarize`) | calendarize |
    | `news` | News plugins (`newsplugins`) | news. Not "News folder" (`news`), which marks the storage folder |
    | `contact` | Sitepackage: Ansprechpartner (`contact`) | sitepackage (`Configuration/TCA/Overrides/pages.php`) |
+   | `apicodo` | apicodo: Artikel, Snips und Veranstaltungen (`apicodo`) | taketool/apicodo (`Configuration/TCA/Overrides/pages.php`) |
 
 2. **Site setting** with a list of page uids, in `config/sites/<mandant>/settings.yaml`
    (Site settings → Sitepackage → Sprechende URLs):
@@ -83,6 +85,7 @@ for the page:
    sitepackage.routing.calendarizePages: ['12', '34']
    sitepackage.routing.newsPages: ['56']
    sitepackage.routing.contactPages: []
+   sitepackage.routing.apicodoPages: ['76', '77']
    ```
 
    Use this when the page property is already used for something else. Each page
@@ -141,6 +144,15 @@ Routes follow the "basic setup" from the news documentation. Pagination comes
 before detail, because the order matters on "list with detail" pages. A `PageType`
 enhancer for RSS feeds is not included: it is site-wide, so each site adds it
 to its own `config.yaml` if needed.
+
+### apicodo
+
+`Apicodo.yaml` has no database aspect: the id-and-title segment comes from the
+`ApicodoItem` aspect of taketool/apicodo, which reads the API cache. It also
+adds the apicodo sitemap keys to the `Sitemap` enhancer of the core set
+`typo3/seo-sitemap`, so the sitemap index links read
+`/sitemap-type/apicodoArticles/sitemap.xml`. Import it only for sites that
+depend on taketool/apicodo. Details in apicodo `Documentation/07_xmlSitemap.md`.
 
 ### Contact
 

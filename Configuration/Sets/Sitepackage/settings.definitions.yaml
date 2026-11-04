@@ -321,3 +321,9 @@ settings:
     description: 'Page uids where Configuration/Routes/Contact.yaml is active, in addition to pages with "Contains plugin" = Sitepackage: Ansprechpartner. See Documentation/RouteEnhancers.md.'
     default: []
     type: stringlist
+  sitepackage.routing.apicodoPages:
+    category: sitepackage.routing
+    label: 'Seiten mit apicodo-URLs'
+    description: 'Page uids where Configuration/Routes/Apicodo.yaml is active, in addition to pages with "Contains plugin" = apicodo. See Documentation/RouteEnhancers.md.'
+    default: []
+    type: stringlist

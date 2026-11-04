@@ -3,3 +3,4 @@ imports:
   - resource: 'EXT:sitepackage/Configuration/Routes/Calendarize.yaml'
   - resource: 'EXT:sitepackage/Configuration/Routes/News.yaml'
   - resource: 'EXT:sitepackage/Configuration/Routes/Contact.yaml'
+  - resource: 'EXT:sitepackage/Configuration/Routes/Apicodo.yaml'
