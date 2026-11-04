@@ -29,6 +29,26 @@ $navbar-active-color-default: #333;
   }
 }
 
+// Animierte Unterstreichung (wie pl2, über background → ::after bleibt frei)
+// $idle = Stärke der Linie im Ruhezustand (0% = erst beim Hover sichtbar)
+@mixin link-underline($idle: 0%) {
+  $idle-color: unquote("color-mix(in srgb, currentColor #{$idle}, transparent)");
+
+  text-decoration: none;
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient($idle-color, $idle-color);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 1px, 100% 1px;
+  transition: background-size $transition;
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
 // Icon (Maske, nimmt die Textfarbe an) als ::before
 @mixin link-icon($icon) {
   &::before {
@@ -80,9 +100,9 @@ $navbar-active-color-default: #333;
 
 
 // ============================================================
-// 1. ICONGROUP ALS KACHELN
+// 1. ICONGROUP ALS KACHELN (nicht im Footer, siehe Abschnitt 8)
 // ============================================================
-.icongroup {
+.icongroup:where(:not(#page-footer .icongroup)) {
   --icongroup-gap: 1rem;
   --icongroup-icon-size: 3rem;
 
@@ -169,68 +189,66 @@ $navbar-active-color-default: #333;
 
 
 // ============================================================
-// 2. APICODO-CARDS MIT BILD-OVERLAY
+// 2. NEWS-CARDS (Artikel): Bild 4:3, Datum unter dem Titel
 // ============================================================
-.apicodo-card:has(> .card-img-top) {
-  position: relative;
-  isolation: isolate;
-  min-height: 30rem;
+.apicodo-card--pl3-news {
   overflow: hidden;
   border: 0;
-  background-color: $gray-900;
-  color: $white;
+  box-shadow: 0 .125rem .75rem rgba($black, .08);
+  transition: transform $transition, box-shadow $transition;
 
-  > .card-img-top {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
+  &:hover,
+  &:focus-within {
+    transform: translateY($card-hover-lift);
+    box-shadow: $card-shadow-hover;
+  }
+
+  .apicodo-card__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background-color: $gray-200;
+  }
+
+  .card-img-top {
+    display: block;
     width: 100%;
     height: 100%;
-    aspect-ratio: auto;
-    border-radius: 0;
-    transition: transform .4s ease;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(to top, rgba($black, .8) 0%, rgba($black, .35) 65%, rgba($black, 0) 100%);
-  }
-
-  &:hover > .card-img-top,
-  &:focus-within > .card-img-top {
-    transform: scale(1.05);
+    object-fit: cover;
   }
 
   .card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
-  .card-title,
-  .card-text,
-  .stretched-link,
-  .stretched-link:is(:hover, :focus) {
-    color: $white;
+    padding: 1.75rem 2.5rem 2.25rem;
   }
 
   .card-title {
-    font-weight: 600;
-
-    &::after {
-      content: "";
-      display: block;
-      height: 2px;
-      margin-top: .75rem;
-      background-color: $white;
-    }
+    margin-bottom: .5rem;
+    font-weight: $font-weight-bold;
   }
 
-  .text-muted {
-    color: rgba($white, .85) !important;
+  .apicodo-card__date {
+    margin-bottom: 1rem;
+    font-size: .9rem;
+    color: $gray-600;
+  }
+
+  // a. prefix: .card a:not(.btn) from the theme (0,2,1) would otherwise win over the color
+  a.apicodo-card__more {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    align-self: flex-start;
+    margin-top: auto;
+    padding-top: 1rem;
+    color: $secondary;
+    font-weight: $font-weight-bold;
+    text-decoration: none;
+    background-image: none;
+
+    &:hover,
+    &:focus {
+      color: shade-color($secondary, 15%);
+    }
   }
 }
 
@@ -584,22 +602,8 @@ body .offcanvas-backdrop {
 
 
 // ============================================================
-// 5b. RAHMEN "CAROUSEL STARTSEITE"
+// 5b. ÜBERSCHRIFTEN ".awesome"
 // ============================================================
-.frame-carousel_startseite {
-  --frame-spacing: 0;
-
-  .frame-container {
-    max-width: none;
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  .carousel-item-type-header .carousel-text-inner {
-    width: 100%;
-  }
-}
-
 @for $i from 1 through 6 {
   h#{$i}.awesome,
   .h#{$i}.awesome {
@@ -607,69 +611,178 @@ body .offcanvas-backdrop {
   }
 }
 
-$pl3-carousel-mobile-image-height: max(20vh, 240px) !default;
 
-@include media-breakpoint-down(sm) {
-  .frame-carousel_startseite .carousel {
-    .item {
-      height: auto;
-      padding-right: 0;
-      padding-left: 0;
-      --carousel-item-color: #{$white};
-      --carousel-item-link-color: #{$white};
-      --carousel-item-link-hover-color: #{$white};
+// ============================================================
+// 5c. CAROUSEL: HÖHEN UND SLIDES MIT TEXT
+// ============================================================
+$pl3-carousel-height-md:        520px !default;
+$pl3-carousel-height-lg:        clamp(560px, 70vh, 760px) !default;
+$pl3-carousel-height-xl:        clamp(640px, 78vh, 880px) !default;
+$pl3-carousel-height-xxl:       clamp(700px, 82vh, 960px) !default;
+$pl3-carousel-small-height-md:  400px !default;
+$pl3-carousel-small-height-lg:  460px !default;
+$pl3-carousel-small-height-xl:  520px !default;
+$pl3-carousel-small-height-xxl: 560px !default;
+$pl3-carousel-text-max-width:   40rem !default;
+$pl3-carousel-text-bottom:      4rem !default;
+$pl3-carousel-box-bg:           rgba($primary, .85) !default;
+$pl3-carousel-box-color:        $white !default;
+$pl3-carousel-box-padding:      2rem 2.5rem !default;
+$pl3-carousel-box-radius:       $border-radius !default;
+$pl3-carousel-subheader-size:   1.1rem !default;
+$pl3-carousel-header-sizes: (
+  1: clamp(2rem, 4vw, 3.5rem),
+  2: clamp(1.75rem, 3.25vw, 3rem),
+  3: clamp(1.5rem, 2.5vw, 2.5rem),
+  4: clamp(1.25rem, 2vw, 2rem),
+) !default;
+
+.carousel {
+  @each $level, $size in $pl3-carousel-header-sizes {
+    h#{$level}.carousel-header,
+    h#{$level}.carousel-item-header {
+      font-size: $size;
+    }
+  }
+
+  .carousel-header,
+  .carousel-item-header {
+    margin-bottom: .75rem;
+    line-height: 1.1;
+  }
+
+  .carousel-subheader,
+  .carousel-item-subheader {
+    margin-bottom: .5rem;
+    font-size: $pl3-carousel-subheader-size;
+    font-weight: $font-weight-bold;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    opacity: .85;
+  }
+}
+
+.carousel:not(.carousel-small):not(.carousel-fullscreen) .item {
+  @include media-breakpoint-up(md)  { height: $pl3-carousel-height-md; }
+  @include media-breakpoint-up(lg)  { height: $pl3-carousel-height-lg; }
+  @include media-breakpoint-up(xl)  { height: $pl3-carousel-height-xl; }
+  @include media-breakpoint-up(xxl) { height: $pl3-carousel-height-xxl; }
+}
+
+.carousel-small .item {
+  @include media-breakpoint-up(md)  { height: $pl3-carousel-small-height-md; }
+  @include media-breakpoint-up(lg)  { height: $pl3-carousel-small-height-lg; }
+  @include media-breakpoint-up(xl)  { height: $pl3-carousel-small-height-xl; }
+  @include media-breakpoint-up(xxl) { height: $pl3-carousel-small-height-xxl; }
+}
+
+@mixin pl3-carousel-box {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  width: 100%;
+  max-width: $pl3-carousel-text-max-width;
+  margin: 0;
+  padding: $pl3-carousel-box-padding;
+  color: $pl3-carousel-box-color;
+  background-color: $pl3-carousel-box-bg;
+  border-radius: $pl3-carousel-box-radius;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 10px 30px rgba($black, .15);
+
+  > * {
+    margin-bottom: 0;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .carousel {
+    .carousel-item-type-header,
+    .carousel-item-type-text_and_image {
+      .carousel-content-link {
+        display: block;
+        height: 100%;
+      }
     }
 
-    .carousel-backgroundimage-container {
-      position: relative;
-      height: $pl3-carousel-mobile-image-height;
+    .carousel-item-type-header,
+    .carousel-item-type-text_and_image,
+    .carousel-item-type-call_to_action {
+      .carousel-content-inner {
+        align-items: center;
+        padding-bottom: $pl3-carousel-text-bottom;
+      }
     }
 
-    .carousel-content {
-      height: auto;
-      min-height: 250px;
-      padding: 1.5rem;
-      color: $white;
-      background-color: $primary;
+    .carousel-item-type-header .carousel-text-inner,
+    .carousel-item-type-text_and_image .carousel-text,
+    .carousel-item-type-call_to_action .carousel-box {
+      @include pl3-carousel-box;
     }
 
-    .carousel-item-type-background_image .carousel-content {
-      position: absolute;
-      inset: 0;
-      min-height: 0;
-      padding: 0;
-      background-color: transparent;
+    .carousel-item-type-text .carousel-text-inner {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: $pl3-carousel-text-max-width;
+      margin: 0;
     }
 
-    .carousel-control {
-      bottom: auto;
-      height: $pl3-carousel-mobile-image-height;
+    .carousel-item-type-text_and_image {
+      .carousel-text,
+      .carousel-image {
+        flex: 0 1 50%;
+      }
     }
 
-    .carousel-indicators {
-      top: $pl3-carousel-mobile-image-height;
-      bottom: auto;
-      transform: translateY(-100%);
+    .carousel-item-type-call_to_action .carousel-item-button {
+      @include button-variant(
+        $pl3-carousel-box-color,
+        $pl3-carousel-box-color,
+        $primary,
+        $hover-background: $gray-200,
+        $hover-border: $gray-200,
+        $hover-color: $primary,
+        $active-background: $gray-300,
+        $active-border: $gray-300,
+        $active-color: $primary
+      );
+      align-self: flex-start;
+      margin-top: .25rem;
+    }
+
+    .carousel-subheader,
+    .carousel-item-subheader {
+      order: -1;
+    }
+
+    .carousel-item-bodytext {
+      display: -webkit-box;
+      overflow: hidden;
+      font-size: 1.125rem;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
     }
   }
 }
 
-@include media-breakpoint-up(sm) {
-  .frame-carousel_startseite .carousel {
-    .carousel-backgroundimage {
-      filter: contrast(1.2);
+@include media-breakpoint-up(lg) {
+  .carousel .carousel-item-type-text_and_image {
+    .carousel-text {
+      flex: 0 1 percentage(divide(5, 12));
     }
 
-    .carousel-backgroundimage-container::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(30deg, rgba($black, .45) 45%, rgba($black, 0) 70%);
-    }
+    .carousel-image {
+      display: flex;
+      flex: 0 1 percentage(divide(7, 12));
+      align-items: center;
+      justify-content: center;
+      height: 80%;
 
-    .carousel-item-type-background_image .carousel-backgroundimage-container::after {
-      background: linear-gradient(30deg, rgba($black, .2) 30%, rgba($black, 0) 60%);
+      img {
+        max-height: 100%;
+        object-fit: contain;
+      }
     }
   }
 }
@@ -880,8 +993,62 @@ $pl3-search-icon:      url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2
   }
 }
 
-@include media-breakpoint-up(md) {
-  .frame-carousel_startseite:has(+ .frame-search.frame-layout-overlap) .carousel .carousel-indicators {
-    bottom: $pl3-search-overlap + .5rem;
+
+// ============================================================
+// 8. FOOTER (Regeln wie pl2 / Kleinich)
+// ============================================================
+.footer-section-content {
+  background-color: $page-footer-background;
+  color: $page-footer-color;
+  padding-bottom: 2rem;
+
+  .element-header { color: $page-footer-color-header; border: 0; }
+}
+
+#page-footer {
+  position: relative;
+
+  .table > :not(caption) > * > * { background-color: transparent; color: #fff; }
+
+  .icongroup { --icongroup-icon-size: 20px; --icongroup-gap: 20px; }
+  .icongroup-item-text-header { font-size: 1em; font-family: $font-footer; }
+
+  // Unterstreichung für alle Links außer Buttons / Menü / Icon-Grafiken
+  a[href]:not(.btn):not(.nav-link):not(.page-link):not(.icongroup-item-icon a) {
+    @include link-underline;
+    font-family: $font-link;
   }
+
+  // Pfeil vor internen Textlinks (externe: Symbol aus Abschnitt 0)
+  a[href]:not([target="_blank"]):is(
+    p a,
+    td a,
+    li:not(.breadcrumb-item):not(.page-item):not(.nav-item) a
+  ):not(.btn):not(.no-link-icon):not(:empty):not(:has(img, svg)):not(.frame-type-social_links a) {
+    @include link-icon($icon-arrow);
+
+    &::before { transition: transform .2s ease; }
+    &:hover::before { transform: translateX(3px); }
+  }
+
+  .footer-section-content a[href]:not(.btn):not(:empty) {
+    color: #fff;
+    letter-spacing: .2px;
+
+    &:hover { color: #fff !important; }
+  }
+
+  .footer-section-content-column ul {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+  }
+}
+
+
+// ============================================================
+// 9. FRAME-HINTERGRUND "PRIMARY LIGHT": Überschriften in $primary
+// ============================================================
+.frame-background-primary-light {
+  :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6):not(.apicodo-event-tile__title) { color: $primary; }
 }

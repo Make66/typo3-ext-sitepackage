@@ -316,13 +316,17 @@ toolbar while the mobile menu is open" rule anchors on `body:has(…)`.
    white box, icon top left, header below, regardless of the element's
    icon-position setting. The header link gets a `::after` over the whole
    tile, so the tile is clickable. Column widths stay bk2k's.
-2. **Apicodo cards with image overlay** (`.apicodo-card:has(> .card-img-top)`,
-   like "Wichtige Themen"): the image fills the card, a gradient darkens it,
-   the text is white. Image and gradient sit at `z-index: -1` inside the
-   card's own stacking context (`isolation: isolate`), so `.card-body`
-   stays unpositioned and `.stretched-link` still covers the whole card.
-   Cards without an image (snips) are unchanged. `min-height: 30rem`; the
-   title is `font-weight: 600` with a 3px white rule below (`::after`).
+2. **News cards** (`.apicodo-card--pl3-news`, like the news tiles on
+   guetersloh.de): apicodo's `Article/Card.html` renders its own `pl3`
+   section. The `.card-img-top` sits inside a 4:3 `.apicodo-card__media` box
+   and fills it (`width`/`height: 100%`), which overrides the 16:9 from
+   apicodo's `Card.css`. Image 4:3 (`object-fit: cover`, grey area when
+   there is no image), a white body with the title, below it the date as
+   `d.m.Y` in `$gray-600` (`.apicodo-card__date`), the summary, and a visible
+   "Weiterlesen" link in `$secondary` as the `stretched-link`. On hover the
+   whole card lifts like pl2's `card-hover` (`$card-hover-lift`,
+   `$card-shadow-hover`, `$transition` from `_layout-variables`); the image
+   does not scale.
 3. **Apicodo events as cards** (`.apicodo-event-list` / `.apicodo-event-row`,
    like "Veranstaltungen"): CSS only on apicodo's `Event/Row.html` — the list
    becomes a grid, the row a column (image first via `order`, date badge on
@@ -367,18 +371,55 @@ toolbar while the mobile menu is open" rule anchors on `body:has(…)`.
    mandant can set them in its `custom.scss`, e.g. podelzig:
    `:root { --pl3-nav-bg: #333; }`. A `--pl3-nav-color`/`--pl3-nav-accent`
    set there wins over the site settings, so for those two prefer the settings.
-5b. **Frame "Carousel Startseite"** (`frame_class` `carousel_startseite`,
-   added in `Configuration/page.tsconfig`, like guetersloh.de's banner): the
-   frame is full-bleed like "No Frame" (`--frame-spacing: 0`, no container
-   width/padding). From `sm` up a `::after` on
-   `.carousel-backgroundimage-container` lays a 30° black gradient (45 % → 0)
-   over the image, plus `contrast(1.2)`. Below `sm` the image is
-   `$pl3-carousel-mobile-image-height` high and the text sits underneath in a
-   `$primary` box with white text (`min-height: 250px`); controls and
-   indicators stay on the image. `background_image` slides keep their
-   absolute, transparent content layer. Header slides' `.carousel-text-inner`
-   is 100 % wide. `frame_layout` is not an option here: bk2k hides it for
-   "No Frame" and renders no frame element to carry its class.
+5b. **`.awesome` headings**: the `hN.awesome` font-weight loop described
+   under "Heading weight of `.awesome`" above.
+5c. **Carousel heights and text slides** (all carousels). Heights from `md`
+   up; below `md` bk2k's values stay (400px / small 300px).
+   `.carousel-fullscreen` keeps bk2k's 100vh.
+
+   | Breakpoint | `.carousel .item` | `.carousel-small .item` |
+   |---|---|---|
+   | ≥ md | `$pl3-carousel-height-md` 520px | `$pl3-carousel-small-height-md` 400px |
+   | ≥ lg | `$pl3-carousel-height-lg` `clamp(560px, 70vh, 760px)` | `…-lg` 460px |
+   | ≥ xl | `$pl3-carousel-height-xl` `clamp(640px, 78vh, 880px)` | `…-xl` 520px |
+   | ≥ xxl | `$pl3-carousel-height-xxl` `clamp(700px, 82vh, 960px)` | `…-xxl` 560px |
+
+   The clamp keeps low laptops (1366×768) from a squashed slide and tall
+   monitors from a slide that fills the whole screen.
+
+   Heading sizes (all widths): carousel headers carry `.awesome`, which bk2k
+   `@extend`s to Bootstrap's `.display-N` (up to 5rem). The editor picks
+   h1–h4 in the backend (`header_layout`), so pl3 sizes them per level from
+   the map `$pl3-carousel-header-sizes` (h1 `clamp(2rem, 4vw, 3.5rem)`, h2
+   `clamp(1.75rem, 3.25vw, 3rem)`, h3 `clamp(1.5rem, 2.5vw, 2.5rem)`, h4
+   `clamp(1.25rem, 2vw, 2rem)`), selector `.carousel hN.carousel-header`,
+   which beats `hN.awesome`. The subheader (also `.awesome`) is a small bold
+   uppercase label of `$pl3-carousel-subheader-size` (1.1rem). Both bk2k
+   class sets are covered (`carousel-header`/`-subheader` in
+   Header/TextAndImage, `carousel-item-header`/`-subheader` in Text).
+
+   Text slides from `md` up: `header`, `text_and_image` and
+   `call_to_action` items share one box (mixin `pl3-carousel-box`, applied
+   to `.carousel-text-inner`, `.carousel-text` and `.carousel-box`):
+   vertically centred on the left, max `$pl3-carousel-text-max-width`
+   (40rem), `$pl3-carousel-box-bg` (default `$primary` at 85 %),
+   `$pl3-carousel-box-color` (white), `$pl3-carousel-box-padding`,
+   `$pl3-carousel-box-radius` (default `$border-radius`), slight
+   `backdrop-filter: blur` and shadow. Children lose their margins and are
+   spaced by `gap: .75rem` instead; the subheader is moved above the header
+   via `order: -1`. This replaces bk2k's centred 80 % / 65 % header text and
+   its white 50 % call-to-action box. The centring area ends
+   `$pl3-carousel-text-bottom` (4rem) above the bottom edge for the
+   indicators. The call-to-action button (`.carousel-item-button`, bk2k
+   renders `btn-primary`) would vanish on the `$primary` box, so it gets a
+   `button-variant` in `$pl3-carousel-box-color` with `$primary` text
+   (hover `$gray-200`, active `$gray-300`). `text` items get the same
+   left-aligned 40rem column without the box (they have the item layout's
+   background) and stay vertically centred. Bodytext is `1.125rem`, cut
+   after three lines. A linked slide is wrapped in `a.carousel-content-link`,
+   which gets `height: 100%` so the alignment still works. `text_and_image`
+   items split text and image 50/50 from `md`, 5/12 and 7/12 from `lg` up,
+   the image at most 80 % of the slide height (`object-fit: contain`).
 6. **A11y toolbar in the header, burger size**: see `A11yToolbar.md`
    ("Positions"). The burger lines are 45 × 4 px, ±12 px apart; the brand gets
    `align-self: center`, because bk2k's `.container-mainnavigation` sets
@@ -389,13 +430,16 @@ toolbar while the mobile menu is open" rule anchors on `body:has(…)`.
    borderless input and a `$primary` submit button with a magnifier icon
    (icon only below `md`, icon + label from `md`). Reset button and clearer
    are hidden. With `frame_layout` "overlap" the card overlaps the element
-   above by `$pl3-search-overlap` from `md` up (not on mobile, where the
-   carousel's text box sits directly above). The frame itself is
+   above by `$pl3-search-overlap` from `md` up (not on mobile). The frame itself is
    `display: flow-root`, so the container's negative margin does not collapse
    through to it: only the card overlaps, the frame (and a frame background
    such as `frame-background-light`) starts at the carousel's bottom edge.
    Otherwise the background lies under the carousel and shows through the
    half-transparent slides during `carousel-fade` transitions.
+8. **Footer**: rules like pl2 / Kleinich.
+9. **Frame background "primary light"** (`.frame-background-primary-light`,
+   see `$frame-backgrounds`): headings h1–h6 (and `.h1`–`.h6`) are `$primary`,
+   except `.apicodo-event-tile__title`, which keeps its own color.
 
 ### Variables injected by bk2k
 

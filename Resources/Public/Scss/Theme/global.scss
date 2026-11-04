@@ -35,6 +35,15 @@
 
 /* define layouts and frames here */
 
+// Rahmen "Volle Breite (mit Hintergrund)" (frame_class = volle_breite):
+// Frame-Wrapper bleibt (Hintergrundfarbe aus background_color_class greift),
+// nur die Container-Begrenzung entfällt. Padding oben/unten bleibt.
+.frame-volle_breite > .frame-group-container > .frame-group-inner > .frame-container {
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .breadcrumb-section { background-color: $breadcrumb-section-bg; }
 
 .footer-section-meta {
