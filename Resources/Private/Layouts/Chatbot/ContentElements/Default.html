@@ -1,6 +1,17 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <section id="c{data.uid}">
-<f:render section="Header" optional="true"><f:render partial="Header/All" arguments="{_all}" /></f:render>
+<f:if condition="{data.header}">
+    <f:switch expression="{data.header_layout}">
+        <f:case value="1"><h1>{data.header}</h1></f:case>
+        <f:case value="3"><h3>{data.header}</h3></f:case>
+        <f:case value="4"><h4>{data.header}</h4></f:case>
+        <f:case value="5"><h5>{data.header}</h5></f:case>
+        <f:case value="6"><h6>{data.header}</h6></f:case>
+        <f:case value="100"></f:case>
+        <f:defaultCase><h2>{data.header}</h2></f:defaultCase>
+    </f:switch>
+    <f:if condition="{data.subheader} && {data.header_layout} != 100"><p>{data.subheader}</p></f:if>
+</f:if>
 <f:render section="Main" optional="true" />
 </section>
 </html>

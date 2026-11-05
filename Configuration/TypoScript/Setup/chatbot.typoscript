@@ -14,6 +14,6 @@ chatbot {
     }
 }
 
-[request.getQueryParams()['type'] == 1730]
+[(request.getQueryParams()['type'] ?? 0) == 1730]
     lib.contentElement.layoutRootPaths.40 = EXT:sitepackage/Resources/Private/Layouts/Chatbot/ContentElements/
 [END]

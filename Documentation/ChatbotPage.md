@@ -10,7 +10,7 @@ no `bk2k:frame` wrappers around content elements.
 |---|---|
 | TypoScript | `Configuration/TypoScript/Setup/chatbot.typoscript` (imported from `setup.typoscript`) |
 | Page template | `Resources/Private/Templates/Chatbot/Page.html`: `<h1>` page title, then `lib.dynamicContent` for colPos 8, 0, 9 |
-| Content element layout | `Resources/Private/Layouts/Chatbot/ContentElements/Default.html`: `<section id="c{uid}">`, header partial, main section. No Before/After/Footer sections, no frame |
+| Content element layout | `Resources/Private/Layouts/Chatbot/ContentElements/Default.html`: `<section id="c{uid}">`, plain `<hN>` header (level from `header_layout`, default h2, hidden for 100) and `<p>` subheader, then the main section. No `frame-header` div, classes, `<span>`, header link, date, Before/After/Footer sections or frame |
 
 The page object `chatbot` has `typeNum = 1730`, `disableAllHeaderCode = 1`
 and sends `X-Robots-Tag: noindex`.
