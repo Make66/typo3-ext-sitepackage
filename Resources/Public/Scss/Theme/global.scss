@@ -19,6 +19,21 @@ body {
   font-family: var(--bs-font-sans-serif, sans-serif);
 }
 
+.body-bg {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  > * {
+    flex-shrink: 0;
+  }
+
+  > #page-footer {
+    margin-top: auto;
+  }
+}
+
 :root {
   --gallery-gap: 0rem;
 }

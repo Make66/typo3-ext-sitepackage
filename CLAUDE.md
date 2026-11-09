@@ -24,7 +24,8 @@ inline comments — see the pinned project-wide memory on this.
 Pre-existing topic files not pulled in here (open directly when relevant):
 `SCSS_pipeline.md`/`SCSS_migration.md`/`MIGRATION_SUMMARY.md` (the per-tenant
 SCSS compilation chain and its migration history), `MainNavigationLevels.md`
-(mega-menu depth), `StickyHeader.md` (the shrinking-header JS),
+(mega-menu depth), `StickyHeader.md` (the shrinking-header JS), `StickyFooter.md` (footer at
+the viewport bottom on short pages),
 `A11yToolbar.md` (opt-in Barrierefreiheits-Leiste, site settings
 `sitepackage.a11y.*`), and two one-off
 upgrade commands, `Mig12Cleanup.md` and `NewsToFeUsersImport.md`.
