@@ -200,7 +200,7 @@ return [
                 ],
                 'overrideChildTca' => [
                     'types' => [
-                        \TYPO3\CMS\Core\Resource\FileType::IMAGE->value => [
+                        \TYPO3\CMS\Core\Resource\AbstractFile::FILETYPE_IMAGE => [
                             'showitem' => '--palette--;;filePalette',
                         ],
                     ],
