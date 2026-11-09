@@ -1,0 +1,14 @@
+# Barrierefreiheits-Leiste — see Documentation/A11yToolbar.md
+# Off by default; enable per site via constant override (sitepackage.a11y.enable = 1).
+sitepackage.a11y {
+    # cat=sitepackage.a11y/enable/10; type=boolean; label=Barrierefreiheits-Leiste aktivieren
+    enable = 0
+    # cat=sitepackage.a11y/links/20; type=int+; label=Seite "Erklärung zur Barrierefreiheit" (0 = ausblenden)
+    statementPid = 0
+    # cat=sitepackage.a11y/links/30; type=int+; label=Seite "Leichte Sprache" (0 = ausblenden)
+    easyLanguagePid = 0
+    # cat=sitepackage.a11y/links/40; type=int+; label=Kontaktseite (0 = ausblenden)
+    contactPid = 0
+    # cat=sitepackage.a11y/links/50; type=int+; label=Suchseite (0 = ausblenden)
+    searchPid = 0
+}

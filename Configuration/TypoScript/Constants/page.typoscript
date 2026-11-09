@@ -1,3 +1,18 @@
+# Layout variant (pl0..pl3) for page.includeCSS.layout / layoutRootPaths.31 in basis.typoscript.
+# Site sets provide it as site setting "layout"; plain TypoScript sites (TYPO3 12) need this default.
+layout = pl0
+
+# Defaults for the other site settings (Configuration/Sets/Sitepackage/settings.definitions.yaml) used in
+# Setup/*.typoscript, so plain TypoScript sites do not render unresolved "{$...}" strings.
+page.theme.mainnavigation.levels = 3
+sitepackage.a11y {
+    enable = 0
+    statementPid = 0
+    easyLanguagePid = 0
+    contactPid = 0
+    searchPid = 0
+}
+
 tx_sitepackage {
     accessibility {
         enable = 0

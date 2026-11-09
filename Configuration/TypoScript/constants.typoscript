@@ -5,3 +5,4 @@
 @import 'EXT:sitepackage/Configuration/TypoScript/Constants/cookieconsent.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/Constants/powermail.typoscript'
 @import 'EXT:sitepackage/Configuration/TypoScript/Constants/sourceopt.typoscript'
+@import 'EXT:sitepackage/Configuration/TypoScript/Constants/a11y.typoscript'
