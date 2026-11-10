@@ -113,7 +113,17 @@ burger (like guetersloh.de), on all breakpoints: its own
 `.navbar-toggler`. Inside the header's flex row the boxes stay vertically
 centred in the shrunk (`.navbar-transition`) state too, which a `fixed`
 offset could not. `pl3.scss` section 6 resets the `fixed`/hanging styles from
-`_toolbar.scss` and the reduced header top padding. Below
+`_toolbar.scss` and the reduced header top padding. The header row
+(`.container-mainnavigation`) uses `gap: 0 1rem` instead of bk2k's
+`0 2rem`; that gap also separates toolbar and burger. On top of it comes `margin-right: 1rem` on `.a11y-tools`, below
+`$grid-float-breakpoint` `0`, and there the burger button is only as wide
+as its 45px lines (instead of 3rem), so the toolbar sits close to the
+burger on mobile. Also below `$grid-float-breakpoint` the toolbar icons
+are 2rem instead of 2.5rem (buttons `min-width: 2.75rem` instead of 3rem,
+height stays 3rem), and the logo may be `nav-height - 20px` high (50px in
+the 70px mobile header) instead of bk2k's `nav-height - 30px` (40px).
+Because that limit is tied to `--mainnavigation-nav-height`, the logo also
+shrinks with the mobile header on scroll (see `StickyHeader.md`). Below
 `$grid-float-breakpoint` it also hides `#a11y-window` while the burger menu
 (`#mainnavigation.offcanvas`) is open (`.show`/`.showing`), because the
 toolbar would otherwise sit on top of the offcanvas next to its close

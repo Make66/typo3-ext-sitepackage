@@ -23,7 +23,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // again within ~100ms.
     offcanvasNav.addEventListener('shown.bs.offcanvas', function () {
         if (window.bootstrap && window.bootstrap.Dropdown) {
-            const activeToggle = offcanvasNav.querySelector('.navbar-nav > .nav-item > .nav-link-main.active[data-bs-toggle="dropdown"]');
+            const activeToggle = offcanvasNav.querySelector(
+                '.navbar-nav > .nav-item > .nav-link-main.active[data-bs-toggle="dropdown"], ' +
+                '.navbar-nav > .nav-item > .nav-link-main-toggle.active[data-bs-toggle="dropdown"]'
+            );
             if (activeToggle) {
                 window.bootstrap.Dropdown.getOrCreateInstance(activeToggle).show();
             }

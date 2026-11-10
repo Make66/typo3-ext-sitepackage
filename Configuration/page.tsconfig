@@ -1,35 +1,13 @@
 ## Eigene Rahmen fuer Content Elemente
 TCEFORM.tt_content.frame_class {
     addItems {
-        sliderstartseite = Slider (Höhe 80%)
-        zielgruppenstart = Zielgruppen Startseite
-        zielgruppenstart_box = Zielgruppen Startseite (6Spalten)
-        sliderkasten = Slider Kasten
-        slidertextlinks = Slider-Text (linksbündig)
-        zielseitensection = Zielseiten Menü
-        zielseitensection_button = Zielseiten Menü Button
-        kalenderkasten1 = Kalender Kasten 1
-        kalenderkasten2 = Kalender Kasten 2
-        newslayout1 = News Layout 1 (Button)
-        newslayout2 = News Layout 2 (Pfeil)
-        infokastenstart  = Infokasten
-        rahmen100 = Rahmen 100%
-        volle_breite = Volle Breite (mit Hintergrund)
-        ampel = Ampel
-        rahmen_ueberlappen = Überlappen
-        rahmen_streifen  = Streifen
-        unterseiten_menu = Unterseitenmenü
-        adventskalender_menu = Adventskalender Menü
-        adventskalender_text = Adventskalender Text
-        text_bild_box1 = Text/Bild Box 1
-        text_bild_box2 = Text/Bild Box 2
-        #Monika
-        accordionstart = Accordion Startseite
-        accordioninfo = Accordion Infobutton
-        accordionkalender = Accordion Kalender
-        bilder_grau = Bilder Grau
-        infokasten_tuerkis  = Infokasten Türkis
-        infokasten_grau  = Infokasten Grau
+    sliderstartseite = Slider (Höhe 72%)
+    volle_breite = Volle Breite (mit Hintergrund)
+    rahmen_ueberlappen = Überlappen
+    startpage-quicklinks = Startseiten-Kacheln
+    search = Suche
+    icon-frame= Icons mit Rahmen
+    ohne_abstand = Ohne Abstand oben/unten
     }
 }
 
@@ -37,7 +15,8 @@ TCEFORM.tt_content.frame_class {
 TCEFORM.tt_content.frame_layout {
     addItems {
         galerie = Galerie
-        rollover_image = Bild mit Hover-Effekt
+        box_image_text = Box: Bild und Text
+        overlap = Element überlappen
     }
 }
 
@@ -45,19 +24,24 @@ TCEFORM.tt_content.frame_layout {
 ## Eigene Hintergrundfarbe fuer Content Elemente
 TCEFORM.tt_content.background_color_class {
     addItems {
-        schmuckfarbe = Schmuckfarbe
-        verlauf = Farbverlauf
-        primary-light = primary light
+        primary-light = Primary Light
+        secondary-light = Secondary Light
     }
 }
 
 TCEFORM.pages.layout {
     addItems {
-        4 = Hintergrundbild
-        5 = Hintergrundbild (transparent)
-        6 = Eventseite
     }
 }
+
+## Icon Group: zusaetzliche Spaltenanzahl
+TCEFORM.tt_content.pi_flexform.icon_group.sDEF.columns.addItems {
+    5 = 5
+    6 = 6
+}
+
+## Vorauswahl Layout bei neuen Carousel-Slides
+TCAdefaults.tx_bootstrappackage_carousel_item.layout = primary
 
 ## Eigene Zusatzklassen im Carousel-Slider
 TCEFORM.tx_bootstrappackage_carousel_item.header_class.addItems{

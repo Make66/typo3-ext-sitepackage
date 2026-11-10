@@ -1,3 +1,9 @@
+## VERALTET – diese Datei wird NICHT geladen und hat keine Wirkung.
+## Sie ist weder in ext_localconf.php noch in einem Site Set eingebunden; die Import-Pfade
+## unten zeigen zudem auf "TsConfig" statt "TSConfig" (bootstrappackage_carousel.tsconfig fehlt ganz).
+## Aktuelle Datei (von TYPO3 automatisch geladen): EXT:sitepackage/Configuration/page.tsconfig
+## Details: EXT:sitepackage/Documentation/Frames.md
+
 @import 'EXT:sitepackage/Configuration/TsConfig/Page/pages.tsconfig'
 @import 'EXT:sitepackage/Configuration/TsConfig/Page/tt_content.tsconfig'
 @import 'EXT:sitepackage/Configuration/TsConfig/Page/bootstrappackage_carousel.tsconfig'

@@ -266,6 +266,66 @@ the end of `.offcanvas-body`). Without these partials bk2k's stock navigation
 renders, which lacks the offcanvas markup, the accessibility toggle and the
 level-3 collapse buttons that `_navigation-dropdown-level3-toggle.scss` styles.
 
+**pl2 navigation:** pl2 has its own `MainNavigation.html` and
+`MainNavigationDropDown.html`.
+
+- **Items with children:** Level-1 and level-2 items with children are
+  rendered as a single `<button>`, not as a link.
+  - A level-1 button opens its dropdown (`data-bs-auto-close="outside"`).
+  - A level-2 button (`.nav-link-dropdown.nav-link-toggle`) collapses its
+    level-3 list. The whole row is clickable.
+  - The pages behind these items are therefore not linked from the main
+    menu. If needed, editors add the overview page as the first child item.
+- **No mega dropdown:** bk2k's switch to a `mega` dropdown when a child has
+  its own children is removed. Every dropdown is `simple` (one column), and
+  level 3 expands downwards inside it.
+- **Level 3 must be loaded:** the site needs
+  `page.theme.mainnavigation.levels: 3`.
+
+`pl2.scss` §3, desktop part:
+
+- The menu is right-aligned (`.navbar-nav { justify-content: flex-end }`).
+- The dropdowns of the last two level-1 items open from the right edge, so
+  they don't overflow the container.
+- On a level-1 button, the chevron sits `.55rem` after the text.
+- Simple dropdowns have a fixed width of `20rem`, so expanding level 3 does
+  not widen them. Long titles wrap. `min-width: 0` is needed because the
+  global `_navigation-dropdown-width.scss` sets `min-width: max-content`.
+- Level-1 dropdowns open on hover only.
+  - `.navbar-nav > .nav-item > .dropdown-menu` is hidden by default. This
+    overrides Bootstrap's `.show` (after a click) and the global
+    `:focus-within`.
+  - A dropdown shows on `:hover` or `:has(:focus-visible)`. A mouse click
+    doesn't count as keyboard focus, so the dropdown closes as soon as the
+    mouse leaves, but it stays reachable by keyboard.
+  - The `:hover` and `:has()` selectors must be two separate rules. A
+    browser without `:has()` support drops a whole selector list, and the
+    dropdown would then not open on hover either.
+  - Level 3 still opens by clicking the level-2 button.
+- Below `lg`, buttons (`button.nav-link`) span the full width and their
+  chevron is pushed to the right edge (`margin-left: auto`).
+- While the mouse is over a level-1 item, all other dropdowns are hidden
+  (`.navbar-nav:hover > .nav-item:not(:hover) > .dropdown-menu`).
+  - Without this rule, the global `_navigation-dropdown-hover.scss` keeps a
+    dropdown open through `:focus-within` after a click inside it, or through
+    Bootstrap's `.show`, so two dropdowns would be visible at once.
+  - Keyboard use without hover is unaffected.
+- The level-3 list is forced to a single grid column.
+- The level-2 button keeps the level-2 link's hover fill,
+  with the chevron pushed to the right.
+- Level-3 links are indented. The menu has no horizontal separator lines.
+
+**pl2 taken over from pl0:**
+
+- **Menu hover:** menu links turn `$primary` on hover, with no background fill.
+- **Article cards** (`.apicodo-card--article`, §5): flat, with a `$primary`
+  top bar (4px, 7px on hover), no lift or shadow, and a 16:9 image. Date and
+  „Weiterlesen“ use pl0's uppercase label style, but at `.95rem` instead of
+  `.8rem`. The „Weiterlesen“ rules are prefixed with `#page-content` to beat
+  the ID-based link rules in §2. Event rows keep the pl2 look.
+- **Footer headings** (§13): pl0's label style (uppercase, 600,
+  letter-spacing). The font size still comes from the h3/h4/h5 rules.
+
 **Creating a new variant plN from pl0:**
 
 1. Copy `Theme/pl0.scss` to `Theme/plN.scss`, rename the `$pl0-*` variables
@@ -284,8 +344,8 @@ does not work: Bootstrap's `300 !default` also replaces a `null`, and bk2k's
 theme offers no hook after Bootstrap's variables. Each layout therefore sets
 `hN.awesome, .hN.awesome { font-weight }` to the weight its own `hN` rule
 uses: pl0–pl2 loop over `$h1-font-weight` … `$h6-font-weight` right after
-the `h6` rule; pl3 has no heading rules of its own (bk2k's theme uses
-`$headings-font-weight` for all levels), so it uses `$headings-font-weight`.
+the `h6` rule; pl3 loops over `$pl3-h1-font-weight` … `$pl3-h5-font-weight`
+(section 0a) and keeps `$headings-font-weight` for h6.
 If a layout changes its heading weights, the `.awesome` rule must follow.
 
 ### pl3 — Hechtsheim (modelled on guetersloh.de)
@@ -311,22 +371,60 @@ toolbar while the mobile menu is open" rule anchors on `body:has(…)`.
    footer-meta exceptions in `global.scss` apply as well; the
    `.footer-copyright` links (TYPO3 / Bootstrap Package) are not excepted, as
    in pl2.
+0a. **Headings h1–h5**: pl3 sets colour, weight, line-height and margins,
+   but **no `font-size`**. Sizes stay Bootstrap's (`$h1-font-size` …
+   `$h5-font-size` from the `heading-scale` site setting, RFS in
+   `_reboot.scss`). Values live in the map `$pl3-headings`:
+
+   | Level | Colour | Weight | line-height | margin-top after text | margin-bottom |
+   |---|---|---|---|---|---|
+   | h1 | `$headings-color` (#222) | `$h1-font-weight` | 1.15 | – | 1.25rem |
+   | h2 | `$primary` | `$h2-font-weight` | 1.2 | 2.5rem | .75rem |
+   | h3 | `$headings-color` | `$h2-font-weight` (bold) | 1.25 | 2rem | .5rem |
+   | h4 | `$headings-color` | `$h4-font-weight` | 1.3 | 1.75rem | .5rem |
+   | h5 | `$gray-700` | `$h5-font-weight` | 1.35 | 1.5rem | .5rem |
+
+   Weights follow the `heading-font-weight(-bold)` site settings. The
+   colours are overridable through `$pl3-h1-color` … `$pl3-h5-color`. All
+   levels use `text-wrap: balance`, and h1 uses `letter-spacing: -.01em`.
+   `margin-top` applies only when the heading follows `p`/`ul`/`ol`/`table`/`figure`
+   (same pattern as pl2). h2 is the only level in `$primary`: Podelzig's
+   `#e64625` reaches about 4.0 : 1 on white, which passes WCAG AA only for
+   large text. The subheader (`.element-subheader` with its `hN` class) uses
+   `$pl3-subheader-color` (`$gray-600`), the regular weight and `margin-top: -.25rem`.
+   Inside `frame-background-primary`/`-secondary`/`-tertiary`/`-quaternary`/`-dark`,
+   `.carousel` and `#page-footer`, headings and subheaders take `color: inherit`.
+   The container list sits in `:where()`, so the footer's own `.element-header`
+   colour and the primary-/secondary-light rule (section 9) still win.
+   Exception: apicodo renders its card and event titles as `hN.h5`
+   (`.apicodo-card .card-title`, `.apicodo-event-tile__title`). These stay
+   `$headings-color` (#222) instead of the grey `.h5` colour. Plain h5/.h5
+   stays `$pl3-h5-color`.
 1. **Icon Group as tiles** (`.icongroup`, bk2k's IconGroup element —
    the one actually used for "Schnellzugriff"): every `.icongroup-item` is a
    white box, icon top left, header below, regardless of the element's
-   icon-position setting. The header link gets a `::after` over the whole
+   icon-position setting. Exceptions inside the frame
+   `startpage-quicklinks`: with icon position `left-center`
+   (`.icongroup-iconposition-left-center`) the tile is a row again, icon on
+   the left, text beside it, vertically centred. With icon position `above`
+   (`.icongroup-iconposition-above`) icon, header and text are centred
+   (icon `align-self: center`, text `align-self: stretch` + `text-align:
+   center`). The header link gets a `::after` over the whole
    tile, so the tile is clickable. Column widths stay bk2k's.
 2. **News cards** (`.apicodo-card--pl3-news`, like the news tiles on
    guetersloh.de): apicodo's `Article/Card.html` renders its own `pl3`
    section. The `.card-img-top` sits inside a 4:3 `.apicodo-card__media` box
    and fills it (`width`/`height: 100%`), which overrides the 16:9 from
    apicodo's `Card.css`. Image 4:3 (`object-fit: cover`, grey area when
-   there is no image), a white body with the title, below it the date as
+   there is no image), a white body (padding `1.75rem 2.5rem 2.25rem`,
+   below `md` `1.25rem 1.25rem 1.5rem`) with the title, below it the date as
    `d.m.Y` in `$gray-600` (`.apicodo-card__date`), the summary, and a visible
    "Weiterlesen" link in `$secondary` as the `stretched-link`. On hover the
    whole card lifts like pl2's `card-hover` (`$card-hover-lift`,
    `$card-shadow-hover`, `$transition` from `_layout-variables`); the image
-   does not scale.
+   does not scale. Card Group items (`.card-group-element-item .card`) share
+   the same surface and hover: no border, `$pl3-news-shadow`, on hover/focus
+   lift by `$card-hover-lift` with `$pl3-news-shadow-hover`.
 3. **Apicodo events as cards** (`.apicodo-event-list` / `.apicodo-event-row`,
    like "Veranstaltungen"): CSS only on apicodo's `Event/Row.html` — the list
    becomes a grid, the row a column (image first via `order`, date badge on
@@ -358,7 +456,10 @@ toolbar while the mobile menu is open" rule anchors on `body:has(…)`.
    because the `$primary` panel needs light text. bk2k's rotated chevron is
    replaced by a +/− drawn from `::before`/`::after` (minus when the level-1
    link has `.show` or a level-2 toggle has `aria-expanded="true"`). Mega
-   dropdown grids collapse to one column. The backdrop is white at 70 %.
+   dropdown grids collapse to one column. Below `$grid-float-breakpoint`
+   page icons in the panel (`.nav-link-icon`, e.g. the search item) are
+   filled with `currentColor` (so they follow `$pl3-nav-color` and the
+   hover/active accent) and keep `.5rem` extra distance to the text. The backdrop is white at 70 %.
    Selectors use classes only (`.navbar-mainnavigation .offcanvas …`,
    no ID), so a mandant's `custom.scss` (loaded after pl3) can override them
    with an equally or more specific class selector. The faint
@@ -390,38 +491,71 @@ toolbar while the mobile menu is open" rule anchors on `body:has(…)`.
    Heading sizes (all widths): carousel headers carry `.awesome`, which bk2k
    `@extend`s to Bootstrap's `.display-N` (up to 5rem). The editor picks
    h1–h4 in the backend (`header_layout`), so pl3 sizes them per level from
-   the map `$pl3-carousel-header-sizes` (h1 `clamp(2rem, 4vw, 3.5rem)`, h2
-   `clamp(1.75rem, 3.25vw, 3rem)`, h3 `clamp(1.5rem, 2.5vw, 2.5rem)`, h4
-   `clamp(1.25rem, 2vw, 2rem)`), selector `.carousel hN.carousel-header`,
-   which beats `hN.awesome`. The subheader (also `.awesome`) is a small bold
-   uppercase label of `$pl3-carousel-subheader-size` (1.1rem). Both bk2k
+   the map `$pl3-carousel-header-sizes` (h1 `clamp(1.75rem, 3.25vw, 3rem)`, h2
+   `clamp(1.5rem, 2.75vw, 2.5rem)`, h3 `clamp(1.3rem, 2.1vw, 2.1rem)`, h4
+   `clamp(1.15rem, 1.7vw, 1.7rem)`, h5 `clamp(1.05rem, 1.35vw, 1.35rem)`, h6
+   `clamp(1rem, 1.15vw, 1.15rem)`), selector `.carousel hN.carousel-header`,
+   which beats `hN.awesome`. The subheader (`subheader_layout`) uses the same
+   map per level (`hN.carousel-subheader` / `hN.carousel-item-subheader`). Slide layout "dark" (`.carousel-item-layout-dark`)
+   drops the coloured box (no background, padding, radius, blur or shadow),
+   sets the text and headings to white, and lets `.carousel-text-inner` run at
+   full width (`max-width: none`). The "fade" background image option
+   (`.carousel-backgroundimage-fade`) uses opacity `.25` instead of bk2k's
+   `.125`. Apart from its size, the subheader keeps bk2k's defaults. Both bk2k
    class sets are covered (`carousel-header`/`-subheader` in
-   Header/TextAndImage, `carousel-item-header`/`-subheader` in Text).
+   Header/TextAndImage, `carousel-item-header`/`-subheader` in Text/CallToAction).
 
-   Text slides from `md` up: `header`, `text_and_image` and
+   Prev/next arrows (`.carousel-control-prev-icon`/`-next-icon`): Bootstrap's
+   filled chevrons are replaced by the same chevron drawn as a stroke
+   (`$pl3-carousel-control-prev-icon`/`-next-icon`), line width
+   `$pl3-carousel-control-stroke` (2 in a 16-unit viewBox, Bootstrap's is
+   about 1), colour `$carousel-control-color`.
+
+   Text slides (all widths): `header`, `text`, `text_and_image` and
    `call_to_action` items share one box (mixin `pl3-carousel-box`, applied
    to `.carousel-text-inner`, `.carousel-text` and `.carousel-box`):
    vertically centred on the left, max `$pl3-carousel-text-max-width`
-   (40rem), `$pl3-carousel-box-bg` (default `$primary` at 85 %),
+   (35rem), `$pl3-carousel-box-bg` (default `$primary` at 85 %),
    `$pl3-carousel-box-color` (white), `$pl3-carousel-box-padding`,
    `$pl3-carousel-box-radius` (default `$border-radius`), slight
-   `backdrop-filter: blur` and shadow. Children lose their margins and are
-   spaced by `gap: .75rem` instead; the subheader is moved above the header
-   via `order: -1`. This replaces bk2k's centred 80 % / 65 % header text and
+   `backdrop-filter: blur` and shadow. Below `md` the box spans the full
+   content width (`max-width: none`) with the smaller
+   `$pl3-carousel-box-padding-mobile` (1.5rem 1.25rem); otherwise it looks
+   the same as on desktop. Side margins on mobile match the page container:
+   below `sm` `.carousel-content-inner` gets `padding-inline:
+   $grid-gutter-width / 2` (bk2k leaves it at 0 there, its `max-width`
+   steps only start at `sm`), and below `md` the extra
+   `--carousel-control-width` padding bk2k puts on `text_and_image` items
+   (`.frame .carousel-item-type-text_and_image`) is reset, so every slide
+   type has the same distance to the edge. Children lose their margins and are
+   spaced by `gap: .75rem` instead. This replaces bk2k's centred 80 % / 65 % header text and
    its white 50 % call-to-action box. The centring area ends
    `$pl3-carousel-text-bottom` (4rem) above the bottom edge for the
-   indicators. The call-to-action button (`.carousel-item-button`, bk2k
+   indicators (from `md`; below it the box is just centred). The call-to-action button (`.carousel-item-button`, bk2k
    renders `btn-primary`) would vanish on the `$primary` box, so it gets a
    `button-variant` in `$pl3-carousel-box-color` with `$primary` text
-   (hover `$gray-200`, active `$gray-300`). `text` items get the same
-   left-aligned 40rem column without the box (they have the item layout's
-   background) and stay vertically centred. Bodytext is `1.125rem`, cut
+   (hover `$gray-200`, active `$gray-300`). Slides with item layout `custom`
+   (class `carousel-item-layout-custom`, set by bk2k from the `layout` field)
+   get a light box instead: `$pl3-carousel-box-custom-bg` (default white at
+   85 %) and `$pl3-carousel-box-custom-color` (default `$black`). Headings and
+   plain links inherit that colour, so the black text wins even if the editor
+   set a custom text colour (`--carousel-item-color`) on the slide. The
+   call-to-action button turns back into a `$primary` button with white text
+   (hover/active `shade-color` 15 %/20 %). All other layouts (`primary` is the
+   default for new slides, see `TCAdefaults` in `Configuration/page.tsconfig`)
+   keep the `$primary` box. `text` items get the box too, on top of the
+   item layout's background (with layout `primary` the box sits on a
+   `$primary` slide and stands out mainly by its shadow); unlike the other
+   types they keep bk2k's vertical centring without the
+   `$pl3-carousel-text-bottom` offset. Bodytext is `1.125rem`, cut
    after three lines. A linked slide is wrapped in `a.carousel-content-link`,
    which gets `height: 100%` so the alignment still works. `text_and_image`
-   items split text and image 50/50 from `md`, 5/12 and 7/12 from `lg` up,
+   items split text and image 50/50 from `md`, 5/12 and 7/12 from `lg` up;
+   below `md` the image is hidden so the box can take the full width (bk2k
+   would show it from `sm`),
    the image at most 80 % of the slide height (`object-fit: contain`).
 6. **A11y toolbar in the header, burger size**: see `A11yToolbar.md`
-   ("Positions"). The burger lines are 45 × 4 px, ±12 px apart; the brand gets
+   ("Positions"). The burger lines are 45 × 4 px, ±12 px apart (button 3rem, below `$grid-float-breakpoint` 45px wide); the brand gets
    `align-self: center`, because bk2k's `.container-mainnavigation` sets
    `align-items: unset !important` and the 3rem toggler/toolbar make the row
    taller than the brand.
@@ -436,10 +570,38 @@ toolbar while the mobile menu is open" rule anchors on `body:has(…)`.
    such as `frame-background-light`) starts at the carousel's bottom edge.
    Otherwise the background lies under the carousel and shows through the
    half-transparent slides during `carousel-fade` transitions.
-8. **Footer**: rules like pl2 / Kleinich.
-9. **Frame background "primary light"** (`.frame-background-primary-light`,
-   see `$frame-backgrounds`): headings h1–h6 (and `.h1`–`.h6`) are `$primary`,
-   except `.apicodo-event-tile__title`, which keeps its own color.
+8. **Footer**: rules like pl2 / Kleinich. h5 headings (`h5`, `.h5`) are
+   `$pl3-footer-h5-size` (1.18rem) instead of the heading scale's h5.
+8b. **Panel header size** (`.card-panel h1.card-header` … `h6.card-header`):
+   bk2k's `_cardpanel.scss` pins `.card-panel .card-header` to
+   `font-size: 1rem !important`, which ignores the `header_layout` chosen in
+   the backend. pl3 gives each level its own size from the compact map
+   `$pl3-panel-header-sizes` (fixed, `!important`; the extra element selector
+   beats bk2k's `!important`): h1 1.7rem, h2 1.5rem, h3 1.35rem, h4 1.2rem,
+   h5 1.1rem, h6 1rem. The full heading scale would be too large in a panel header,
+   but the levels stay distinguishable. A mandant can override the map.
+   **Accordion** works the same way: the backend's `subitems_header_layout`
+   renders `<hN class="accordion-header">`, but Bootstrap's `_accordion.scss`
+   gives `.accordion-button` `font-size: $font-size-base` (1.2rem on
+   Wasserliesch/Podelzig via the `font-size-base` site setting), so every
+   level looked the same. pl3 sizes
+   `.accordion hN.accordion-header .accordion-button` from
+   `$pl3-accordion-header-sizes`, which defaults to `$pl3-panel-header-sizes`.
+   No `!important` is needed, because the selector beats Bootstrap's
+   `.accordion-button`.
+9. **Frame backgrounds "primary light" / "secondary light"**
+   (`.frame-background-primary-light` / `.frame-background-secondary-light`,
+   see `$frame-backgrounds`): headings h1–h6 (and `.h1`–`.h6`) are `$primary`
+   or `$secondary`, except `.apicodo-event-tile__title`, which keeps its own color.
+10. **Breadcrumb** (bk2k's markup and `/` separator, otherwise like the
+    pl1/pl2 shortening): always one line (`flex-wrap: nowrap`). When space
+    runs out, items are cut with "…": the first item ("Startseite") never
+    shrinks, middle levels shrink first (`flex-shrink: 2`), the current page
+    last (`1`). Below `md` the breadcrumb is `.875rem`. Below `sm` the linked
+    first item shows only a house icon (`$icon-home` as mask in
+    `currentColor`); its text stays for screen readers (`visually-hidden`).
+    On the start page itself the first item is the current page without a
+    link, so it keeps its text.
 
 ### Variables injected by bk2k
 
@@ -496,17 +658,19 @@ without `!default` and therefore beats the injected setting in theme, global
 and custom — but the layout compile never sees it, so the page would mix two
 values. Values covered by a setting belong in the site settings only.
 
-### Element background "primary light"
+### Element backgrounds "primary light" / "secondary light"
 
 The backend's element background (`tt_content.background_color_class`)
-offers an extra "primary light" (`primary-light`, added in
-`Configuration/page.tsconfig`). `_layout-variables.scss` defines
-`$primary-light` (`mix(#fff, $primary, 85%)`) and passes it to bk2k through
-`$frame-backgrounds`, whose own `map-merge` adds it to primary/secondary/…,
-so the theme compile emits `.frame-background-primary-light` with the same
-frame-collapsing rules as the built-in colours. Text and link colours stay
-the frame defaults. A mandant can set its own `$primary-light` in its
-`_variables.scss`. The `demo` template's `theme.scss` does not import
+offers an extra "primary light" (`primary-light`) and "secondary light"
+(`secondary-light`), both added in `Configuration/page.tsconfig`.
+`_layout-variables.scss` defines `$primary-light` (`mix(#fff, $primary, 85%)`)
+and `$secondary-light` (`mix(#fff, $secondary, 85%)`) and passes them to bk2k
+through `$frame-backgrounds`, whose own `map-merge` adds them to
+primary/secondary/…, so the theme compile emits
+`.frame-background-primary-light` and `.frame-background-secondary-light` with
+the same frame-collapsing rules as the built-in colours. Text and link colours
+stay the frame defaults. A mandant can set its own `$primary-light` /
+`$secondary-light` in its `_variables.scss`. The `demo` template's `theme.scss` does not import
 `_layout-variables` and therefore has no such class.
 
 ### Footer meta bar

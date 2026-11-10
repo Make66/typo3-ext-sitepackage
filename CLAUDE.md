@@ -29,7 +29,8 @@ the typography/navigation/breadcrumb/cards/footer site settings), `Fonts.md`
 (mega-menu depth), `StickyHeader.md` (the shrinking-header JS),
 `Calendarize.md` (optional `lochmueller/calendarize`: template overrides and
 the month view category filter and colors, site setting `sitepackage.calendarize.*`),
-`Categories.md` (the `sys_category.tx_sitepackage_color` field: setup, editor
+`Frames.md` (own `frame_class` frames: where the backend list comes from, CSS per frame,
+load order/specificity vs. the pl0–pl3 layout files; also extra backend options such as icon_group 5/6 columns), `Categories.md` (the `sys_category.tx_sitepackage_color` field: setup, editor
 steps, where it is used),
 `RouteEnhancers.md` (speaking URLs: `Configuration/Routes/*.yaml` imported per
 site, limited to marked pages via `sitepackagePluginPage()`, site settings

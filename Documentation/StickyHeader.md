@@ -95,6 +95,34 @@ didn't fully work.
    trackpad's momentum tail), so it only actually fires for what it was
    built for.
 
+## Layout pl3: shrinking on mobile too
+
+bk2k keeps the header height the same in both states below
+`$grid-float-breakpoint` (`.navbar-transition` sets
+`--mainnavigation-nav-height` to the `xs` value, 70px, which is also the
+expanded mobile height) and only animates the navbar from the breakpoint up.
+`pl3.scss` section 6 sets `--mainnavigation-nav-height` to
+`$pl3-nav-height-mobile-shrunk` (56px) on `.navbar-transition` below the
+breakpoint. bk2k derives the navbar's top/bottom padding from that variable,
+and pl3's mobile logo limit (`nav-height - 20px`) does too, so the header
+loses 14px and the logo goes from 50px to 36px. Padding and the logo's
+`max-height` get a `.27s` transition with bk2k's desktop easing
+(`$pl3-nav-transition`).
+The script itself needs no change: it already reacts to `touchmove`.
+
+Header heights in pl3 (`--mainnavigation-nav-height`):
+
+| | expanded | `.navbar-transition` |
+|---|---|---|
+| below `$grid-float-breakpoint` | 70px (bk2k `xs`–`md`) | `$pl3-nav-height-mobile-shrunk` 56px |
+| from `$grid-float-breakpoint` | `$pl3-nav-height-desktop` 90px (instead of bk2k's 100/110px) | 70px (bk2k) |
+
+On desktop the logo is limited to bk2k's `nav-height * .65` (about 58px
+expanded, 45px shrunk). bk2k's desktop `.navbar { transition: all … }` only
+animates the navbar itself, so pl3 gives the logo's `max-height` the same
+`$pl3-nav-transition` on all widths. `prefers-reduced-motion: reduce` switches
+the navbar and logo transitions off on all widths.
+
 ## Current design
 
 Threshold and per-input handling both live in the script; only the shape of

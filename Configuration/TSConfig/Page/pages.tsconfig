@@ -1,7 +1,6 @@
-TCEFORM.pages.layout {
-    addItems {
-        4 = Hintergrundbild
-        5 = Hintergrundbild (transparent)
-        6 = Eventseite
-    }
-}
+## VERALTET – diese Datei wird NICHT geladen und hat keine Wirkung.
+## Sie wird nur von Configuration/TSConfig/page.tsconfig importiert, die selbst nirgends
+## eingebunden ist (zudem falscher Pfad "TsConfig" statt "TSConfig").
+## Aktuelle Datei für Seiten-Layouts (TCEFORM.pages.layout): EXT:sitepackage/Configuration/page.tsconfig
+## Details: EXT:sitepackage/Documentation/Frames.md
+

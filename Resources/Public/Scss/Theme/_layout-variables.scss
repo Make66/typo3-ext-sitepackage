@@ -214,11 +214,13 @@ $box-colors: (
   light:     (#f1f3f5, #222)
 ) !default;
 
-// Zusätzliche Element-Hintergrundfarbe "primary light" (frame-background-primary-light),
-// Auswahl im Backend über page.tsconfig.
+// Zusätzliche Element-Hintergrundfarben "primary light" / "secondary light"
+// (frame-background-primary-light / -secondary-light), Auswahl im Backend über page.tsconfig.
 $primary-light: mix(#fff, $primary, 85%) !default;
+$secondary-light: mix(#fff, $secondary, 85%) !default;
 $frame-backgrounds: (
-  'primary-light': ('background': $primary-light)
+  'primary-light': ('background': $primary-light),
+  'secondary-light': ('background': $secondary-light)
 ) !default;
 
 

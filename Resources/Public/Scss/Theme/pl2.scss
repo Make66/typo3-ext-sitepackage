@@ -303,6 +303,50 @@ strong { font-weight: 900; }
 
 .dropdown-menu { box-shadow: none; border: 0; }
 
+.navbar-mainnavigation button.nav-link {
+  background: none;
+  border: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.navbar-mainnavigation .dropdown-nav button.nav-link:not(.nav-link-toggle) { width: 100%; }
+
+.navbar-mainnavigation .navbar-nav > .nav-item.nav-style-simple {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  > .nav-link-main { flex: 1 1 auto; min-width: 0; }
+  > .dropdown-menu { flex: 0 0 100%; }
+}
+
+.navbar-mainnavigation .nav-link-main-toggle,
+.navbar-mainnavigation .nav-link-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0;
+  color: inherit;
+}
+.navbar-mainnavigation .nav-link-main-toggle > .nav-link-indicator { display: block; }
+.navbar-mainnavigation .nav-link-main-toggle[aria-expanded="true"] > .nav-link-indicator::before { transform: rotate(45deg); }
+
+.navbar-mainnavigation .nav-link-indicator::before {
+  border-top-width: 2px;
+  border-left-width: 2px;
+  padding: .3em 0 0 .3em;
+}
+
+.navbar-mainnavigation .nav-link {
+  .nav-link-text { transition: color $transition; }
+
+  &:hover,
+  &:hover .nav-link-text { color: $primary; }
+}
+
 // Externe Links im Menü (Desktop, Dropdown und Offcanvas)
 .navbar-mainnavigation .nav-link {
   @include external {
@@ -326,12 +370,13 @@ strong { font-weight: 900; }
     .nav-link-dropdown:focus-visible { outline-offset: -3px; }
 
     // Hauptebene: Unterstrich-Animation
-    .navbar-nav > li > .nav-link {
+    .navbar-nav > li > .nav-link-main {
       position: relative;
 
       .nav-link-text {
         position: relative;
         display: inline-block;
+        white-space: nowrap;
 
         &::after {
           content: "";
@@ -354,6 +399,35 @@ strong { font-weight: 900; }
     .nav-link-indicator { display: none; }
 
     .dropdown-menu li { padding: 0; }
+
+    .navbar-nav { justify-content: flex-end; }
+
+    .navbar-nav > .nav-item:nth-last-child(-n+2) > .dropdown-menu {
+      left: auto;
+      right: 0;
+    }
+
+    .navbar-nav > .nav-item.nav-style-simple {
+      flex-wrap: nowrap;
+      > .nav-link-main { flex: 0 1 auto; padding-right: .15rem; }
+      > .nav-link-main-toggle { min-width: 1.5rem; margin-right: .5rem; }
+    }
+
+    .navbar-nav .dropdown-menu-simple { width: 20rem; min-width: 0; }
+
+    .navbar-nav > .nav-item > .dropdown-menu { display: none; }
+
+    .navbar-nav > .nav-item:hover > .dropdown-menu,
+    .navbar-nav > .nav-item > .dropdown-menu.show { display: block; }
+    .navbar-nav > .nav-item:has(:focus-visible) > .dropdown-menu { display: block; }
+
+    .navbar-nav:hover > .nav-item:not(:hover) > .dropdown-menu { display: none; }
+
+    .navbar-nav > .nav-item:hover > .nav-link-main-toggle > .nav-link-indicator::before,
+    .navbar-nav > .nav-item:has(:focus-visible) > .nav-link-main-toggle > .nav-link-indicator::before { transform: rotate(45deg); }
+    .navbar-nav:hover > .nav-item:not(:hover) > .nav-link-main-toggle > .nav-link-indicator::before { transform: rotate(-135deg); }
+
+    .dropdown-nav[data-level="3"] { grid-template-columns: 1fr; }
   }
 
   .dropdown-menu {
@@ -363,14 +437,17 @@ strong { font-weight: 900; }
     .nav-link-text::after { display: none; }
 
     .nav-link.nav-link-dropdown {
-      border-bottom: 1px solid $primary;
-      transition: background-color $transition, color $transition;
       &::after { display: none; }
 
       &:hover {
-        background-color: $navbar-active-color;
-        .nav-link-text { color: #fff; }
+        background-color: transparent;
+        color: $primary;
+        .nav-link-text { color: $primary; }
       }
+    }
+
+    .dropdown-nav[data-level="3"] .nav-link.nav-link-dropdown {
+      padding-left: 1.5rem;
     }
   }
 
@@ -392,16 +469,139 @@ strong { font-weight: 900; }
   }
 }
 
+.navbar-mainnavigation .navbar-brand-image img {
+  transition: max-height .27s cubic-bezier(0, 0, .58, 1);
+}
+
+// ---------- Header-Höhe Desktop ----------
+@include media-breakpoint-up(lg) {
+  .navbar-mainnavigation:not(.navbar-transition) { --mainnavigation-nav-height: 90px; }
+}
+
+// ---------- Einzeiliger Header (ab xxl): Logo 60px, vertikal mittig ----------
+@include media-breakpoint-up(xxl) {
+  .navbar.navbar-mainnavigation {
+    padding-top: calc((var(--mainnavigation-nav-height) - var(--mainnavigation-link-height)) / 2);
+    padding-bottom: calc((var(--mainnavigation-nav-height) - var(--mainnavigation-link-height)) / 2);
+  }
+  .navbar.navbar-mainnavigation:not(.navbar-transition) .navbar-brand-image img { max-height: 60px; }
+}
+
+// ---------- Zweizeiliger Header (lg bis unter xxl) ----------
+@include media-breakpoint-between(lg, xxl) {
+  .navbar.navbar-mainnavigation {
+    padding-top: .5rem;
+    padding-bottom: 0;
+  }
+
+  .navbar-mainnavigation > .container { flex-wrap: wrap; }
+
+  .navbar-mainnavigation .navbar-brand {
+    height: auto;
+    padding-bottom: .5rem;
+  }
+  .navbar-mainnavigation .navbar-brand-image img {
+    top: auto;
+    transform: none;
+  }
+  .navbar.navbar-mainnavigation:not(.navbar-transition) .navbar-brand-image img { max-height: 48px; }
+
+  .navbar-mainnavigation .navbar-collapse {
+    flex: 0 0 100%;
+    padding: .25rem 0;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .navbar-mainnavigation .navbar-nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
 // ---------- Mobil / Offcanvas (unter lg) ----------
 @include media-breakpoint-down(lg) {
 
+  .navbar-mainnavigation button.nav-link:not(.nav-link-toggle):not(.nav-link-main-toggle) {
+    width: 100%;
+
+    > .nav-link-indicator { margin-left: auto; }
+  }
+
   .navbar-mainnavigation { --mainnavigation-nav-height: 80px; }
+
+  .navbar-mainnavigation {
+    .navbar-nav,
+    .navbar-nav > .nav-item,
+    .dropdown-menu { width: 100%; }
+
+    .navbar-nav > .nav-item.nav-style-simple > .nav-link-main,
+    .nav-item-has-subnav-toggle > .nav-link-dropdown {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .nav-link-main-toggle,
+    .nav-link-toggle {
+      flex: 0 0 auto;
+      margin-left: auto;
+    }
+
+    .dropdown-nav { grid-template-columns: minmax(0, 1fr); }
+
+    .navbar-nav > .nav-item.nav-style-simple,
+    .nav-item-has-subnav-toggle { position: relative; }
+
+    .navbar-nav > .nav-item > .nav-link-main-toggle,
+    .nav-item-has-subnav-toggle > .nav-link-toggle { position: static; }
+
+    .navbar-nav > .nav-item > .nav-link-main-toggle::after,
+    .nav-item-has-subnav-toggle > .nav-link-toggle::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .navbar-nav > .nav-item > .dropdown-menu,
+    .nav-item-has-subnav-toggle > .collapse,
+    .nav-item-has-subnav-toggle > .collapsing {
+      position: relative;
+      z-index: 2;
+    }
+
+    .navbar-nav > .nav-item > .dropdown-menu {
+      display: grid;
+      grid-template-rows: 0fr;
+      padding-block: 0;
+      margin: 0;
+      visibility: hidden;
+      transition: grid-template-rows .35s ease, visibility 0s linear .35s;
+
+      > .dropdown-nav {
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      &.show {
+        grid-template-rows: 1fr;
+        visibility: visible;
+        transition: grid-template-rows .35s ease, visibility 0s linear 0s;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .navbar-nav > .nav-item > .dropdown-menu,
+      .navbar-nav > .nav-item > .dropdown-menu.show { transition: none; }
+    }
+
+    .nav-item:has(> .nav-link-main-toggle:hover) > .nav-link-main .nav-link-text,
+    .nav-item:has(> .nav-link-toggle:hover) > .nav-link-dropdown .nav-link-text { color: $primary; }
+  }
 
   .offcanvas {
     .offcanvas-body { width: 100%; }
 
     .navbar-nav > .nav-item > .nav-link {
-      border-bottom: 1px solid $primary;
       padding: 15px 0;
     }
 
@@ -410,7 +610,6 @@ strong { font-weight: 900; }
       justify-content: space-between;
       align-items: center;
       padding: 5px 0;
-      border-bottom: 1px solid #eee;
       color: $navbar-font-color;
     }
 
@@ -421,10 +620,12 @@ strong { font-weight: 900; }
       font-weight: $navbar-link-dropdown-weight;
     }
 
+    .navbar-nav > .nav-item > .nav-link-main-toggle { padding: 15px 0 15px 1rem; }
+
     .nav-link-indicator::before {
-      border-top: 2px solid currentColor;
-      border-left: 2px solid currentColor;
-      padding: .55em 0 0 .55em;
+      border-top: 2.5px solid currentColor;
+      border-left: 2.5px solid currentColor;
+      padding: .65em 0 0 .65em;
     }
   }
 }
@@ -566,86 +767,81 @@ strong { font-weight: 900; }
   .card-footer { padding: 0 20px 20px; background: transparent; border: 0; }
 }
 
-// ---------- Apicodo Artikelkarten ----------
+// ---------- Apicodo Artikelkarten (Optik von pl0) ----------
 .apicodo {
 
-  .apicodo-card {
+  .apicodo-card--article {
     position: relative;
     height: 100%;
+    box-shadow: none;
+    transition: none;
+
+    .card-title { transition: color $transition; }
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+
+      .card-title { color: $primary; }
+    }
   }
 
-  .apicodo-card .card-img-top {
+  .apicodo-card--article .card-img-top {
     display: block;
     width: 100%;
-    height: unquote("clamp(220px, 20vw, #{$card-image-height})");
+    aspect-ratio: 16 / 9;
+    height: auto;
+    max-height: $card-image-height;
     object-fit: cover;
     border: 0;
-    transition: transform .5s ease;
+    border-radius: 0;
   }
-  .apicodo-card:hover .card-img-top { transform: scale(1.03); }
 
-  .apicodo-card .card-body {
+  .apicodo-card--article .card-body {
     display: flex;
     flex-direction: column;
     padding: $card-pad;
     @include media-breakpoint-down(md) { padding: $card-pad * .85; }
   }
 
-  // Datum mit Marker
-  .apicodo-card .card-subtitle {
-    position: relative;
-    margin-bottom: .75rem !important;
-    padding-left: 1rem;
+  .apicodo-card--article .card-subtitle,
+  #page-content & .apicodo-card--article .stretched-link {
     font-family: $font-family-base;
-    font-weight: 400;
-    line-height: 1.3;
-    color: $primary !important;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: .1em;
-      left: 0;
-      width: 4px;
-      height: 1em;
-      border-radius: 2px;
-      background-color: $primary;
-    }
-  }
-
-  .apicodo-card .card-title {
-    margin-bottom: .75rem;
-    font-family: $headings-font-family;
-    font-size: unquote("clamp(1.2rem, calc(1.1rem + .4vw), #{$card-title-size})");
+    font-size: .95rem;
     font-weight: 600;
     line-height: 1.3;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: $primary !important;
+  }
+
+  .apicodo-card--article .card-subtitle { margin-bottom: .5rem !important; }
+
+  .apicodo-card--article .card-title {
+    margin-bottom: .75rem;
+    font-family: $headings-font-family;
+    font-weight: 700;
+    line-height: 1.25;
     color: $headings-color;
+    @include font-size($card-title-size);
   }
 
-  .apicodo-card .card-text {
-    flex: 1 1 auto;               // schiebt "Weiterlesen" nach unten
-    margin-bottom: 1.5rem;
-    line-height: 1.55;
-    color: $grey;
+  .apicodo-card--article .card-text {
+    flex: 1 1 auto;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    color: #5f6b76;
   }
 
-  // "Weiterlesen": Optik des Links kommt aus Abschnitt 2
-  .apicodo-card .stretched-link {
+  #page-content & .apicodo-card--article .stretched-link {
     display: inline-flex;
     align-items: center;
     width: fit-content;
-    padding: .25rem 0;
-    font-weight: 600;
-    line-height: 1.4;
-    color: $primary;
+    background: none;
   }
-  .apicodo-card:hover .stretched-link {
-    color: $link-hover-color;
-    background-size: 100% 1px;
-    &::before { transform: translateX(3px); }
-  }
+  .apicodo-card--article:hover .stretched-link::before { transform: translateX(3px); }
 
-  h3.card-title { padding: 0; border: 0; margin-bottom: 1.3rem; }
+  h3.card-title { padding: 0; border: 0; }
 }
 
 // ---------- Apicodo Event-Liste ----------
@@ -657,6 +853,12 @@ strong { font-weight: 900; }
 }
 
 .apicodo-event-row__date {
+  background-color: $primary;
+  color: #fff;
+
+  .apicodo-event-row__day,
+  .apicodo-event-row__month { color: #fff; }
+
   min-width: 3rem !important;
   padding: .5rem .2rem !important;
   @include media-breakpoint-up(lg) { min-width: 4.5rem !important; padding: 1rem !important; }
@@ -937,14 +1139,19 @@ strong { font-weight: 900; }
 
 // ============================================================
 // 12. LAYOUT "BOX + BILD"  (frame-layout-box_image_text)
-//    Text in einer Box, die das Bild daneben leicht überlappt.
+//    Bild und Text-Box 50/50, flach: gleich hoch, ohne Überlappung,
+//    gemeinsame abgerundete Außenkanten.
 //    Bild rechts = .textpic-right (Standard), Bild links = .textpic-left
 //    Box-Farbe nach frame-background-primary / -secondary / -light
 // ============================================================
 
+$split-pad:                 3.5rem !default;
+$split-pad-mobile:          1.75rem !default;
+$split-image-height:        26rem !default;
+$split-image-height-mobile: 15rem !default;
+
 .frame-layout-box_image_text {
 
-  // Der Frame selbst bekommt keine Hintergrundfarbe – nur die Box
   --frame-background: transparent;
 
   &,
@@ -953,14 +1160,19 @@ strong { font-weight: 900; }
   .frame-container,
   .frame-inner { background: none; }
 
+  .textmedia,
+  .textpic { gap: 0; }
+
   // ---------- Raster ----------
   .textpic {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);     // mobil: Bild oben, Box darunter
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+    border-radius: $card-radius;
+    overflow: hidden;
 
     @include media-breakpoint-up(lg) {
-      grid-template-columns: minmax(0, #{$box-ratio-text}fr) minmax(0, #{$box-ratio-image}fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
@@ -985,30 +1197,26 @@ strong { font-weight: 900; }
       display: block;
       width: 100%;
       height: 100%;
-      min-height: $box-image-height-mobile;
+      min-height: $split-image-height-mobile;
       object-fit: cover;
-      border-radius: $card-radius;
+      border-radius: 0;
 
-      @include media-breakpoint-up(lg) { min-height: $box-image-height; }
+      @include media-breakpoint-up(lg) { min-height: $split-image-height; }
     }
   }
 
   // ---------- Box ----------
   .textpic-text {
-    position: relative;
-    z-index: 2;
-    padding: $box-pad-mobile;
-    margin: (-$box-overlap-mobile) 1rem 0;     // mobil: ragt nach oben ins Bild
-    border-radius: $card-radius;
-    box-shadow: $card-shadow-hover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: $split-pad-mobile;
 
-    // Standard (ohne Hintergrund-Auswahl) = light
     background: nth(map-get($box-colors, light), 1);
     color: nth(map-get($box-colors, light), 2);
 
-    @include media-breakpoint-up(lg) { padding: $box-pad; }
+    @include media-breakpoint-up(lg) { padding: $split-pad; }
 
-    // Inhalt der Box übernimmt die Textfarbe der Box
     :is(h1, h2, h3, h4, h5, h6) {
       color: inherit;
       border-color: unquote("color-mix(in srgb, currentColor 35%, transparent)");
@@ -1018,7 +1226,6 @@ strong { font-weight: 900; }
     p:last-child { margin-bottom: 0; }
   }
 
-  // Farben je Hintergrund (Box-Farbe + Textfarbe)
   @each $name, $pair in $box-colors {
     &.frame-background-#{$name} .textpic-text {
       background: nth($pair, 1);
@@ -1026,22 +1233,18 @@ strong { font-weight: 900; }
     }
   }
 
-  // ---------- Desktop: Box und Bild nebeneinander, Box überlappt ----------
+  // ---------- Desktop: Bild rechts (Standard) / Bild links ----------
   @include media-breakpoint-up(lg) {
 
     .textpic-gallery,
     .textpic-text { grid-row: 1; }
 
-    // Bild rechts (Standard)
-    .textpic-text    { grid-column: 1; margin: 0 (-$box-overlap) 0 0; }
+    .textpic-text    { grid-column: 1; }
     .textpic-gallery { grid-column: 2; }
 
-    // Bild links
     .textpic-left {
-      grid-template-columns: minmax(0, #{$box-ratio-image}fr) minmax(0, #{$box-ratio-text}fr);
-
       .textpic-gallery { grid-column: 1; }
-      .textpic-text    { grid-column: 2; margin: 0 0 0 (-$box-overlap); }
+      .textpic-text    { grid-column: 2; }
     }
   }
 }
@@ -1056,7 +1259,16 @@ strong { font-weight: 900; }
   color: $page-footer-color;
   padding-bottom: 2rem;
 
-  .element-header { color: $page-footer-color-header; border: 0; }
+  .element-header {
+    margin-bottom: 1rem;
+    font-family: $font-family-base;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: $page-footer-color-header;
+    border: 0;
+  }
 }
 
 #page-footer {
@@ -1064,6 +1276,6 @@ strong { font-weight: 900; }
 
   .table > :not(caption) > * > * { background-color: transparent; color: #fff; }
 
-  .icongroup { --icongroup-icon-size: 20px; --icongroup-gap: 20px; }
+  .icongroup { --icongroup-icon-size: 20px; --icongroup-gap: 10px; }
   .icongroup-item-text-header { font-size: 1em; font-family: $font-footer; }
 }

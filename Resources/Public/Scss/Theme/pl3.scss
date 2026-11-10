@@ -16,6 +16,15 @@ $navbar-active-color-default: #333;
 // bootstrap_package's own variables layer — needed for $grid-float-breakpoint.
 @import "EXT:bootstrap_package/Resources/Public/Scss/bootstrap5/_variables";
 
+// Card-Titel (News + Event-Kachel): 1.3rem Desktop, fluid bis 1.15rem auf Mobil
+$pl3-card-title-size:     1.3rem !default;
+$pl3-card-title-size-min: 1.15rem !default;
+$pl3-card-title-fluid: unquote("clamp(#{$pl3-card-title-size-min}, calc(1rem + .4vw), #{$pl3-card-title-size})");
+
+// News-Cards: zweilagiger Schatten (Kontur + Tiefe), damit sie sich auf Weiß abheben
+$pl3-news-shadow:       0 1px 3px rgba(#000, .10), 0 .25rem 1rem rgba(#000, .14) !default;
+$pl3-news-shadow-hover: 0 2px 6px rgba(#000, .12), 0 .75rem 2rem rgba(#000, .22) !default;
+
 
 
 // ============================================================
@@ -63,6 +72,69 @@ $navbar-active-color-default: #333;
     -webkit-mask: url($icon) no-repeat center / contain;
     mask: url($icon) no-repeat center / contain;
   }
+}
+
+
+// ============================================================
+// 0a. ÜBERSCHRIFTEN h1–h5 (Größen aus Bootstrap / heading-scale)
+// ============================================================
+$pl3-h1-color:          $headings-color !default;
+$pl3-h2-color:          $primary !default;
+$pl3-h3-color:          $headings-color !default;
+$pl3-h4-color:          $headings-color !default;
+$pl3-h5-color:          $gray-700 !default;
+$pl3-subheader-color:   $gray-600 !default;
+
+$pl3-h1-font-weight:    $h1-font-weight !default;
+$pl3-h2-font-weight:    $h2-font-weight !default;
+$pl3-h3-font-weight:    $h2-font-weight !default;
+$pl3-h4-font-weight:    $h4-font-weight !default;
+$pl3-h5-font-weight:    $h5-font-weight !default;
+
+$pl3-headings: (
+  1: (color: $pl3-h1-color, weight: $pl3-h1-font-weight, line-height: 1.15, margin-top: 0,       margin-bottom: 1.25rem),
+  2: (color: $pl3-h2-color, weight: $pl3-h2-font-weight, line-height: 1.2,  margin-top: 2.5rem,  margin-bottom: .75rem),
+  3: (color: $pl3-h3-color, weight: $pl3-h3-font-weight, line-height: 1.25, margin-top: 2rem,    margin-bottom: .5rem),
+  4: (color: $pl3-h4-color, weight: $pl3-h4-font-weight, line-height: 1.3,  margin-top: 1.75rem, margin-bottom: .5rem),
+  5: (color: $pl3-h5-color, weight: $pl3-h5-font-weight, line-height: 1.35, margin-top: 1.5rem,  margin-bottom: .5rem),
+) !default;
+
+@each $level, $h in $pl3-headings {
+  h#{$level},
+  .h#{$level} {
+    margin-bottom: map-get($h, margin-bottom);
+    color: map-get($h, color);
+    font-weight: map-get($h, weight);
+    line-height: map-get($h, line-height);
+    text-wrap: balance;
+  }
+
+  @if map-get($h, margin-top) != 0 {
+    :is(p, ul, ol, table, figure) + :is(h#{$level}, .h#{$level}) {
+      margin-top: map-get($h, margin-top);
+    }
+  }
+}
+
+h1,
+.h1 {
+  letter-spacing: -.01em;
+}
+
+.element-subheader:is(h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5) {
+  margin-top: -.25rem;
+  color: $pl3-subheader-color;
+  font-weight: $h5-font-weight;
+}
+
+$pl3-headings-inherit: ".frame-background-primary, .frame-background-secondary, .frame-background-tertiary, .frame-background-quaternary, .frame-background-dark, .carousel, #page-footer";
+
+:where(#{$pl3-headings-inherit}) :is(h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5) {
+  color: inherit;
+}
+
+:where(#{$pl3-headings-inherit}) .element-subheader.element-subheader {
+  color: inherit;
 }
 
 
@@ -187,21 +259,94 @@ $navbar-active-color-default: #333;
   }
 }
 
+.frame-startpage-quicklinks .icongroup-iconposition-left-center .icongroup-item {
+  flex-direction: row;
+  align-items: center;
+}
+
+.frame-startpage-quicklinks .icongroup-iconposition-above {
+  .icongroup-item-icon {
+    align-self: center;
+  }
+
+  .icongroup-item-text {
+    align-self: stretch;
+    text-align: center;
+  }
+}
+
+.frame-startpage-quicklinks :is(.icongroup-iconposition-left-top, .icongroup-iconposition-above) {
+  @include media-breakpoint-down(sm) {
+    .icongroup-item {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .icongroup-item-icon {
+      align-self: center;
+    }
+
+    .icongroup-item-text {
+      align-self: auto;
+      text-align: left;
+    }
+  }
+}
+
+.frame-startpage-quicklinks .icongroup:not(
+  .icongroup-iconposition-left-center,
+  .icongroup-iconposition-left-top,
+  .icongroup-iconposition-above
+):is(
+  .icongroup-columns-2,
+  .icongroup-columns-3,
+  .icongroup-columns-4,
+  .icongroup-columns-5,
+  .icongroup-columns-6
+) {
+  .icongroup-item {
+    min-width: 0;
+  }
+
+  .icongroup-item-text {
+    min-width: 0;
+    hyphens: auto;
+    overflow-wrap: anywhere;
+  }
+
+  @include media-breakpoint-down(sm) {
+    .icongroup-item {
+      width: calc((100% - var(--icongroup-gap)) / 2);
+      padding: 1.25rem .75rem;
+    }
+  }
+
+  &.icongroup-columns-3 .icongroup-item {
+    @include media-breakpoint-between(sm, md) {
+      width: calc((100% - var(--icongroup-gap)) / 2);
+    }
+  }
+}
+
 
 // ============================================================
 // 2. NEWS-CARDS (Artikel): Bild 4:3, Datum unter dem Titel
 // ============================================================
-.apicodo-card--pl3-news {
+.apicodo-card--pl3-news,
+.card-group-element-item .card {
   overflow: hidden;
   border: 0;
-  box-shadow: 0 .125rem .75rem rgba($black, .08);
+  box-shadow: $pl3-news-shadow;
   transition: transform $transition, box-shadow $transition;
 
   &:hover,
   &:focus-within {
     transform: translateY($card-hover-lift);
-    box-shadow: $card-shadow-hover;
+    box-shadow: $pl3-news-shadow-hover;
   }
+}
+
+.apicodo-card--pl3-news {
 
   .apicodo-card__media {
     position: relative;
@@ -219,10 +364,15 @@ $navbar-active-color-default: #333;
 
   .card-body {
     padding: 1.75rem 2.5rem 2.25rem;
+
+    @include media-breakpoint-down(md) {
+      padding: 1.25rem 1.25rem 1.5rem;
+    }
   }
 
   .card-title {
     margin-bottom: .5rem;
+    font-size: $pl3-card-title-fluid;
     font-weight: $font-weight-bold;
   }
 
@@ -256,6 +406,16 @@ $navbar-active-color-default: #333;
 // ============================================================
 // 3. APICODO-EVENTS ALS CARDS
 // ============================================================
+// Event-Slider-Kachel: (0,2,0) schlägt .h5
+.apicodo-event-tile .apicodo-event-tile__title {
+  color: $headings-color;
+  font-size: $pl3-card-title-fluid;
+}
+
+.apicodo-card .card-title {
+  color: $headings-color;
+}
+
 .apicodo-event-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
@@ -505,6 +665,16 @@ $pl3-nav-dropdown-font-size: 1.2rem !default;
     display: none;
   }
 
+  @media (max-width: #{$grid-float-breakpoint - .02}) {
+    .nav-link-icon {
+      margin-right: .5rem;
+
+      svg {
+        fill: currentColor;
+      }
+    }
+  }
+
   .nav-link-text {
     font-family: $navbar-family;
     font-weight: $font-weight-bold;
@@ -604,10 +774,10 @@ body .offcanvas-backdrop {
 // ============================================================
 // 5b. ÜBERSCHRIFTEN ".awesome"
 // ============================================================
-@for $i from 1 through 6 {
-  h#{$i}.awesome,
-  .h#{$i}.awesome {
-    font-weight: $headings-font-weight;
+@each $level, $weight in (1: $pl3-h1-font-weight, 2: $pl3-h2-font-weight, 3: $pl3-h3-font-weight, 4: $pl3-h4-font-weight, 5: $pl3-h5-font-weight, 6: $headings-font-weight) {
+  h#{$level}.awesome,
+  .h#{$level}.awesome {
+    font-weight: $weight;
   }
 }
 
@@ -623,24 +793,33 @@ $pl3-carousel-small-height-md:  400px !default;
 $pl3-carousel-small-height-lg:  460px !default;
 $pl3-carousel-small-height-xl:  520px !default;
 $pl3-carousel-small-height-xxl: 560px !default;
-$pl3-carousel-text-max-width:   40rem !default;
+$pl3-carousel-text-max-width:   35rem !default;
 $pl3-carousel-text-bottom:      4rem !default;
 $pl3-carousel-box-bg:           rgba($primary, .85) !default;
 $pl3-carousel-box-color:        $white !default;
 $pl3-carousel-box-padding:      2rem 2.5rem !default;
+$pl3-carousel-box-padding-mobile: 1.5rem 1.25rem !default;
+$pl3-carousel-box-custom-bg:    rgba($white, .85) !default;
+$pl3-carousel-box-custom-color: $black !default;
 $pl3-carousel-box-radius:       $border-radius !default;
-$pl3-carousel-subheader-size:   1.1rem !default;
+$pl3-carousel-control-stroke:   2 !default;
+$pl3-carousel-control-prev-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$carousel-control-color}' stroke-width='#{$pl3-carousel-control-stroke}' stroke-linecap='round' stroke-linejoin='round'><path d='M11 2 5 8l6 6'/></svg>") !default;
+$pl3-carousel-control-next-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$carousel-control-color}' stroke-width='#{$pl3-carousel-control-stroke}' stroke-linecap='round' stroke-linejoin='round'><path d='M5 2l6 6-6 6'/></svg>") !default;
 $pl3-carousel-header-sizes: (
-  1: clamp(2rem, 4vw, 3.5rem),
-  2: clamp(1.75rem, 3.25vw, 3rem),
-  3: clamp(1.5rem, 2.5vw, 2.5rem),
-  4: clamp(1.25rem, 2vw, 2rem),
+  1: clamp(1.75rem, 3.25vw, 3rem),
+  2: clamp(1.5rem, 2.75vw, 2.5rem),
+  3: clamp(1.3rem, 2.1vw, 2.1rem),
+  4: clamp(1.15rem, 1.7vw, 1.7rem),
+  5: clamp(1.05rem, 1.35vw, 1.35rem),
+  6: clamp(1rem, 1.15vw, 1.15rem),
 ) !default;
 
 .carousel {
   @each $level, $size in $pl3-carousel-header-sizes {
     h#{$level}.carousel-header,
-    h#{$level}.carousel-item-header {
+    h#{$level}.carousel-item-header,
+    h#{$level}.carousel-subheader,
+    h#{$level}.carousel-item-subheader {
       font-size: $size;
     }
   }
@@ -650,15 +829,15 @@ $pl3-carousel-header-sizes: (
     margin-bottom: .75rem;
     line-height: 1.1;
   }
+}
 
-  .carousel-subheader,
-  .carousel-item-subheader {
-    margin-bottom: .5rem;
-    font-size: $pl3-carousel-subheader-size;
-    font-weight: $font-weight-bold;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    opacity: .85;
+.carousel {
+  .carousel-control-prev-icon {
+    background-image: escape-svg($pl3-carousel-control-prev-icon);
+  }
+
+  .carousel-control-next-icon {
+    background-image: escape-svg($pl3-carousel-control-next-icon);
   }
 }
 
@@ -695,74 +874,152 @@ $pl3-carousel-header-sizes: (
   }
 }
 
-@include media-breakpoint-up(md) {
-  .carousel {
-    .carousel-item-type-header,
-    .carousel-item-type-text_and_image {
-      .carousel-content-link {
-        display: block;
-        height: 100%;
-      }
+.carousel {
+  @include media-breakpoint-down(sm) {
+    .carousel-content-inner {
+      padding-inline: calc(#{$grid-gutter-width} / 2);
     }
+  }
 
-    .carousel-item-type-header,
-    .carousel-item-type-text_and_image,
-    .carousel-item-type-call_to_action {
-      .carousel-content-inner {
-        align-items: center;
+  @include media-breakpoint-down(md) {
+    .carousel-item-type-text_and_image {
+      padding-inline: 0;
+    }
+  }
+
+  .carousel-item-type-header,
+  .carousel-item-type-text_and_image {
+    .carousel-content-link {
+      display: block;
+      height: 100%;
+    }
+  }
+
+  .carousel-item-type-header,
+  .carousel-item-type-text_and_image,
+  .carousel-item-type-call_to_action {
+    .carousel-content-inner {
+      align-items: center;
+
+      @include media-breakpoint-up(md) {
         padding-bottom: $pl3-carousel-text-bottom;
       }
     }
+  }
 
-    .carousel-item-type-header .carousel-text-inner,
-    .carousel-item-type-text_and_image .carousel-text,
-    .carousel-item-type-call_to_action .carousel-box {
-      @include pl3-carousel-box;
+  .carousel-item-type-header .carousel-text-inner,
+  .carousel-item-type-text .carousel-text-inner,
+  .carousel-item-type-text_and_image .carousel-text,
+  .carousel-item-type-call_to_action .carousel-box {
+    @include pl3-carousel-box;
+
+    @include media-breakpoint-down(md) {
+      max-width: none;
+      padding: $pl3-carousel-box-padding-mobile;
     }
+  }
 
-    .carousel-item-type-text .carousel-text-inner {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      max-width: $pl3-carousel-text-max-width;
-      margin: 0;
-    }
-
-    .carousel-item-type-text_and_image {
-      .carousel-text,
-      .carousel-image {
+  .carousel-item-type-text_and_image {
+    .carousel-text,
+    .carousel-image {
+      @include media-breakpoint-up(md) {
         flex: 0 1 50%;
       }
     }
 
-    .carousel-item-type-call_to_action .carousel-item-button {
+    .carousel-image {
+      @include media-breakpoint-down(md) {
+        display: none;
+      }
+    }
+  }
+
+  .carousel-item-type-call_to_action .carousel-item-button {
+    @include button-variant(
+      $pl3-carousel-box-color,
+      $pl3-carousel-box-color,
+      $primary,
+      $hover-background: $gray-200,
+      $hover-border: $gray-200,
+      $hover-color: $primary,
+      $active-background: $gray-300,
+      $active-border: $gray-300,
+      $active-color: $primary
+    );
+    align-self: flex-start;
+    margin-top: .25rem;
+  }
+
+  .carousel-item-bodytext {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 1.125rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .carousel-item-layout-custom {
+    &.carousel-item-type-header .carousel-text-inner,
+    &.carousel-item-type-text .carousel-text-inner,
+    &.carousel-item-type-text_and_image .carousel-text,
+    &.carousel-item-type-call_to_action .carousel-box {
+      color: $pl3-carousel-box-custom-color;
+      background-color: $pl3-carousel-box-custom-bg;
+
+      h1, h2, h3, h4, h5, h6,
+      .carousel-header,
+      .carousel-subheader,
+      .carousel-item-header,
+      .carousel-item-subheader,
+      a:not(.btn) {
+        color: inherit;
+      }
+    }
+
+    &.carousel-item-type-call_to_action .carousel-item-button {
       @include button-variant(
-        $pl3-carousel-box-color,
-        $pl3-carousel-box-color,
         $primary,
-        $hover-background: $gray-200,
-        $hover-border: $gray-200,
-        $hover-color: $primary,
-        $active-background: $gray-300,
-        $active-border: $gray-300,
-        $active-color: $primary
+        $primary,
+        $white,
+        $hover-background: shade-color($primary, 15%),
+        $hover-border: shade-color($primary, 15%),
+        $hover-color: $white,
+        $active-background: shade-color($primary, 20%),
+        $active-border: shade-color($primary, 20%),
+        $active-color: $white
       );
-      align-self: flex-start;
-      margin-top: .25rem;
+    }
+  }
+
+  .carousel-item-layout-dark {
+    &.carousel-item-type-header .carousel-text-inner,
+    &.carousel-item-type-text .carousel-text-inner,
+    &.carousel-item-type-text_and_image .carousel-text,
+    &.carousel-item-type-call_to_action .carousel-box {
+      padding: 0;
+      color: $white;
+      background-color: transparent;
+      border-radius: 0;
+      backdrop-filter: none;
+      box-shadow: none;
+
+      h1, h2, h3, h4, h5, h6,
+      .carousel-header,
+      .carousel-subheader,
+      .carousel-item-header,
+      .carousel-item-subheader,
+      a:not(.btn) {
+        color: inherit;
+      }
     }
 
-    .carousel-subheader,
-    .carousel-item-subheader {
-      order: -1;
+    .carousel-text-inner {
+      max-width: none;
     }
+  }
 
-    .carousel-item-bodytext {
-      display: -webkit-box;
-      overflow: hidden;
-      font-size: 1.125rem;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
-    }
+  .carousel-backgroundimage-fade {
+    opacity: .25;
   }
 }
 
@@ -792,14 +1049,57 @@ $pl3-carousel-header-sizes: (
 // 6. A11Y-LEISTE IM HEADER, BURGER-LINIEN
 // ============================================================
 $a11y-item-bg: #e9ecef !default;
+$pl3-nav-height-desktop: 90px !default;
+$pl3-nav-height-mobile-shrunk: 56px !default;
+$pl3-nav-transition: .27s cubic-bezier(0, 0, .58, 1) !default;
+
+.container-mainnavigation {
+  gap: 0 1rem;
+}
 
 .navbar-mainnavigation .navbar-brand {
   align-self: center;
 }
 
+@media (min-width: $grid-float-breakpoint) {
+  .navbar-mainnavigation:not(.navbar-transition) {
+    --mainnavigation-nav-height: #{$pl3-nav-height-desktop};
+  }
+
+  .navbar-mainnavigation .navbar-brand-image img {
+    transition: max-height $pl3-nav-transition;
+  }
+}
+
+@media (max-width: #{$grid-float-breakpoint - .02}) {
+  .navbar-mainnavigation {
+    transition: padding $pl3-nav-transition;
+
+    &.navbar-transition {
+      --mainnavigation-nav-height: #{$pl3-nav-height-mobile-shrunk};
+    }
+  }
+
+  .navbar-mainnavigation .navbar-brand-image img {
+    max-height: calc(var(--mainnavigation-nav-height) - 20px);
+    transition: max-height $pl3-nav-transition;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar-mainnavigation,
+  .navbar-mainnavigation .navbar-brand-image img {
+    transition: none;
+  }
+}
+
 .navbar-mainnavigation .navbar-toggler {
   width: 3rem;
   height: 3rem;
+
+  @media (max-width: #{$grid-float-breakpoint - .02}) {
+    width: 45px;
+  }
 
   .navbar-toggler-icon,
   .navbar-toggler-icon::before,
@@ -840,6 +1140,10 @@ body #a11y-window {
     align-items: center;
     margin-right: 1rem;
     padding-right: 0;
+
+    @media (max-width: #{$grid-float-breakpoint - .02}) {
+      margin-right: 0;
+    }
   }
 
   .a11y-item,
@@ -856,6 +1160,15 @@ body #a11y-window {
     svg {
       width: 2.5rem;
       height: 2.5rem;
+    }
+
+    @media (max-width: #{$grid-float-breakpoint - .02}) {
+      min-width: 2.75rem;
+
+      svg {
+        width: 2rem;
+        height: 2rem;
+      }
     }
 
     &:hover svg {
@@ -995,8 +1308,10 @@ $pl3-search-icon:      url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2
 
 
 // ============================================================
-// 8. FOOTER (Regeln wie pl2 / Kleinich)
+// 8. FOOTER 
 // ============================================================
+$pl3-footer-h5-size: 1.18rem !default;
+
 .footer-section-content {
   background-color: $page-footer-background;
   color: $page-footer-color;
@@ -1010,8 +1325,10 @@ $pl3-search-icon:      url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2
 
   .table > :not(caption) > * > * { background-color: transparent; color: #fff; }
 
-  .icongroup { --icongroup-icon-size: 20px; --icongroup-gap: 20px; }
+  .icongroup { --icongroup-icon-size: 20px; --icongroup-gap: 10px; }
   .icongroup-item-text-header { font-size: 1em; font-family: $font-footer; }
+
+  :is(h5, .h5) { font-size: $pl3-footer-h5-size; }
 
   // Unterstreichung für alle Links außer Buttons / Menü / Icon-Grafiken
   a[href]:not(.btn):not(.nav-link):not(.page-link):not(.icongroup-item-icon a) {
@@ -1047,8 +1364,96 @@ $pl3-search-icon:      url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2
 
 
 // ============================================================
+// 8b. PANEL + ACCORDION: Überschrift in der Größe aus header_layout / subitems_header_layout
+// ============================================================
+$pl3-panel-header-sizes: (1: 1.7rem, 2: 1.5rem, 3: 1.35rem, 4: 1.2rem, 5: 1.1rem, 6: 1rem) !default;
+
+@each $level, $size in $pl3-panel-header-sizes {
+  .card-panel h#{$level}.card-header {
+    font-size: $size !important;
+  }
+}
+
+$pl3-accordion-header-sizes: $pl3-panel-header-sizes !default;
+
+@each $level, $size in $pl3-accordion-header-sizes {
+  .accordion h#{$level}.accordion-header .accordion-button {
+    font-size: $size;
+  }
+}
+
+
+// ============================================================
 // 9. FRAME-HINTERGRUND "PRIMARY LIGHT": Überschriften in $primary
 // ============================================================
 .frame-background-primary-light {
   :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6):not(.apicodo-event-tile__title) { color: $primary; }
+}
+
+.frame-background-secondary-light {
+  :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6):not(.apicodo-event-tile__title) { color: $secondary; }
+}
+
+
+// ============================================================
+// 10. BREADCRUMB: EINE ZEILE, MOBIL GEKUERZT
+// ============================================================
+.breadcrumb {
+  flex-wrap: nowrap;
+
+  li {
+    white-space: nowrap;
+  }
+
+  .breadcrumb-item {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .breadcrumb-item:first-child {
+    flex: 0 0 auto;
+    overflow: visible;
+  }
+
+  .breadcrumb-item:not(:first-child):not(.active) {
+    flex: 0 2 auto;
+  }
+
+  .breadcrumb-item.active {
+    flex: 0 1 auto;
+  }
+
+  .breadcrumb-item:not(:first-child) .breadcrumb-link,
+  .breadcrumb-item.active .breadcrumb-link-title {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @include media-breakpoint-down(md) {
+    font-size: .875rem;
+  }
+
+  @include media-breakpoint-down(sm) {
+    .breadcrumb-item:first-child .breadcrumb-link {
+      display: inline-flex;
+      align-items: center;
+
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 1.1rem;
+        height: 1.1rem;
+        background-color: currentColor;
+        -webkit-mask: url("#{$icon-home}") no-repeat center / contain;
+        mask: url("#{$icon-home}") no-repeat center / contain;
+      }
+    }
+
+    .breadcrumb-item:first-child .breadcrumb-link .breadcrumb-text {
+      @include visually-hidden;
+    }
+  }
 }
