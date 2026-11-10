@@ -9,6 +9,16 @@ upgrade/cleanup console commands. Every site in this project depends on it.
 We comment in docs, not in code. Explanation belongs in `Documentation/`, not
 inline comments — see the pinned project-wide memory on this.
 
+## Source of truth and testing
+
+The source of truth lives in `~/github/typo3-ext-sitepackage/`. Make all edits
+there. Testing happens in `~/dev/ddev/t3v14/`. The playground version is
+symlinked (`vendor/taketool/sitepackage`) and does not require a sync.
+
+## Git
+
+Always `git add` every new file you create (no commit unless asked).
+
 ## Content elements and plugins
 
 | CType | Kind | Notes |
@@ -35,6 +45,7 @@ steps, where it is used),
 `RouteEnhancers.md` (speaking URLs: `Configuration/Routes/*.yaml` imported per
 site, limited to marked pages via `sitepackagePluginPage()`, site settings
 `sitepackage.routing.*`),
+`ChatbotPage.md` (page type 1730: reduced HTML for chatbot fetch),
 `SchemaOrg.md` (JSON-LD structured data: organization/website/breadcrumb from site settings
 `sitepackage.schema.*`, `Person` in the Contact templates), `A11yToolbar.md` (opt-in Barrierefreiheits-Leiste, site settings
 `sitepackage.a11y.*`), `IconSet.md` (own bootstrap_package icon set from

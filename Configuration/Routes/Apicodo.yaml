@@ -1,0 +1,121 @@
+# See Documentation/RouteEnhancers.md
+routeEnhancers:
+  Sitemap:
+    aspects:
+      sitemap:
+        map:
+          apicodoArticles: apicodoArticles
+          apicodoArticleEvents: apicodoArticleEvents
+          apicodoCalendarEvents: apicodoCalendarEvents
+          apicodoSnips: apicodoSnips
+          apicodoSnipEvents: apicodoSnipEvents
+  ApicodoArticles:
+    type: Extbase
+    limitToPages:
+      - 'sitepackagePluginPage("apicodo")'
+    extension: Apicodo
+    plugin: Articles
+    routes:
+      - routePath: '/{item}'
+        _controller: 'Articles::show'
+        _arguments:
+          item: 'article'
+    defaultController: 'Articles::index'
+    aspects:
+      item:
+        type: ApicodoItem
+        kind: 'articles'
+      articles_label:
+        type: LocaleModifier
+        default: 'article'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'artikel'
+  ApicodoArticleEvents:
+    type: Extbase
+    limitToPages:
+      - 'sitepackagePluginPage("apicodo")'
+    extension: Apicodo
+    plugin: ArticleEvents
+    routes:
+      - routePath: '/{item}'
+        _controller: 'ArticleEvents::show'
+        _arguments:
+          item: 'article'
+    defaultController: 'ArticleEvents::index'
+    aspects:
+      item:
+        type: ApicodoItem
+        kind: 'articleevents'
+      articleevents_label:
+        type: LocaleModifier
+        default: 'event'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'veranstaltung'
+  ApicodoCalendarEvents:
+    type: Extbase
+    limitToPages:
+      - 'sitepackagePluginPage("apicodo")'
+    extension: Apicodo
+    plugin: CalendarEvents
+    routes:
+      - routePath: '/{item}'
+        _controller: 'CalendarEvents::show'
+        _arguments:
+          item: 'event'
+    defaultController: 'CalendarEvents::index'
+    aspects:
+      item:
+        type: ApicodoItem
+        kind: 'calendarevents'
+      calendarevents_label:
+        type: LocaleModifier
+        default: 'appointment'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'termin'
+  ApicodoSnips:
+    type: Extbase
+    limitToPages:
+      - 'sitepackagePluginPage("apicodo")'
+    extension: Apicodo
+    plugin: Snips
+    routes:
+      - routePath: '/{item}'
+        _controller: 'Snips::show'
+        _arguments:
+          item: 'snip'
+    defaultController: 'Snips::index'
+    aspects:
+      item:
+        type: ApicodoItem
+        kind: 'snips'
+      snips_label:
+        type: LocaleModifier
+        default: 'topic'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'thema'
+  ApicodoSnipEvents:
+    type: Extbase
+    limitToPages:
+      - 'sitepackagePluginPage("apicodo")'
+    extension: Apicodo
+    plugin: SnipEvents
+    routes:
+      - routePath: '/{item}'
+        _controller: 'SnipEvents::show'
+        _arguments:
+          item: 'snip'
+    defaultController: 'SnipEvents::index'
+    aspects:
+      item:
+        type: ApicodoItem
+        kind: 'snipevents'
+      snipevents_label:
+        type: LocaleModifier
+        default: 'notice'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'meldung'
