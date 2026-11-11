@@ -1432,24 +1432,32 @@ $pl3-accordion-header-sizes: $pl3-panel-header-sizes !default;
     white-space: nowrap;
   }
 
+  // Haus-Symbol vor "Startseite" (immer sichtbar, wie bei pl2)
+  .breadcrumb-item:first-child .breadcrumb-link {
+    display: inline-flex;
+    align-items: center;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      flex: 0 0 auto;
+      width: 1.1rem;
+      height: 1.1rem;
+      margin-right: .4rem;
+      background-color: currentColor;
+      -webkit-mask: url("#{$icon-home}") no-repeat center / contain;
+      mask: url("#{$icon-home}") no-repeat center / contain;
+    }
+  }
+
   @include media-breakpoint-down(md) {
     font-size: .875rem;
   }
 
+  // Mobil: nur das Haus-Symbol, Text bleibt für Screenreader erhalten
   @include media-breakpoint-down(sm) {
-    .breadcrumb-item:first-child .breadcrumb-link {
-      display: inline-flex;
-      align-items: center;
-
-      &::before {
-        content: "";
-        display: inline-block;
-        width: 1.1rem;
-        height: 1.1rem;
-        background-color: currentColor;
-        -webkit-mask: url("#{$icon-home}") no-repeat center / contain;
-        mask: url("#{$icon-home}") no-repeat center / contain;
-      }
+    .breadcrumb-item:first-child .breadcrumb-link::before {
+      margin-right: 0;
     }
 
     .breadcrumb-item:first-child .breadcrumb-link .breadcrumb-text {
