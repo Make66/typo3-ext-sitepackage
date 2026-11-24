@@ -27,8 +27,34 @@
                         </config>
                     </settings.pluginType>
 
-                    <settings.persons>
+                    <settings.listSource>
+                        <onChange>reload</onChange>
                         <displayCond>FIELD:settings.pluginType:=:list</displayCond>
+                        <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.listSource</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0">
+                                    <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.listSource.persons</label>
+                                    <value>persons</value>
+                                </numIndex>
+                                <numIndex index="1">
+                                    <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.listSource.categories</label>
+                                    <value>categories</value>
+                                </numIndex>
+                            </items>
+                            <default>persons</default>
+                        </config>
+                    </settings.listSource>
+
+                    <settings.persons>
+                        <displayCond>
+                            <and>
+                                <numIndex index="0">FIELD:settings.pluginType:=:list</numIndex>
+                                <numIndex index="1">FIELD:settings.listSource:!=:categories</numIndex>
+                            </and>
+                        </displayCond>
                         <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.persons</label>
                         <config>
                             <type>group</type>
@@ -39,7 +65,12 @@
                     </settings.persons>
 
                     <settings.categories>
-                        <displayCond>FIELD:settings.pluginType:=:list</displayCond>
+                        <displayCond>
+                            <and>
+                                <numIndex index="0">FIELD:settings.pluginType:=:list</numIndex>
+                                <numIndex index="1">FIELD:settings.listSource:=:categories</numIndex>
+                            </and>
+                        </displayCond>
                         <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.categories</label>
                         <description>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.categories.description</description>
                         <config>

@@ -36,8 +36,10 @@ two reasons:
 FlexForm fields, same `settings.pluginType` list/show switch as `taketool/fewo`'s
 own `Fewo` plugin uses (`packages/fewo/CLAUDE.md`):
 
-- **List mode**: `settings.categories` (a `category` tree picker, zero or more
-  categories, stored as a comma-separated uid list), `settings.persons` (a
+- **List mode**: `settings.listSource` (`persons` / `categories`, reloads the
+  form and shows only the matching picker), `settings.categories` (a `category`
+  tree picker, zero or more categories, stored as a comma-separated uid list),
+  `settings.persons` (a
   `group` picker on `tx_sitepackage_domain_model_contact`, like tsa's own
   `settings.persons`) — see "Choosing which contacts a list shows" below,
   `settings.displayMode` (`single` wide cards / `multiple` grid, like tsa's
@@ -108,12 +110,20 @@ category, see the next section.
 
 ## Choosing which contacts a list shows
 
-A list-mode plugin has two sources, and exactly one of them is used:
+A list-mode plugin has two sources, and `settings.listSource` picks exactly one
+of them. The FlexForm shows only the picker that belongs to the selected source.
+A value left in the hidden picker stays in the FlexForm XML, but
+`ContactController::listSource()` ignores it, so the two sources never mix.
 
-| `settings.categories` | Contacts shown | Order |
+| `settings.listSource` | Contacts shown | Order |
 |---|---|---|
-| one or more categories | every non-hidden contact assigned to **at least one** of them (OR, not AND); `settings.persons` is ignored | organisation (`department_text`), then last name, first name (`findByAnyCategory()`) — an alphabetical directory, the way the Wasserliesch source lists were sorted |
-| none | the contacts picked in `settings.persons` | the editor's pick order (`findByUidsInOrder()`) |
+| `categories` | every non-hidden contact assigned to **at least one** of the `settings.categories` (OR, not AND) | organisation (`department_text`), then last name, first name (`findByAnyCategory()`) — an alphabetical directory, the way the Wasserliesch source lists were sorted |
+| `persons` (default) | the contacts picked in `settings.persons` | the editor's pick order (`findByUidsInOrder()`) |
+
+Records created before `settings.listSource` existed have no value for it. For
+those, the controller falls back to the old rule: `categories` if any category
+is set, `persons` otherwise. Migrations that create contact plugins should
+always write `settings.listSource` explicitly.
 
 The category source is `ContactRepository::findByAnyCategory()`. Like the rest of
 the repository it does not respect storage pages, so a contact appears wherever

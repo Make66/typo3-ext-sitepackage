@@ -18,9 +18,8 @@ final class ContactController extends ActionController
 
     public function indexAction(): ResponseInterface
     {
-        $categoryUids = $this->uidList('categories');
-        $contacts = $categoryUids !== []
-            ? $this->contactRepository->findByAnyCategory($categoryUids)
+        $contacts = $this->listSource() === 'categories'
+            ? $this->contactRepository->findByAnyCategory($this->uidList('categories'))
             : $this->contactRepository->findByUidsInOrder($this->uidList('persons'));
         $displayMode = ($this->settings['displayMode'] ?? 'single') === 'multiple' ? 'multiple' : 'single';
 
@@ -53,6 +52,19 @@ final class ContactController extends ActionController
         ]);
 
         return $this->htmlResponse();
+    }
+
+    /**
+     * @return 'persons'|'categories'
+     */
+    private function listSource(): string
+    {
+        $source = (string)($this->settings['listSource'] ?? '');
+        if ($source === 'persons' || $source === 'categories') {
+            return $source;
+        }
+
+        return $this->uidList('categories') !== [] ? 'categories' : 'persons';
     }
 
     /**
