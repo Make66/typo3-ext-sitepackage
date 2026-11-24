@@ -116,8 +116,9 @@
                                 <numIndex index="1"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.position</label><value>position</value></numIndex>
                                 <numIndex index="2"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.department</label><value>department</value></numIndex>
                                 <numIndex index="3"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.room</label><value>room</value></numIndex>
-                                <numIndex index="4"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.phone</label><value>phone</value></numIndex>
-                                <numIndex index="5"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.email</label><value>email</value></numIndex>
+                                <numIndex index="4"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.address</label><value>address</value></numIndex>
+                                <numIndex index="5"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.phone</label><value>phone</value></numIndex>
+                                <numIndex index="6"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayItems.email</label><value>email</value></numIndex>
                             </items>
                         </config>
                     </settings.displayItems>

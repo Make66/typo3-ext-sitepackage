@@ -82,7 +82,7 @@ final class ContactController extends ActionController
      */
     private function displayItems(): array
     {
-        $keys = ['salutation', 'position', 'department', 'room', 'phone', 'email'];
+        $keys = ['salutation', 'position', 'department', 'room', 'address', 'phone', 'email'];
         $selected = GeneralUtility::trimExplode(',', (string)($this->settings['displayItems'] ?? ''), true);
 
         $items = [];

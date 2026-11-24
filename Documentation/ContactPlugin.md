@@ -31,7 +31,7 @@ two reasons:
 | CType | `sitepackage_contact` |
 | Controller | `ContactController`, actions `index` (list), `show` (detail) |
 | FlexForm | `Configuration/FlexForms/ContactPlugin.xml` |
-| Table | `tx_sitepackage_domain_model_contact` (plain fields: `salutation`, `first_name`, `last_name`, `job_position`, `department_text`, `room`, `phone`, `mobile`, `email`, `website`, `photo` (FAL, max 1), `description` (RTE), `categories` (system categories, see below)) |
+| Table | `tx_sitepackage_domain_model_contact` (plain fields: `salutation`, `first_name`, `last_name`, `job_position`, `department_text`, `room`, `phone`, `mobile`, `fax`, `email`, `website`, `address` (street and house number), `zip`, `city`, `photo` (FAL, max 1), `description` (RTE), `categories` (system categories, see below)) |
 
 FlexForm fields, same `settings.pluginType` list/show switch as `taketool/fewo`'s
 own `Fewo` plugin uses (`packages/fewo/CLAUDE.md`):
@@ -46,8 +46,9 @@ own `Fewo` plugin uses (`packages/fewo/CLAUDE.md`):
   `displayMode`), `settings.singleViewPage` (the detail page a card's "Details"
   link targets, like fewo's `settings.singleViewPage`).
 - **Both modes**: `settings.displayItems` (checkboxes: salutation/position/
-  department/room/phone/email — ported verbatim from tsa's own
-  `displayItems`, same six keys, same meaning).
+  department/room/phone/email, ported from tsa's own `displayItems` with the
+  same meaning, plus `address`, which tsa doesn't have). Nothing checked
+  means everything is shown.
 - **Show mode**: `settings.backToListPage` and `settings.contact` (pin one
   specific contact, overriding whatever `contact` route/request argument a
   visitor's URL carries — the same override tsa's own
@@ -89,9 +90,15 @@ The model exposes this as `Contact::isPerson()` (`{contact.person}`) and
 organisation), used for the image `alt` text. The slug's generator fields are
 `first_name` + (`last_name`, or `department_text` when there is no last name).
 
-Cards render `description` below the communication list. That's where the
-directory migration puts the address, and where it puts data that has no
-field of its own: fax, a second homepage.
+Cards and the detail view render the address (`address`, then `zip` +
+`city`) above the communication list, shown with the `address` display item.
+JSON-LD carries it as a `PostalAddress`. The communication list shows the
+fax after the mobile number, with the `phone` display item (JSON-LD
+`faxNumber`). `description` renders below the communication list. The
+directory migration puts data there that has no field of its own, such as a
+second homepage. Older imports also put the address and fax there;
+`skilledmigration:migrate:contact-fields` moves them into their fields
+(`packages/skilledmigration/Documentation/04_ContactFieldMigration.md`).
 
 ## Categories
 

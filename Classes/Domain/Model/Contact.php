@@ -27,9 +27,17 @@ class Contact extends AbstractEntity
 
     protected string $mobile = '';
 
+    protected string $fax = '';
+
     protected string $email = '';
 
     protected string $website = '';
+
+    protected string $address = '';
+
+    protected string $zip = '';
+
+    protected string $city = '';
 
     protected string $description = '';
 
@@ -141,6 +149,16 @@ class Contact extends AbstractEntity
         $this->mobile = $mobile;
     }
 
+    public function getFax(): string
+    {
+        return $this->fax;
+    }
+
+    public function setFax(string $fax): void
+    {
+        $this->fax = $fax;
+    }
+
     public function getEmail(): string
     {
         return $this->email;
@@ -159,6 +177,36 @@ class Contact extends AbstractEntity
     public function setWebsite(string $website): void
     {
         $this->website = $website;
+    }
+
+    public function getAddress(): string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): void
+    {
+        $this->address = $address;
+    }
+
+    public function getZip(): string
+    {
+        return $this->zip;
+    }
+
+    public function setZip(string $zip): void
+    {
+        $this->zip = $zip;
+    }
+
+    public function getCity(): string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): void
+    {
+        $this->city = $city;
     }
 
     public function getDescription(): string

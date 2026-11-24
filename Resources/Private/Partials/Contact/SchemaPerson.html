@@ -10,6 +10,11 @@
 <f:variable name="ldPosition"><f:if condition="{displayItems.position}">{contact.jobPosition}</f:if></f:variable>
 <f:variable name="ldDepartment"><f:if condition="{displayItems.department}">{contact.departmentText}</f:if></f:variable>
 <f:variable name="ldPhone"><f:if condition="{displayItems.phone}">{contact.phone}</f:if></f:variable>
+<f:variable name="ldAddress"></f:variable>
+<f:if condition="{displayItems.address}">
+    <f:variable name="ldAddress" value="{'@type': 'PostalAddress', streetAddress: contact.address, postalCode: contact.zip, addressLocality: contact.city}" />
+</f:if>
+<f:variable name="ldFax"><f:if condition="{displayItems.phone}">{contact.fax}</f:if></f:variable>
 <f:variable name="ldEmail"><f:if condition="{displayItems.email}">{contact.email}</f:if></f:variable>
 <f:if condition="{contact.person}">
 <f:then>
@@ -21,7 +26,9 @@
     jobTitle: ldPosition,
     worksFor: {'@type': 'Organization', name: ldDepartment},
     telephone: ldPhone,
+    faxNumber: ldFax,
     email: ldEmail,
+    address: ldAddress,
     image: ldImage,
     url: contact.website
 }" />
@@ -31,7 +38,9 @@
     '@type': 'Organization',
     name: contact.departmentText,
     telephone: ldPhone,
+    faxNumber: ldFax,
     email: ldEmail,
+    address: ldAddress,
     logo: ldImage,
     url: contact.website
 }" />

@@ -17,16 +17,20 @@ return [
         'enablecolumns' => [
             'disabled' => 'hidden',
         ],
-        'searchFields' => 'first_name,last_name,job_position,department_text,email',
+        'searchFields' => 'first_name,last_name,job_position,department_text,email,address,city',
         'iconfile' => 'EXT:sitepackage/Resources/Public/Icons/contact.svg',
         'typeicon_classes' => [
             'default' => 'sitepackage-contact',
         ],
     ],
     'palettes' => [
+        'anschrift' => [
+            'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.palette.anschrift',
+            'showitem' => 'address, --linebreak--, zip, city',
+        ],
         'kontakt' => [
             'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.palette.kontakt',
-            'showitem' => 'phone, mobile, --linebreak--, email, website',
+            'showitem' => 'phone, mobile, fax, --linebreak--, email, website',
         ],
     ],
     'types' => [
@@ -35,6 +39,7 @@ return [
                 --div--;LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.tab.allgemeines,
                     salutation, first_name, last_name, --linebreak--, slug, --linebreak--, job_position, department_text, room, photo,
                 --div--;LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.tab.kontakt,
+                    --palette--;;anschrift,
                     --palette--;;kontakt,
                 --div--;LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.tab.beschreibung,
                     description,
@@ -154,6 +159,15 @@ return [
                 'eval' => 'trim',
             ],
         ],
+        'fax' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.fax',
+            'config' => [
+                'type' => 'input',
+                'size' => 20,
+                'eval' => 'trim',
+            ],
+        ],
         'email' => [
             'exclude' => true,
             'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.email',
@@ -165,6 +179,33 @@ return [
         'website' => [
             'exclude' => true,
             'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.website',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim',
+            ],
+        ],
+        'address' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.address',
+            'config' => [
+                'type' => 'input',
+                'size' => 40,
+                'eval' => 'trim',
+            ],
+        ],
+        'zip' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.zip',
+            'config' => [
+                'type' => 'input',
+                'size' => 8,
+                'eval' => 'trim',
+            ],
+        ],
+        'city' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.city',
             'config' => [
                 'type' => 'input',
                 'size' => 30,

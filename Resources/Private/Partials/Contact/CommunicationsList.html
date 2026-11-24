@@ -13,6 +13,12 @@
             <span><a href="tel:{contact.mobile -> f:format.raw()}">{contact.mobile}</a></span>
         </li>
     </f:if>
+    <f:if condition="{displayItems.phone} && {contact.fax}">
+        <li class="d-flex align-items-start gap-2">
+            <i class="fa-solid fa-fax" aria-hidden="true"></i>
+            <span><f:translate key="LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.fax" />: {contact.fax}</span>
+        </li>
+    </f:if>
     <f:if condition="{displayItems.email} && {contact.email}">
         <li class="d-flex align-items-start gap-2">
             <i class="fa-solid fa-envelope" aria-hidden="true"></i>

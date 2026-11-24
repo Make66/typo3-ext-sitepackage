@@ -123,6 +123,18 @@
             <trans-unit id="tx_sitepackage_domain_model_contact.room" xml:space="preserve">
                 <source>Room</source>
             </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.palette.anschrift" xml:space="preserve">
+                <source>Address</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.address" xml:space="preserve">
+                <source>Street and house number</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.zip" xml:space="preserve">
+                <source>ZIP code</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.city" xml:space="preserve">
+                <source>City</source>
+            </trans-unit>
             <trans-unit id="tx_sitepackage_domain_model_contact.photo" xml:space="preserve">
                 <source>Photo</source>
             </trans-unit>
@@ -131,6 +143,9 @@
             </trans-unit>
             <trans-unit id="tx_sitepackage_domain_model_contact.mobile" xml:space="preserve">
                 <source>Mobile</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.fax" xml:space="preserve">
+                <source>Fax</source>
             </trans-unit>
             <trans-unit id="tx_sitepackage_domain_model_contact.email" xml:space="preserve">
                 <source>E-mail</source>
@@ -198,6 +213,9 @@
             </trans-unit>
             <trans-unit id="flexform.displayItems.room" xml:space="preserve">
                 <source>Room</source>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.address" xml:space="preserve">
+                <source>Address</source>
             </trans-unit>
             <trans-unit id="flexform.displayItems.phone" xml:space="preserve">
                 <source>Phone</source>

@@ -21,7 +21,11 @@ CREATE TABLE tx_sitepackage_domain_model_contact (
     room varchar(64) DEFAULT '' NOT NULL,
     phone varchar(64) DEFAULT '' NOT NULL,
     mobile varchar(64) DEFAULT '' NOT NULL,
+    fax varchar(64) DEFAULT '' NOT NULL,
     email varchar(255) DEFAULT '' NOT NULL,
     website varchar(255) DEFAULT '' NOT NULL,
+    address varchar(255) DEFAULT '' NOT NULL,
+    zip varchar(16) DEFAULT '' NOT NULL,
+    city varchar(255) DEFAULT '' NOT NULL,
     description text
 );
