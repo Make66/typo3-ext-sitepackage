@@ -6,7 +6,7 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact',
         'label' => 'last_name',
-        'label_alt' => 'first_name,job_position',
+        'label_alt' => 'first_name,job_position,department_text',
         'label_alt_force' => true,
         'descriptionColumn' => 'description',
         'tstamp' => 'tstamp',
@@ -38,6 +38,8 @@ return [
                     --palette--;;kontakt,
                 --div--;LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.tab.beschreibung,
                     description,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,
+                    categories,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                     hidden,
             ',
@@ -70,7 +72,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim,required',
+                'eval' => 'trim',
             ],
         ],
         'last_name' => [
@@ -79,7 +81,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim,required',
+                'eval' => 'trim',
             ],
         ],
         'slug' => [
@@ -89,7 +91,7 @@ return [
                 'type' => 'slug',
                 'size' => 40,
                 'generatorOptions' => [
-                    'fields' => ['first_name', 'last_name'],
+                    'fields' => ['first_name', ['last_name', 'department_text']],
                     'fieldSeparator' => '-',
                     'prefixParentPageSlug' => false,
                 ],
@@ -178,6 +180,13 @@ return [
                 'cols' => 40,
                 'enableRichtext' => true,
                 'richtextConfiguration' => 'minimal',
+            ],
+        ],
+        'categories' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_category.categories',
+            'config' => [
+                'type' => 'category',
             ],
         ],
     ],

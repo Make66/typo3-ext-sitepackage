@@ -10,7 +10,7 @@ Machine-readable structured data so crawlers and AI agents can read facts
 |---|---|---|
 | Every page (opt-in) | `Organization` (or subtype) and `WebSite` | site settings `sitepackage.schema.*` |
 | Every page below the root | `BreadcrumbList` | current rootline, starting at the site root page (doktype >= 199 skipped) |
-| Contact list cards | `Person` | `Contact` record |
+| Contact list cards | `Person`, or `Organization` for an organisation-only record (see `ContactPlugin.md`) | `Contact` record |
 | Calendarize event detail | `Event` (name, description, start/end, status, location, organizer, image) | `Partials/Calendarize/Event/SchemaEvent.html`, included from `Detail.html` |
 | Contact detail view | `ProfilePage` with `mainEntity` `Person` | `Contact` record |
 

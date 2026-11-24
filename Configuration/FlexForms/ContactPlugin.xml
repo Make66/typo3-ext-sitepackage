@@ -38,6 +38,18 @@
                         </config>
                     </settings.persons>
 
+                    <settings.categories>
+                        <displayCond>FIELD:settings.pluginType:=:list</displayCond>
+                        <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.categories</label>
+                        <description>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.categories.description</description>
+                        <config>
+                            <type>category</type>
+                            <relationship>oneToMany</relationship>
+                            <size>10</size>
+                            <maxitems>99</maxitems>
+                        </config>
+                    </settings.categories>
+
                     <settings.displayMode>
                         <displayCond>FIELD:settings.pluginType:=:list</displayCond>
                         <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayMode</label>

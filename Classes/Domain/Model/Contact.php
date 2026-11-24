@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Taketool\Sitepackage\Domain\Model;
 
+use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -37,9 +38,27 @@ class Contact extends AbstractEntity
      */
     protected ObjectStorage $photo;
 
+    /**
+     * @var ObjectStorage<Category>
+     */
+    protected ObjectStorage $categories;
+
     public function __construct()
     {
         $this->photo = new ObjectStorage();
+        $this->categories = new ObjectStorage();
+    }
+
+    public function isPerson(): bool
+    {
+        return $this->firstName !== '' || $this->lastName !== '';
+    }
+
+    public function getName(): string
+    {
+        return $this->isPerson()
+            ? trim($this->firstName . ' ' . $this->lastName)
+            : $this->departmentText;
     }
 
     public function getSalutation(): string
@@ -168,5 +187,23 @@ class Contact extends AbstractEntity
     public function removePhoto(FileReference $photo): void
     {
         $this->photo->detach($photo);
+    }
+
+    /**
+     * @return ObjectStorage<Category>
+     */
+    public function getCategories(): ObjectStorage
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): void
+    {
+        $this->categories->attach($category);
+    }
+
+    public function removeCategory(Category $category): void
+    {
+        $this->categories->detach($category);
     }
 }

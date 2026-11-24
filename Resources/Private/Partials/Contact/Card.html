@@ -5,25 +5,36 @@
     <f:if condition="{contact.photo}">
         <f:for each="{contact.photo}" as="image" iteration="iterator">
             <f:if condition="{iterator.isFirst}">
-                <f:image image="{image}" class="card-img-top" alt="{contact.firstName} {contact.lastName}" />
+                <f:image image="{image}" class="card-img-top" alt="{contact.name}" />
             </f:if>
         </f:for>
     </f:if>
     <div class="card-body">
         <h3 class="card-title h6">
-            <i class="fa-solid fa-user" aria-hidden="true"></i>
-            <f:if condition="{displayItems.salutation}">{contact.salutation} </f:if>{contact.firstName} {contact.lastName}
+            <f:if condition="{contact.person}">
+                <f:then>
+                    <i class="fa-solid fa-user" aria-hidden="true"></i>
+                    <f:if condition="{displayItems.salutation}">{contact.salutation} </f:if>{contact.firstName} {contact.lastName}
+                </f:then>
+                <f:else>
+                    <i class="fa-solid fa-building" aria-hidden="true"></i>
+                    {contact.departmentText}
+                </f:else>
+            </f:if>
         </h3>
         <f:if condition="{displayItems.position} && {contact.jobPosition}">
             <p class="mb-1 d-flex align-items-start gap-2"><i class="fa-solid fa-id-badge" aria-hidden="true"></i><span>{contact.jobPosition}</span></p>
         </f:if>
-        <f:if condition="{displayItems.department} && {contact.departmentText}">
+        <f:if condition="{contact.person} && {displayItems.department} && {contact.departmentText}">
             <p class="text-body-secondary mb-1 d-flex align-items-start gap-2"><i class="fa-solid fa-people-group" aria-hidden="true"></i><span>{contact.departmentText}</span></p>
         </f:if>
         <f:if condition="{displayItems.room} && {contact.room}">
             <p class="text-body-secondary mb-1 d-flex align-items-start gap-2"><i class="fa-solid fa-door-open" aria-hidden="true"></i><span>{contact.room}</span></p>
         </f:if>
         <f:render partial="Contact/CommunicationsList" arguments="{contact: contact, displayItems: displayItems}" />
+        <f:if condition="{contact.description}">
+            <div class="sitepackage-contact-description small">{contact.description -> f:format.html()}</div>
+        </f:if>
         <f:if condition="{singleViewPage}">
             <p class="mt-2 mb-0">
                 <f:link.action action="show" pageUid="{singleViewPage}" arguments="{contact: contact.uid}" class="stretched-link">

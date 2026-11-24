@@ -50,4 +50,25 @@ class ContactRepository extends Repository
 
         return $ordered;
     }
+
+    /**
+     * @param list<int> $categoryUids
+     * @return list<\Taketool\Sitepackage\Domain\Model\Contact>
+     */
+    public function findByAnyCategory(array $categoryUids): array
+    {
+        if ($categoryUids === []) {
+            return [];
+        }
+
+        $query = $this->createQuery();
+        $constraints = array_map(
+            static fn(int $categoryUid) => $query->contains('categories', $categoryUid),
+            $categoryUids
+        );
+        $query->matching($query->logicalOr(...$constraints));
+        $query->setOrderings(['departmentText' => 'ASC', 'lastName' => 'ASC', 'firstName' => 'ASC']);
+
+        return $query->execute()->toArray();
+    }
 }

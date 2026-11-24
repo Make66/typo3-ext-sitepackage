@@ -31,13 +31,15 @@ two reasons:
 | CType | `sitepackage_contact` |
 | Controller | `ContactController`, actions `index` (list), `show` (detail) |
 | FlexForm | `Configuration/FlexForms/ContactPlugin.xml` |
-| Table | `tx_sitepackage_domain_model_contact` (plain fields: `salutation`, `first_name`, `last_name`, `job_position`, `department_text`, `room`, `phone`, `mobile`, `email`, `website`, `photo` (FAL, max 1), `description` (RTE)) |
+| Table | `tx_sitepackage_domain_model_contact` (plain fields: `salutation`, `first_name`, `last_name`, `job_position`, `department_text`, `room`, `phone`, `mobile`, `email`, `website`, `photo` (FAL, max 1), `description` (RTE), `categories` (system categories, see below)) |
 
 FlexForm fields, same `settings.pluginType` list/show switch as `taketool/fewo`'s
 own `Fewo` plugin uses (`packages/fewo/CLAUDE.md`):
 
-- **List mode**: `settings.persons` (a `group` picker on
-  `tx_sitepackage_domain_model_contact`, like tsa's own `settings.persons`),
+- **List mode**: `settings.categories` (a `category` tree picker, zero or more
+  categories, stored as a comma-separated uid list), `settings.persons` (a
+  `group` picker on `tx_sitepackage_domain_model_contact`, like tsa's own
+  `settings.persons`) — see "Choosing which contacts a list shows" below,
   `settings.displayMode` (`single` wide cards / `multiple` grid, like tsa's
   `displayMode`), `settings.singleViewPage` (the detail page a card's "Details"
   link targets, like fewo's `settings.singleViewPage`).
@@ -60,6 +62,64 @@ is needed on top.
 `ContactRepository::findByUidsInOrder()` exists because `settings.persons` is a
 comma-separated uid list in the editor's own pick order, and a plain `IN()`
 query does not preserve that order — the result is re-sorted in PHP to match.
+
+## Organisation-only records
+
+A record is either a person (`first_name` + `last_name`, optionally with the
+organisation in `department_text`), or an organisation alone: names left
+empty, `department_text` set. The second kind covers directory entries
+without a named contact (a restaurant, a company). Neither name field is
+required in the backend form, so an editor has to fill in a name or an
+organisation themselves; nothing enforces it.
+
+What changes for an organisation-only record:
+
+| | Person | Organisation only |
+|---|---|---|
+| Card / detail title | salutation + first + last name, person icon | `department_text`, building icon |
+| Department line | shown (if `displayItems.department`) | not repeated, it is the title |
+| JSON-LD (`Partials/Contact/SchemaPerson.html`) | `Person` with `worksFor` | `Organization` (`logo` = photo) |
+| Backend label | last name, first name, position, organisation | organisation |
+| Slug | `first-last` | `organisation` |
+
+The model exposes this as `Contact::isPerson()` (`{contact.person}`) and
+`Contact::getName()` (`{contact.name}`: the person's name, else the
+organisation), used for the image `alt` text. The slug's generator fields are
+`first_name` + (`last_name`, or `department_text` when there is no last name).
+
+Cards render `description` below the communication list. That's where the
+directory migration puts the address, and where it puts data that has no
+field of its own: fax, a second homepage.
+
+## Categories
+
+Contact records carry the standard TYPO3 system categories (`sys_category`),
+edited on their own "Categories" backend tab. The TCA field is of type
+`category`, so TYPO3 itself generates the `categories` DB column and stores the
+relation in the shared `sys_category_record_mm` table (`tablenames =
+tx_sitepackage_domain_model_contact`, `fieldname = categories`) — there is no
+`ext_tables.sql` entry for it. Field and tab labels come from EXT:core, which
+already ships the German translation.
+
+The Extbase model exposes them as `Contact::getCategories()`
+(`ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>`), so templates
+can use `{contact.categories}`. The list mode can select contacts by
+category, see the next section.
+
+## Choosing which contacts a list shows
+
+A list-mode plugin has two sources, and exactly one of them is used:
+
+| `settings.categories` | Contacts shown | Order |
+|---|---|---|
+| one or more categories | every non-hidden contact assigned to **at least one** of them (OR, not AND); `settings.persons` is ignored | organisation (`department_text`), then last name, first name (`findByAnyCategory()`) — an alphabetical directory, the way the Wasserliesch source lists were sorted |
+| none | the contacts picked in `settings.persons` | the editor's pick order (`findByUidsInOrder()`) |
+
+The category source is `ContactRepository::findByAnyCategory()`. Like the rest of
+the repository it does not respect storage pages, so a contact appears wherever
+one of its categories is picked, no matter which sysfolder it lives in. In
+practice, categories are kept per site (one category tree per tenant), and that
+keeps contacts from leaking across sites.
 
 ## Site setup
 
@@ -84,9 +144,9 @@ query does not preserve that order — the result is re-sorted in PHP to match.
   sync to go stale against, so the risk that tagging exists to prevent does
   not apply here.
 - `TsaSettingsResolver` / multi-tenant storage-pid-from-site-settings handling
-  — a plain Extbase picker (`settings.persons`) is the only way a plugin
-  instance gets scoped to specific contacts; there is no site-wide "all
-  contacts for this tenant" notion to resolve.
+  — a plugin instance is scoped only by its own pickers (`settings.categories`
+  or `settings.persons`); there is no site-wide "all contacts for this tenant"
+  notion to resolve.
 - The `anonymize`/`visible` upstream-publish flags (`AbstractTsaPluginController::
   onlyVisiblePersons()`) — those exist only because tsa mirrors third-party data
   that may be marked not-for-publication; a hand-authored contact record is

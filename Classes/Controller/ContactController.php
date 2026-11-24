@@ -18,11 +18,14 @@ final class ContactController extends ActionController
 
     public function indexAction(): ResponseInterface
     {
-        $uids = array_map('intval', GeneralUtility::trimExplode(',', (string)($this->settings['persons'] ?? ''), true));
+        $categoryUids = $this->uidList('categories');
+        $contacts = $categoryUids !== []
+            ? $this->contactRepository->findByAnyCategory($categoryUids)
+            : $this->contactRepository->findByUidsInOrder($this->uidList('persons'));
         $displayMode = ($this->settings['displayMode'] ?? 'single') === 'multiple' ? 'multiple' : 'single';
 
         $this->view->assignMultiple([
-            'contacts' => $this->contactRepository->findByUidsInOrder($uids),
+            'contacts' => $contacts,
             'displayMode' => $displayMode,
             'displayItems' => $this->displayItems(),
             'singleViewPage' => (int)($this->settings['singleViewPage'] ?? 0),
@@ -50,6 +53,16 @@ final class ContactController extends ActionController
         ]);
 
         return $this->htmlResponse();
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function uidList(string $settingName): array
+    {
+        $uids = array_map('intval', GeneralUtility::trimExplode(',', (string)($this->settings[$settingName] ?? ''), true));
+
+        return array_values(array_filter($uids, static fn(int $uid): bool => $uid > 0));
     }
 
     /**

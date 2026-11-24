@@ -157,6 +157,12 @@
             <trans-unit id="flexform.persons" xml:space="preserve">
                 <source>Contacts to show</source>
             </trans-unit>
+            <trans-unit id="flexform.categories" xml:space="preserve">
+                <source>Show contacts from categories</source>
+            </trans-unit>
+            <trans-unit id="flexform.categories.description" xml:space="preserve">
+                <source>Optional. If one or more categories are selected, the list shows all contacts assigned to at least one of them and the "Contacts to show" selection is ignored. If none is selected, the contacts picked under "Contacts to show" are listed.</source>
+            </trans-unit>
             <trans-unit id="flexform.displayMode" xml:space="preserve">
                 <source>Layout</source>
             </trans-unit>
