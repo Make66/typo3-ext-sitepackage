@@ -131,6 +131,27 @@ one of its categories is picked, no matter which sysfolder it lives in. In
 practice, categories are kept per site (one category tree per tenant), and that
 keeps contacts from leaking across sites.
 
+## Backend preview
+
+In the page module, a `sitepackage_contact` element shows its settings as
+readable values instead of the generic plugin label
+(`Classes/EventListener/ContactPluginPreviewRenderer.php`, a
+`PageContentPreviewRenderingEvent` listener, template
+`Resources/Private/Templates/Backend/ContactPluginPreview.html`):
+
+| Setting | Shown as |
+|---|---|
+| `settings.pluginType` | List / Detail (FlexForm option label) |
+| `settings.listSource` | the effective source; without an explicit value, the same fallback as `ContactController::listSource()` (categories if any are picked) |
+| `settings.persons` | contact names in pick order, `First Last (Organisation)` or the organisation alone; only with source "persons" |
+| `settings.categories` | category titles; only with source "categories" |
+| `settings.displayMode` | Stacked / Grid (FlexForm option label) |
+| `settings.singleViewPage` | page title and uid |
+
+Detail mode shows only the mode. Labels are the FlexForm's own labels, so
+the preview is German for German backend users. Deleted contacts, categories
+or pages are left out; hidden ones are still listed.
+
 ## Site setup
 
 1. No Site Set dependency needed — this plugin ships inside `taketool/sitepackage`,

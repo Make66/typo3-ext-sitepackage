@@ -1,0 +1,57 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:variable name="ll">LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:</f:variable>
+<table class="table table-sm table-borderless mb-0 sitepackage-contact-preview">
+    <tr>
+        <th scope="row"><f:translate key="{ll}flexform.pluginType" /></th>
+        <td><f:translate key="{ll}flexform.pluginType.{pluginType}" /></td>
+    </tr>
+    <f:if condition="{pluginType} == 'list'">
+        <tr>
+            <th scope="row"><f:translate key="{ll}flexform.listSource" /></th>
+            <td><f:translate key="{ll}flexform.listSource.{listSource}" /></td>
+        </tr>
+        <f:if condition="{listSource} == 'categories'">
+            <f:then>
+                <tr>
+                    <th scope="row"><f:translate key="{ll}flexform.categories" /></th>
+                    <td>
+                        <f:if condition="{categories}">
+                            <f:then><f:for each="{categories}" as="title" iteration="i">{title}<f:if condition="{i.isLast}"><f:else>, </f:else></f:if></f:for></f:then>
+                            <f:else><em>&ndash;</em></f:else>
+                        </f:if>
+                    </td>
+                </tr>
+            </f:then>
+            <f:else>
+                <tr>
+                    <th scope="row"><f:translate key="{ll}flexform.persons" /></th>
+                    <td>
+                        <f:if condition="{persons}">
+                            <f:then>
+                                <ul class="list-unstyled mb-0">
+                                    <f:for each="{persons}" as="name"><li>{name}</li></f:for>
+                                </ul>
+                            </f:then>
+                            <f:else><em>&ndash;</em></f:else>
+                        </f:if>
+                    </td>
+                </tr>
+            </f:else>
+        </f:if>
+        <tr>
+            <th scope="row"><f:translate key="{ll}flexform.displayMode" /></th>
+            <td><f:translate key="{ll}flexform.displayMode.{displayMode}" /></td>
+        </tr>
+        <tr>
+            <th scope="row"><f:translate key="{ll}flexform.singleViewPage" /></th>
+            <td>
+                <f:if condition="{singleViewPage}">
+                    <f:then>{singleViewPage.title} [{singleViewPage.uid}]</f:then>
+                    <f:else><em>&ndash;</em></f:else>
+                </f:if>
+            </td>
+        </tr>
+    </f:if>
+</table>
+</html>
