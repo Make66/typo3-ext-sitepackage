@@ -5,7 +5,7 @@
     <f:if condition="{contact.photo}">
         <f:for each="{contact.photo}" as="image" iteration="iterator">
             <f:if condition="{iterator.isFirst}">
-                <f:image image="{image}" class="card-img-top" alt="{contact.name}" />
+                <f:image image="{image}" cropVariant="card" class="card-img-top" alt="{contact.name}" />
             </f:if>
         </f:for>
     </f:if>

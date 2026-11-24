@@ -214,6 +214,14 @@
                 <source>Photo</source>
                 <target>Foto</target>
             </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.photo.cropVariant.card" xml:space="preserve">
+                <source>Card (list)</source>
+                <target>Karte (Liste)</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.photo.cropVariant.detail" xml:space="preserve">
+                <source>Detail page</source>
+                <target>Detailseite</target>
+            </trans-unit>
             <trans-unit id="tx_sitepackage_domain_model_contact.phone" xml:space="preserve">
                 <source>Phone</source>
                 <target>Telefon</target>

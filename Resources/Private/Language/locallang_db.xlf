@@ -138,6 +138,12 @@
             <trans-unit id="tx_sitepackage_domain_model_contact.photo" xml:space="preserve">
                 <source>Photo</source>
             </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.photo.cropVariant.card" xml:space="preserve">
+                <source>Card (list)</source>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.photo.cropVariant.detail" xml:space="preserve">
+                <source>Detail page</source>
+            </trans-unit>
             <trans-unit id="tx_sitepackage_domain_model_contact.phone" xml:space="preserve">
                 <source>Phone</source>
             </trans-unit>

@@ -4,7 +4,7 @@
 <f:variable name="ldImage"></f:variable>
 <f:for each="{contact.photo}" as="image" iteration="iterator">
     <f:if condition="{iterator.isFirst}">
-        <f:variable name="ldImage"><f:uri.image image="{image}" absolute="1" maxWidth="600" /></f:variable>
+        <f:variable name="ldImage"><f:uri.image image="{image}" cropVariant="detail" absolute="1" maxWidth="600" /></f:variable>
     </f:if>
 </f:for>
 <f:variable name="ldPosition"><f:if condition="{displayItems.position}">{contact.jobPosition}</f:if></f:variable>

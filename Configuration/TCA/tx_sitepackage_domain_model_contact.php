@@ -139,6 +139,60 @@ return [
                 'type' => 'file',
                 'allowed' => 'common-image-types',
                 'maxitems' => 1,
+                'overrideChildTca' => [
+                    'columns' => [
+                        'crop' => [
+                            'config' => [
+                                'cropVariants' => [
+                                    'card' => [
+                                        'title' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.photo.cropVariant.card',
+                                        'allowedAspectRatios' => [
+                                            '4:3' => [
+                                                'title' => 'LLL:EXT:core/Resources/Private/Language/locallang_wizards.xlf:imwizard.ratio.4_3',
+                                                'value' => 4 / 3,
+                                            ],
+                                            '1:1' => [
+                                                'title' => 'LLL:EXT:core/Resources/Private/Language/locallang_wizards.xlf:imwizard.ratio.1_1',
+                                                'value' => 1.0,
+                                            ],
+                                            '3:4' => [
+                                                'title' => 'LLL:EXT:core/Resources/Private/Language/locallang_wizards.xlf:imwizard.ratio.3_4',
+                                                'value' => 3 / 4,
+                                            ],
+                                            'NaN' => [
+                                                'title' => 'LLL:EXT:core/Resources/Private/Language/locallang_wizards.xlf:imwizard.ratio.free',
+                                                'value' => 0.0,
+                                            ],
+                                        ],
+                                        'selectedRatio' => '4:3',
+                                    ],
+                                    'detail' => [
+                                        'title' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tx_sitepackage_domain_model_contact.photo.cropVariant.detail',
+                                        'allowedAspectRatios' => [
+                                            '4:3' => [
+                                                'title' => 'LLL:EXT:core/Resources/Private/Language/locallang_wizards.xlf:imwizard.ratio.4_3',
+                                                'value' => 4 / 3,
+                                            ],
+                                            '1:1' => [
+                                                'title' => 'LLL:EXT:core/Resources/Private/Language/locallang_wizards.xlf:imwizard.ratio.1_1',
+                                                'value' => 1.0,
+                                            ],
+                                            '3:4' => [
+                                                'title' => 'LLL:EXT:core/Resources/Private/Language/locallang_wizards.xlf:imwizard.ratio.3_4',
+                                                'value' => 3 / 4,
+                                            ],
+                                            'NaN' => [
+                                                'title' => 'LLL:EXT:core/Resources/Private/Language/locallang_wizards.xlf:imwizard.ratio.free',
+                                                'value' => 0.0,
+                                            ],
+                                        ],
+                                        'selectedRatio' => '4:3',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ],
         'phone' => [

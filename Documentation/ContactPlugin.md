@@ -100,6 +100,48 @@ second homepage. Older imports also put the address and fax there;
 `skilledmigration:migrate:contact-fields` moves them into their fields
 (`packages/skilledmigration/Documentation/04_ContactFieldMigration.md`).
 
+## Photo crop variants
+
+The `photo` field defines two crop variants (`overrideChildTca` on the
+file reference's `crop` column in
+`Configuration/TCA/tx_sitepackage_domain_model_contact.php`), so editors
+choose the image section and aspect ratio separately for each place the
+photo appears:
+
+| Variant | Used in | Default ratio | Other ratios |
+|---|---|---|---|
+| `card` ("Karte (Liste)") | `Partials/Contact/Card.html` (`card-img-top`) | 4:3 | 1:1, 3:4, free |
+| `detail` ("Detailseite") | `Templates/Contact/Show.html`, and the JSON-LD `image`/`logo` in `Partials/Contact/SchemaPerson.html` | 4:3 | 1:1, 3:4, free |
+
+The templates select the variant with `cropVariant="card"` /
+`cropVariant="detail"`. There is no `default` variant.
+
+The crop area is stored in the file reference's `crop` field when the
+contact record is saved in the backend. Photos that were added before the
+variants existed (or by an import that writes no `crop` value) have no area
+for `card`/`detail` and render uncropped, at their original ratio, until an
+editor opens the contact and saves it once.
+
+The upgrade wizard `sitepackage_contactPhotoCropVariants`
+(`Classes/Upgrades/ContactPhotoCropVariantsWizard.php`) fills in the missing
+variants: each missing `card`/`detail` entry gets the whole image with the
+free ratio, so the frontend looks the same as before. Variants that already
+exist are left alone, other variants (e.g. `default`) are kept, and hidden
+file references are included. A centred 4:3 crop was not used because most
+existing contact photos are organisation logos (square or wide banners), and
+4:3 would cut their edges off. Editors switch a photo to 4:3 in the crop
+editor when they want it.
+
+```
+vendor/bin/typo3 upgrade:run sitepackage_contactPhotoCropVariants
+```
+
+The wizard is repeatable: it is never marked as done and shows up in the
+upgrade list whenever a contact photo lacks one of the variants, for example
+after a migration import. "Free" keeps whatever area the
+editor draws, so cards in one grid can differ in height if editors mix
+ratios. Use one ratio per list when the grid has to line up.
+
 ## Categories
 
 Contact records carry the standard TYPO3 system categories (`sys_category`),
