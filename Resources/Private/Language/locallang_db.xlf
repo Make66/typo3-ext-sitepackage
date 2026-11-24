@@ -118,7 +118,7 @@
                 <source>Job title</source>
             </trans-unit>
             <trans-unit id="tx_sitepackage_domain_model_contact.department_text" xml:space="preserve">
-                <source>Department</source>
+                <source>Department / organisation</source>
             </trans-unit>
             <trans-unit id="tx_sitepackage_domain_model_contact.room" xml:space="preserve">
                 <source>Room</source>
@@ -185,7 +185,7 @@
                 <source>Job title</source>
             </trans-unit>
             <trans-unit id="flexform.displayItems.department" xml:space="preserve">
-                <source>Department</source>
+                <source>Department / organisation</source>
             </trans-unit>
             <trans-unit id="flexform.displayItems.room" xml:space="preserve">
                 <source>Room</source>

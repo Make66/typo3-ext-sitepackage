@@ -122,6 +122,158 @@
                 <source>Optional. If one or more categories are selected, the list shows all contacts assigned to at least one of them and the "Contacts to show" selection is ignored. If none is selected, the contacts picked under "Contacts to show" are listed.</source>
                 <target>Optional. Ist mindestens eine Kategorie ausgewählt, zeigt die Liste alle Ansprechpartner, die mindestens einer dieser Kategorien zugeordnet sind; die Auswahl unter „Anzuzeigende Ansprechpartner“ wird dann ignoriert. Ist keine Kategorie ausgewählt, werden die unter „Anzuzeigende Ansprechpartner“ gewählten Ansprechpartner angezeigt.</target>
             </trans-unit>
+            <trans-unit id="plugin.contact.title" xml:space="preserve">
+                <source>Sitepackage: Ansprechpartner</source>
+                <target>Sitepackage: Ansprechpartner</target>
+            </trans-unit>
+            <trans-unit id="pages.module.contact" xml:space="preserve">
+                <source>Sitepackage: Ansprechpartner</source>
+                <target>Sitepackage: Ansprechpartner</target>
+            </trans-unit>
+            <trans-unit id="plugin.contact.description" xml:space="preserve">
+                <source>List of contact cards (e.g. staff/organization directory) with an optional detail view, each picked from the Contact records in this folder.</source>
+                <target>Liste von Kontaktkarten (z. B. Mitarbeiter- oder Vereinsverzeichnis) mit optionaler Detailansicht, ausgewählt aus den Ansprechpartner-Datensätzen dieses Ordners.</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact" xml:space="preserve">
+                <source>Contact</source>
+                <target>Ansprechpartner</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.tab.allgemeines" xml:space="preserve">
+                <source>General</source>
+                <target>Allgemeines</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.tab.kontakt" xml:space="preserve">
+                <source>Contact details</source>
+                <target>Kontaktdaten</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.tab.beschreibung" xml:space="preserve">
+                <source>Description</source>
+                <target>Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.palette.kontakt" xml:space="preserve">
+                <source>Contact details</source>
+                <target>Kontaktdaten</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.salutation" xml:space="preserve">
+                <source>Salutation</source>
+                <target>Anrede</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.first_name" xml:space="preserve">
+                <source>First name</source>
+                <target>Vorname</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.last_name" xml:space="preserve">
+                <source>Last name</source>
+                <target>Nachname</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.slug" xml:space="preserve">
+                <source>URL segment</source>
+                <target>URL-Segment</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.job_position" xml:space="preserve">
+                <source>Job title</source>
+                <target>Funktion</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.department_text" xml:space="preserve">
+                <source>Department / organisation</source>
+                <target>Abteilung / Organisation</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.room" xml:space="preserve">
+                <source>Room</source>
+                <target>Raum</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.photo" xml:space="preserve">
+                <source>Photo</source>
+                <target>Foto</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.phone" xml:space="preserve">
+                <source>Phone</source>
+                <target>Telefon</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.mobile" xml:space="preserve">
+                <source>Mobile</source>
+                <target>Mobil</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.email" xml:space="preserve">
+                <source>E-mail</source>
+                <target>E-Mail</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.website" xml:space="preserve">
+                <source>Website</source>
+                <target>Website</target>
+            </trans-unit>
+            <trans-unit id="tx_sitepackage_domain_model_contact.description" xml:space="preserve">
+                <source>Description</source>
+                <target>Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="flexform.sheet.general" xml:space="preserve">
+                <source>General</source>
+                <target>Allgemein</target>
+            </trans-unit>
+            <trans-unit id="flexform.pluginType" xml:space="preserve">
+                <source>Mode</source>
+                <target>Modus</target>
+            </trans-unit>
+            <trans-unit id="flexform.pluginType.list" xml:space="preserve">
+                <source>List</source>
+                <target>Liste</target>
+            </trans-unit>
+            <trans-unit id="flexform.pluginType.show" xml:space="preserve">
+                <source>Detail</source>
+                <target>Detail</target>
+            </trans-unit>
+            <trans-unit id="flexform.displayMode" xml:space="preserve">
+                <source>Layout</source>
+                <target>Darstellung</target>
+            </trans-unit>
+            <trans-unit id="flexform.displayMode.single" xml:space="preserve">
+                <source>Stacked (wide cards)</source>
+                <target>Untereinander (breite Karten)</target>
+            </trans-unit>
+            <trans-unit id="flexform.displayMode.multiple" xml:space="preserve">
+                <source>Grid</source>
+                <target>Raster</target>
+            </trans-unit>
+            <trans-unit id="flexform.singleViewPage" xml:space="preserve">
+                <source>Detail page</source>
+                <target>Detailseite</target>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems" xml:space="preserve">
+                <source>Fields to show</source>
+                <target>Anzuzeigende Felder</target>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.salutation" xml:space="preserve">
+                <source>Salutation</source>
+                <target>Anrede</target>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.position" xml:space="preserve">
+                <source>Job title</source>
+                <target>Funktion</target>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.department" xml:space="preserve">
+                <source>Department / organisation</source>
+                <target>Abteilung / Organisation</target>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.room" xml:space="preserve">
+                <source>Room</source>
+                <target>Raum</target>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.phone" xml:space="preserve">
+                <source>Phone</source>
+                <target>Telefon</target>
+            </trans-unit>
+            <trans-unit id="flexform.displayItems.email" xml:space="preserve">
+                <source>E-mail</source>
+                <target>E-Mail</target>
+            </trans-unit>
+            <trans-unit id="flexform.backToListPage" xml:space="preserve">
+                <source>Back-to-list page</source>
+                <target>Seite für „Zurück zur Liste“</target>
+            </trans-unit>
+            <trans-unit id="flexform.contact" xml:space="preserve">
+                <source>Pin to one contact</source>
+                <target>Fest auf einen Ansprechpartner</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
