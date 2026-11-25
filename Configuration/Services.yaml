@@ -36,3 +36,7 @@ services:
         command: 'sitepackage:contact-slugs'
         description: 'Generate URL slugs for contact records that have none (needed by Configuration/Routes/Contact.yaml)'
         schedulable: false
+
+  TYPO3\CMS\Core\Site\SiteSettingsFactory:
+    alias: Taketool\Sitepackage\Site\TenantSiteSettingsFactory
+    public: true

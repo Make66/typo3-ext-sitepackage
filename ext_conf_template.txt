@@ -1,0 +1,6 @@
+# cat=tenantConfig; type=string; label=LLL:EXT:sitepackage/Resources/Private/Language/locallang_tenantconfig.xlf:extconf.sets
+tenantConfig.sets = taketool/*, apicodo/*
+# cat=tenantConfig; type=string; label=LLL:EXT:sitepackage/Resources/Private/Language/locallang_tenantconfig.xlf:extconf.excludeSettings
+tenantConfig.excludeSettings = *apiKey*, *ApiKey*, chatbot.serverApiUrl, chatbot.serviceUrl
+# cat=tenantConfig; type=string; label=LLL:EXT:sitepackage/Resources/Private/Language/locallang_tenantconfig.xlf:extconf.tabOrder
+tenantConfig.tabOrder = taketool/sitepackage, taketool/apicodo, taketool/infodienste, taketool/tsa, apicodo/chatbot

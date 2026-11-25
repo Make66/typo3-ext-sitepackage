@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-11-25T00:00:00Z" product-name="sitepackage">
+        <header/>
+        <body>
+            <trans-unit id="title" xml:space="preserve">
+                <source>Site settings</source>
+                <target>Website-Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="short_description" xml:space="preserve">
+                <source>Edit this website's settings</source>
+                <target>Einstellungen dieser Website bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="description" xml:space="preserve">
+                <source>Opens the configuration record stored on the root page of the selected website. Filled values override the site package settings.</source>
+                <target>Öffnet den Konfigurationsdatensatz auf der Startseite der gewählten Website. Ausgefüllte Werte überschreiben die Einstellungen des Sitepackages.</target>
+            </trans-unit>
+            <trans-unit id="noPage.title" xml:space="preserve">
+                <source>No page selected</source>
+                <target>Keine Seite ausgewählt</target>
+            </trans-unit>
+            <trans-unit id="noPage.message" xml:space="preserve">
+                <source>Select any page of a website in the page tree.</source>
+                <target>Bitte im Seitenbaum eine beliebige Seite einer Website auswählen.</target>
+            </trans-unit>
+            <trans-unit id="noSite.title" xml:space="preserve">
+                <source>No website</source>
+                <target>Keine Website</target>
+            </trans-unit>
+            <trans-unit id="noSite.message" xml:space="preserve">
+                <source>The selected page does not belong to a website configuration.</source>
+                <target>Die gewählte Seite gehört zu keiner Website-Konfiguration.</target>
+            </trans-unit>
+            <trans-unit id="noAccess.title" xml:space="preserve">
+                <source>No access</source>
+                <target>Kein Zugriff</target>
+            </trans-unit>
+            <trans-unit id="noAccess.message" xml:space="preserve">
+                <source>You are not allowed to edit the configuration of website "%s". Access to its root page and modify rights for the table "Website configuration" are required.</source>
+                <target>Sie dürfen die Konfiguration der Website „%s“ nicht bearbeiten. Nötig sind Zugriff auf deren Startseite und Bearbeitungsrechte für die Tabelle „Website-Konfiguration“.</target>
+            </trans-unit>
+            <trans-unit id="noSets.title" xml:space="preserve">
+                <source>Nothing to configure</source>
+                <target>Nichts zu konfigurieren</target>
+            </trans-unit>
+            <trans-unit id="noSets.message" xml:space="preserve">
+                <source>Website "%s" includes no site sets with editable settings.</source>
+                <target>Die Website „%s“ bindet keine Site-Sets mit bearbeitbaren Einstellungen ein.</target>
+            </trans-unit>
+            <trans-unit id="missing.title" xml:space="preserve">
+                <source>No configuration yet</source>
+                <target>Noch keine Konfiguration</target>
+            </trans-unit>
+            <trans-unit id="missing.message" xml:space="preserve">
+                <source>There is no configuration for the website "%s" (%s) yet. It will be stored on the root page.</source>
+                <target>Für die Website „%s“ (%s) gibt es noch keine Konfiguration. Sie wird auf der Startseite gespeichert.</target>
+            </trans-unit>
+            <trans-unit id="missing.sets" xml:space="preserve">
+                <source>It covers the settings of these site sets:</source>
+                <target>Sie umfasst die Einstellungen dieser Site-Sets:</target>
+            </trans-unit>
+            <trans-unit id="missing.button" xml:space="preserve">
+                <source>Create configuration</source>
+                <target>Konfiguration anlegen</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

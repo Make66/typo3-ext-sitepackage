@@ -48,6 +48,9 @@ site, limited to marked pages via `sitepackagePluginPage()`, site settings
 `ChatbotPage.md` (page type 1730: reduced HTML for chatbot fetch),
 `SchemaOrg.md` (JSON-LD structured data: organization/website/breadcrumb from site settings
 `sitepackage.schema.*`, `Person` in the Contact templates), `A11yToolbar.md` (opt-in Barrierefreiheits-Leiste, site settings
-`sitepackage.a11y.*`), `IconSet.md` (own bootstrap_package icon set from
+`sitepackage.a11y.*`), `TenantConfig.md` (per-tenant override record
+`tx_sitepackage_tenantconfig` on the site root, module Inhalt → Website-Einstellungen
+for non-admins, fields generated from the site's own sets, overlaid on site settings
+via `TenantSiteSettingsFactory`), `IconSet.md` (own bootstrap_package icon set from
 `Resources/Public/Icons/Set/`), and two one-off
 upgrade commands, `Mig12Cleanup.md` and `NewsToFeUsersImport.md`.

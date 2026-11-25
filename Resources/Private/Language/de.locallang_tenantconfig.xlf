@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-11-25T00:00:00Z" product-name="sitepackage">
+        <header/>
+        <body>
+            <trans-unit id="table" xml:space="preserve">
+                <source>Website configuration</source>
+                <target>Website-Konfiguration</target>
+            </trans-unit>
+            <trans-unit id="field.settings" xml:space="preserve">
+                <source>Settings</source>
+                <target>Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="label.prefix" xml:space="preserve">
+                <source>Configuration</source>
+                <target>Konfiguration</target>
+            </trans-unit>
+            <trans-unit id="inherit" xml:space="preserve">
+                <source>Inherited: %s</source>
+                <target>Erbt: %s</target>
+            </trans-unit>
+            <trans-unit id="bool.yes" xml:space="preserve">
+                <source>Yes</source>
+                <target>Ja</target>
+            </trans-unit>
+            <trans-unit id="bool.no" xml:space="preserve">
+                <source>No</source>
+                <target>Nein</target>
+            </trans-unit>
+            <trans-unit id="form.intro" xml:space="preserve">
+                <source>Filled fields override the settings of website "%s". Empty fields inherit; the grey hint shows the current value.</source>
+                <target>Ausgefüllte Felder überschreiben die Einstellungen der Website „%s“. Leere Felder erben; der graue Hinweis zeigt den aktuellen Wert.</target>
+            </trans-unit>
+            <trans-unit id="form.overridden" xml:space="preserve">
+                <source>overridden</source>
+                <target>überschrieben</target>
+            </trans-unit>
+            <trans-unit id="form.movedToRoot" xml:space="preserve">
+                <source>This configuration will be stored on the root page "%s" [%s].</source>
+                <target>Diese Konfiguration wird auf der Startseite „%s“ [%s] gespeichert.</target>
+            </trans-unit>
+            <trans-unit id="form.noSite.title" xml:space="preserve">
+                <source>No website</source>
+                <target>Keine Website</target>
+            </trans-unit>
+            <trans-unit id="form.noSite.message" xml:space="preserve">
+                <source>This page does not belong to a website configuration, so there are no settings to edit.</source>
+                <target>Diese Seite gehört zu keiner Website-Konfiguration, daher gibt es keine Einstellungen zu bearbeiten.</target>
+            </trans-unit>
+            <trans-unit id="form.exists.title" xml:space="preserve">
+                <source>Configuration already exists</source>
+                <target>Konfiguration existiert bereits</target>
+            </trans-unit>
+            <trans-unit id="form.exists.message" xml:space="preserve">
+                <source>The website "%s" (%s) already has a configuration on its root page. Each website has exactly one.</source>
+                <target>Die Website „%s“ (%s) hat bereits eine Konfiguration auf ihrer Startseite. Jede Website hat genau eine.</target>
+            </trans-unit>
+            <trans-unit id="form.exists.button" xml:space="preserve">
+                <source>Edit existing configuration</source>
+                <target>Vorhandene Konfiguration bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="form.noSets.title" xml:space="preserve">
+                <source>Nothing to configure</source>
+                <target>Nichts zu konfigurieren</target>
+            </trans-unit>
+            <trans-unit id="form.noSets.message" xml:space="preserve">
+                <source>Website "%s" includes no site sets with editable settings.</source>
+                <target>Die Website „%s“ bindet keine Site-Sets mit bearbeitbaren Einstellungen ein.</target>
+            </trans-unit>
+            <trans-unit id="error.noSite" xml:space="preserve">
+                <source>Website configuration not saved: page %s does not belong to a website.</source>
+                <target>Website-Konfiguration nicht gespeichert: Seite %s gehört zu keiner Website.</target>
+            </trans-unit>
+            <trans-unit id="error.duplicate" xml:space="preserve">
+                <source>Website configuration not saved: website "%s" already has one (record %s).</source>
+                <target>Website-Konfiguration nicht gespeichert: Die Website „%s“ hat bereits eine (Datensatz %s).</target>
+            </trans-unit>
+            <trans-unit id="error.moveCopy" xml:space="preserve">
+                <source>Website configurations cannot be moved or copied; each one belongs to the root page of its website.</source>
+                <target>Website-Konfigurationen können nicht verschoben oder kopiert werden; jede gehört zur Startseite ihrer Website.</target>
+            </trans-unit>
+            <trans-unit id="error.undeleteDuplicate" xml:space="preserve">
+                <source>Not restored: root page %s already has a website configuration.</source>
+                <target>Nicht wiederhergestellt: Die Startseite %s hat bereits eine Website-Konfiguration.</target>
+            </trans-unit>
+            <trans-unit id="error.notAllowed" xml:space="preserve">
+                <source>Setting "%s" cannot be changed here and was ignored.</source>
+                <target>Die Einstellung „%s“ kann hier nicht geändert werden und wurde ignoriert.</target>
+            </trans-unit>
+            <trans-unit id="error.invalid" xml:space="preserve">
+                <source>Invalid value for "%s" (%s); the previous value was kept.</source>
+                <target>Ungültiger Wert für „%s“ (%s); der bisherige Wert wurde beibehalten.</target>
+            </trans-unit>
+            <trans-unit id="extconf.sets" xml:space="preserve">
+                <source>Site sets offered in the website configuration (comma-separated, wildcards allowed)</source>
+                <target>Site-Sets, die in der Website-Konfiguration angeboten werden (kommagetrennt, Platzhalter erlaubt)</target>
+            </trans-unit>
+            <trans-unit id="extconf.excludeSettings" xml:space="preserve">
+                <source>Settings never offered in the website configuration, e.g. API keys (comma-separated, wildcards allowed)</source>
+                <target>Einstellungen, die nie in der Website-Konfiguration angeboten werden, z. B. API-Schlüssel (kommagetrennt, Platzhalter erlaubt)</target>
+            </trans-unit>
+            <trans-unit id="extconf.tabOrder" xml:space="preserve">
+                <source>Tab order of the site sets (comma-separated, wildcards allowed; unlisted sets follow)</source>
+                <target>Reihenfolge der Reiter für die Site-Sets (kommagetrennt, Platzhalter erlaubt; nicht genannte Sets folgen danach)</target>
+            </trans-unit>
+            <trans-unit id="form.sections" xml:space="preserve">
+                <source>Sections</source>
+                <target>Abschnitte</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

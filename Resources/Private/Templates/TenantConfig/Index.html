@@ -1,0 +1,49 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<f:layout name="Module" />
+
+<f:section name="Content">
+    <f:variable name="lll" value="LLL:EXT:sitepackage/Resources/Private/Language/locallang_mod_tenantconfig.xlf:" />
+    <h1><f:translate key="{lll}title" /></h1>
+
+    <f:switch expression="{state}">
+        <f:case value="missing">
+            <f:be.infobox state="-1" title="{f:translate(key: '{lll}missing.title')}">
+                <p><f:translate key="{lll}missing.message" arguments="{0: site.rootPageTitle, 1: site.identifier}" /></p>
+                <p><f:translate key="{lll}missing.sets" /></p>
+                <ul>
+                    <f:for each="{sets}" as="set">
+                        <li>{set.label} <code>{set.name}</code></li>
+                    </f:for>
+                </ul>
+                <a class="btn btn-primary" href="{createUrl}">
+                    <f:translate key="{lll}missing.button" />
+                </a>
+            </f:be.infobox>
+        </f:case>
+        <f:case value="noSite">
+            <f:be.infobox state="1" title="{f:translate(key: '{lll}noSite.title')}">
+                <p><f:translate key="{lll}noSite.message" /></p>
+            </f:be.infobox>
+        </f:case>
+        <f:case value="noAccess">
+            <f:be.infobox state="2" title="{f:translate(key: '{lll}noAccess.title')}">
+                <p><f:translate key="{lll}noAccess.message" arguments="{0: site.identifier}" /></p>
+            </f:be.infobox>
+        </f:case>
+        <f:case value="noSets">
+            <f:be.infobox state="1" title="{f:translate(key: '{lll}noSets.title')}">
+                <p><f:translate key="{lll}noSets.message" arguments="{0: site.identifier}" /></p>
+            </f:be.infobox>
+        </f:case>
+        <f:defaultCase>
+            <f:be.infobox state="-1" title="{f:translate(key: '{lll}noPage.title')}">
+                <p><f:translate key="{lll}noPage.message" /></p>
+            </f:be.infobox>
+        </f:defaultCase>
+    </f:switch>
+</f:section>
+</html>
