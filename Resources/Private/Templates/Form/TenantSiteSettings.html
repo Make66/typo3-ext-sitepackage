@@ -1,0 +1,117 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+<f:variable name="lll" value="LLL:EXT:sitepackage/Resources/Private/Language/locallang_tenantconfig.xlf:" />
+<div class="formengine-field-item t3js-formengine-field-item">
+    <f:switch expression="{state}">
+        <f:case value="noSite">
+            <f:be.infobox state="1" title="{f:translate(key: '{lll}form.noSite.title')}">
+                <p><f:translate key="{lll}form.noSite.message" /></p>
+            </f:be.infobox>
+        </f:case>
+        <f:case value="exists">
+            <f:be.infobox state="1" title="{f:translate(key: '{lll}form.exists.title')}">
+                <p><f:translate key="{lll}form.exists.message" arguments="{0: site.rootPageTitle, 1: site.identifier}" /></p>
+                <a class="btn btn-default" href="{editUrl}"><f:translate key="{lll}form.exists.button" /></a>
+            </f:be.infobox>
+        </f:case>
+        <f:case value="noSets">
+            <f:be.infobox state="1" title="{f:translate(key: '{lll}form.noSets.title')}">
+                <p><f:translate key="{lll}form.noSets.message" arguments="{0: site.identifier}" /></p>
+            </f:be.infobox>
+        </f:case>
+        <f:defaultCase>
+            <f:if condition="{movedToRoot}">
+                <f:be.infobox state="-1">
+                    <p><f:translate key="{lll}form.movedToRoot" arguments="{0: site.rootPageTitle, 1: site.rootPageId}" /></p>
+                </f:be.infobox>
+            </f:if>
+            <p class="text-body-secondary"><f:translate key="{lll}form.intro" arguments="{0: site.identifier}" /></p>
+            <div class="tab-wrapper">
+            <ul class="nav nav-tabs" role="tablist" id="{tabId}" data-store-last-tab="1">
+                <f:for each="{groups}" as="group" iteration="iteration">
+                    <li role="presentation" class="nav-item">
+                        <button
+                            type="button"
+                            class="nav-link{f:if(condition: iteration.isFirst, then: ' active')}"
+                            title="{group.name}"
+                            data-typo3-tab="#{tabId}-{iteration.cycle}"
+                            aria-controls="{tabId}-{iteration.cycle}"
+                            role="tab"
+                        >
+                            {group.label}
+                            <f:if condition="{group.overriddenCount}">
+                                <span class="badge badge-warning" title="{f:translate(key: '{lll}form.overridden')}">{group.overriddenCount}</span>
+                            </f:if>
+                        </button>
+                    </li>
+                </f:for>
+            </ul>
+            <div class="tab-content">
+            <f:for each="{groups}" as="group" iteration="iteration">
+                <div role="tabpanel" class="tab-pane{f:if(condition: iteration.isFirst, then: ' active')}" id="{tabId}-{iteration.cycle}">
+                    <f:if condition="{group.categories -> f:count()} > 1">
+                        <nav class="form-section" aria-label="{f:translate(key: '{lll}form.sections')}">
+                            <div class="d-flex flex-wrap align-items-center gap-2">
+                                <span class="fw-bold"><f:translate key="{lll}form.sections" />:</span>
+                                <f:for each="{group.categories}" as="category" iteration="sectionIteration">
+                                    <a class="btn btn-sm btn-default" href="#{tabId}-{iteration.cycle}-{sectionIteration.cycle}">{category.label}</a>
+                                </f:for>
+                            </div>
+                        </nav>
+                    </f:if>
+                    <f:for each="{group.categories}" as="category" iteration="sectionIteration">
+                    <fieldset class="form-section" id="{tabId}-{iteration.cycle}-{sectionIteration.cycle}" style="scroll-margin-top: 6rem">
+
+                        <h3 class="form-section-headline">{category.label}</h3>
+                        <f:if condition="{category.description}">
+                            <p class="form-section-description">{category.description}</p>
+                        </f:if>
+                        <div class="form-grid" style="--typo3-form-grid-columns: 2">
+                            <f:for each="{category.fields}" as="field">
+                                <div class="form-group t3js-formengine-palette-field">
+                                    <label class="form-label t3js-formengine-label" for="{field.id}">
+                                        {field.label}
+                                        <f:if condition="{field.overridden}">
+                                            <span class="badge badge-warning"><f:translate key="{lll}form.overridden" /></span>
+                                        </f:if>
+                                    </label>
+                                    <f:switch expression="{field.control}">
+                                        <f:case value="select">
+                                            <select id="{field.id}" name="{field.name}" class="form-select" {f:if(condition: readOnly, then: 'disabled')}>
+                                                <f:for each="{field.options}" as="option">
+                                                    <option value="{option.value}" {f:if(condition: option.selected, then: 'selected')}>{option.label}</option>
+                                                </f:for>
+                                            </select>
+                                        </f:case>
+                                        <f:case value="textarea">
+                                            <textarea id="{field.id}" name="{field.name}" class="form-control" rows="{field.rows}" placeholder="{field.placeholder}" {f:if(condition: readOnly, then: 'disabled')}>{field.value}</textarea>
+                                        </f:case>
+                                        <f:case value="color">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="min-width: 2.5rem; background-color: {field.swatch};" aria-hidden="true"></span>
+                                                <input type="text" id="{field.id}" name="{field.name}" class="form-control" value="{field.value}" placeholder="{field.placeholder}" {f:if(condition: readOnly, then: 'disabled')} />
+                                            </div>
+                                        </f:case>
+                                        <f:defaultCase>
+                                            <input type="{field.inputType}" id="{field.id}" name="{field.name}" class="form-control" value="{field.value}" placeholder="{field.placeholder}" step="{field.step}" {f:if(condition: readOnly, then: 'disabled')} />
+                                        </f:defaultCase>
+                                    </f:switch>
+                                    <f:if condition="{field.description}">
+                                        <div class="form-text">{field.description}</div>
+                                    </f:if>
+                                    <div class="form-text"><code>{field.key}</code></div>
+                                </div>
+                            </f:for>
+                        </div>
+                    </fieldset>
+                    </f:for>
+                </div>
+            </f:for>
+            </div>
+            </div>
+        </f:defaultCase>
+    </f:switch>
+</div>
+</html>

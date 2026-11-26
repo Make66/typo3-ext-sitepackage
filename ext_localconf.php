@@ -40,3 +40,12 @@ if ($versionInformation->getMajorVersion() < 12) {
 // after bootstrap_package, enforced via the 'bootstrap_package' dependency
 // in ext_emconf.php.
 $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['bootstrap'] = 'EXT:sitepackage/Configuration/RTE/Default.yaml';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1764067200] = [
+    'nodeName' => 'tenantSiteSettings',
+    'priority' => 40,
+    'class' => \Taketool\Sitepackage\Form\Element\TenantSiteSettingsElement::class,
+];
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['sitepackage_tenantconfig']
+    = \Taketool\Sitepackage\Hooks\TenantConfigDataHandlerHook::class;
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['sitepackage_tenantconfig']
+    = \Taketool\Sitepackage\Hooks\TenantConfigDataHandlerHook::class;

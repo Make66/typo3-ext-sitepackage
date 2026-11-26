@@ -8,7 +8,7 @@
             <div class="col-12 col-md-4">
                 <f:for each="{contact.photo}" as="image" iteration="iterator">
                     <f:if condition="{iterator.isFirst}">
-                        <f:image image="{image}" class="img-fluid rounded" alt="{contact.name}" />
+                        <f:image image="{image}" cropVariant="detail" class="img-fluid rounded" alt="{contact.name}" />
                     </f:if>
                 </f:for>
             </div>
