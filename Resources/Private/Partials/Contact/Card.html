@@ -3,25 +3,33 @@
 <div class="sitepackage-contact-card card h-100">
     <f:render partial="Contact/SchemaPerson" arguments="{contact: contact, displayItems: displayItems}" />
     <f:if condition="{contact.photo}">
-        <f:for each="{contact.photo}" as="image" iteration="iterator">
-            <f:if condition="{iterator.isFirst}">
-                <f:image image="{image}" cropVariant="card" class="card-img-top" alt="{contact.name}" />
-            </f:if>
-        </f:for>
+        <f:then>
+            <f:for each="{contact.photo}" as="image" iteration="iterator">
+                <f:if condition="{iterator.isFirst}">
+                    <f:image image="{image}" cropVariant="card" class="card-img-top rounded" alt="{contact.name}" />
+                </f:if>
+            </f:for>
+        </f:then>
+        <f:else>
+            <div class="sitepackage-contact-card-placeholder rounded" aria-hidden="true">
+                <i class="fa-solid {f:if(condition: contact.person, then: 'fa-user', else: 'fa-building')}"></i>
+            </div>
+        </f:else>
     </f:if>
     <div class="card-body">
-        <h3 class="card-title h6">
+        <h3 class="card-title h6 d-flex align-items-start gap-2">
             <f:if condition="{contact.person}">
                 <f:then>
                     <i class="fa-solid fa-user" aria-hidden="true"></i>
-                    <f:if condition="{displayItems.salutation}">{contact.salutation} </f:if>{contact.firstName} {contact.lastName}
+                    <span><f:if condition="{displayItems.salutation}">{contact.salutation} </f:if>{contact.firstName} {contact.lastName}</span>
                 </f:then>
                 <f:else>
                     <i class="fa-solid fa-building" aria-hidden="true"></i>
-                    {contact.departmentText}
+                    <span>{contact.departmentText}</span>
                 </f:else>
             </f:if>
         </h3>
+        <div class="sitepackage-contact-card-main">
         <f:if condition="{displayItems.position} && {contact.jobPosition}">
             <p class="mb-1 d-flex align-items-start gap-2"><i class="fa-solid fa-id-badge" aria-hidden="true"></i><span>{contact.jobPosition}</span></p>
         </f:if>
@@ -34,6 +42,8 @@
         <f:if condition="{displayItems.address} && ({contact.address} || {contact.zip} || {contact.city})">
             <address class="text-body-secondary mb-1 d-flex align-items-start gap-2"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span><f:if condition="{contact.address}">{contact.address}<br /></f:if>{contact.zip} {contact.city}</span></address>
         </f:if>
+        </div>
+        <div class="sitepackage-contact-card-details">
         <f:render partial="Contact/CommunicationsList" arguments="{contact: contact, displayItems: displayItems}" />
         <f:if condition="{contact.description}">
             <div class="sitepackage-contact-description small">{contact.description -> f:format.html()}</div>
@@ -45,6 +55,7 @@
                 </f:link.action>
             </p>
         </f:if>
+        </div>
     </div>
 </div>
 </html>

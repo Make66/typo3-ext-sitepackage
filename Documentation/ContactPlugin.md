@@ -234,12 +234,161 @@ or pages are left out; hidden ones are still listed.
 
 ## Card layout
 
-In list mode with `settings.displayMode = single`, each card sits in a
-`.mb-3` wrapper (`Templates/Contact/Index.html`). For these cards only,
-`Resources/Public/Scss/Theme/global.scss` puts the photo to the left of the
-text from the `sm` breakpoint up: a two-column grid (photo 1/3, text 2/3).
-The photo has a light frame (border, small padding, rounded corners), full
-column width with automatic height, and sits vertically centered next to
-the text. Below `sm` the photo stays on top, with the same frame. Cards
-without a photo keep the normal one-column layout (`:has(> .card-img-top)`).
-The grid mode (`multiple`) and the detail view are not affected.
+`Resources/Public/Scss/Theme/global.scss` styles the two list modes
+differently. All layout rules are scoped to one of the two wrappers from
+`Templates/Contact/Index.html`; the bare `.sitepackage-contact-card` class
+carries no layout of its own.
+
+**Stacked list** (`settings.displayMode = single`, each card in a `.mb-3`
+wrapper, selector `.sitepackage-contact .mb-3 > .sitepackage-contact-card`):
+the cards are not boxed. Each card has no border, radius, background or
+shadow and 1.25rem vertical padding; the card body has no padding of its
+own. Rows are separated by a hairline (`--bs-border-width` in
+`--bs-border-color-translucent`) on the top of every card that follows
+another card (`.mb-3 + .mb-3 > .sitepackage-contact-card`), so there is
+no line above the first or below the last card. The wrappers' `mb-3`
+margin is set to 0 inside the contact list
+(`.mb-3:has(> .sitepackage-contact-card)`; `!important`, because
+Bootstrap's spacing utilities are `!important` themselves), so the
+spacing comes only from the card padding and the line sits exactly
+between two rows (1.25rem above and below). The layouts' decorative card
+pseudo-element is switched off (`content: none` on `::before`), so the
+hairline is the only separator. The selector is more specific than the layouts' plain `.card`,
+so it wins although the layout CSS loads after `global.scss`.
+
+Below `sm`, logo and text stack (flex column, 1.5rem gap), and the logo
+sits in a 150px-high `object-fit: contain` box, centered. From `sm` up,
+every card becomes a two-column grid: a 150px column on the left for the
+logo or, without one, the placeholder (see below, 150 × 112.5 px here),
+3rem gap, the text on the right.
+
+The card body holds the title (`<h3 class="card-title">`) and two groups
+after it (`Partials/Contact/Card.html`): `.sitepackage-contact-card-main`
+(position, department, room, address) and
+`.sitepackage-contact-card-details` (communication list, description,
+"Details" link). In the stacked list, from the `md` breakpoint up, the
+card body is a two-column grid: the title spans both columns
+(`grid-column: 1 / -1`), and below it the two groups sit side by side
+(3rem gap, top-aligned), so they start at the same height. The columns
+are `fit-content(28ch)` and `fit-content(40ch)` with
+`justify-content: start`: each is as wide as its content, but at most
+about 28 / 40 characters, and the second follows the first at the gap
+instead of taking half of the width. Longer lines wrap at that cap, so
+one long department name or street does not push the second column to
+the right and leave empty space under the short lines, and a long
+description wraps at a readable line length. The caps are a first guess;
+adjust them to the real data if names wrap too early. The title has `width: 0;
+min-width: 100%`, so it fills the whole row but does not count when the
+columns are sized; without that, a long name would widen the columns.
+The card then has three columns: logo, main data, contact details, with
+the title over the two text columns. Below `md` they stack. The
+logo is aligned to the top left (`align-items: start`, `height: auto`,
+`object-position: left top`), level with the title, as in the grid. In
+the grid the two groups are plain blocks and stack, so it looks as
+before.
+
+Columns aligned across rows (subgrid): the rules above size each card's
+columns on their own, so the contact details would start at a different
+position in every row. To line them up like a table, the stacked list's
+rows are wrapped in `.sitepackage-contact-stack`
+(`Templates/Contact/Index.html`), and from `md` up that wrapper is the
+one grid that defines the columns for the whole list:
+`150px fit-content(28ch) fit-content(40ch) minmax(0, 1fr)`, 3rem gap.
+Each level below takes the columns over with
+`grid-template-columns: subgrid`: the `.mb-3` row and the card span all
+four columns, the logo or placeholder sits in column 1, and the card body
+spans columns 2 to 4, with `.sitepackage-contact-card-main` and
+`.sitepackage-contact-card-details` in its first two and the title across
+all three. The text columns are therefore sized once, by the widest
+content of any row (still capped at about 28 / 40 characters). The fourth
+column only takes the remaining width, so cards and their hairlines run
+across the full width; without it the cards would end after the details
+column. A table was not used: each contact is a record with a heading,
+logo and two groups, the description and "Details" link do not fit into
+cells, and below `md` the rows have to stack.
+
+These rules are inside `@supports (grid-template-columns: subgrid)`.
+Browsers without subgrid (all current browsers support it, since 2023)
+keep the per-card layout described above: everything works, only the
+columns are not aligned across rows. The hairline and spacing rules use
+the `.mb-3` wrappers, which are unchanged inside the new wrapper.
+
+**Grid** (`settings.displayMode = multiple`, cards in
+`.row > .col`): a normal Bootstrap card with the layout's card styling.
+From the `sm` breakpoint up, every card becomes a two-column grid: a
+120px column on the left (plus the card's horizontal spacing) and the card
+body on the right. The photo is 120px wide, keeps its own ratio and is
+aligned to the top, with the card's spacing as margin above and left of
+it, so its top edge lines up with the top of the text (the title). It
+has Bootstrap's `rounded` class (`--bs-border-radius`, overriding the
+card's top-only `card-img-top` radius). The spacing must be margin, not
+padding: with padding the rounded corners would sit on the padded box
+and not touch the image. The rounding is only visible where the image
+fills its box, i.e. in the grid; in the stacked list and below `sm` the
+`object-fit: contain` box is larger than the image, and logos with a
+white background show no visible corner on a white card anyway. Below `sm`, the photo sits on top at 70% width with a 16:9
+box.
+
+A card without a photo renders `.sitepackage-contact-card-placeholder`
+instead (`Partials/Contact/Card.html`): a 4:3 box (the `card` crop
+variant's default ratio) in `--bs-tertiary-bg` with a person or building
+icon at 50% opacity and the same `rounded` corners, at the same position
+as a photo. Its look is defined once on the class itself, hidden by
+default (`display: none`); each layout only switches it on and sets its
+width: 120px (120 × 90) in the grid, 150px (150 × 112.5) in the stacked
+list, matching the logo column. Both layouts show it from `sm` up; below
+`sm` it stays hidden, so a card without a photo shows only the text.
+
+The detail view does not use the card partial and is not affected.
+
+The icon rows (position, department, room, address, communication list)
+are flex rows (`d-flex align-items-start`) with the icon as the first
+item. Font Awesome gives `.fa-solid` `line-height: 1`, so the icon box is
+only 1em tall while the text line is about 1.5em, and with
+`align-items-start` the icon sits too high. `global.scss` gives these
+icons (`.sitepackage-contact .d-flex > .fa-solid`) `line-height: inherit`,
+so the icon box is exactly one text line tall and the glyph is centered
+on the first line, also next to a two-line address. A fixed width of
+1.25em (like FA's `fa-fw`) lines up the text of all rows. Both sizes are
+in `em`, so the icons scale with the text. This applies to the stacked list, the grid and the detail
+view. The card title (`<h3>`, person or building icon) is a flex row of
+the same kind, so a long name that wraps continues under the text, not
+under the icon. The title is larger than the rows, so a `1.25em` icon box
+would be wider there and push the title text further right than the row
+texts. The title icon's box is therefore set to
+`calc(1.25 * var(--bs-body-font-size))`, the width of the row icons
+(the rows use the body font size; `fontsize.css` sets it to a `clamp()`,
+not `1rem`, so a fixed `rem` value would not match). The glyph keeps the
+title's size and is centered on the same axis as the row icons, and all
+texts start at the same position. The detail view's `<h1>` has no icon.
+The card title has `text-wrap: balance`, so a name that wraps is split
+into lines of similar length instead of a full line and a short rest.
+Browsers without support wrap normally.
+
+The communication list (`.sitepackage-contact .sitepackage-contact-list`,
+all list modes and the detail view) has `overflow-wrap: anywhere`. Email
+addresses and URLs contain no spaces and would otherwise stick out of a
+narrow column or card; with `anywhere` the browser breaks them at any
+character, but only when the whole string does not fit. Unlike
+`break-word`, `anywhere` also lowers the text's minimum width, which the
+flex rows (`d-flex` with the icon) need, or the row would not shrink.
+
+The page layouts (`pl0.scss` to `pl3.scss`) put a symbol in front of text
+links: an external-link symbol for `target="_blank"` (all layouts) and an
+arrow for other links (pl1, pl2). Links in `.sitepackage-contact-list`
+(phone, mobile, email, website) already have their own FA icon, so each
+of these rules excludes them with `:not(.sitepackage-contact-list a)`,
+next to the existing exceptions such as `.frame-type-social_links`. The
+"Details" link and links in the description are outside the list and keep
+their symbol.
+
+The same list links have no underline at rest. On hover or keyboard focus
+the layout's own underline appears: the animated line from `link-underline`
+in pl0 to pl2, the Bootstrap underline in pl3. `global.scss` does this with
+`.sitepackage-contact-list a[href]:not(:hover):not(:focus-visible)`, which
+sets `text-decoration: none` and shrinks both `link-underline` gradients to
+zero width (`background-size: 0 2px, 0 1px`), so the hover transition still
+runs from zero. The rule needs `!important`: the layout rule contains the
+`#page-content` ID and its CSS loads after `global.scss`. An extra `:not()`
+exception in the layout rules would not work, because those rules also set
+the link font (pl1, pl2) and the focus ring (pl0), and both would be lost.

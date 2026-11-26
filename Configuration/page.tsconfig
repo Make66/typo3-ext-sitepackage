@@ -8,6 +8,7 @@ TCEFORM.tt_content.frame_class {
     search = Suche
     icon-frame= Icons mit Rahmen
     ohne_abstand = Ohne Abstand oben/unten
+    schmal = Schmaler Inhalt (max. 950px)
     }
 }
 

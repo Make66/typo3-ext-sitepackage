@@ -228,7 +228,7 @@ hr { border-color: $pl0-divider; opacity: 1; }
     @include focus-ring;
   }
 
-  a[href][target="_blank"]:is(p a, td a, li:not(.nav-item):not(.page-item) a):not(.btn):not(.no-link-icon):not(:empty):not(:has(img, svg)) {
+  a[href][target="_blank"]:is(p a, td a, li:not(.nav-item):not(.page-item) a):not(.btn):not(.no-link-icon):not(:empty):not(:has(img, svg)):not(.sitepackage-contact-list a) {
     @include link-icon($icon-external);
   }
 }

@@ -13,9 +13,11 @@
                     </div>
                 </f:then>
                 <f:else>
-                    <f:for each="{contacts}" as="contact">
-                        <div class="mb-3"><f:render partial="Contact/Card" arguments="{contact: contact, displayItems: displayItems, singleViewPage: singleViewPage}" /></div>
-                    </f:for>
+                    <div class="sitepackage-contact-stack">
+                        <f:for each="{contacts}" as="contact">
+                            <div class="mb-3"><f:render partial="Contact/Card" arguments="{contact: contact, displayItems: displayItems, singleViewPage: singleViewPage}" /></div>
+                        </f:for>
+                    </div>
                 </f:else>
             </f:if>
         </f:then>

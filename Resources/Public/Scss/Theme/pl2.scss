@@ -200,7 +200,7 @@ strong { font-weight: 900; }
     .card-footer a,
     li:not(.breadcrumb-item):not(.page-item):not(.nav-item) a,
     .stretched-link
-  ):not(.btn):not(.no-link-icon):not(:empty):not(:has(img, svg)):not(.apicodo-event-row a):not(.frame-type-social_links a) {
+  ):not(.btn):not(.no-link-icon):not(:empty):not(:has(img, svg)):not(.apicodo-event-row a):not(.frame-type-social_links a):not(.sitepackage-contact-list a) {
 
     @include link-icon($icon-arrow);
 
