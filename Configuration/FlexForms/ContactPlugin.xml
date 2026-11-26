@@ -27,6 +27,20 @@
                         </config>
                     </settings.pluginType>
 
+                    <settings.displayMode>
+                        <displayCond>FIELD:settings.pluginType:=:list</displayCond>
+                        <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayMode</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <default>single</default>
+                            <items>
+                                <numIndex index="0"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayMode.single</label><value>single</value></numIndex>
+                                <numIndex index="1"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayMode.multiple</label><value>multiple</value></numIndex>
+                            </items>
+                        </config>
+                    </settings.displayMode>
+
                     <settings.listSource>
                         <onChange>reload</onChange>
                         <displayCond>FIELD:settings.pluginType:=:list</displayCond>
@@ -80,20 +94,6 @@
                             <maxitems>99</maxitems>
                         </config>
                     </settings.categories>
-
-                    <settings.displayMode>
-                        <displayCond>FIELD:settings.pluginType:=:list</displayCond>
-                        <label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayMode</label>
-                        <config>
-                            <type>select</type>
-                            <renderType>selectSingle</renderType>
-                            <default>single</default>
-                            <items>
-                                <numIndex index="0"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayMode.single</label><value>single</value></numIndex>
-                                <numIndex index="1"><label>LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:flexform.displayMode.multiple</label><value>multiple</value></numIndex>
-                            </items>
-                        </config>
-                    </settings.displayMode>
 
                     <settings.singleViewPage>
                         <displayCond>FIELD:settings.pluginType:=:list</displayCond>
