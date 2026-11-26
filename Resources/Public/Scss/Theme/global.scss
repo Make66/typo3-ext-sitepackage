@@ -138,3 +138,52 @@
   .footer-sociallinks a::before { content: none !important; }
   .footer-sociallinks a { background-image: none !important; }
 }
+
+// Sitepackage:Ansprechpartner (Kontakt) – Card-Layout für Bild + Text nebeneinander ab sm-Breakpoint
+.sitepackage-contact .mb-3 > .sitepackage-contact-card > .card-img-top {
+  height: auto;
+  padding: .25rem;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  background-color: var(--bs-body-bg);
+}
+
+.sitepackage-contact .mb-3 > .sitepackage-contact-card:has(> .card-img-top) {
+  @include media-breakpoint-up(sm) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    align-items: start;
+    padding-left: var(--bs-card-spacer-x);
+
+    > .card-img-top {
+      align-self: center;
+      margin-block: var(--bs-card-spacer-y);
+    }
+  }
+}
+
+.sitepackage-contact-card {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.sitepackage-contact-card .card-img-top {
+  flex: 0 0 280px;      /* feste Breite der Logo-Spalte */
+  width: 280px;
+  height: 200px;        /* feste Höhe der Logo-Box */
+  object-fit: contain;  /* Logo wird proportional eingepasst, nie verzerrt */
+  object-position: center;
+}
+
+.sitepackage-contact-card .card-body {
+  flex: 1 1 auto;
+  padding: 0;
+}
+
+@include media-breakpoint-down(sm)  {
+  .sitepackage-contact-card { flex-direction: column; }
+  .sitepackage-contact-card .card-img-top { width: 100%; flex-basis: auto; }
+}

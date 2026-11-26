@@ -189,3 +189,15 @@ or pages are left out; hidden ones are still listed.
   onlyVisiblePersons()`) — those exist only because tsa mirrors third-party data
   that may be marked not-for-publication; a hand-authored contact record is
   either `hidden` (a normal TYPO3 enable field) or it is not.
+
+## Card layout
+
+In list mode with `settings.displayMode = single`, each card sits in a
+`.mb-3` wrapper (`Templates/Contact/Index.html`). For these cards only,
+`Resources/Public/Scss/Theme/global.scss` puts the photo to the left of the
+text from the `sm` breakpoint up: a two-column grid (photo 1/3, text 2/3).
+The photo has a light frame (border, small padding, rounded corners), full
+column width with automatic height, and sits vertically centered next to
+the text. Below `sm` the photo stays on top, with the same frame. Cards
+without a photo keep the normal one-column layout (`:has(> .card-img-top)`).
+The grid mode (`multiple`) and the detail view are not affected.
