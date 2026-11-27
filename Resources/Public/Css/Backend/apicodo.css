@@ -1,0 +1,59 @@
+/* Proposal A: Nacht */
+[data-theme=apicodo-nacht] {
+  --typo3-color-neutral-mix: 8%;
+  --token-color-primary-base: #335e7b;
+  --token-color-secondary-base: hsl(from var(--token-color-primary-base) h 10% l);
+  --typo3-scaffold-header-color: var(--typo3-surface-primary-text);
+  --typo3-scaffold-header-bg: light-dark(#132237, #0c1624);
+  --typo3-scaffold-header-box-shadow: none;
+  --typo3-scaffold-sidebar-color: var(--typo3-surface-primary-text);
+  --typo3-scaffold-sidebar-bg: light-dark(#132237, #0c1624);
+  --typo3-scaffold-sidebar-border-width: 0;
+}
+[data-theme=apicodo-nacht] .scaffold-sidebar {
+  --typo3-icons-accent: light-dark(#ec672a, #f5a26e);
+}
+
+/* Proposal B: Salbei */
+[data-theme=apicodo-salbei] {
+  --typo3-color-neutral-mix: 10%;
+  --token-color-primary-base: #69918b;
+  --token-color-secondary-base: hsl(from var(--token-color-primary-base) h 10% l);
+  --typo3-scaffold-header-color: var(--typo3-surface-primary-text);
+  --typo3-scaffold-header-bg: light-dark(hsl(from #69918b h s 26%), hsl(from #69918b h s 17%));
+  --typo3-scaffold-header-box-shadow: none;
+  --typo3-scaffold-sidebar-color: var(--typo3-surface-primary-text);
+  --typo3-scaffold-sidebar-bg: light-dark(hsl(from #69918b h s 26%), hsl(from #69918b h s 17%));
+  --typo3-scaffold-sidebar-border-width: 0;
+}
+[data-theme=apicodo-salbei] .scaffold-sidebar {
+  --typo3-icons-accent: light-dark(#9dd3cf, #9dd3cf);
+}
+
+/* Proposal C: Orange */
+[data-theme=apicodo-orange] {
+  --typo3-color-neutral-mix: 4%;
+  --token-color-primary-base: #ec672a;
+  --typo3-icons-accent: light-dark(#ec672a, #f5a26e);
+}
+[data-theme=apicodo-orange] .scaffold-header {
+  border-bottom: 3px solid #ec672a;
+}
+
+/* Shared shape for the dark-frame proposals (as in core theme "Fresh") */
+:is([data-theme=apicodo-nacht], [data-theme=apicodo-salbei]) .scaffold-content::before {
+  --size: 1rem;
+  background-color: var(--typo3-scaffold-sidebar-bg);
+  content: "";
+  height: calc(var(--size) * 2);
+  inset-inline-start: calc(var(--size) * -1);
+  mask: radial-gradient(circle at var(--typo3-position-end-percent) 100%, transparent calc(var(--size) - .5px), #000 calc(var(--size) + .5px));
+  position: absolute;
+  top: calc(var(--size) * -1);
+  user-select: none;
+  width: calc(var(--size) * 2);
+  z-index: calc(var(--typo3-zindex-header) + 2);
+}
+:is([data-theme=apicodo-nacht], [data-theme=apicodo-salbei]) .modal-position-sheet {
+  --typo3-modal-border-radius: 1rem;
+}

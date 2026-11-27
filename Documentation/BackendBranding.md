@@ -51,3 +51,27 @@ container:
 ddev exec "cd /var/www/html/packages/sitepackage/Resources/Public/Images && \
   magick -background none -density 600 favicon.svg -define icon:auto-resize=48,32,16 favicon.ico"
 ```
+
+## Backend themes "apicodo"
+
+Three themes are added to the core user setting "Theme" (User
+Settings → Backend appearance) by `Configuration/TCA/Overrides/be_users.php`.
+The core writes the chosen value to `<html data-theme="…">`; the CSS in
+`Resources/Public/Css/Backend/apicodo.css` (loaded via
+`$GLOBALS['TYPO3_CONF_VARS']['BE']['stylesheets']['sitepackage']`) styles
+each value. Light and dark mode come from `light-dark()`, so each theme follows
+the user's colour scheme setting.
+
+| Value | Header/sidebar | Primary (buttons, links) | Icon accent |
+|---|---|---|---|
+| `apicodo-nacht` | Dunkelblau `#132237` | hue of Blau `#335e7b` | Dunkelorange / Hellorange |
+| `apicodo-salbei` | dark Salbei (from `#69918b`) | hue of Salbei | Türkis `#9dd3cf` |
+| `apicodo-orange` | core default (light/dark) + orange line | hue of Dunkelorange `#ec672a` | Dunkelorange / Hellorange |
+
+The core derives the whole primary scale from `--token-color-primary-base`
+using only its hue and saturation (`hsl(from … h s <fixed lightness>)`), so
+buttons show the brand hue, not the exact hex. Header and sidebar colours are
+exact. The theme CSS variables are internal core API (see changelog
+Feature-108240) and may need adjusting after TYPO3 updates.
+
+All three are kept as selectable themes for now.

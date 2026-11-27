@@ -53,6 +53,7 @@ foreach ($backendBranding as $key => $value) {
     }
 }
 unset($backendBranding, $key, $value);
+$GLOBALS['TYPO3_CONF_VARS']['BE']['stylesheets']['sitepackage'] = 'EXT:sitepackage/Resources/Public/Css/Backend/';
 
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1764067200] = [
     'nodeName' => 'tenantSiteSettings',

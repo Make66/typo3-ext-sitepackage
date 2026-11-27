@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-11-27T00:00:00Z" product-name="sitepackage">
+        <header/>
+        <body>
+            <trans-unit id="theme.apicodo-nacht" xml:space="preserve">
+                <source>apicodo: Night (proposal A)</source>
+            </trans-unit>
+            <trans-unit id="theme.apicodo-salbei" xml:space="preserve">
+                <source>apicodo: Sage (proposal B)</source>
+            </trans-unit>
+            <trans-unit id="theme.apicodo-orange" xml:space="preserve">
+                <source>apicodo: Orange (proposal C)</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
