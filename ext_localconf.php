@@ -40,6 +40,20 @@ if ($versionInformation->getMajorVersion() < 12) {
 // after bootstrap_package, enforced via the 'bootstrap_package' dependency
 // in ext_emconf.php.
 $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['bootstrap'] = 'EXT:sitepackage/Configuration/RTE/Default.yaml';
+$backendBranding = [
+    'loginLogo' => 'EXT:sitepackage/Resources/Public/Images/loginLogo.svg',
+    'loginLogoAlt' => 'OrtsPage',
+    'loginHighlightColor' => '#69918b',
+    'backendLogo' => 'EXT:sitepackage/Resources/Public/Images/ortspage.svg',
+    'backendFavicon' => 'EXT:sitepackage/Resources/Public/Images/favicon.ico',
+];
+foreach ($backendBranding as $key => $value) {
+    if (($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['backend'][$key] ?? '') === '') {
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['backend'][$key] = $value;
+    }
+}
+unset($backendBranding, $key, $value);
+
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1764067200] = [
     'nodeName' => 'tenantSiteSettings',
     'priority' => 40,

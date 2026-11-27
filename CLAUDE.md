@@ -52,5 +52,6 @@ site, limited to marked pages via `sitepackagePluginPage()`, site settings
 `tx_sitepackage_tenantconfig` on the site root, module Inhalt → Website-Einstellungen
 for non-admins, fields generated from the site's own sets, overlaid on site settings
 via `TenantSiteSettingsFactory`), `IconSet.md` (own bootstrap_package icon set from
-`Resources/Public/Icons/Set/`), and two one-off
+`Resources/Public/Icons/Set/`), `BackendBranding.md` (login logo with light/dark switch,
+top-left backend logo, favicon, login accent colour - set in `ext_localconf.php`), and two one-off
 upgrade commands, `Mig12Cleanup.md` and `NewsToFeUsersImport.md`.
